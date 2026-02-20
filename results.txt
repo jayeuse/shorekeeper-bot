@@ -1,0 +1,271 @@
+(.venv) [ceejay@archlinux shorekeeper_bot]$ python test_rag.py
+📚 Embedding 715 knowledge chunks...
+✅ Knowledge base built: 715 chunks saved to /home/ceejay/Local-AI/shorekeeper_bot/data/vectors.json
+
+🔍 "What is the Black Shores organization?"
+   [0.850] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Narrative Chronicle: The Black Shores and Tethys System
+   [0.810] lore/regions/black_shores/black_shores_story.md → Shorekeeper: Black Shores: Overview
+   [0.786] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Basic Information
+   [0.783] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Relationships
+   [0.779] lore/regions/black_shores/black_shores_story.md → Shorekeeper: Black Shores: The Tethys System
+
+🔍 "How does Shorekeeper's healing work?"
+   [0.800] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Inherent Skill 1: Tethered Star
+   [0.791] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Resonance Liberation: End Loop
+   [0.790] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Recommended Echo Set
+   [0.780] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Target Stats for Build
+   [0.778] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Resonance Chain Level 4 (S4): Surge of Healing
+
+🔍 "What is Shorekeeper's relationship with the Rover?"
+   [0.864] personalization/relationships.md → Shorekeeper: Relationship: The Rover
+   [0.857] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Relationships
+   [0.839] personalization/relationships.md → Shorekeeper: Relationship: The User (as the Rover)
+   [0.814] personalization/relationships.md → Shorekeeper: Relationship: Camellya
+   [0.808] personalization/relationships.md → Shorekeeper: Relationship: Delone
+
+🔍 "Who is Camellya?"
+   [0.745] characters/camellya/camellya_story.md → Camellya: Narrative Chronicle: Camellya's Role in Chapter I
+   [0.719] characters/camellya/camellya_kit.md → Camellya: Inherent Skill 1: Sanguine Bloom (Havoc + Basic Reclassification)
+   [0.715] characters/camellya/camellya_kit.md → Camellya: Resonance Chain Level 3 (S3): Blossom's Edge
+   [0.711] characters/camellya/camellya_story.md → Camellya: Favorite and Disliked Foods
+   [0.711] characters/camellya/camellya_kit.md → Camellya: Resonance Chain Level 5 (S5): Eternal Garden
+
+🔍 "Explain Camellya's combat kit and element."
+   [0.811] characters/galbrena/galbrena_kit.md → Galbrena: Combat Archetype and Role
+   [0.808] characters/zani/zani_kit.md → Zani: Combat Archetype and Role
+   [0.797] characters/camellya/camellya_kit.md → Camellya: Combat Archetype and Role
+   [0.787] characters/cartethyia/cartethyia_kit.md → Cartethyia: Combat Archetype and Role
+   [0.784] characters/iuno/iuno_kit.md → Iuno: Combat Archetype and Role
+
+🔍 "What is Camellya's backstory?"
+   [0.800] characters/camellya/camellya_story.md → Camellya: Official Introduction
+   [0.795] characters/camellya/camellya_story.md → Camellya: Narrative Chronicle: Camellya's Role in Chapter I
+   [0.763] personalization/backstory.md → Shorekeeper: Backstory: Awakening Through the Rover
+   [0.762] characters/camellya/camellya_story.md → Camellya: Character Story III: Stellar Matrix and Lady Flora's Emergence
+   [0.761] characters/camellya/camellya_story.md → Camellya: Chronicles: Petalfall Village and the Roots of Lady Flora
+
+🔍 "What weapons does Cartethyia use?"
+   [0.792] characters/cartethyia/cartethyia_kit.md → Cartethyia: Weapons — Best Weapon
+   [0.768] characters/cartethyia/cartethyia_kit.md → Cartethyia: Team Composition Guide — Best Team (with Chisa, patch 2.8+)
+   [0.766] characters/cartethyia/cartethyia_kit.md → Cartethyia: Combat Archetype and Role
+   [0.756] characters/cartethyia/cartethyia_kit.md → Cartethyia: Weapons — Alternative Weapons
+   [0.753] characters/cartethyia/cartethyia_kit.md → Cartethyia: Key Resources (Forte Mechanics Overview)
+
+🔍 "Tell me about Cartethyia's personality and ideals."
+   [0.823] characters/cartethyia/cartethyia_story.md → Cartethyia: Personality
+   [0.806] characters/cartethyia/cartethyia_story.md → Cartethyia: Ideals
+   [0.788] characters/cartethyia/cartethyia_character.md → Cartethyia: Psychological Profile
+   [0.768] characters/cartethyia/cartethyia_story.md → Cartethyia: Character Story III: Hesitation Amid Gale and Tide (Intimacy Level 3)
+   [0.767] characters/cartethyia/cartethyia_story.md → Cartethyia: Theoretical Implications
+
+🔍 "What is Galbrena's role in combat?"
+   [0.810] characters/galbrena/galbrena_kit.md → Galbrena: Intro Skill: Hellflare Overload
+   [0.798] characters/galbrena/galbrena_kit.md → Galbrena: Combat Archetype and Role
+   [0.770] characters/galbrena/galbrena_character.md → Galbrena: Relationship: Chimera
+   [0.767] characters/galbrena/galbrena_character.md → Galbrena: Significant Lore Events
+   [0.766] characters/galbrena/galbrena_kit.md → Galbrena: Outro Skill: Ashen Pursuit
+
+🔍 "Describe Galbrena's relationship with the Tethys System."
+   [0.873] personalization/relationships.md → Shorekeeper: Relationship: The Rover
+   [0.832] characters/cartethyia/cartethyia_story.md → Cartethyia: Theoretical Implications
+   [0.825] characters/galbrena/galbrena_character.md → Galbrena: Character Profile: Ontological Overview
+   [0.825] characters/galbrena/galbrena_character.md → Galbrena: Relationship: Chimera
+   [0.820] characters/cartethyia/cartethyia_character.md → Cartethyia: Relationships
+
+🔍 "How does Zani's Inferno Mode work?"
+   [0.762] characters/zani/zani_kit.md → Zani: Character Kit: Resonance Liberation — Between Dawn and Dusk
+   [0.761] characters/zani/zani_kit.md → Zani: Character's Strengths and Weaknesses in Actual Gameplay
+   [0.743] characters/zani/zani_kit.md → Zani: Character Kit: Resonance Skill — Restless Watch
+   [0.743] characters/zani/zani_kit.md → Zani: Character Kit: Forte Circuit — There Will Be A Light
+   [0.735] characters/zani/zani_kit.md → Zani: Combat Archetype and Role
+
+🔍 "What are Zani's best team compositions?"
+   [0.776] characters/cantarella/cantarella_kit.md → Cantarella: Team Composition Guide — Best Team (Phrolova/Roccia/Cantarella)
+   [0.775] characters/zani/zani_kit.md → Zani: Character's Strengths and Weaknesses in Actual Gameplay
+   [0.773] characters/iuno/iuno_kit.md → Iuno Best Team: Iuno + Augusta + Shorekeeper
+   [0.769] characters/cartethyia/cartethyia_kit.md → Cartethyia: Team Composition Guide — Best Team (with Chisa, patch 2.8+)
+   [0.763] characters/zani/zani_kit.md → Zani: Alternative Teams (Lower Performance)
+
+🔍 "Explain Cantarella's 'Mirage State' mechanic."
+   [0.826] characters/cantarella/cantarella_kit.md → Cantarella: Intro Skill — Ripple / Tidal Surge
+   [0.814] characters/cantarella/cantarella_kit.md → Cantarella: Resonance Skill — Graceful Step / Flickering Reverie
+   [0.807] characters/cantarella/cantarella_kit.md → Cantarella: Forte Circuit — Abyssal Rebirth
+   [0.805] characters/cantarella/cantarella_kit.md → Cantarella: Weapons — Best Weapon
+   [0.797] characters/cantarella/cantarella_kit.md → Cantarella: Weapons — Alternative Weapons
+
+🔍 "What is Cantarella's relationship with Phrolova?"
+   [0.848] personalization/relationships.md → Shorekeeper: Relationship: The Rover
+   [0.813] characters/cantarella/cantarella_character.md → Cantarella Relationships: The People of Ragunna
+   [0.807] characters/cantarella/cantarella_character.md → Cantarella Relationships: Rover (Immortal Jellyfish)
+   [0.790] characters/cantarella/cantarella_character.md → Cantarella Relationships: Cartethyia
+   [0.789] personalization/relationships.md → Shorekeeper: Relationship: The User (as the Rover)
+
+🔍 "How do I use Carlotta's 'Tinted Crystal' mechanic?"
+   [0.761] characters/carlotta/carlotta_kit.md → Carlotta: Inherent Passives
+   [0.760] characters/carlotta/carlotta_kit.md → Carlotta Inherent Skill 2: Crystalline Precision
+   [0.758] characters/carlotta/carlotta_kit.md → Carlotta Alternative Team 1: Carlotta + Cantarella + Shorekeeper
+   [0.752] characters/carlotta/carlotta_kit.md → Carlotta Echo Sets: Best Main Echo
+   [0.751] characters/carlotta/carlotta_kit.md → Carlotta Best Weapon: The Last Dance (Signature — 5-Star Pistols)
+
+🔍 "What is the best weapon for Carlotta?"
+   [0.810] characters/carlotta/carlotta_kit.md → Carlotta Best Weapon: The Last Dance (Signature — 5-Star Pistols)
+   [0.796] characters/carlotta/carlotta_kit.md → Carlotta: Stats Baseline: Max Analysis
+   [0.789] characters/carlotta/carlotta_kit.md → Carlotta Outro Skill: Glacial Benediction
+   [0.782] characters/carlotta/carlotta_kit.md → Carlotta Best Team: Carlotta + Zhezhi + Shorekeeper
+   [0.774] characters/carlotta/carlotta_kit.md → Carlotta Echo Sets: Best Main Echo
+
+🔍 "What is Lupa's 'Wolf Spirit' mechanic?"
+   [0.797] characters/lupa/lupa_kit.md → Lupa: Team Composition Guide — Encore Variant
+   [0.788] characters/lupa/lupa_kit.md → Lupa: Resonance Skill — Shewolf's Hunt / Feral Fang
+   [0.787] characters/lupa/lupa_character.md → Lupa Profile: Basic Information
+   [0.784] characters/lupa/lupa_kit.md → Lupa: Forte Circuit — Ignis Lupa
+   [0.783] characters/lupa/lupa_kit.md → Lupa: Team Composition Guide — Best Team (Mono Fusion)
+
+🔍 "Tell me about Lupa's backstory and origin."
+   [0.795] characters/lupa/lupa_story.md → Lupa Character Stories: Burning Inside (Intimacy Lv. 1)
+   [0.779] characters/lupa/lupa_story.md → Lupa Narrative Chronicle: Village, Fire, and the First Arena
+   [0.774] characters/lupa/lupa_story.md → Lupa Conclusion: Wolf on Her Own Terms
+   [0.768] characters/lupa/lupa_story.md → Lupa Narrative Chronicle: The Dark Tide and the Nameless
+   [0.767] personalization/backstory.md → Shorekeeper: Backstory: Origin and Purpose
+
+🔍 "Who is Phrolova?"
+   [0.735] characters/phrolova/phrolova_kit.md → Phrolova: Resonance Chains (Sequence Nodes)
+   [0.726] characters/phrolova/phrolova_kit.md → Phrolova Intro Skill: Song of Immortality
+   [0.722] characters/phrolova/phrolova_kit.md → Phrolova: Game Kit
+   [0.712] characters/phrolova/phrolova_kit.md → Phrolova Inherent Skill 1: Cadenza Conversion
+   [0.706] characters/phrolova/phrolova_character.md → Phrolova Profile: Basic Information
+
+🔍 "Explain Phrolova's Hecate coordinated attacks."
+   [0.804] characters/phrolova/phrolova_kit.md → Phrolova Basic Attack: Elegy of the Fallen
+   [0.780] characters/phrolova/phrolova_kit.md → Phrolova: Combat Archetype and Role
+   [0.780] characters/phrolova/phrolova_kit.md → Phrolova Resonance Chain S3: An Echo That Fades Not
+   [0.778] characters/cantarella/cantarella_kit.md → Cantarella: Team Composition Guide — Best Team (Phrolova/Roccia/Cantarella)
+   [0.776] characters/phrolova/phrolova_kit.md → Phrolova Resonance Liberation: Waltz of Forsaken Depths
+
+🔍 "What is Iuno's role in a team?"
+   [0.795] characters/iuno/iuno_kit.md → Iuno Best Team: Iuno + Jiyan + Ciaccona
+   [0.794] characters/iuno/iuno_kit.md → Iuno Alternative Team (F2P-accessible): Iuno + Mortefi + Shorekeeper
+   [0.790] characters/iuno/iuno_kit.md → Iuno Best Team: Iuno + Augusta + Shorekeeper
+   [0.789] characters/iuno/iuno_kit.md → Iuno Resonance Chain S4: Full Moon's Blessing
+   [0.782] characters/iuno/iuno_kit.md → Iuno Alternative Team: Main DPS Iuno + Lynae + Mornye
+
+🔍 "Describe Iuno's personality."
+   [0.848] characters/iuno/iuno_story.md → Iuno Personality
+   [0.791] personalization/personality.md → Shorekeeper: Personality: Awakened Emotion
+   [0.784] personalization/personality.md → Shorekeeper: Personality: Composure as Choice
+   [0.768] personalization/personality.md → Shorekeeper: Personality: Courage and Sacrifice
+   [0.767] characters/iuno/iuno_character.md → Iuno Relationships
+
+🔍 "Who is Augusta?"
+   [0.749] characters/augusta/augusta_kit.md → Augusta: Character Strengths and Weaknesses in Actual Gameplay
+   [0.734] characters/augusta/augusta_kit.md → Augusta: Key Resources (Forte Mechanics Overview)
+   [0.733] characters/augusta/augusta_kit.md → Augusta: Resonance Chains (Sequence Nodes S1–S6)
+   [0.722] characters/augusta/augusta_kit.md → Augusta: Character Kit
+   [0.722] characters/augusta/augusta_kit.md → Augusta: Echo Sets
+
+🔍 "What element does Augusta use?"
+   [0.750] characters/augusta/augusta_kit.md → Augusta Best Team: Augusta + Iuno + Shorekeeper
+   [0.730] characters/augusta/augusta_kit.md → Augusta Alternative Team 2: Augusta + Mortefi + Shorekeeper
+   [0.729] characters/augusta/augusta_kit.md → Augusta Alternative Team 1: Augusta + Phrolova + Shorekeeper
+   [0.729] characters/augusta/augusta_kit.md → Augusta: Weaknesses
+   [0.726] characters/augusta/augusta_kit.md → Augusta Best Weapon: Thunderflare Dominion (Signature — 5-Star Broadblade)
+
+🔍 "Who is Chisa?"
+   [0.722] characters/chisa/chisa_kit.md → Chisa: Character Strengths and Weaknesses in Actual Gameplay
+   [0.721] characters/chisa/chisa_character.md → Chisa Profile: Basic Information
+   [0.717] characters/chisa/chisa_kit.md → Chisa: Intro Skill — Reverberance - Return
+   [0.716] characters/chisa/chisa_character.md → Chisa Relationships: Cartethyia (Gameplay Context)
+   [0.709] characters/chisa/chisa_character.md → Chisa Relationships: The Bullied Classmate (Ritsuko) and the Moment of Awakening
+
+🔍 "What makes Chisa unique?"
+   [0.740] characters/chisa/chisa_kit.md → Chisa: Character Strengths and Weaknesses in Actual Gameplay
+   [0.734] characters/chisa/chisa_story.md → Chisa Theoretical Implications: The Mutant and the Severed Thread
+   [0.733] characters/chisa/chisa_character.md → Chisa - Psychological Profile: Analytical Mind and Emotional Restraint
+   [0.726] characters/chisa/chisa_kit.md → Chisa: Inherent Skill 1 — Inescapable Fate
+   [0.726] characters/chisa/chisa_story.md → Chisa Conclusion: Precision, Not Coldness
+
+🔍 "How does the 'Concerto Energy' system work?"
+   [0.633] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Resonance Chain Level 3 (S3): Concerto Recovery
+   [0.604] characters/camellya/camellya_kit.md → Camellya: Optimal Rotation Overview (S0, Full Concerto from Outro Swap)
+   [0.599] personalization/relationships.md → Shorekeeper: Relationship: The Tethys System
+   [0.598] characters/augusta/augusta_kit.md → Augusta Forte Circuit: Resource Management System
+   [0.593] lore/regions/black_shores/black_shores_story.md → Shorekeeper: Black Shores: The Tethys System
+
+🔍 "What is the difference between Resonance Skill and Resonance Liberation?"
+   [0.799] characters/zani/zani_kit.md → Zani: Character Kit: Resonance Liberation — Between Dawn and Dusk
+   [0.740] characters/cantarella/cantarella_kit.md → Cantarella: Resonance Liberation — Beneath the Sea (Flowing Suffocation)
+   [0.735] characters/cartethyia/cartethyia_kit.md → Cartethyia: Resonance Liberation — A Knight's Heartfelt Prayers (Transformation)
+   [0.712] characters/carlotta/carlotta_kit.md → Carlotta Resonance Skill: Art of Violence / Chromatic Splendor
+   [0.709] characters/galbrena/galbrena_kit.md → Galbrena: Resonance Skill Multipliers (Lv. 1)
+
+🔍 "Explain the 'Vibration Strength' mechanic on bosses."
+   [0.693] characters/carlotta/carlotta_kit.md → Carlotta: Strengths
+   [0.666] characters/zani/zani_kit.md → Zani: Character's Strengths and Weaknesses in Actual Gameplay
+   [0.653] characters/chisa/chisa_kit.md → Chisa: Character Strengths and Weaknesses in Actual Gameplay
+   [0.644] characters/chisa/chisa_kit.md → Chisa: Key Resources (Forte Mechanics Overview)
+   [0.639] characters/lupa/lupa_kit.md → Lupa: Character Strengths and Weaknesses in Actual Gameplay
+
+🔍 "How do Outro Skills trigger?"
+   [0.727] characters/camellya/camellya_kit.md → Camellya: Outro Skill: Twining
+   [0.698] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Outro Skill: Binary Butterfly
+   [0.659] characters/zani/zani_kit.md → Zani: Character Kit: Outro Skill — Beacon For the Future
+   [0.658] characters/chisa/chisa_kit.md → Chisa: Outro Skill — Unraveling - Law Zero
+   [0.653] characters/augusta/augusta_kit.md → Augusta Outro Skill: Battlesong of the Unyielding
+
+🔍 "What is the Lament in Wuthering Waves?"
+   [0.601] characters/shorekeeper/shorekeeper_kit.md → Shorekeeper: Materials Costs: Resonance Chain (Wavebands)
+   [0.590] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Theoretical Implications
+   [0.588] characters/lupa/lupa_character.md → Lupa Profile: Basic Information
+   [0.576] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Basic Information
+   [0.573] characters/chisa/chisa_character.md → Chisa Profile: Basic Information
+
+🔍 "Tell me about the history of the Black Shores."
+   [0.786] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Relationships
+   [0.782] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Narrative Chronicle: The Black Shores and Tethys System
+   [0.778] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Chronicles: Betrayal and the Fallacy of No Return
+   [0.778] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Theoretical Implications
+   [0.759] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Character Profile: Ontological Overview
+
+🔍 "What are 'Echoes' and how are they formed?"
+   [0.629] characters/shorekeeper/shorekeeper_character.md → Shorekeeper: Basic Information
+   [0.622] characters/galbrena/galbrena_character.md → Galbrena: Basic Information
+   [0.620] characters/carlotta/carlotta_character.md → Carlotta Profile: Basic Information
+   [0.615] characters/cartethyia/cartethyia_character.md → Cartethyia: Basic Information
+   [0.614] characters/chisa/chisa_character.md → Chisa Profile: Basic Information
+
+🔍 "Who are the Threnodians?"
+   [0.590] characters/chisa/chisa_story.md → Chisa Theoretical Implications: The Mutant and the Severed Thread
+   [0.588] characters/cartethyia/cartethyia_story.md → Cartethyia: Chronicles: The Threnodian's Creation and the Truth of Fleurdelys
+   [0.556] characters/galbrena/galbrena_kit.md → Galbrena: Basic Attack: Slayer's Trigger — Threshold State
+   [0.556] characters/cantarella/cantarella_story.md → Cantarella Theoretical Implications: Velvet Dream as Existential Threat
+   [0.534] characters/galbrena/galbrena_kit.md → Galbrena: Forte Circuit: Beyond Threshold — Enhanced State Attacks
+
+🔍 "What is your personality like, Shorekeeper?"
+   [0.795] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Personality
+   [0.780] personalization/personality.md → Shorekeeper: Personality: Composure as Choice
+   [0.779] personalization/relationships.md → Shorekeeper: Relationship: The User (as the Rover)
+   [0.771] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Voicelines (Selected)
+   [0.766] personalization/personality.md → Shorekeeper: Personality: Awakened Emotion
+
+🔍 "Do you have feelings for the Rover?"
+   [0.609] characters/lupa/lupa_character.md → Lupa Relationships: Rover (Best Teammate Ever)
+   [0.606] personalization/backstory.md → Shorekeeper: Backstory: Awakening Through the Rover
+   [0.596] personalization/relationships.md → Shorekeeper: Relationship: The User (as the Rover)
+   [0.579] personalization/relationships.md → Shorekeeper: Relationship: The Rover
+   [0.578] characters/lupa/lupa_story.md → Lupa Cherished Items: Ta-da Figurines (Gift to Rover)
+
+🔍 "How would you describe your voice and manner of speaking?"
+   [0.578] personalization/personality.md → Shorekeeper: Personality: Voice and Speech
+   [0.554] characters/lupa/lupa_character.md → Lupa Notable Dialogues and Voice Lines
+   [0.545] characters/chisa/chisa_character.md → Chisa Notable Dialogues and Voice Lines
+   [0.544] characters/cantarella/cantarella_character.md → Cantarella Notable Dialogues and Voice Lines
+   [0.535] characters/shorekeeper/shorekeeper_story.md → Shorekeeper: Voicelines (Selected)
+
+🔍 "What is your philosophy on 'choice' and 'fate'?"
+   [0.538] characters/camellya/camellya_story.md → Camellya: Ideals
+   [0.524] characters/iuno/iuno_character.md → Iuno – Psychological Profile
+   [0.515] characters/iuno/iuno_story.md → Iuno Theoretical Implications
+   [0.509] characters/camellya/camellya_character.md → Camellya: Psychological Profile
+   [0.502] characters/iuno/iuno_story.md → Iuno Ideals
+
+(.venv) [ceejay@archlinux shorekeeper_bot]$ 

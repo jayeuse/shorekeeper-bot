@@ -1,0 +1,48 @@
+| Character | English | Chinese | Japanese | Korean |
+|---|---|---|---|---|
+| Aalto | James Day | Liang Dawei (梁达伟) | Iwasaki Ryōta (岩崎諒太) | Lim Chae-bin (임채빈) |
+| Aemeath | Cara Theobold | Wang Yaxin (王雅欣) | Satō Satomi (佐藤聡美) | Kim Ha-ru (김하루) |
+| Augusta | Alix Wilton Regan | Mu Xueting (穆雪婷) | Hikasa Yōko (日笠陽子) | Lee Ji-hyun (이지현) |
+| Baizhi | Samantha Dakin | Chen Tingting (陈婷婷) | Seto Asami (瀬戸麻沙美) | Seong Ye-won (성예원) |
+| Brant | Hyoie O'Grady | Moran (莫然) | Kishio Daisuke (岸尾だいすけ) | Lee Ju-seung (이주승) |
+| Buling | Elizabeth Chu | Zhang Ye (张晔) | Senbongi Sayaka (千本木彩花) | Lee I-ro (이이로) |
+| Calcharo | Ben Cura | Xu Xiang (徐翔) | Toshiyuki Morikawa (森川智之) | Park Min-gi (박민기) |
+| Camellya | Meaghan Martin | Liu Zhixiao (柳知萧) | Ise Mariya (伊瀬茉莉也) | Yu Hye-ji (유혜지) |
+| Cantarella | Alexandra Guelff | Xiao Mi (小米) | Nakahara Mai (中原麻衣) | Kim Yul (김율) |
+| Carlotta | Jennifer English | Yan Yeqiao (闫夜桥) | Ueda Kana (植田佳奈) | Kim Soon-mi (김순미) |
+| Cartethyia | Amanda Elizabeth Rischel | Yun He Zhui (云鹤追) | Asakawa Yū (浅川悠) | Bae Ha-gyoung (배하경) |
+| Changli | Ashleigh Haddad | Mufei (沐霏) | Saitō Chiwa (斎藤千和) | Shin Nari (신나리) |
+| Chisa | Leader Looi | Zhao Lingze (赵灵泽) | Kanemoto Hisako (金元寿子) | Lee Joo-eun (이주은) |
+| Chixia | Harriet Carmichael | Cai Na (蔡娜) | Nagase Anna (永瀬アンナ) | Kang Eun-ae (강은애) |
+| Ciaccona | Rebecca Hanssen | Ye Zhiqiu (叶知秋) | Hasegawa Ikumi (長谷川育美) | Kim Ye-rim (김예림) |
+| Danjin | Sophie Colquhoun | Yi Kou Jing (一口井) | Okasaki Miho (岡咲美保) | Lee Hyunjin (이현진) |
+| Encore | Carina Reeves | Xiao Sibai (皛四白) | Ibuki Chikano (伊吹誓乃) | Serena Lee (이세레나) |
+| Galbrena | Devora Wilde | Zhang Wenjie (张文婕) | Shōji Umeka (庄司宇芽香) | Lee Da-seul (이다슬) |
+| Galbrena (Young/Angel) | Leonie Schliesing | Zhang Wenjie (张文婕) | Shōji Umeka (庄司宇芽香) | Lee Da-seul (이다슬) |
+| Iuno | Ella Boyes | Jiang Yingjun (姜英俊) | Lynn (りん) | Yoon Eun-seo (윤은서) |
+| Jianxin | Ioanna Kimbook | Yu Tou (昱头) | Anzai Chika (安済知佳) | Lee Eunjo (이은조) |
+| Jinhsi | Anna Devlin | Jiang Yue (江月) | Aoyama Yoshino (青山吉能) | Park Ha-jin (박하진) |
+| Jiyan | Alex Jordan | Sun Ye (孙晔) | Ono Yūki (小野友樹) | Nam Doh-hyeong (남도형) |
+| Lingyang | Aleksander Varadian | Jinli (锦鲤) | Hanae Natsuki (花江夏樹) | Lee Sangho (이상호) |
+| Lumi | Emily Cass | Jing Chen (静宸) | Suzuki Minori (鈴木みのり) | Jeong Ha-eun (정해은) |
+| Lupa | Kaja Chan | Shuo Xiaotu (朔小兔) | Takahashi Minami (髙橋ミナミ) | Kim Ye-ryeong (김예령) |
+| Lynae | Elsie Lovelock | Zhu Jing (朱婧) | Inoue Marina (井上麻里奈) | Choi Hyeon-ji (최현지) |
+| Mornye | Michelle Fox | Tong Xinzhu (佟心竹) | Iwami Manaka (石見舞菜香) | Oh Ro-ah (오로아) |
+| Mortefi | Joseph May | Liu Yijia (刘以嘉) | Miura Katsuyuki (三浦勝之) | Kim Da-ol (김다올) |
+| Phoebe | Rebecca LaChance | Fu Tingyun (傅婷云) | Hondo Kaede (本渡楓) | Lee Bo-yong (이보용) |
+| Phrolova | Rae Lim | Zhang Qi (张琦) | Fujita Saki (藤田咲) | Choi Hari (최하리) |
+| Qiuyuan | Jeremy Ang Jones | Gan Ziqi (淦子齐) | Miki Shinichirō (三木眞一郎) | Kim Min-ju (김민주) |
+| Roccia | Holly Earl | Shen Huasang (沈话桑) | Kohara Konomi (小原好美) | Jang Mi (장미) |
+| Rover (Female) | Jane Jackson | Zhang Ruoyu (张若瑜) | Tanaka Minami (田中美海) | Song Harim (송하림) |
+| Rover (Male) | Chase Brown | Ma Yang (马洋) | Masuda Toshiki (増田俊樹) | Kim Sinwoo (김신우) |
+| Sanhua | Jennifer Armour | Song Yuanyuan (宋媛媛) | Matsuda Risae (松田利冴) | Yooyoung (유영) |
+| Shorekeeper | Stephanie McKeon | Tang Yajing (唐雅菁) | Suwa Ayaka (諏訪彩花) | Kim Bo-na (김보나) |
+| Taoqi | Clare Louise Connolly | KIYO | Yōmiya Hina (羊宮妃那) | Yi Sae-ah (이새아) |
+| Verina | Heather Nicol | Zhao Shuang (赵爽) | Sasahara Yū (篠原侑) | Kang Saebom (강새봄) |
+| Xiangli Yao | Shaun Mendum | Banma (斑马) | Kobayashi Chiaki (小林千晃) | Jung Eui-jin (정의진) |
+| Yangyang | Rebecca Yeo | Chongchong (虫虫) | Ishikawa Yui (石川由依) | Lee Yu-ri (이유리) |
+| Yinlin | Naomi McDonald | Xiao Liansha (小连杀) | Koshimizu Ami (小清水亜美) | Kang Sae-bom (강새봄) |
+| Youhu | Leonora Haig | Liu Yilei (刘一蕾) | Tomita Miyu (富田美憂) | Park Si-yoon (박시윤) |
+| Yuanwu | Adam Diggle | Liu Beichen (刘北辰) | Shirokuma Hiroshi (白熊寬嗣) | Park Seong-tae (박성태) |
+| Zani | Alexandra Metaxa | Nie Xiying (聂曦映) | Ueda Hitomi (上田瞳) | Won Esther (원에스더) |
+| Zhezhi | Shin-Fei Chen | Miao Zi (苗子) | Makino Yui (牧野由依) | Kim Ha-ru (김하루) |
