@@ -1,14 +1,16 @@
 import os
 import re
 import json
+from typing import Any, Callable, Optional
+
 import numpy as np
 import ollama
 
 try:
-    import yaml
+    from yaml import safe_load  # type: ignore
     YAML_AVAILABLE = True
-except ImportError:
-    yaml = None
+except Exception:
+    safe_load: Optional[Callable[[str], Any]] = None
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
@@ -59,8 +61,10 @@ def parse_frontmatter(content):
     frontmatter_text = content[4:end_delim]  # Between first and second delimiters
     remaining = content[end_delim + 5:]  # After "\n---\n"
 
+    # Ensure the imported safe_load is available for type checkers
+    assert safe_load is not None
     try:
-        metadata = yaml.safe_load(frontmatter_text) or {}
+        metadata = safe_load(frontmatter_text) or {}
     except Exception:
         metadata = {}
 

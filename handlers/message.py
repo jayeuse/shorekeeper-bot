@@ -67,7 +67,7 @@ async def on_message(bot, msg):
         llm_duration = time.time() - llm_start
 
     elapsed = time.time() - start_time
-    log_response(msg, user_content, MODEL, response, elapsed, rag_duration=rag_duration, llm_duration=llm_duration)
+    log_response(msg, user_content, MODEL or "unknown", response, elapsed, rag_duration=rag_duration, llm_duration=llm_duration)
 
     reply_content = response["message"]["content"]
     store_chat(str(msg.guild.id), str(msg.channel.id), reply_content, "assistant")

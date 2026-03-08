@@ -18,6 +18,14 @@ This is a Discord bot for the Wuthering Waves game universe, embodying the "Shor
 - **`handlers/conversation_context.py`**: In-memory conversation history per server/channel with 16-message limit.
 - **`utils/logger.py`**: Logs response metrics (timings, token counts).
 
+### RAG Search Algorithm
+
+The RAG system uses a **hybrid search** approach:
+1. **Semantic similarity** (70% weight): Cosine similarity between query and chunk embeddings using `nomic-embed-text`
+2. **Keyword matching** (30% weight): Boosts scores for matches in source paths, headings, labels, and metadata fields
+3. **Metadata boosting**: Chunks with `importance: "high"` get 10% score boost, `importance: "low"` get 10% penalty
+4. **Character disambiguation**: Strong weighting for character name matches in source paths and metadata
+
 ### Knowledge Base Structure
 
 - `knowledge/characters/` – Character profiles, kits, stories (subdirectories by region/character)
@@ -38,13 +46,30 @@ Files are markdown with YAML frontmatter metadata, chunked at `##` headings. The
 
 ## Common Commands
 
+### Environment Setup
+
+```bash
+# Create virtual environment (recommended)
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create environment file
+echo "DISCORD_TOKEN=your_token_here
+GOOGLE_GEMINI_API_KEY=your_key_here
+ONLINE_MODEL=gemini-2.5-flash-lite-preview-09-2025
+LOCAL_MODEL=your_local_model" > .env.local
+```
+
 ### Running the Bot
 
 ```bash
 # Main Discord bot (builds RAG on startup)
 python main.py
 
-# Online CLI version (Gemini only, no Discord)
+# Online CLI version (Gemini only, no Discord, no RAG)
 python online_bot.py
 ```
 
@@ -59,19 +84,9 @@ python test_phrolova_lore.py
 
 # Analyze knowledge base statistics
 python check_knowledge.py
-```
 
-### Setup & Dependencies
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Create environment file
-echo "DISCORD_TOKEN=your_token_here
-GOOGLE_GEMINI_API_KEY=your_key_here
-ONLINE_MODEL=gemini-2.5-flash-lite-preview-09-2025
-LOCAL_MODEL=your_local_model" > .env.local
+# Test RAG search for a specific query
+python -c "from services.rag import RAG; r=RAG(); r.load(); print(r.search('your query'))"
 ```
 
 ### Knowledge Base Management
@@ -80,14 +95,11 @@ LOCAL_MODEL=your_local_model" > .env.local
 # Rebuild RAG vectors after modifying knowledge/ files
 python -c "from services.rag import RAG; r=RAG(); r.build()"
 
-# Check RAG search for a specific query
-python -c "from services.rag import RAG; r=RAG(); r.load(); print(r.search('your query'))"
-
 # Add YAML frontmatter to existing markdown files (after adding new files)
-python add_frontmatter.py
+python commands/add_frontmatter.py
 
 # Update vectors.json with metadata without re-embedding
-python update_vectors_with_metadata.py
+python commands/update_vectors_with_metadata.py
 ```
 
 ## Configuration Notes
@@ -100,7 +112,7 @@ python update_vectors_with_metadata.py
 
 ## Development Patterns
 
-- **Adding Knowledge**: Add markdown files to appropriate `knowledge/` subdirectory. Include YAML frontmatter (see `FORMAT_GUIDE.md`). Use `##` headings for automatic chunking.
+- **Adding Knowledge**: Add markdown files to appropriate `knowledge/` subdirectory. Include YAML frontmatter (see `knowledge/references/FORMAT_GUIDE.md`). Use `##` headings for automatic chunking.
 - **Extending LLM Support**: Add new backend methods in `services/llm.py` following the existing pattern.
 - **Conversation Memory**: History is stored in memory only, reset on bot restart. Modify `conversation_context_limit` in `handlers/conversation_context.py` to adjust.
 - **Response Formatting**: Long messages are split at line breaks or spaces under 2000 chars via `split_message()` in `handlers/message.py`.
@@ -111,3 +123,10 @@ python update_vectors_with_metadata.py
 - **RAG Behavior**: `services/rag.py` search scoring, chunking logic
 - **LLM Integration**: `services/llm.py` model configuration and response formatting
 - **Message Handling**: `handlers/message.py` filtering, context construction, response processing
+
+## Reference Documentation
+
+- **`ROADMAP.md`**: Planned features and improvements (hot reload, slash commands, reranking)
+- **`knowledge/references/FORMAT_GUIDE.md`**: Definitive formatting rules for knowledge files
+- **`commands/add_frontmatter.py`**: Script to add YAML metadata to markdown files
+- **`commands/update_vectors_with_metadata.py`**: Update vector store with new metadata

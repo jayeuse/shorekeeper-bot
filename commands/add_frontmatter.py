@@ -9,10 +9,26 @@ import sys
 import shutil
 import yaml
 from pathlib import Path
+from typing import Any, Dict, List, cast
 
 KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
 BACKUP_DIR = Path(__file__).parent / "knowledge_backups"
 EXCLUDE_DIRS = {"references", ".git", "__pycache__"}
+
+
+def _ensure_list(metadata: Dict[str, Any], key: str) -> None:
+    v = metadata.get(key)
+    if v is None:
+        metadata[key] = []
+        return
+    if isinstance(v, str):
+        metadata[key] = [v]
+        return
+    if not isinstance(v, list):
+        try:
+            metadata[key] = list(v)
+        except Exception:
+            metadata[key] = [str(v)]
 
 
 def get_metadata_from_path(filepath):
@@ -22,7 +38,7 @@ def get_metadata_from_path(filepath):
     filename = parts[-1]
     name_no_ext = filename[:-3]  # Remove .md
 
-    metadata = {
+    metadata: Dict[str, Any] = {
         "version": "1.0.0",
         "chunk_strategy": "heading_based",
         "source_file": str(rel_path),
@@ -41,15 +57,21 @@ def get_metadata_from_path(filepath):
             if name_no_ext.endswith("_character"):
                 metadata["document_type"] = "character_profile"
                 metadata["importance"] = "medium"
-                metadata.setdefault("tags", []).extend(["character", "profile"])
+                _ensure_list(metadata, "tags")
+                tags = cast(List[str], metadata["tags"])
+                tags.extend(["character", "profile"])
             elif name_no_ext.endswith("_kit"):
                 metadata["document_type"] = "character_kit"
                 metadata["importance"] = "high"
-                metadata.setdefault("tags", []).extend(["character", "kit", "combat"])
+                _ensure_list(metadata, "tags")
+                tags = cast(List[str], metadata["tags"])
+                tags.extend(["character", "kit", "combat"])
             elif name_no_ext.endswith("_story"):
                 metadata["document_type"] = "character_story"
                 metadata["importance"] = "medium"
-                metadata.setdefault("tags", []).extend(["character", "story", "lore"])
+                _ensure_list(metadata, "tags")
+                tags = cast(List[str], metadata["tags"])
+                tags.extend(["character", "story", "lore"])
             else:
                 metadata["document_type"] = "character_other"
                 metadata["importance"] = "low"
@@ -83,21 +105,29 @@ def get_metadata_from_path(filepath):
                             metadata["quest_type"] = "thematic_analysis"
                         else:
                             metadata["quest_type"] = "chapter"
-                    metadata.setdefault("tags", []).extend(["lore", "quest", region])
+                    _ensure_list(metadata, "tags")
+                    tags = cast(List[str], metadata["tags"])
+                    tags.extend(["lore", "quest", region])
                 else:
                     # Region story/places files
                     if "_story" in filename:
                         metadata["document_type"] = "region_story"
                         metadata["importance"] = "medium"
-                        metadata.setdefault("tags", []).extend(["lore", "region", "story"])
+                        _ensure_list(metadata, "tags")
+                        tags = cast(List[str], metadata["tags"])
+                        tags.extend(["lore", "region", "story"])
                     elif "_places" in filename:
                         metadata["document_type"] = "region_places"
                         metadata["importance"] = "medium"
-                        metadata.setdefault("tags", []).extend(["lore", "region", "geography"])
+                        _ensure_list(metadata, "tags")
+                        tags = cast(List[str], metadata["tags"])
+                        tags.extend(["lore", "region", "geography"])
                     elif "_territories" in filename:
                         metadata["document_type"] = "region_territories"
                         metadata["importance"] = "medium"
-                        metadata.setdefault("tags", []).extend(["lore", "region", "geography"])
+                        _ensure_list(metadata, "tags")
+                        tags = cast(List[str], metadata["tags"])
+                        tags.extend(["lore", "region", "geography"])
                     else:
                         metadata["document_type"] = "region_other"
                         metadata["importance"] = "low"
@@ -105,7 +135,9 @@ def get_metadata_from_path(filepath):
                 # Top-level lore files (e.g., history.md, world.md)
                 metadata["document_type"] = "lore_general"
                 metadata["importance"] = "medium"
-                metadata.setdefault("tags", []).append("lore")
+                _ensure_list(metadata, "tags")
+                tags = cast(List[str], metadata["tags"])
+                tags.append("lore")
         else:
             metadata["document_type"] = "lore"
             metadata["importance"] = "medium"
@@ -114,15 +146,21 @@ def get_metadata_from_path(filepath):
         if "personality" in filename:
             metadata["document_type"] = "personality"
             metadata["importance"] = "high"
-            metadata.setdefault("tags", []).extend(["shorekeeper", "personality"])
+            _ensure_list(metadata, "tags")
+            tags = cast(List[str], metadata["tags"])
+            tags.extend(["shorekeeper", "personality"])
         elif "backstory" in filename:
             metadata["document_type"] = "backstory"
             metadata["importance"] = "high"
-            metadata.setdefault("tags", []).extend(["shorekeeper", "backstory"])
+            _ensure_list(metadata, "tags")
+            tags = cast(List[str], metadata["tags"])
+            tags.extend(["shorekeeper", "backstory"])
         elif "relationships" in filename:
             metadata["document_type"] = "relationships"
             metadata["importance"] = "medium"
-            metadata.setdefault("tags", []).extend(["shorekeeper", "relationships"])
+            _ensure_list(metadata, "tags")
+            tags = cast(List[str], metadata["tags"])
+            tags.extend(["shorekeeper", "relationships"])
         else:
             metadata["document_type"] = "personalization"
             metadata["importance"] = "medium"
@@ -130,7 +168,9 @@ def get_metadata_from_path(filepath):
     elif parts[0] == "systems":
         metadata["document_type"] = "game_mechanics"
         metadata["importance"] = "medium"
-        metadata.setdefault("tags", []).extend(["systems", "mechanics"])
+        _ensure_list(metadata, "tags")
+        tags = cast(List[str], metadata["tags"])
+        tags.extend(["systems", "mechanics"])
 
     else:
         metadata["document_type"] = "unknown"

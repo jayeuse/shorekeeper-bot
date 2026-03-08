@@ -1,4 +1,7 @@
-def log_response(msg, user_content, model, response, elapsed, rag_duration=0, llm_duration=0):
+from typing import Any
+
+
+def log_response(msg: Any, user_content: str, model: str, response: dict, elapsed: float, rag_duration: float = 0.0, llm_duration: float = 0.0) -> None:
     reply_content = response["message"]["content"]
 
     prompt_tokens = response.get("prompt_eval_count", 0)
