@@ -1,8 +1,32 @@
 # Knowledge File Format Guide
 
-This guide is the **definitive formatting reference** for every file within `@knowledge/characters/` and `@knowledge/lore/`. Following these rules ensures the RAG system can chunk, embed, and retrieve knowledge accurately and consistently.
+This guide is the general formatting reference for the entire `knowledge/` folder. Following these rules ensures the RAG system can chunk, embed, and retrieve knowledge accurately and consistently.
 
-> **Scope:** This guide covers `characters/` and `lore/` only. The `personalization/` directory has its own conventions and is excluded.
+> **Scope:** This guide covers shared rules used across `characters/` and `lore/`. For file-type-specific templates, use the specialized guides in `knowledge/references/`.
+
+---
+
+## Specialized Guides
+
+Use the base guide for universal rules, then use the specialized guide that matches the file family you are editing.
+
+| Guide | Purpose |
+|-------|---------|
+| `FORMAT_GUIDE.md` | Shared RAG, frontmatter, naming, and source-policy rules for the whole knowledge folder |
+| `CHARACTER_FORMAT_GUIDE.md` | Detailed structure for `*_character.md`, `*_kit.md`, and `*_story.md` files |
+| `REGION_FORMAT_GUIDE.md` | Detailed structure for regional lore, territory, and quest files |
+
+---
+
+## Knowledge Folder Scope
+
+```
+knowledge/
+├── characters/       (character profiles, kits, and stories)
+├── lore/             (regions, places, quests, world lore)
+├── personalization/  (persona-specific writing, excluded from this guide)
+└── references/       (reference docs and formatting guides, excluded from RAG)
+```
 
 ---
 
@@ -113,455 +137,12 @@ These rules apply to **all** knowledge files (characters and lore).
 
 ---
 
-## Voice Actor Reference
+## Writing Guide by File Family
 
-The file `knowledge/characters/voice_actors.txt` is the **single source of truth** for all voice actor data. It is a pipe-delimited table covering EN, CN, JP, and KR voice actors for every character.
+Use the specialized guides below for the detailed file templates:
 
-- Character files MUST cross-reference this file for accuracy.
-- Include only the 4-language entries in each character's Basic Information section; do not duplicate the full table.
-- Format in character files:
-  ```
-  - **Voice Actors:**
-    - **JP:** <Name> (<Kanji>)
-    - **EN:** <Name>
-    - **CN:** <Name> (<Chinese Characters>)
-    - **KR:** <Name> (<Hangul>)
-  ```
-
----
-
-## Character File Directory Structure
-
-Each character lives in its own folder inside the appropriate character group directory:
-
-```
-knowledge/characters/
-├── voice_actors.txt                    (master VA reference)
-├── <group>_characters/                 (e.g., ragunna_characters/)
-│   └── <character_name>/
-│       ├── <name>_character.md
-│       ├── <name>_kit.md
-│       └── <name>_story.md
-```
-
-Every character folder contains exactly three files. The naming convention is `<lowercase_name>_<type>.md`.
-
----
-
-## Character File: `<name>_character.md`
-
-This file covers identity, appearance, personality, and relationships. All sections below are **required** unless marked optional.
-
-### Required Sections (in order)
-
-**H1 Title:**
-
-```
-# <Name> — Character Documentation
-<!-- Sources: url1, url2 -->
-```
-
-**Section 1 — Basic Information:**
-
-```
-## <Name> Profile: Basic Information
-- **Name:** <Name> (Chinese: <characters>, <pinyin>)
-- **Alias / Title:** <titles, separated by semicolons>
-- **Identity:** <one-line ontological description>
-- **Affiliation:** <organization or group>
-- **Birthplace / Origin:** <location>
-- **Release Version:** Wuthering Waves Version X.X
-- **Rarity:** 5-Star / 4-Star
-- **Element:** <element>
-- **Weapon Type:** <weapon>
-- **Voice Actors:**
-  - **JP:** <Name> (<Kanji>)
-  - **EN:** <Name>
-  - **CN:** <Name> (<Chinese>)
-  - **KR:** <Name> (<Hangul>)
-```
-
-**Section 2 — Ontological Overview:**
-
-```
-## <Name> Profile: Ontological Overview
-```
-
-1–3 paragraphs describing who they are in the world — their nature, role, and significance.
-
-**Section 3 — Appearance Design:**
-
-```
-## <Name> — Character/Appearance Design
-```
-
-Visual description: hair, eyes, outfit, color palette, dominant motifs, and design philosophy.
-
-**Section 4 — Psychological Profile:**
-
-```
-## <Name>: Psychological Profile
-```
-
-Personality analysis organized with **bolded trait headers** (e.g., `**Composure Under Pressure**`), each followed by explanatory text.
-
-**Section 5 — Relationships:**
-
-```
-## <Name>: Relationships
-```
-
-Grouped by person. Each relationship starts with a **bold name header** (e.g., `**Rover (Protagonist)**`) followed by the relationship description.
-
-**Section 6 — Sources:**
-
-```
-## <Name>: Sources
-- <Source Name> — <URL>
-- <Source Name> — <URL>
-```
-
----
-
-## Character File: `<name>_kit.md`
-
-This file covers combat mechanics, abilities, stats, materials, and build recommendations. All sections below are **required** unless marked optional.
-
-### Required Sections (in order)
-
-**H1 Title:**
-
-```
-# <Name> Kit Documentation
-<!-- Sources: url1, url2 -->
-```
-
-**Section 1 — Combat Archetype and Role:**
-
-```
-## <Name>: Combat Archetype and Role
-- **Element/Attribute:** <element>
-- **Weapon Type:** <weapon>
-- **Role:** <role description — e.g., "Main DPS — ranged hypercarry dealing heavy Resonance Skill burst damage">
-```
-
-**Section 2 — Key Resources:**
-
-```
-## <Name>: Key Resources (Forte Mechanics Overview)
-```
-
-Brief explanation of the character's unique resource systems and how they interact.
-
-**Section 3 — Forte Circuit Details:**
-
-```
-## <Name> Forte Circuit: <Resource Name(s)>
-```
-
-Detailed breakdown of the Forte system: resource generation, consumption, thresholds, and state transitions. Include numerical values.
-
-**Section 4 — Stats Baseline:**
-
-```
-## <Name>: Stats Baseline
-```
-
-Table of base stats at key levels (Lv. 1, Lv. 90, etc.). Use a Markdown table.
-
-**Section 5 — Ascension Materials:**
-
-```
-## <Name>: Ascension Materials
-```
-
-Table of materials required per ascension level.
-
-**Section 6 — Basic Attack:**
-
-```
-## <Name>: Character Kit: Basic Attack — <Attack Name>
-```
-
-Attack chain breakdown with stage-by-stage multipliers and mechanics.
-
-**Section 7 — Resonance Skill:**
-
-```
-## <Name>: Character Kit: Resonance Skill — <Skill Name>
-```
-
-Skill mechanics, cooldowns, damage multipliers, and conditional effects.
-
-**Section 8 — Resonance Liberation:**
-
-```
-## <Name>: Character Kit: Resonance Liberation — <Liberation Name>
-```
-
-Liberation mechanics, activation conditions, damage multipliers, and state changes.
-
-**Section 9 — Inherent Passives:**
-
-```
-## <Name>: Inherent Passives
-```
-
-Each passive described with trigger conditions, effects, and numerical values.
-
-**Section 10 — Intro/Outro Skills:**
-
-```
-## <Name>: Intro/Outro Skills
-```
-
-Transition skill descriptions with damage values and utility effects.
-
-**Section 11 — Skill Upgrade Materials:**
-
-```
-## <Name>: Skill Upgrade Materials
-```
-
-Table of level-up materials per skill tier.
-
-**Section 12 — Resonance Chains:**
-
-```
-## <Name>: Resonance Chains (Sequences)
-```
-
-S1 through S6 descriptions with effects, numerical values, and evaluation of each sequence's impact.
-
-**Section 13 — Recommended Echo Sets:**
-
-```
-## <Name>: Recommended Echo Sets
-```
-
-Best Echo set combinations with reasoning, main stat and sub-stat priorities.
-
-**Section 14 — Best Weapon:**
-
-```
-## <Name>: Best Weapon
-```
-
-Weapon recommendations (signature + alternatives) with reasoning and comparisons.
-
-**Section 15 — Best Teams:**
-
-```
-## <Name>: Best Teams
-```
-
-Team compositions with role explanations for each slot and rotation notes.
-
-**Section 16 — DPS Benchmarks (optional but recommended):**
-
-```
-## <Name>: DPS Benchmarks
-```
-
-Damage benchmarks, rotation DPS calculations, and comparisons to similar characters. Include investment levels where applicable.
-
-**Section 17 — Sources:**
-
-```
-## <Name>: Sources
-- <Source Name> — <URL>
-```
-
----
-
-## Character File: `<name>_story.md`
-
-This file covers narrative content, backstory, personality analysis, and lore items. Sections marked optional should be included when data is available.
-
-### Required Sections (in order)
-
-**H1 Title:**
-
-```
-# <Name> Story Documentation
-<!-- Sources: url1, url2 -->
-```
-
-**Section 1 — Official Introduction:**
-
-```
-## <Name> Official Introduction
-```
-
-Official description from the website/banner introduction. Use italics for direct quotes.
-
-**Section 2 — Personality:**
-
-```
-## <Name> Personality
-```
-
-Analytical personality description — deeper than the character.md profile, focused on narrative characterization.
-
-**Section 3 — Forte Examination Report:**
-
-```
-## <Name> Forte Examination Report
-```
-
-Summarized findings from the in-game Forte Examination Report, including Resonance metrics and anomalies.
-
-**Section 4 — Character Stories:**
-Each sub-story gets its **own** `## ` heading — do NOT nest under a single parent heading:
-
-```
-## <Name> Character Story I: "<Title>"
-## <Name> Character Story II: "<Title>"
-## <Name> Character Story III: "<Title>"
-```
-
-Include in-game text (italicized) followed by analysis/context.
-
-**Section 5 — Cherished Items:**
-
-```
-## <Name>: Cherished Items
-```
-
-Item name, description, and significance to the character.
-
-**Section 6 — Favorite/Disliked Food:**
-
-```
-## <Name>: Favorite/Disliked Food
-```
-
-Food preferences with in-game reasoning.
-
-**Section 7 — Ideals:**
-
-```
-## <Name>: Ideals
-```
-
-Categorized ideals (Passion, Resonance, Gratitude, etc.) with descriptions.
-
-**Section 8 — Narrative Chronicle:**
-
-```
-## <Name>: Narrative Chronicle
-```
-
-Chronological timeline of key events in the character's life.
-
-**Section 9 — Sources:**
-
-```
-## <Name>: Sources
-- <Source Name> — <URL>
-```
-
----
-
-## Lore File Directory Structure
-
-```
-knowledge/lore/
-├── history.md                          (global timeline)
-├── world.md                            (world overview)
-└── regions/
-    └── <region_name>/                  (e.g., rinascita/)
-        ├── <region>_story.md           (history, politics, culture)
-        ├── <region>_places.md          (geography, locations)
-        ├── <city_name>/               (e.g., ragunna/, septimont/)
-        │   ├── <city>_story.md
-        │   └── <city>_territories.md
-        └── quests/
-            ├── main_quests/
-            │   ├── <region>_mq_<chapter_id>.md           (chapter overview)
-            │   ├── <region>_mq_<id>_prologue.md
-            │   ├── <region>_mq_<id>_act<NN>.md           (per-act files)
-            │   ├── <region>_mq_<id>_themes.md            (thematic analysis)
-            │   ├── <region>_mq_seg<NN>.md                (segments)
-            │   └── <region>_mq_seg<NN>_ic<NN>.md         (interludes)
-            ├── side_quests/
-            ├── companion_quests/
-            └── exploration_quests/
-```
-
----
-
-## Lore: Regional Story and Places Files
-
-These files document the history, culture, geography, and locations of a region or city.
-
-**H1 Title:**
-
-```
-# <Region> - <Topic>
-```
-
-For example: `# Rinascita - History and Story` or `# Rinascita - Places and Locations`
-
-**First section must be:**
-
-```
-## Overview
-```
-
-A 1–3 paragraph summary of the region/topic.
-
-**Subsequent sections:**
-
-- Each `## ` heading covers one distinct topic (a historical era, a location, a cultural tradition, etc.)
-- Use `---` horizontal rules between major thematic groups (e.g., between "Founding Era" sections and "Modern Era" sections)
-- Include region/city name or use clearly contextual headings (e.g., `## The Founding Era`, `## Ragunnan Maritime`, `## The Stormy Sea`)
-
----
-
-## Lore: Quest Files — Act Format
-
-Each main quest act is stored in its own file. The filename convention is:
-
-```
-<region>_mq_<chapter>_act<NN>.md
-```
-
-**Standard `## ` sections for act files (include only those relevant to the act):**
-
-| Section                                | Required?    | Description                                           |
-| -------------------------------------- | ------------ | ----------------------------------------------------- |
-| `## Act <N>: <Title>`                  | **Required** | Act title                                             |
-| `## Act <N>: Synopsis`                 | **Required** | Plot summary                                          |
-| `## Act <N>: Key Revelations`          | **Required** | Major plot reveals (bulleted, bolded labels)          |
-| `## Act <N>: Key Locations`            | **Required** | Locations visited with brief descriptions             |
-| `## Act <N>: Important NPCs`           | **Required** | NPC list with roles and significance                  |
-| `## Act <N>: Combat Encounters`        | Optional     | Boss fights, enemy types, mechanics                   |
-| `## Act <N>: Cultural Elements`        | Optional     | Traditions, customs, or cultural details revealed     |
-| `## Act <N>: Political Landscape`      | Optional     | Power structures, factions, governance details        |
-| `## Act <N>: Political Developments`   | Optional     | Political changes or shifts that occur during the act |
-| `## Act <N>: Thematic Elements`        | Optional     | Recurring themes and motifs                           |
-| `## Act <N>: Character Development`    | Optional     | Character growth and arc progression                  |
-| `## Act <N>: Key Items`                | Optional     | Important items introduced or used                    |
-| `## Act <N>: Relationship Development` | Optional     | Changes in character relationships                    |
-| `## Act <N>: Anomaly Details`          | Optional     | Waveworn/TD anomaly specifics                         |
-| `## Act <N>: Unresolved Questions`     | Optional     | Open plot threads                                     |
-| `## Act <N>: Gameplay Significance`    | Optional     | Rewards, achievements, unlocks                        |
-
----
-
-## Lore: Quest Files — Segment and Interlude Format
-
-Shorter quest files (segments, interludes, prologues) use fewer sections. At minimum:
-
-```
-## <Segment/Prologue Name>: Synopsis
-## <Segment/Prologue Name>: Key Revelations
-## <Segment/Prologue Name>: Key Locations
-## <Segment/Prologue Name>: Important NPCs     (if applicable)
-```
-
-Use the same self-identifying heading prefix pattern (e.g., `## Prologue: Synopsis`).
+- Characters: `knowledge/references/CHARACTER_FORMAT_GUIDE.md`
+- Regions and lore: `knowledge/references/REGION_FORMAT_GUIDE.md`
 
 ---
 
@@ -569,16 +150,15 @@ Use the same self-identifying heading prefix pattern (e.g., `## Prologue: Synops
 
 | File Type          | Heading Pattern                                   | Example                                                            |
 | ------------------ | ------------------------------------------------- | ------------------------------------------------------------------ |
-| `_character.md`    | `## <Name> Profile: <Topic>`                      | `## Carlotta Profile: Basic Information`                           |
-| `_character.md`    | `## <Name>: <Topic>`                              | `## Carlotta: Relationships`                                       |
-| `_character.md`    | `## <Name> — <Topic>`                             | `## Carlotta — Character/Appearance Design`                        |
-| `_kit.md`          | `## <Name>: <Topic>`                              | `## Carlotta: Combat Archetype and Role`                           |
-| `_kit.md`          | `## <Name>: Character Kit: <Skill Type> — <Name>` | `## Carlotta: Character Kit: Resonance Skill — Chromatic Splendor` |
-| `_story.md`        | `## <Name> <Topic>`                               | `## Carlotta Official Introduction`                                |
-| `_story.md`        | `## <Name> Character Story <N>: "<Title>"`        | `## Carlotta Character Story I: "The Night Rain"`                  |
-| Lore regional      | `## <Topic>`                                      | `## The Founding Era`                                              |
-| Lore quest act     | `## Act <N>: <Topic>`                             | `## Act V: Key Revelations`                                        |
-| Lore quest segment | `## <Segment>: <Topic>`                           | `## Prologue: Synopsis`                                            |
+| Character profile  | `## <Name> Profile: <Topic>`                      | `## Carlotta Profile: Basic Information`                           |
+| Character generic  | `## <Name>: <Topic>`                              | `## Carlotta: Relationships`                                       |
+| Character design   | `## <Name> — <Topic>`                             | `## Carlotta — Character/Appearance Design`                        |
+| Story section      | `## <Name> <Topic>`                               | `## Carlotta Official Introduction`                                |
+| Story sub-entry    | `## <Name> Character Story <N>: "<Title>"`        | `## Carlotta Character Story I: "The Night Rain"`                  |
+| Regional lore      | `## <Topic>`                                      | `## The Founding Era`                                              |
+| Territory lore     | `## <Place>: <Sub-Area>`                          | `## Ragunna City: City Square`                                     |
+| Quest act          | `## Act <N>: <Topic>`                             | `## Act V: Key Revelations`                                        |
+| Quest segment      | `## <Segment>: <Topic>`                           | `## Prologue: Synopsis`                                            |
 
 ---
 
@@ -592,3 +172,82 @@ Use the same self-identifying heading prefix pattern (e.g., `## Prologue: Synops
 - ❌ Repeating voice actor data that contradicts `voice_actors.txt` — always cross-reference
 - ❌ Using `---` horizontal rules in character files — reserved for lore files only
 - ❌ Empty `## ` sections with no content — either add content or remove the heading
+
+---
+
+## Cited Sources Registry
+
+This section lists all external websites and sources currently cited across the knowledge base. When adding new files, prefer sourcing from these established sites for consistency. New sources may be added here when first used.
+
+### Official & Primary Game Sources
+
+| Site | URL | Used For |
+|------|-----|----------|
+| Wuthering Waves Fandom Wiki | https://wutheringwaves.fandom.com | Primary source for all character data, lore, backstories, quest details, voicelines |
+| Official Wuthering Waves X/Twitter | https://x.com/Wuthering_Waves | Official character announcements and artwork |
+
+### Build Guides & Meta Analysis
+
+| Site | URL | Used For |
+|------|-----|----------|
+| Prydwen Institute | https://www.prydwen.gg/wuthering-waves | Primary DPS benchmarks, tier list, full build guides |
+| Game8 | https://game8.co/games/Wuthering-Waves | Builds, teams, lore pages, quest walkthroughs |
+| Wuthering.gg | https://wuthering.gg | Character pages, kit details, build info |
+| Wutheringlab | https://wutheringlab.com | Character build guides |
+| LootBar | https://lootbar.gg/blog/en | Build guides, kit and resonance chain analyses |
+| LDShop | https://www.ldshop.gg/blog | Build guides, kit breakdowns |
+| OSLink | https://www.oslink.io/blog | Build guides and kit leak coverage |
+| WutheringWaves-Builds | https://wutheringwaves-builds.com | Build guides, story/voice line aggregation |
+| WuWaLabo | https://wuwalabo.com | Character guides and build recommendations |
+| Pocket Tactics | https://www.pockettactics.com/wuthering-waves | Build guides, lore overviews, release date info |
+| Genshin-Builds (WuWa section) | https://genshin-builds.com/en/wuthering-waves | Story pages, voice lines, team builds |
+| Tacter | https://www.tacter.com/wuthering-waves | Build guides |
+| Theria Games | https://theriagames.com | Ultimate build guides |
+| GladiatorBoost | https://gladiatorboost.com | Build guides |
+| Buffget | https://buffget.com | Team DPS benchmark articles |
+| WuWaCompanion | https://wuwacompanion.com | Character stat databases |
+| MisterMenPlays | https://www.mistermenplays.com/wutheringwaves | Build calculators and guides |
+| WutheringTide | https://www.wutheringtide.com | Character guides |
+| XboxPlay.games | https://xboxplay.games | Resonance chain guides |
+
+### Character Lore & Community Wikis
+
+| Site | URL | Used For |
+|------|-----|----------|
+| Wuthering.wiki | https://wuthering.wiki | Character data pages (stat numbers, story text) |
+| TV Tropes | https://tvtropes.org/pmwiki/pmwiki.php/Characters | Character analysis pages (Black Shores, Rinascita, Septimont, Fractsidus) |
+| VS Battles Wiki | https://vsbattles.fandom.com | Character power level analysis |
+| Villains Wiki | https://villains.fandom.com | Antagonist character pages |
+| Shipping Wiki | https://shipping.fandom.com | Relationship/ship pages |
+| Steam Community | https://steamcommunity.com/app/3513350 | Lore discussions and player guides |
+| Wikipedia | https://en.wikipedia.org/wiki/Wuthering_Waves | General game overview |
+
+### Gaming News & Media
+
+| Site | URL | Used For |
+|------|-----|----------|
+| Sportskeeda | https://www.sportskeeda.com/esports | Resonance chain guides, kit analyses, voiceline articles |
+| GameRant | https://gamerant.com | Build guides, character explainers |
+| GameLeap | https://www.gameleap.com | Build guides, character previews |
+| Pocket Gamer | https://www.pocketgamer.com | Character previews and lore |
+| Destructoid | https://www.destructoid.com | Build guides, weapon stat articles |
+| Dot Esports | https://dotesports.com/wuthering-waves | Character lore explainers |
+| The Gamer | https://www.thegamer.com | Build guides |
+| Game Revolution | https://www.gamerevolution.com | Build guides |
+| DBLTAP | https://www.dbltap.com | Build guides |
+| India Today Gaming | https://www.indiatodaygaming.com | Character profile and lore articles |
+| Esports.gg | https://esports.gg/guides/wuthering-waves | Ascension material guides |
+| ComicBook.com | https://comicbook.com/gaming | Lore analysis articles |
+| InGameNews | https://www.ingamenews.com | Character previews |
+| Joytify | https://www.joytify.com | Kit and build articles |
+| FdayTalk | https://www.fdaytalk.com | Build guides |
+| GuildJen | https://guildjen.com | Character guides |
+| The Illuminate | https://www.theilluminate.com | Resonance chain guides |
+| The Flagship Eclipse | https://www.theflagshipeclipse.com | Lore analysis articles |
+| WutheringWaves.gg | https://wutheringwaves.gg | Character guides |
+
+### Voice Actor Reference
+
+| Site | URL | Used For |
+|------|-----|----------|
+| Behind the Voice Actors | https://www.behindthevoiceactors.com/video-games/Wuthering-Waves | Voice actor verification |

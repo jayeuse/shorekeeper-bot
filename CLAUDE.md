@@ -112,7 +112,7 @@ python commands/update_vectors_with_metadata.py
 
 ## Development Patterns
 
-- **Adding Knowledge**: Add markdown files to appropriate `knowledge/` subdirectory. Include YAML frontmatter (see `knowledge/references/FORMAT_GUIDE.md`). Use `##` headings for automatic chunking.
+- **Adding Knowledge**: Add markdown files to appropriate `knowledge/` subdirectory. Follow shared rules in `knowledge/references/FORMAT_GUIDE.md` and the specialized reference guides in `knowledge/references/` for character or region file structure. Use `##` headings for automatic chunking.
 - **Extending LLM Support**: Add new backend methods in `services/llm.py` following the existing pattern.
 - **Conversation Memory**: History is stored in memory only, reset on bot restart. Modify `conversation_context_limit` in `handlers/conversation_context.py` to adjust.
 - **Response Formatting**: Long messages are split at line breaks or spaces under 2000 chars via `split_message()` in `handlers/message.py`.
@@ -127,6 +127,6 @@ python commands/update_vectors_with_metadata.py
 ## Reference Documentation
 
 - **`ROADMAP.md`**: Planned features and improvements (hot reload, slash commands, reranking)
-- **`knowledge/references/FORMAT_GUIDE.md`**: Definitive formatting rules for knowledge files
+- **`knowledge/references/FORMAT_GUIDE.md`**: Shared formatting rules for all knowledge files; see the specialized guides in the same folder for character and region templates
 - **`commands/add_frontmatter.py`**: Script to add YAML metadata to markdown files
 - **`commands/update_vectors_with_metadata.py`**: Update vector store with new metadata
