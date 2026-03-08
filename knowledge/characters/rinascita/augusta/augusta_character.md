@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/augusta/augusta_character.md
+character: Augusta
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Augusta Character Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki, Augusta/Backstory, TV Tropes (WuWa: Septimont), VS Battles Wiki, Genshin-Builds, Pocket Tactics, GameLeap, Destructoid -->
 

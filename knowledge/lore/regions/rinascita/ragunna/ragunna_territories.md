@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/ragunna/ragunna_territories.md
+region: Rinascita
+document_type: region_territories
+importance: medium
+tags:
+- lore
+- region
+- geography
+---
+
 # Ragunna Territory
 
 ## Ragunna City

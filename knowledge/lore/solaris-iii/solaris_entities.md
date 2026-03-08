@@ -1,3 +1,12 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/solaris-iii/solaris_entities.md
+document_type: lore
+importance: medium
+tags: []
+---
+
 # Solaris-III Lore: Entities
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Tacet_Discord, https://wutheringwaves.fandom.com/wiki/Threnodian, https://wutheringwaves.fandom.com/wiki/Sentinel -->

@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/iuno/iuno_kit.md
+character: Iuno
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Iuno Kit Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki, Prydwen.gg (primary DPS benchmarks), Game8.co, Wutheringlab.com, Wuthering.gg, LootBar.gg, LDShop.gg, Sportskeeda, WuWaLabo, Tacter, OSLink, TheIlluminate -->
 

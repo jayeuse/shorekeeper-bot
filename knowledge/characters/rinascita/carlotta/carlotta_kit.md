@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/carlotta/carlotta_kit.md
+character: Carlotta
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Carlotta Kit Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki, Prydwen.gg (PRIMARY DPS BENCHMARKS), Game8.co, Wutheringlab.com, Wuthering.gg, Pocket Tactics, LootBar.gg, LDShop.gg, Sportskeeda -->
 

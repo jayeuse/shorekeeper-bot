@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/rinascita_places.md
+region: Rinascita
+document_type: region_places
+importance: medium
+tags:
+- lore
+- region
+- geography
+---
+
 # Rinascita - Places and Locations
 
 ## Overview

@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/quests/main_quests/rinascita_mq_ch02_prologue.md
+region: Rinascita
+document_type: quest
+importance: low
+quest_type: prologue
+tags:
+- lore
+- quest
+- rinascita
+---
+
 ## Prologue: Through the Sea Thou Break
 
 ## Prologue: Synopsis

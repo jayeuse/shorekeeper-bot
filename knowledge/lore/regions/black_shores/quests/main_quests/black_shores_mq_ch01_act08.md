@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/quests/main_quests/black_shores_mq_ch01_act08.md
+region: Black Shores
+document_type: quest
+importance: low
+quest_type: act
+tags:
+- lore
+- quest
+- black_shores
+---
+
 # Act VIII: To the Shore's End
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/To_the_Shore%27s_End, https://wutheringwaves.fandom.com/wiki/Hidden_Between_the_Waves, https://game8.co/games/Wuthering-Waves/archives/476327, https://game8.co/games/Wuthering-Waves/archives/476330, https://game8.co/games/Wuthering-Waves/archives/476335, https://wutheringwaves.fandom.com/wiki/Hoda -->

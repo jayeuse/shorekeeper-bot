@@ -1,3 +1,12 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/solaris-iii/solaris_iii.md
+document_type: lore
+importance: medium
+tags: []
+---
+
 # Solaris-III — World Lore Documentation
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Solaris-3, https://wutheringwaves.fandom.com/wiki/The_Lament, https://wutheringwaves.fandom.com/wiki/Timeline -->

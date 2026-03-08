@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/ciaconna/ciaccona_kit.md
+character: Ciaconna
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Ciaccona — Kit & Combat Knowledge File
 
 <!-- Sources: Wuthering Waves Fandom Wiki, Prydwen.gg, Game8.co, Wutheringlab.com, Wuthering.gg, LootBar.gg, WuWaLabo, Sportskeeda -->

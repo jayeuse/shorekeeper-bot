@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/cartethyia/cartethyia_character.md
+character: Cartethyia
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Cartethyia — Character Knowledge File
 
 <!-- RAG-optimized: each ## section is a standalone searchable chunk -->

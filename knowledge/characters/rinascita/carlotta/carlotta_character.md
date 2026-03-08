@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/carlotta/carlotta_character.md
+character: Carlotta
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Carlotta Character Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki, Carlotta/Backstory Wiki, Montelli Family Wiki, Game8, Prydwen, VS Battles Wiki, Pocket Tactics, Genshin-Builds, Sportskeeda, Wuthering.wiki -->
 

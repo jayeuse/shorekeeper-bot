@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/quests/main_quests/rinascita_mq_ch02_act09.md
+region: Rinascita
+document_type: quest
+importance: low
+quest_type: act
+tags:
+- lore
+- quest
+- rinascita
+---
+
 ## Act IX: By Moon's Fated Light
 
 ## Act IX: Synopsis

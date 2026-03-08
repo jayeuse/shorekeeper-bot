@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/carlotta/carlotta_story.md
+character: Carlotta
+group: Rinascita
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Carlotta Story Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki (Carlotta, Carlotta/Backstory, Montelli Family, If On a Rainy Night a Family, Francesco Montelli), Game8, Genshin-Builds, Wuthering.wiki, Sportskeeda -->
 

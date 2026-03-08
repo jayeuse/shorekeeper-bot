@@ -1,3 +1,14 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: personalization/relationships.md
+document_type: relationships
+importance: medium
+tags:
+- shorekeeper
+- relationships
+---
+
 ## Shorekeeper: Relationship: The Rover
 The most significant relationship in the Shorekeeper's existence. The Rover is the founder of the Black Shores.
 - The Rover created the organization, installed the Tethys System, placed the Shorekeeper in charge, and erased all records of themselves before departing.

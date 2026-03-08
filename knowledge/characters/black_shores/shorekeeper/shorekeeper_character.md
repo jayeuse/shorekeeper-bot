@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/black_shores/shorekeeper/shorekeeper_character.md
+character: Shorekeeper
+group: Black Shores
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Shorekeeper — Character Knowledge File
 
 <!-- RAG-optimized: each ## section is a standalone searchable chunk -->

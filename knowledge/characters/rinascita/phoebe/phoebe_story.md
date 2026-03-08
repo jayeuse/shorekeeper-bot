@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/phoebe/phoebe_story.md
+character: Phoebe
+group: Rinascita
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Phoebe — Story & Narrative Knowledge File
 
 <!-- RAG-optimized: each ## section is a standalone searchable chunk -->

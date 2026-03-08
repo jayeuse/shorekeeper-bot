@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/black_shores_story.md
+region: Black Shores
+document_type: region_story
+importance: medium
+tags:
+- lore
+- region
+- story
+---
+
 # Black Shores - History and Story
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/The_Black_Shores, https://wutheringwaves.fandom.com/wiki/Black_Shores_Archipelago, https://wutheringwaves.fandom.com/wiki/Tethys'_Deep, https://wutheringwaves.fandom.com/wiki/Shorekeeper, https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesBlackShores, https://wutheringwaves.fandom.com/wiki/Hidden_Between_the_Waves -->
 

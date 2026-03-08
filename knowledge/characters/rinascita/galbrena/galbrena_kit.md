@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/galbrena/galbrena_kit.md
+character: Galbrena
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Galbrena — Combat Kit & Mechanics
 
 ## Galbrena: Combat Archetype and Role

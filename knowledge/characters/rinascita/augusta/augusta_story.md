@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/augusta/augusta_story.md
+character: Augusta
+group: Rinascita
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Augusta Story Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki (Augusta, Augusta/Backstory, Rust Sword and the Sun, Shadow of Glory), TV Tropes (WuWa: Septimont), VS Battles Wiki, Genshin-Builds Story Page, Pocket Tactics -->
 

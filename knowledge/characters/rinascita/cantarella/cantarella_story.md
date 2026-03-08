@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/cantarella/cantarella_story.md
+character: Cantarella
+group: Rinascita
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Cantarella Story & Lore Knowledge File
 <!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
 

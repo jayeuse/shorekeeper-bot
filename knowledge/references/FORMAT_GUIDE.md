@@ -27,6 +27,71 @@ Files are split on `## ` (H2) headings — each `## ` section becomes a standalo
 
 ---
 
+## YAML Frontmatter Metadata
+
+Every markdown file **MUST** include YAML frontmatter at the beginning of the file to provide metadata for improved RAG search accuracy. The frontmatter is parsed by the RAG system and used for:
+
+- **Importance scoring:** `high`, `medium`, `low` priority for search ranking
+- **Character/region identification:** Automatic filtering and boosting
+- **Tag-based matching:** Additional keyword matching beyond content
+
+### Required Frontmatter Fields
+
+| Field | Required? | Description | Example |
+|-------|-----------|-------------|---------|
+| `version` | Yes | Semantic version of the document | `1.0.0` |
+| `chunk_strategy` | Yes | Chunking method (always `heading_based`) | `heading_based` |
+| `source_file` | Auto-generated | Relative path from `knowledge/` directory | `characters/black_shores/shorekeeper/shorekeeper_kit.md` |
+| `document_type` | Yes | Type of document (see table below) | `character_kit` |
+| `importance` | Yes | Search priority: `high`, `medium`, `low` | `high` |
+| `tags` | Recommended | List of relevant tags | `[character, kit, combat]` |
+
+### Document Type Values
+
+| Category | Document Type | Used For |
+|----------|---------------|----------|
+| Characters | `character_profile` | `*_character.md` files |
+| Characters | `character_kit` | `*_kit.md` files |
+| Characters | `character_story` | `*_story.md` files |
+| Lore | `region_story` | Regional story files |
+| Lore | `region_places` | Geography/location files |
+| Lore | `region_territories` | Territory description files |
+| Lore | `quest` | Quest files (subtypes: `act`, `prologue`, `segment`) |
+| Personalization | `personality` | Personality files |
+| Personalization | `backstory` | Backstory files |
+| Personalization | `relationships` | Relationship files |
+| Systems | `game_mechanics` | Game mechanics files |
+
+### Additional Fields by Document Type
+
+- **Character files:** `character` (character name), `group` (faction/region group)
+- **Lore files:** `region` (region name), `quest_type` (for quest files)
+- **Personalization files:** No additional required fields
+
+### Frontmatter Format
+
+```yaml
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/black_shores/shorekeeper/shorekeeper_kit.md
+character: Shorekeeper
+group: Black Shores
+document_type: character_kit
+importance: high
+tags:
+  - character
+  - kit
+  - combat
+---
+```
+
+**Placement:** The frontmatter must be the **first content** in the file, before the H1 title. Use exactly `---` on its own line as opening and closing delimiter.
+
+**Generation:** Use the `add_frontmatter.py` script to automatically add frontmatter to existing files. Manual editing should maintain consistency with the schema above.
+
+---
+
 ## Universal Formatting Conventions
 
 These rules apply to **all** knowledge files (characters and lore).
@@ -36,6 +101,7 @@ These rules apply to **all** knowledge files (characters and lore).
 | **File naming**      | `lowercase_snake_case.md` — always `.md` extension                                                                                          |
 | **H1 title**         | One per file. Format: `# <Name> — <File Type> Documentation` (characters) or `# <Region> - <Topic>` (lore)                                  |
 | **Sources comment**  | Place `<!-- Sources: url1, url2 -->` or `<!-- RAG-optimized: each ## section is a standalone searchable chunk -->` immediately after the H1 |
+| **YAML frontmatter** | Place YAML frontmatter at the very beginning of the file (before H1). Required for all files. See YAML Frontmatter Metadata section.        |
 | **Heading prefix**   | Every `## ` heading includes the character/topic name for self-identification                                                               |
 | **Horizontal rules** | Use `---` between major thematic groups in **lore files only**. Do not use in character files                                               |
 | **Bold text**        | `**text**` for key terms, stat labels, NPC names, and field labels                                                                          |

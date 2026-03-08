@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/black_shores/chisa/chisa_character.md
+character: Chisa
+group: Black Shores
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Chisa Character Knowledge File
 <!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
 

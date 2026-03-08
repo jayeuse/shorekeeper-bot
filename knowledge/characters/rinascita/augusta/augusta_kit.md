@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/augusta/augusta_kit.md
+character: Augusta
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Augusta Kit Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki, Prydwen.gg, Game8.co, Wutheringlab.com, Wuthering.gg, Destructoid, Sportskeeda, LootBar.gg, DBLTap, WuWaCompanion, FdayTalk -->
 

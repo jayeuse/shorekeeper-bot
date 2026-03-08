@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/quests/main_quests/black_shores_mq_ch01_act07.md
+region: Black Shores
+document_type: quest
+importance: low
+quest_type: act
+tags:
+- lore
+- quest
+- black_shores
+---
+
 # Act VII: Thaw of Eons
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Thaw_of_Eons, https://game8.co/games/Wuthering-Waves/archives/459842, https://wutheringwaves.fandom.com/wiki/Ju%C3%A9 -->

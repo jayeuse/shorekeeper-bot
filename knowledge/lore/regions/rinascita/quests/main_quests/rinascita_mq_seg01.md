@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/quests/main_quests/rinascita_mq_seg01.md
+region: Rinascita
+document_type: quest
+importance: low
+quest_type: segment
+tags:
+- lore
+- quest
+- rinascita
+---
+
 ## Segue: Rust, Sword and the Sun
 
 While waiting for an audience with Ephor Augusta at the Solis Tavern, the Rover and Abby encounter Nestor, a blind bard. Nestor offers to recount the "Epic of the Blazing Sun," the origin story of Augusta. Instead of merely listening, the Rover delves into the "script" of history, roleplaying as a young Augusta to experience her rise from a war-torn refugee to the ruler of Septimont.

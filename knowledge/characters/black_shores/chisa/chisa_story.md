@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/black_shores/chisa/chisa_story.md
+character: Chisa
+group: Black Shores
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Chisa Story & Lore Knowledge File
 <!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
 

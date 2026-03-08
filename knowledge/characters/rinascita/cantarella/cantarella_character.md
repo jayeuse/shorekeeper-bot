@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/cantarella/cantarella_character.md
+character: Cantarella
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Cantarella Character Knowledge File
 <!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
 

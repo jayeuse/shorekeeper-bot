@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/quests/main_quests/rinascita_mq_seg03.md
+region: Rinascita
+document_type: quest
+importance: low
+quest_type: segment
+tags:
+- lore
+- quest
+- rinascita
+---
+
 # Segue: Flowing Starlight in the Iris
 
 > **Note:** The content for this Segue has been moved to the Black Shores lore directory, as it takes place in that region.

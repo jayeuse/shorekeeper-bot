@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/rinascita/septimont/septimont_territories.md
+region: Rinascita
+document_type: region_territories
+importance: medium
+tags:
+- lore
+- region
+- geography
+---
+
 ## Septimont Territory
 
 ## Septimont

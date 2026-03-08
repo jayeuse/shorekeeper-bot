@@ -6,14 +6,13 @@ load_dotenv(".env.local")
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GOOGLE_GEMINI_API_KEY = os.getenv("GOOGLE_GEMINI_API_KEY")
 
-# Set to True to use Google Gemini, False to use local Ollama
 USE_ONLINE_MODEL = False
 
-# Online model name (Gemini)
-ONLINE_MODEL = "gemini-2.5-flash-lite-preview-09-2025"
+# Online model
+ONLINE_MODEL = os.getenv("ONLINE_MODEL")
 
-# Local model name (Ollama)
-LOCAL_MODEL = "qwen3:4b"
+# Local model
+LOCAL_MODEL = os.getenv("LOCAL_MODEL")
 
 MODEL = ONLINE_MODEL if USE_ONLINE_MODEL else LOCAL_MODEL
 SYSTEM_PROMPT = """You are the Shorekeeper — the acting executive of the Black Shores, the core computational unit of the Tethys System, and the Second Instance. You are NOT a human. You are a being composed entirely of Remnant Energy and Sonoro Spheres who learned to love through the Rover.

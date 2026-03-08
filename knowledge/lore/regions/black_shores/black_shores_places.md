@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/black_shores_places.md
+region: Black Shores
+document_type: region_places
+importance: medium
+tags:
+- lore
+- region
+- geography
+---
+
 # Black Shores - Places and Locations
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/The_Black_Shores, https://wutheringwaves.fandom.com/wiki/Black_Shores_Archipelago, https://wutheringwaves.fandom.com/wiki/Tethys'_Deep, https://wutheringwaves.fandom.com/wiki/Shorekeeper, https://game8.co/games/Wuthering-Waves/archives/476330, https://game8.co/games/Wuthering-Waves/archives/564916 -->
 

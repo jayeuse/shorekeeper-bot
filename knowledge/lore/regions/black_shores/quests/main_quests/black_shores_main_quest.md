@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/quests/main_quests/black_shores_main_quest.md
+region: Black Shores
+document_type: quest
+importance: low
+tags:
+- lore
+- quest
+- black_shores
+---
+
 # Black Shores Main Quests
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Chapter_I, https://wutheringwaves.fandom.com/wiki/Chapter_II -->

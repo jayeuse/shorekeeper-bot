@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/ciaconna/ciaccona_character.md
+character: Ciaconna
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Ciaccona — Character Profile Knowledge File
 
 <!-- Sources: Wuthering Waves Fandom Wiki, Ciaccona/Backstory Wiki, Prydwen.gg, Game8.co, Wuthering.gg, Pocket Tactics, LootBar.gg, Sportskeeda, WuWaLabo -->

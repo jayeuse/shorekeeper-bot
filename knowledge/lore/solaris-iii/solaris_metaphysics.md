@@ -1,3 +1,12 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/solaris-iii/solaris_metaphysics.md
+document_type: lore
+importance: medium
+tags: []
+---
+
 # Solaris-III Lore: Metaphysics and Phenomena
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/The_Lament, https://wutheringwaves.fandom.com/wiki/Waveworn_Phenomenon, https://wutheringwaves.fandom.com/wiki/Etheric_Sea, https://wutheringwaves.fandom.com/wiki/Remnant, https://wutheringwaves.fandom.com/wiki/Resonator -->

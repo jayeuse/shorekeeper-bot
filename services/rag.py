@@ -4,6 +4,14 @@ import json
 import numpy as np
 import ollama
 
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    yaml = None
+    YAML_AVAILABLE = False
+    print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
+
 KNOWLEDGE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge")
 STORE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "vectors.json")
 EMBED_MODEL = "nomic-embed-text"
@@ -30,6 +38,35 @@ def _extract_label(source):
     return name.replace("_", " ").title()
 
 
+def parse_frontmatter(content):
+    """Parse YAML frontmatter from markdown content.
+
+    Returns:
+        tuple: (metadata_dict, remaining_content)
+    """
+    if not YAML_AVAILABLE:
+        return {}, content
+
+    # Check for frontmatter delimiter at start
+    if not content.startswith("---\n"):
+        return {}, content
+
+    # Find the second delimiter
+    end_delim = content.find("\n---\n", 4)  # Skip first "---\n"
+    if end_delim == -1:
+        return {}, content
+
+    frontmatter_text = content[4:end_delim]  # Between first and second delimiters
+    remaining = content[end_delim + 5:]  # After "\n---\n"
+
+    try:
+        metadata = yaml.safe_load(frontmatter_text) or {}
+    except Exception:
+        metadata = {}
+
+    return metadata, remaining
+
+
 def load_knowledge():
     chunks = []
 
@@ -47,16 +84,19 @@ def load_knowledge():
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            file_chunks = chunk_by_heading(content, source=rel_path)
+            metadata, remaining_content = parse_frontmatter(content)
+            file_chunks = chunk_by_heading(remaining_content, source=rel_path, metadata=metadata)
             chunks.extend(file_chunks)
 
     return chunks
 
 
-def chunk_by_heading(text, source=""):
+def chunk_by_heading(text, source="", metadata=None):
     sections = re.split(r"(?=^## )", text, flags=re.MULTILINE)
     chunks = []
     label = _extract_label(source)
+    if metadata is None:
+        metadata = {}
 
     for section in sections:
         section = section.strip()
@@ -79,6 +119,7 @@ def chunk_by_heading(text, source=""):
             "source": source,
             "heading": heading,
             "label": label,
+            "metadata": metadata,
         })
 
     return chunks
@@ -149,6 +190,13 @@ class RAG:
             keyword_score = self._keyword_boost(query_words, chunk)
             combined = (0.7 * semantic_score) + (0.3 * keyword_score)
 
+            # Importance boost from metadata
+            importance = chunk.get("metadata", {}).get("importance", "medium")
+            if importance == "high":
+                combined *= 1.1
+            elif importance == "low":
+                combined *= 0.9
+
             scored.append((combined, semantic_score, keyword_score, chunk))
 
         scored.sort(key=lambda x: x[0], reverse=True)
@@ -159,6 +207,7 @@ class RAG:
                 "source": chunk["source"],
                 "heading": chunk["heading"],
                 "score": float(combined),
+                "metadata": chunk.get("metadata", {}),
             }
             for combined, _, _, chunk in scored[:top_k]
         ]
@@ -189,6 +238,7 @@ class RAG:
         text = chunk["text"].lower()
         source = chunk["source"].lower()
         label = chunk.get("label", "").lower()
+        metadata = chunk.get("metadata", {})
 
         stopwords = {
             "what", "who", "how", "why", "when", "where", "which",
@@ -218,5 +268,29 @@ class RAG:
             # Text body match — weaker but still useful
             elif stem in text:
                 score += 0.1
+
+            # Metadata field matches
+            if metadata:
+                # Character name match
+                char_name = metadata.get("character", "").lower()
+                if char_name and stem in char_name:
+                    score += 0.3
+
+                # Region match
+                region = metadata.get("region", "").lower()
+                if region and stem in region:
+                    score += 0.3
+
+                # Group match
+                group = metadata.get("group", "").lower()
+                if group and stem in group:
+                    score += 0.3
+
+                # Tags match
+                tags = metadata.get("tags", [])
+                for tag in tags:
+                    if isinstance(tag, str) and stem in tag.lower():
+                        score += 0.2
+                        break
 
         return min(score, 1.0)

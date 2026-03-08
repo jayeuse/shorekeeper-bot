@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/galbrena/galbrena_character.md
+character: Galbrena
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Galbrena — Character Profile
 
 ## Galbrena: Basic Information

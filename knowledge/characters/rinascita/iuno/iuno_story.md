@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/iuno/iuno_story.md
+character: Iuno
+group: Rinascita
+document_type: character_story
+importance: medium
+tags:
+- character
+- story
+- lore
+---
+
 # Iuno Story Documentation
 <!-- Sources: Wuthering Waves Fandom Wiki (Iuno, Iuno/Backstory, Septimont), TV Tropes (WuWa: Septimont), VS Battles Wiki (Iuno), Shipping Wiki (Augiuno), Wutheringwaves-builds (Iuno Story), Pocket Tactics, WuWaLabo -->
 

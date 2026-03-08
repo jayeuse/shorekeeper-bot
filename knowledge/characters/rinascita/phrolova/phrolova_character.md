@@ -1,3 +1,16 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/phrolova/phrolova_character.md
+character: Phrolova
+group: Rinascita
+document_type: character_profile
+importance: medium
+tags:
+- character
+- profile
+---
+
 # Phrolova Character Documentation
 
 <!-- Sources: Wuthering Waves Fandom Wiki, Villains Wiki (Fandom), Game8, TV Tropes, Steam Community, Wuthering Waves Wikipedia -->

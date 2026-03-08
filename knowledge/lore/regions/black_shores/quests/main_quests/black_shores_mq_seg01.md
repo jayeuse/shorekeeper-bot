@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/quests/main_quests/black_shores_mq_seg01.md
+region: Black Shores
+document_type: quest
+importance: low
+quest_type: segment
+tags:
+- lore
+- quest
+- black_shores
+---
+
 # Segue: Flowing Starlight in the Iris
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Flowing_Starlight_in_the_Iris, https://game8.co/games/Wuthering-Waves/archives/564931 -->

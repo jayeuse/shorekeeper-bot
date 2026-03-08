@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/rinascita/cartethyia/cartethyia_kit.md
+character: Cartethyia
+group: Rinascita
+document_type: character_kit
+importance: high
+tags:
+- character
+- kit
+- combat
+---
+
 # Cartethyia Kit & Mechanics Knowledge File
 <!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
 

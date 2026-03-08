@@ -1,3 +1,12 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/solaris-iii/solaris_factions.md
+document_type: lore
+importance: medium
+tags: []
+---
+
 # Solaris-III Lore: Nations and Factions
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Huanglong, https://wutheringwaves.fandom.com/wiki/New_Federation, https://wutheringwaves.fandom.com/wiki/Fractsidus -->

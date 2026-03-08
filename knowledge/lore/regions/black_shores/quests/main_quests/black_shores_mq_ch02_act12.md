@@ -1,3 +1,17 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: lore/regions/black_shores/quests/main_quests/black_shores_mq_ch02_act12.md
+region: Black Shores
+document_type: quest
+importance: low
+quest_type: act
+tags:
+- lore
+- quest
+- black_shores
+---
+
 # Act XII: Stagnant Dawn on Wastelands
 
 <!-- Sources: https://wutheringwaves.fandom.com/wiki/Stagnant_Dawn_on_Wastelands, https://game8.co/games/Wuthering-Waves/archives/564916, https://wutheringwaves.fandom.com/wiki/Version/2.8 -->
