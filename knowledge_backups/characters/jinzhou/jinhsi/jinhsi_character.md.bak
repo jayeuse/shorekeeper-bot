@@ -1,0 +1,50 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jinhsi/jinhsi_character.md
+character: Jinhsi
+group: Huanglong / Jinzhou
+document_type: character_profile
+importance: high
+tags:
+  - character
+  - spectro
+  - broadblade
+  - magistrate
+  - jinzhou
+  - sentinel
+---
+
+# Jinhsi — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Jinhsi, https://wutheringwaves.fandom.com/wiki/Jinhsi/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/jinhsi/info, https://www.sportskeeda.com/esports/jinhsi-va-wuthering-waves-english-japanese-voice-actors -->
+
+## Jinhsi Profile: Basic Information
+
+- **Full Name:** Jinhsi (Chinese: 今汐)
+- **Aliases:** Magistrate of Jinzhou; Sentinel's Appointed Resonator; "Young Magistrate"
+- **Identity:** Congenital Resonator; Appointed Resonator of Sentinel Jué
+- **Affiliation:** Jinzhou City Hall; Huanglong
+- **Birthplace:** Jinzhou
+- **Version Added:** 1.1 (playable); appeared in main story Version 1.0
+- **Rarity:** 5-Star
+- **Element:** Spectro
+- **Weapon:** Broadblade
+
+Voice Actors:
+
+| Language | Voice Actor |
+|----------|-------------|
+| **JP** | Aoyama Yoshino |
+| **EN** | Anna Devlin |
+| **CN** | Jian Yue |
+| **KR** | Park Hyajin |
+
+## Jinhsi Profile: Ontological Overview
+
+Jinhsi stands as the young Magistrate of Jinzhou — the civic and spiritual heart of the Huanglong region — wielding both institutional authority and the profound burden of being Sentinel Jué's Appointed Resonator since birth. This dual role places her at the intersection of mortal governance and transcendent duty: she must administer the daily affairs of a city scarred by the Lament while also acting as a living conduit to one of the world's most powerful Sentinels.
+
+As a Congenital Resonator, Jinhsi's awakening predates conscious memory. Her resonance with Sentinel Jué — shaped like a celestial Loong — manifests physically: crystalline formations resembling Loong horns materialize above her head when she draws on her abilities. This connection grants her the capacity to project holographic likenesses of the Sentinel itself, channeling power approaching the Sentinel's own scale, with the theoretical apex of her ability hinting at time-shifting.
+
+Jinhsi's core challenge, however, is not merely one of power — it is one of hope. Confronted with a populace worn down by hardship, skepticism, and accumulated grief, she has come to understand that restoring confidence and the will to persist is as vital as any military or logistical victory. She is, in every sense, a figure who carries the future of Jinzhou on her shoulders while quietly shouldering all its grief.
+
+... (file truncated for brevity)

@@ -1,0 +1,33 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jiyan/jiyan_kit.md
+character: Jiyan
+group: Huanglong / Jinzhou
+document_type: character_kit
+importance: high
+tags:
+  - character
+  - kit
+  - combat
+  - aero
+  - broadblade
+  - main-dps
+  - qingloong-mode
+  - heavy-attack
+---
+
+# Jiyan Kit Documentation
+<!-- Sources: https://wuthering.gg/characters/jiyan, https://www.prydwen.gg/wuthering-waves/characters/jiyan/, https://wutheringlab.com/character/jiyan-build/, https://game8.co/games/Wuthering-Waves/archives/454216, https://lootbar.gg/blog/en/wuthering-waves-jiyan-build-guide.html -->
+
+## Jiyan: Combat Archetype and Role
+
+- **Element:** Aero
+- **Weapon Type:** Broadblade
+- **Role:** Main DPS — on-field Qingloong Mode hypercarry
+- **Archetype:** Heavy Attack AoE specialist; Liberation-state sustained damage dealer
+- **Introduced:** Version 1.0 (first limited 5-star banner in Wuthering Waves)
+
+Jiyan is a straightforward but high-reward Main DPS built around a single premise: build Resolve, spend it on his Resonance Liberation, enter **Qingloong Mode**, and deal enormous AoE Aero damage with empowered Heavy Attacks. He has the gentlest learning curve of any 5-star DPS at his release while still offering depth via Resolve management and Intro Skill timing. Approximately 90% of his total damage is generated inside Qingloong Mode. Outside of it, his role is resource accumulation — dealing modest damage and building toward the next Liberation window. He is the first character in Wuthering Waves whose entire combat identity is defined by entering and maximizing a Liberation state.
+
+... (file truncated for brevity)

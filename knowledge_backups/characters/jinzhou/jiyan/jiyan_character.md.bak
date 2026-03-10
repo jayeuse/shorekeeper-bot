@@ -1,0 +1,48 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jiyan/jiyan_character.md
+character: Jiyan
+group: Huanglong / Jinzhou
+document_type: character_profile
+importance: high
+tags:
+  - character
+  - aero
+  - broadblade
+  - midnight-rangers
+  - general
+  - mutant-resonator
+  - jinzhou
+  - huanglong
+---
+
+# Jiyan — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Jiyan, https://genshin-builds.com/en/wuthering-waves/characters/jiyan/info, https://www.prydwen.gg/wuthering-waves/characters/jiyan/, https://www.sportskeeda.com/esports/jiyan-va-wuthering-waves-english-japanese-voice-actors-revealed -->
+
+## Jiyan Profile: Basic Information
+
+- **Full Name:** Jiyan (Chinese: 忌炎)
+- **Aliases:** General of the Midnight Rangers; Qingloong (battlefield honorific); "Windborne Rider" (Forte archive designation)
+- **Identity:** Mutant Resonator; Aero-Aligned; selected by Sentinel Jué as commander of the Midnight Rangers stationed in Jinzhou
+- **Affiliation:** Midnight Rangers, Jinzhou; Huanglong
+- **Birthplace:** Huanglong
+- **Version Added:** Version 1.0 (first limited 5-star banner character in Wuthering Waves)
+- **Rarity:** 5-Star
+- **Element:** Aero
+- **Weapon:** Broadblade
+
+Voice Actors:
+
+| Language | Voice Actor |
+|----------|-------------|
+| **JP** | Ono Yuki (小野友樹) |
+| **EN** | Alex Jordan |
+| **CN** | Sun Ye (孙野) |
+| **KR** | Nam Doh-hyeong (남도형) |
+
+## Jiyan Profile: Ontological Overview
+
+Jiyan is the youngest general in the Midnight Rangers' recorded history — a distinction that encapsulates both the speed of his ascent and the weight it placed on him before he was fully prepared to carry it. He leads the Midnight Rangers from Jinzhou, defending the passes of Huanglong against the unending pressure of Tacet Discord tides, and was specifically selected for this role by Sentinel Jué. This divine endorsement gives him authority that extends beyond institutional rank, though Jiyan himself grounds his command in practical wisdom rather than supernatural mandate.
+
+... (file truncated for brevity)

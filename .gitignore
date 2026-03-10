@@ -9,6 +9,7 @@ env/
 # claude configuration
 .claude/
 /CLAUDE.md
+CLAUDE.md
 
 # Environment variables / secrets
 .env

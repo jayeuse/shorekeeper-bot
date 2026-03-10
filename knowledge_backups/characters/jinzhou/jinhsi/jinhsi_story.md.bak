@@ -1,0 +1,27 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jinhsi/jinhsi_story.md
+character: Jinhsi
+group: Huanglong / Jinzhou
+document_type: character_story
+importance: high
+tags:
+  - character
+  - lore
+  - story
+  - jinzhou
+  - sentinel
+  - spectro
+---
+
+# Jinhsi Story Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Jinhsi/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/jinhsi/info, https://wuthering.gg/characters/jinhsi, https://wutheringwaves.fandom.com/wiki/Jinhsi -->
+
+## Jinhsi Official Introduction
+
+*"Through repeated ages, the Lament has preyed upon mankind's vulnerable hope. Yet, grasping the nettle, she strives with all her might to forge a path toward tomorrow."*
+
+Jinhsi, Magistrate of Jinzhou, is described by official sources as one who *"gently brightens the hopes of her people, like rays of winter sunlight."* As the revered Sentinel's Appointed Resonator, she displays humility and wholeheartedly commits herself to guiding her people toward a brilliant future.
+
+... (file truncated for brevity)

@@ -1,0 +1,28 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jiyan/jiyan_story.md
+character: Jiyan
+group: Huanglong / Jinzhou
+document_type: character_story
+importance: high
+tags:
+  - character
+  - lore
+  - story
+  - jinzhou
+  - aero
+  - midnight-rangers
+  - general
+---
+
+# Jiyan Story Documentation
+<!-- Sources: https://genshin-builds.com/en/wuthering-waves/characters/jiyan/info, https://wutheringwaves.fandom.com/wiki/Jiyan/Backstory, https://wuthering.gg/characters/jiyan, https://wutheringwaves.fandom.com/wiki/Jiyan -->
+
+## Jiyan Official Introduction
+
+*"Jiyan is the General of Midnight Rangers stationed in Jinzhou, embracing strong sense of justice and resolution. Born in a family devoted to medicine, Jiyan is both skilled and attentive. Later, in a bid to fend off the encroaching Tacet Discords, he relinquished his role in medicine and took up arms as a soldier."*
+
+His signature motivational statement, used in official promotional materials and voice lines, is: *"I have never regretted to brave the long night."*
+
+... (file truncated for brevity)

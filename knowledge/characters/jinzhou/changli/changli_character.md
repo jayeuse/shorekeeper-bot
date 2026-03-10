@@ -1,0 +1,109 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/changli/changli_character.md
+character: Changli
+group: Huanglong / Jinzhou
+document_type: character_profile
+importance: high
+tags:
+  - character
+  - fusion
+  - sword
+  - counselor
+  - jinzhou
+  - huanglong
+---
+
+# Changli — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Changli, https://wutheringwaves.fandom.com/wiki/Changli/Backstory, https://wuthering.wiki/character_1205.html, https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesHuanglong -->
+
+## Changli Profile: Basic Information
+
+- **Full Name:** Changli (Chinese: 长离)
+- **Aliases:** Counselor to the Jinzhou Magistrate; Former Secretary-General of the Central Secretariat; "Eternal Blaze" (archive title)
+- **Identity:** Natural Resonator; Fusion-Aligned; Phoenix-archetype Forte
+- **Affiliation:** Jinzhou City Hall (current); Central Secretariat, Mingting (former); Vermillion's Ploy (associated faction)
+- **Birthplace:** Huanglong
+- **Birthday:** June 6th
+- **Version Added:** 1.1 (second half); Banner: Vermillion's Ploy
+- **Rarity:** 5-Star
+- **Element:** Fusion
+- **Weapon:** Sword
+
+Voice Actors:
+
+| Language | Voice Actor |
+|----------|-------------|
+| **JP** | Saitō Chiwa (斎藤千和) |
+| **EN** | Ashleigh Haddad |
+| **CN** | Mufei (沐霏) |
+| **KR** | Shin Nari (신나리) |
+
+## Changli Profile: Ontological Overview
+
+Changli is a former Secretary-General of the Central Secretariat in Mingting, the capital of Huanglong, who now serves as Counselor to Jinzhou Magistrate Jinhsi. She is both Jinhsi's political advisor and her most trusted mentor — the architect behind many of Jinzhou's strategic decisions during the Lament crisis, advising from the shadows long before she steps onto the field herself. For most of the game's first major story arc, Changli exists only as a voice on a call, her full presence withheld until Chapter 1 Act VII — a deliberate narrative choice that makes her first physical appearance hit with significant weight.
+
+Her background is defined by a childhood of uncontrolled fire, poverty, and instinct-driven survival, followed by a self-forged climb through the political hierarchy of Huanglong's capital. Changli is not a character who was given power — she seized it through a combination of perceptive intelligence, strategic patience, and the kind of charisma that can make people walk into their own undoing without realizing it. Now, wielding both political influence and Fusion Resonance shaped like a phoenix's flame, she operates as a force that burns precisely as hot as she chooses — no more, no less.
+
+Her Forte-related overclocking during childhood caused permanent burn marks on her left arm and may have irreversibly shortened her lifespan — a detail that reframes her flame motif from triumph into quiet sacrifice. She burns brightly, and she has always known that burning bright comes at a cost.
+
+## Changli — Character/Appearance Design
+
+Changli's visual design communicates controlled power — every element of her appearance references fire and feathers while maintaining the composed elegance of a senior political official.
+
+- **Hair:** Salmon pink fading to white at the ends, styled in a curled high ponytail arranged to mimic the spread of vermillion phoenix feathers — the design's most immediately recognizable feature
+- **Eyes:** Fiery yellow, wide and sharp; communicate alertness and calculation simultaneously
+- **Left Arm:** The skin of her left arm is covered in feather-shaped burn marks that emit a soft fiery glow — the permanent physical record of her childhood overclocking events; both scar and symbol
+- **Upper Torso Markings:** Faint grey flame-like markings visible on her upper body skin; her Tacet Mark sits just beneath her chest
+- **Base Outfit:** A short white gown layered over a black gown with a black-and-gold neckpiece; together they suggest bureaucratic formality undercut by dangerous elegance
+- **Sleeves:** Long black sleeves with a red diamond-patterned interior; a matching black coattail is tied at the waist, creating movement that suggests fire when she moves
+- **Coattails and Extensions:** Multiple layered coattail extensions bearing fiery patterns, gold accents, and inscribed writing — the complexity of the design reflects the many layers of Changli herself
+- **Jewelry:** Ornate pieces complementing the gold-and-black palette throughout
+- **Forte Transformation:** As she accumulates Enflamement stacks in combat, the outer layer of her outfit progressively burns away — at 4 stacks (full Forte), the outer layer is completely gone and a black blindfold wraps around her eyes; the blindfold motif references her "True Sight" ability and the idea that she sees most clearly when the false surface is stripped away
+- **Color Language:** Black and gold signal authority; vermillion and flame-orange signal danger; the white underlayer signals that something clean and principled remains beneath the burning exterior
+
+Her alternate outfit "Scarlet Sunrise" shifts the palette toward warmer ambers and reds, emphasizing the phoenix quality of her design over the bureaucratic severity of her default.
+
+## Changli: Psychological Profile
+
+**Strategic Intelligence as a Way of Being**
+Changli does not simply use strategy — she experiences the world through a strategic lens at all times. Her archive quote frames existence itself as a game: *"Eons of time on this vast land, all encapsulated in a humble game... I am fortunate to have you as my opponent."* This is not arrogance; it is her authentic mode of perceiving relationship, conflict, and possibility. She enjoys the game sincerely, and she plays it well.
+
+**Composure Forged by Fire**
+Changli's childhood was defined by fire she could not control — a Resonance that ignited without warning, burned others accidentally, and left her unable to be touched safely. This formative experience of dangerous proximity produced a woman who is intensely composed in adulthood, maintains deliberate physical distance from most people, and channels all of that early chaotic energy into controlled, precise output. The composure is not cold — it is the product of tremendous internal effort.
+
+**Calculated Patience**
+She is described officially as "persuasive and patient," and in practice this means she is willing to wait, to plant seeds, to let situations ripen. She does not rush to conclusions or confrontations. Changli corners her enemies not by force but by narrowing their options so gradually they don't notice until the trap closes. This patience extends to her relationships — she built trust with Jinhsi slowly, across years, before becoming her most essential advisor.
+
+**Protective Instinct Behind the Mask**
+For all her political exterior, Changli's motivations trace back to a child who lost her family and decided that no one else in her reach would suffer the same fate if she could prevent it. Her care for Jinhsi is genuine and maternal in its consistency. The official character sources emphasize that those who know her well understand she cares deeply for Jinzhou's people — the political maneuvering is inseparable from that underlying protectiveness.
+
+**The Weight of the Flame**
+Changli's overclocking history is documented: she overcame it, controlled it, but the damage was done. Some sources suggest her lifespan may have been shortened by those early Forte bursts. This knowledge — that her flame burns at a cost to her own future — adds a layer of melancholy beneath her wit and composure. She burns brightly because she has chosen to, knowing what that brightness costs.
+
+**Aversion to Being Touched**
+As a child, Changli could not be safely touched — the uncontrolled fire would burn anyone who reached out to her. Even in adulthood, with full control established, she maintains physical distance from most people out of habit and caution. She will shorten this distance only for those she trusts entirely. This detail grounds all of her interpersonal relationships in a specific texture: she is not cold by preference, but closeness was never safe for her, and that wound runs deep.
+
+## Changli: Relationships
+
+**Jinhsi (Magistrate of Jinzhou)**
+Changli is Jinhsi's mentor, counselor, and one of the few people in Jinzhou who treats her as both a charge to protect and an equal to respect. The relationship is layered: Jinhsi consults Changli on the highest-stakes decisions, while Changli shapes the decisions without overriding the Magistrate's authority. Their Intro/Outro voice lines are mirrored — *"Together we fight" / "Together we vanquish"; "Strike as one!" / "Strike!"* — suggesting a deep coordination that has been rehearsed over years of trust-building.
+
+**Rover (Protagonist)**
+Rover encounters Changli first as a voice on a call with Jinhsi, then as a co-investigator in the Immortal Blaze companion story. In that quest, they enter a Sonoro Sphere transformed into a Mental World infused with Changli's memories, where Rover encounters the young Changli directly. The experience is intimate by the standards of Wuthering Waves' companion stories — Rover witnesses the child Changli trapped in desperate circumstances, which reframes the composed adult as a survivor rather than simply a master strategist.
+
+**Changqing (Bookstore Owner)**
+A figure from Changli's backstory who showed her a defining act of quiet kindness during her most difficult years. Changli — as a small, impoverished child who had burned books she couldn't afford — scraped together all her Shell Credits to repay him and beg for access to what she needed. He accepted her apology without conditions and gave her a lamp and spare key to his store. Years later, when Changli had risen to influence, she anonymously renovated his bookstore overnight — the vermillion feather pattern on the unsigned note the only hint of who had done it. This relationship illuminates the quieter, more generous side of her character that the political exterior usually conceals.
+
+**Central Secretariat (Former Colleagues)**
+As Former Secretary-General of the Central Secretariat in Mingting, Changli spent years in the capital's highest political circles. The circumstances of her departure and transition to serving Jinhsi in Jinzhou are not fully elaborated in available sources, but the shift from national capital to a regional city suggests a deliberate choice — possibly one informed by conviction about where the real work of protection needed to happen.
+
+## Changli: Sources
+
+- Wuthering Waves Fandom Wiki — Changli main page: https://wutheringwaves.fandom.com/wiki/Changli
+- Wuthering Waves Fandom Wiki — Changli Backstory: https://wutheringwaves.fandom.com/wiki/Changli/Backstory
+- Wuthering.wiki — Changli character data page: https://wuthering.wiki/character_1205.html
+- TV Tropes — Wuthering Waves Huanglong character page: https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesHuanglong
+- Sportskeeda — Changli companion story guide: https://www.sportskeeda.com/esports/wuthering-waves-changli-companion-story-immortal-blaze-guide
+- Game8 — Changli profile and build guide: https://game8.co/games/Wuthering-Waves/archives/452826

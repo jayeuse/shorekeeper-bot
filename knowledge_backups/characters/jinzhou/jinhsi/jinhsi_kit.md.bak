@@ -1,0 +1,31 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/jinhsi/jinhsi_kit.md
+character: Jinhsi
+group: Huanglong / Jinzhou
+document_type: character_kit
+importance: high
+tags:
+  - character
+  - kit
+  - combat
+  - spectro
+  - broadblade
+  - main-dps
+---
+
+# Jinhsi Kit Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Jinhsi, https://wuthering.gg/characters/jinhsi, https://www.prydwen.gg/wuthering-waves/characters/jinhsi/, https://game8.co/games/Wuthering-Waves/archives/455405, https://wutheringlab.com/character/jinhsi-build/ -->
+
+## Jinhsi: Combat Archetype and Role
+
+- **Element:** Spectro
+- **Weapon Type:** Broadblade
+- **Role:** Main DPS — aerial burst hypercarry
+- **Archetype:** Incarnation-state combatant; Resonance Skill nuke specialist
+- **Introduced:** Version 1.1 (first dedicated Spectro Main DPS in the game)
+
+Jinhsi is an on-field Main DPS whose entire kit is built around a two-phase combat loop: building resources on the ground, then entering the airborne **Incarnation** state where her enhanced Basic Attacks and Resonance Skill variants deal the bulk of her damage. Her primary damage source is the final Resonance Skill variant **Illuminous Epiphany**, which consumes her Forte resource (Incandescence) for a massive multiplier burst. She requires team members with Coordinated Attacks to charge her gauge efficiently and excels in quickswap compositions that trigger free Intro/Outro swaps via the **Unison** mechanic.
+
+... (file truncated for brevity)

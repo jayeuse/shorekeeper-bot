@@ -11,8 +11,9 @@ import yaml
 from pathlib import Path
 from typing import Any, Dict, List, cast
 
-KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
-BACKUP_DIR = Path(__file__).parent / "knowledge_backups"
+REPO_ROOT = Path(__file__).parent.parent
+KNOWLEDGE_DIR = REPO_ROOT / "knowledge"
+BACKUP_DIR = REPO_ROOT / "knowledge_backups"
 EXCLUDE_DIRS = {"references", ".git", "__pycache__"}
 
 

@@ -1,0 +1,104 @@
+---
+version: 1.0.0
+chunk_strategy: heading_based
+source_file: characters/jinzhou/changli/changli_kit.md
+character: Changli
+group: Huanglong / Jinzhou
+document_type: character_kit
+importance: high
+tags:
+  - character
+  - kit
+  - combat
+  - fusion
+  - sword
+  - main-dps
+  - sub-dps
+  - swap-cancel
+---
+
+# Changli Kit Documentation
+<!-- Sources: https://wuthering.wiki/character_1205.html, https://www.prydwen.gg/wuthering-waves/characters/changli/, https://wutheringlab.com/character/changli-build/, https://game8.co/games/Wuthering-Waves/archives/452826, https://game8.co/games/Wuthering-Waves/archives/504464 -->
+
+## Changli: Combat Archetype and Role
+
+- **Element:** Fusion
+- **Weapon Type:** Sword
+- **Role:** Main DPS or Sub-DPS — dual-threat hybrid
+- **Archetype:** Skill-intensive swap-cancel specialist; True Sight state combatant
+- **Introduced:** Version 1.1 (second half); second Fusion Main DPS in the game
+
+Changli is Wuthering Waves' highest skill-ceiling character as of her release window. Her kit revolves entirely around entering the **True Sight** state and consuming it via enhanced Basic Attacks (**Conquest** or **Charge**) to build **Enflamement** stacks, which then unlock her primary burst: **Heavy Attack: Flaming Sacrifice**. At baseline she is a capable Main DPS without special optimization, but she rewards swap-canceling — a high-execution technique that chains her True Sight attacks into rapid Concerto Energy generation — with dramatically higher damage output than most characters in the game. Her Outro Skill also provides a potent 20% Fusion DMG + 25% Resonance Liberation DMG buff to the next character, making her equally functional as a high-damage buffer in Double DPS compositions.
+
+## Changli: Key Resources (Forte Mechanics Overview)
+
+Changli's Forte Circuit is centered on two interacting systems: **True Sight** (the temporary combat state that enables her Resonance Skill variant attacks) and **Enflamement** (the stacking resource that gates access to her main damage move). Both systems must be understood together to play her correctly.
+
+- **True Sight** is a 12-second state activated by four different triggers: Resonance Skill, Intro Skill, Ground Basic Attack Stage 4, or Mid-air Attack Stage 4. During True Sight, her Basic Attack inputs convert into special directional dashes — one on the ground (**Conquest**) and one in mid-air (**Charge**). Each grants 1 Enflamement stack when it hits.
+- **Enflamement** caps at 4 stacks. Reaching 4 stacks changes her Heavy Attack input into **Flaming Sacrifice**, the highest-damage move in her kit. It can be reached through 4 True Sight attacks across multiple True Sight windows, or instantly via Resonance Liberation.
+- **Fiery Feather** is a 10-second buff applied automatically after casting Resonance Liberation — if Changli uses Flaming Sacrifice within that window, she gains +25% ATK.
+
+## Changli Forte Circuit: True Sight & Enflamement
+
+**Entering True Sight**
+True Sight lasts 12 seconds and is triggered by any of these:
+- Resonance Skill: True Sight: Capture (2 initial charges; 1 charge replenished every 12s)
+- Intro Skill: Obedience of Rules (entering the field)
+- Ground Basic Attack Stage 4 (completing the 4-hit chain)
+- Mid-air Attack Stage 4 (completing the 4-hit aerial chain)
+
+**True Sight Attack Variants**
+- **True Sight: Conquest** — Used by pressing Ground Basic Attack while in True Sight; Changli dashes to the enemy dealing Fusion DMG counted as Resonance Skill DMG; grants 1 Enflamement on hit; consumes True Sight
+- **True Sight: Charge** — Used by jumping or pressing Basic Attack in mid-air while in True Sight; Changli dashes to the enemy dealing Fusion DMG counted as Resonance Skill DMG; grants 1 Enflamement on hit; consumes True Sight
+
+**Enflamement Stack Acquisition**
+- +1 stack: Each True Sight: Conquest hit
+- +1 stack: Each True Sight: Charge hit
+- +4 stacks (instant full bar): Resonance Liberation: Radiance of Fealty
+
+**At 4 Enflamement Stacks**
+- Heavy Attack input becomes **Heavy Attack: Flaming Sacrifice**
+- Consuming all 4 stacks, deals Fusion DMG counted as Resonance Skill DMG
+- Changli takes 40% reduced DMG while casting it
+
+**Swap-Cancel Mechanic**
+Changli's most advanced technique involves swapping off-field immediately after hitting with Conquest or Charge to cut the True Sight state's exit animation, then swapping back to chain another True Sight entry. This creates much faster Enflamement accumulation and dramatically increases Concerto Energy generation per unit of time. This is the primary source of her elite-level DPS ceiling and the main reason Prydwen rates her as having the highest skill factor in the game.
+
+## Changli: Stats Baseline
+
+| Level | HP | ATK | DEF |
+|-------|----|-----|-----|
+| Lv. 1 | 831 | 37 | 90 |
+| Lv. 20 | 2,161 | 96 | 230 |
+| Lv. 40 | 4,116 | 186 | 437 |
+| Lv. 60 | 6,624 | 304 | 702 |
+| Lv. 80 | 9,133 | 412 | 967 |
+| Lv. 90 | 10,387 | 462 | 1,099 |
+
+*Note: Baseline stats exclude Forte Attribute Bonuses and equipment.*
+
+## Changli: Ascension Materials
+
+| Ascension | Level Cap | Key Materials |
+|-----------|-----------|---------------|
+| 1 | 20→40 | Crude Ring ×4, Pavo Plum ×4, Shell Credits ×5,000 |
+| 2 | 40→50 | Basic Ring ×4, Pavo Plum ×8, Shell Credits ×10,000 |
+| 3 | 50→60 | Improved Ring ×8, Pavo Plum ×12, Rage Tacet Core ×4, Shell Credits ×15,000 |
+| 4 | 60→70 | Improved Ring ×8, Pavo Plum ×16, Rage Tacet Core ×8, Shell Credits ×20,000 |
+| 5 | 70→80 | Tailored Ring ×12, Pavo Plum ×20, Rage Tacet Core ×12, Shell Credits ×40,000 |
+| 6 | 80→90 | Tailored Ring ×12, Pavo Plum ×24, Rage Tacet Core ×16, Shell Credits ×80,000 |
+
+**Total Ascension Shell Credits:** ~170,000
+- **Rings (Crude/Basic/Improved/Tailored):** Dropped by Exile-type enemies throughout Huanglong; also purchasable at Jinzhou weapon shop or via Synthesizer
+- **Pavo Plum:** Gathered from overworld trees primarily in the Luminous Shore area of Mt. Firmament; also purchasable at Jinzhou's Pharmacy
+- **Rage Tacet Core:** Dropped by the **Inferno Rider** boss (Sea of Flames, Port City of Guixu, Huanglong)
+
+## Changli: Character Kit: Basic Attack — Blazing Enlightenment
+
+**Ground Attack Chain (4 stages)**
+- Stage 1: Two rapid slashes (14.84%×2 Fusion DMG at Lv.1 → 29.49%×2 at Lv.10)
+- Stage 2: Two follow-up slashes (17.85%×2 → 35.49%×2)
+- Stage 3: Three consecutive strikes (18.34%×3 → 36.45%×3)
+- Stage 4: One overhead + four-hit spread (25.50% + 14.88%×4 → 50.70% + 29.58%×4); completing Stage 4 triggers **True Sight** for 12s
+
+... (file truncated here for brevity)
