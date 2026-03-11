@@ -40,7 +40,7 @@ Voice Actors:
 
 | Language | Voice Actor |
 |----------|-------------|
-| **JP** | Sasahara Yu (笹原優) |
+| **JP** | Sasahara Yū (篠原侑) |
 | **EN** | Heather Nicol |
 | **CN** | Zhao Shuang (赵爽) |
 | **KR** | Kang Sae-bom (강새봄) |

@@ -36,8 +36,8 @@ Voice Actors:
 |----------|-------------|
 | **JP** | Aoyama Yoshino |
 | **EN** | Anna Devlin |
-| **CN** | Jian Yue |
-| **KR** | Park Hyajin |
+| **CN** | Jiang Yue (江月) |
+| **KR** | Park Ha-jin (박하진) |
 
 ## Jinhsi Profile: Ontological Overview
 

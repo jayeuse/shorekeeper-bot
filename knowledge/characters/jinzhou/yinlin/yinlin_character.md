@@ -39,7 +39,7 @@ Voice Actors:
 |----------|-------------|
 | **JP** | Koshimizu Ami (小清水亜美) |
 | **EN** | Naomi McDonald |
-| **CN** | Mickey (Xiao Liansha / 晓连莎) |
+| **CN** | Mickey (Xiao Liansha / 小连杀) |
 | **KR** | Kang Sae-bom (강새봄) |
 
 ## Yinlin Profile: Ontological Overview

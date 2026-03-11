@@ -38,7 +38,7 @@ Voice Actors:
 |----------|-------------|
 | **JP** | Ono Yuki (小野友樹) |
 | **EN** | Alex Jordan |
-| **CN** | Sun Ye (孙野) |
+| **CN** | Sun Ye (孙晔) |
 | **KR** | Nam Doh-hyeong (남도형) |
 
 ## Jiyan Profile: Ontological Overview

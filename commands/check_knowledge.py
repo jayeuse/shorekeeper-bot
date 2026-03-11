@@ -3,7 +3,7 @@ import os
 from collections import defaultdict, Counter
 from tabulate import tabulate
 
-VECTORS_PATH = os.path.join(os.path.dirname(__file__), "data", "vectors.json")
+VECTORS_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "vectors.json")
 
 def analyze_knowledge():
     if not os.path.exists(VECTORS_PATH):

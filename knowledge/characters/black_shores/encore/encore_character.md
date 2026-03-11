@@ -37,10 +37,10 @@ Voice Actors:
 
 | Language | Voice Actor |
 |----------|-------------|
-| **JP** | Chikano Ibuki (知花伊吹) |
+| **JP** | Ibuki Chikano (伊吹誓乃) |
 | **EN** | Carina Reeves |
-| **CN** | Xiao Sibai (晓斯白) |
-| **KR** | Serena Lee (이세나) |
+| **CN** | Xiao Sibai (皛四白) |
+| **KR** | Serena Lee (이세레나) |
 
 ## Encore Profile: Ontological Overview
 

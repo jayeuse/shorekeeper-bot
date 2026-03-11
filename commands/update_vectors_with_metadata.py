@@ -10,12 +10,12 @@ import sys
 from pathlib import Path
 
 # Add parent directory to path to import rag
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from services.rag import parse_frontmatter
 
-VECTORS_PATH = Path(__file__).parent / "data" / "vectors.json"
-KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
+VECTORS_PATH = Path(__file__).parent.parent / "data" / "vectors.json"
+KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
 
 def update_vectors_with_metadata():
     if not VECTORS_PATH.exists():
@@ -69,10 +69,10 @@ def update_vectors_with_metadata():
             print(f"  Processed {i+1} chunks...")
 
     if updated > 0:
-        # Write updated vectors
+        # Write updated vectors (minified — no indent, no embeddings stored inline)
         print(f"💾 Writing updated vectors with metadata for {updated} chunks...")
         with open(VECTORS_PATH, "w", encoding="utf-8") as f:
-            json.dump(chunks, f, indent=4)
+            json.dump(chunks, f)
         print(f"✅ Updated {updated} chunks with metadata.")
     else:
         print("✅ No updates needed; metadata already present.")

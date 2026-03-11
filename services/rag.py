@@ -15,7 +15,9 @@ except Exception:
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
 KNOWLEDGE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge")
-STORE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "vectors.json")
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+STORE_PATH = os.path.join(DATA_DIR, "vectors.json")
+EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings")  # np.savez_compressed appends .npz
 EMBED_MODEL = "nomic-embed-text"
 
 
@@ -151,17 +153,35 @@ class RAG:
 
         print(f"📚 Embedding {len(self.chunks)} knowledge chunks...")
 
+        embeddings = []
         for chunk in self.chunks:
             # Include the label (character/file identity) in embedding for disambiguation
             doc_text = f"search_document: [{chunk['label']}] {chunk['heading']}. {chunk['text']}"
             response = ollama.embed(model=EMBED_MODEL, input=doc_text)
-            chunk["embedding"] = response["embeddings"][0]
+            embeddings.append(response["embeddings"][0])
 
-        os.makedirs(os.path.dirname(STORE_PATH), exist_ok=True)
+        # Store embeddings as float16 binary (major size reduction)
+        embedding_matrix = np.array(embeddings, dtype=np.float16)
+
+        os.makedirs(DATA_DIR, exist_ok=True)
+        np.savez_compressed(EMBEDDINGS_PATH, embeddings=embedding_matrix)
+
+        # Store metadata-only chunks as minified JSON (no embeddings)
+        chunks_for_storage = [
+            {k: v for k, v in chunk.items() if k != "embedding"}
+            for chunk in self.chunks
+        ]
         with open(STORE_PATH, "w", encoding="utf-8") as f:
-            json.dump(self.chunks, f, indent=4)
+            json.dump(chunks_for_storage, f)
 
-        print(f"✅ Knowledge base built: {len(self.chunks)} chunks saved to {STORE_PATH}")
+        # Keep embeddings in memory as float32 for accuracy
+        self.embeddings = embedding_matrix.astype(np.float32)
+        for i, chunk in enumerate(self.chunks):
+            chunk["embedding"] = self.embeddings[i]
+
+        print(f"✅ Knowledge base built: {len(self.chunks)} chunks saved")
+        print(f"   Metadata: {STORE_PATH}")
+        print(f"   Embeddings: {EMBEDDINGS_PATH}.npz (float16, compressed)")
 
     def load(self):
         if not os.path.exists(STORE_PATH):
@@ -169,6 +189,23 @@ class RAG:
 
         with open(STORE_PATH, "r", encoding="utf-8") as f:
             self.chunks = json.load(f)
+
+        # Load binary embeddings if present, fall back gracefully
+        embeddings_file = EMBEDDINGS_PATH + ".npz"
+        if os.path.exists(embeddings_file):
+            data = np.load(embeddings_file)
+            # Upcast to float32 for computation accuracy
+            embedding_matrix = data["embeddings"].astype(np.float32)
+            for i, chunk in enumerate(self.chunks):
+                if i < len(embedding_matrix):
+                    chunk["embedding"] = embedding_matrix[i]
+        elif os.path.exists(EMBEDDINGS_PATH):
+            # Legacy: .npz without extension appended by np.savez_compressed
+            data = np.load(EMBEDDINGS_PATH)
+            embedding_matrix = data["embeddings"].astype(np.float32)
+            for i, chunk in enumerate(self.chunks):
+                if i < len(embedding_matrix):
+                    chunk["embedding"] = embedding_matrix[i]
 
         print(f"📚 Loaded {len(self.chunks)} chunks from existing knowledge base")
         return True
