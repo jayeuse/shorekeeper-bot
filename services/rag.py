@@ -140,6 +140,7 @@ class RAG:
         self.chunks = []
         self.embeddings = []
         self.personalization_cache = None
+        self.manifest_cache = None
 
     def build(self):
         self.chunks = load_knowledge()
@@ -236,6 +237,75 @@ class RAG:
 
         self.personalization_cache = "\n\n".join(c["text"] for c in persona_chunks)
         return self.personalization_cache
+
+    def get_manifest(self):
+        """Build a structured knowledge manifest from loaded chunks.
+
+        Returns a human-readable string listing all characters and lore topics
+        present in the knowledge base, grouped by category.
+        """
+        if self.manifest_cache:
+            return self.manifest_cache
+
+        if not self.chunks:
+            if not self.load():
+                return ""
+
+        # Collect unique sources (one entry per file, not per chunk)
+        seen_sources = set()
+        characters: dict[str, list[str]] = {}  # group -> [character names]
+        lore_topics: list[str] = []
+        other_topics: list[str] = []
+
+        for chunk in self.chunks:
+            source = chunk["source"]
+            if source in seen_sources:
+                continue
+            seen_sources.add(source)
+
+            parts = source.replace("\\", "/").split("/")
+            metadata = chunk.get("metadata", {})
+
+            if parts[0] == "characters" and len(parts) >= 3:
+                group = parts[1].replace("_", " ").title()
+                char = metadata.get("character") or parts[2].replace("_", " ").title()
+                if group not in characters:
+                    characters[group] = []
+                if char not in characters[group]:
+                    characters[group].append(char)
+
+            elif parts[0] == "lore":
+                doc_type = metadata.get("document_type", "")
+                region = metadata.get("region", "")
+                label = chunk.get("label", source.replace("_", " ").title())
+                entry = region if region else label
+                if entry and entry not in lore_topics:
+                    lore_topics.append(entry)
+
+            elif parts[0] not in ("personalization",):
+                label = chunk.get("label", source)
+                if label not in other_topics:
+                    other_topics.append(label)
+
+        lines = ["=== KNOWLEDGE MANIFEST ==="]
+        lines.append("The following is a precise list of what is stored in your knowledge base. Reference ONLY these entries when asked what you know.\n")
+
+        if characters:
+            lines.append("Characters:")
+            for group in sorted(characters):
+                names = ", ".join(sorted(set(characters[group])))
+                lines.append(f"  {group}: {names}")
+
+        if lore_topics:
+            lines.append("\nLore topics:")
+            lines.append(f"  {', '.join(sorted(set(lore_topics)))}")
+
+        if other_topics:
+            lines.append("\nOther topics:")
+            lines.append(f"  {', '.join(sorted(set(other_topics)))}")
+
+        self.manifest_cache = "\n".join(lines)
+        return self.manifest_cache
 
     def _keyword_boost(self, query_words, chunk):
         heading = chunk["heading"].lower()

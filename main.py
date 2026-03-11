@@ -7,6 +7,8 @@ print("🔄 Building knowledge base...")
 rag = RAG()
 rag.build()
 
+print("\n" + rag.get_manifest() + "\n")
+
 if DISCORD_TOKEN is None:
     sys.exit("ERROR: DISCORD_TOKEN is not set. Add it to .env.local or environment variables.")
 

@@ -9,6 +9,36 @@ from handlers.conversation_context import store_chat, get_chat
 rag = RAG()
 llm_client = LLMClient()
 
+_META_PATTERNS = [
+    "how many", "which characters", "what characters", "what do you know",
+    "who do you have", "list all", "list the", "what's in your", "what is in your",
+    "what groups", "what regions", "what factions", "stored in your",
+]
+_CASUAL_PATTERNS = [
+    "how are you", "how do you feel", "tell me about yourself", "what do you think",
+    "what's your opinion", "do you like", "are you okay", "how have you been",
+    "good morning", "good night", "hello", "hi ", "hey ",
+]
+
+
+def _classify_query(query: str) -> str:
+    """Classify query to determine how many RAG chunks are needed.
+
+    Returns:
+        "meta"   — query is about the knowledge base itself → skip RAG
+        "casual" — light conversational query → top_k=2
+        "lore"   — character/lore/ability query → top_k=5
+    """
+    q = query.lower()
+    if any(p in q for p in _META_PATTERNS):
+        return "meta"
+    if any(p in q for p in _CASUAL_PATTERNS):
+        return "casual"
+    return "lore"
+
+
+_TOP_K = {"meta": 0, "casual": 2, "lore": 5}
+
 
 async def on_message(bot, msg):
     if msg.author == bot.user:
@@ -31,7 +61,9 @@ async def on_message(bot, msg):
 
     async with msg.channel.typing():
         rag_start = time.time()
-        context_chunks = rag.search(user_content)
+        query_type = _classify_query(user_content)
+        top_k = _TOP_K[query_type]
+        context_chunks = rag.search(user_content, top_k=top_k) if top_k > 0 else []
         rag_duration = time.time() - rag_start
 
         context_text = ""
@@ -42,7 +74,12 @@ async def on_message(bot, msg):
             )
 
         personalization = rag.get_personalization_context()
-        full_system_prompt = f"{SYSTEM_PROMPT}\n\n=== PERSONALITY & BACKSTORY ===\n{personalization}"
+        manifest = rag.get_manifest()
+        full_system_prompt = (
+            f"{SYSTEM_PROMPT}\n\n"
+            f"=== PERSONALITY & BACKSTORY ===\n{personalization}\n\n"
+            f"{manifest}"
+        )
 
         messages = [
             {"role": "system", "content": full_system_prompt},
@@ -67,7 +104,7 @@ async def on_message(bot, msg):
         llm_duration = time.time() - llm_start
 
     elapsed = time.time() - start_time
-    log_response(msg, user_content, MODEL or "unknown", response, elapsed, rag_duration=rag_duration, llm_duration=llm_duration)
+    log_response(msg, user_content, MODEL or "unknown", response, elapsed, rag_duration=rag_duration, llm_duration=llm_duration, query_type=query_type, top_k=top_k)
 
     reply_content = response["message"]["content"]
     store_chat(str(msg.guild.id), str(msg.channel.id), reply_content, "assistant")
