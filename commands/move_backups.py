@@ -7,8 +7,8 @@ import os
 import shutil
 from pathlib import Path
 
-KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
-BACKUP_DIR = Path(__file__).parent / "knowledge_backups"
+KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
+BACKUP_DIR = Path(__file__).parent.parent / "knowledge_backups"
 
 def move_backups():
     if not KNOWLEDGE_DIR.exists():
