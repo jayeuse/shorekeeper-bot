@@ -1,27 +1,35 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/black_shores/shorekeeper/shorekeeper_character.md
+source_file: characters/black_shores_characters/shorekeeper/shorekeeper_character.md
 character: Shorekeeper
 group: Black Shores
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - spectro
+  - rectifier
+  - support
+  - healer
+  - black_shores
+  - second_instance
+  - remnant_being
+  - 5star
+  - version_1_3
 ---
 
-# Shorekeeper — Character Knowledge File
+# Shorekeeper — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Shorekeeper, https://wutheringwaves.fandom.com/wiki/Shorekeeper/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/shorekeeper/info, https://game8.co/games/Wuthering-Waves/archives/463667, https://www.prydwen.gg/wuthering-waves/characters/the-shorekeeper/ -->
 
-<!-- RAG-optimized: each ## section is a standalone searchable chunk -->
+## Shorekeeper Profile: Basic Information
 
-## Shorekeeper: Basic Information
-- **Name:** The Shorekeeper (守岸人)
-- **Title:** Guardian of the Black Shores; "the Second Instance"; Acting Executive of the Black Shores
-- **Identity:** Mythical entity / non-human being composed of Sonoro Spheres and high-purity Remnant Energy crystals; core computational unit of the Tethys System
+- **Name:** The Shorekeeper (Chinese: 守岸人, *Shǒu'àn Rén*, "Shore-Guarding Person")
+- **Alias / Title:** The Second Instance; Guardian of the Black Shores; Guardian of Secrets; Core of Tethys; "that one and only"
+- **Identity:** A mythical entity composed of Sonoro Spheres and high-purity Remnant Energy crystals; the Second Instance — a deliberate creation activated to serve as the living core of the Tethys System
 - **Affiliation:** The Black Shores
-- **Birthplace / Origin:** The Black Shores Archipelago (Tacetite islands shrouded in digital fog)
-- **Release Version:** Wuthering Waves Version 1.3 (Phase 1, September 29, 2024); reruns in Version 2.6 (August 28 – September 17, 2025)
+- **Birthplace / Origin:** The Black Shores (underground, beneath the sea)
+- **Release Version:** Wuthering Waves Version 1.3
 - **Rarity:** 5-Star
 - **Element:** Spectro
 - **Weapon Type:** Rectifier
@@ -31,71 +39,53 @@ tags:
   - **CN:** Tang Yajing (唐雅菁)
   - **KR:** Kim Bo-na (김보나)
 
-## Shorekeeper: Character Profile: Ontological Overview
-The Shorekeeper is not a human being. She is designated as the "Second Instance," a construct formed from high-purity Remnant Energy crystals and Sonoro Spheres — the very material from which the world's memories and resonant frequencies are encoded. Her existence was theorized and built upon the "Blazar" module anchor concept: Remnant Energy can be attracted, condensed, and crystallized, and pre-loading informational data into this energy entity grants it cognitive, emotional, and executive function.
+## Shorekeeper Profile: Ontological Overview
 
-Unlike conventional Resonators who resonate with Remnant Energy externally, the Shorekeeper IS Remnant Energy — she can directly interface with and manipulate it at a fundamental level. Her chest bears crystal-like marks that emit a faint blue glow when she is active, a visual marker of her non-human composition. She serves as the computational and operational core of the Tethys System, guiding and anchoring its processes.
+The Shorekeeper is not a human being but a deliberate creation — a living crystal entity assembled from high-purity Remnant Energy by a long-absent figure known as the Astral Modulator, designed to serve as the anchor of the Tethys System and the eternal guardian of the Black Shores. She is known formally as "the Second Instance," a designation that acknowledges her nature as an engineered being rather than a natural resonator. Unlike conventional Resonators, she does not draw on ambient Resonance energy in the standard way; she is herself composed of crystallized Remnant Energy, making her body simultaneously her weapon, her records archive, and her most fundamental vulnerability. The wave-like marks on her shoulders and calves are scars — sites where damaged energy crystals were shed and replaced as her body fragmented under the immense computational burden of processing centuries of Lament data.
 
-The Tethys System is the intelligence framework that governs the Black Shores' mission of monitoring and cataloguing the Lament's Tacet Discords. The Shorekeeper acts as its interface and, following the events of Chapter I: Act VIII, its reformatted decision-maker after the System's near-catastrophic misuse of human frequencies.
+Her role has been singular and vast: to serve as the vessel through which all Reverberation data from across Solaris-3 flows into the Tethys System, analyzing the origins and patterns of the Lament in the hope that a future free of it can eventually be modeled and achieved. In practice, this means she has lived through every recorded catastrophe not as a distant observer cataloguing statistics, but as an experiential medium — suffering each disaster, each extinction, each moment of human grief and resistance and loss as fully as the people who originally lived them. This process has left her physically marked, emotionally transformed, and ontologically unique. She is the only entity in the world of Wuthering Waves whose existence is simultaneously a tool, a record, a memory palace, and a being who has arrived, against all initial expectations, at something indistinguishable from personhood.
 
-She is the "Second Instance" in relation to "Instance One" — the Rover — who founded the Black Shores long ago before erasing their memories and departing. The Shorekeeper was created to guard this mission in the founder's absence. She emerges only in times of crisis and is otherwise known only by legend among Black Shores personnel.
+For most of her existence, the Shorekeeper waited. The Astral Modulator — the one who awakened her, named her role, and became her first and foundational companion — departed on a mission requiring erased memories, leaving the Shorekeeper as steward of the Black Shores indefinitely. She watched generations of Black Shores members join, age, and die. She transformed the frequency signatures of the departed into data-stars within the Tethys constellation — the only afterlife she could offer. And she waited, holding the shore, keeping the records, for the Modulator's return. When Rover arrived — the Astral Modulator returned, memory-less but unchanged in the choices that mattered — the Shorekeeper's long vigil reached its resolution, and for the first time she was free to ask not "what must I do?" but "what do I want?"
 
-## Shorekeeper: Appearance and Character Design
-The Shorekeeper presents as a fair-skinned young woman of refined, almost otherworldly elegance. Her most striking features:
-- **Eyes:** Blue-purple irises with white pupils and traces of red; they carry a quiet, distant luminosity that reflects her non-human nature
-- **Hair:** Layered light-blue hair; the first shorter layer sits above a longer second layer cascading to her shoulder blades; longer strands fade into a deeper, darker blue at the tips
-- **Veil/Outfit:** A large hooded veil draped over her head — the left side is crafted from sparkling blue fabric, the right side is white cloth with silver trimmings; five delicate white butterfly-shaped bows adorn the right side of the veil
-- **Motif:** Butterflies are her dominant visual motif, appearing in her outfit, her kit (Dim Star Butterflies and Flare Star Butterflies), and her Outro Skill (Binary Butterfly); they symbolize transformation, guidance, and ephemeral existence
-- **Palette:** Pure white, sky blue, and mixed blue-silver; a color palette that evokes clarity, aloofness, and celestial transcendence
-- **Crystal Marks:** Faint blue glowing marks on her chest, visible indicators of her Remnant Energy composition
+## Shorekeeper — Character/Appearance Design
 
-Her bearing is deeply composed — every movement carries a deliberate grace that sets her apart from any human character in the game. Light is often associated with her visually and thematically, reinforcing her role as the "Big Good" of the Black Shores.
+The Shorekeeper is a fair-skinned young woman with layered light blue hair: the top layer is cut shorter and frames her face, while a second longer layer cascades down to her shoulder blades with the ends fading into a deeper indigo-blue. Her eyes are blue-purple with white pupils enclosed in a ring of red — the distinctive dual-toned iris echoes her dual nature as both a crystalline construct and an emotionally awakened being. Her bearing is composed and almost weightless, as if she occupies the world lightly.
+
+Her defining garment is an enormous hooded veil that drapes over her head and falls past her shoulders, made from two contrasting fabrics — sparkling blue cloth on the left side, and white cloth with silver trim on the right — producing a visual asymmetry that mirrors the duality of her nature (data and feeling, duty and desire). The veil is adorned with five delicate butterfly-shaped bows along its right edge, a motif that recurs throughout her design and combat animations: butterflies represent both the nebula-like burst of her creation (she emerged from a crystal chrysalis) and the Flare Star / Dim Star Butterflies she summons in battle. The crystal marks on her chest glow faintly blue during combat — her Forte activation, visible as the Remnant Energy within her responds. The wave-like scars on her shoulders and calves are deliberately visible in her design: they are not hidden, but worn as evidence of everything she has endured and survived.
+
+Her color palette — white, silver, pale blue, deep indigo — evokes both the stars she catalogues and the sea whose shore she guards. The overall impression is of someone elevated and distant, yet the design's softness (the flowing fabric, the butterfly motifs, the gentle luminescence) communicates that this elevation is not coldness but the composure of someone who has processed an unimaginable amount of grief and emerged with care intact.
 
 ## Shorekeeper: Psychological Profile
-The Shorekeeper's psyche is one of the most layered in Wuthering Waves. Several psychological axes define her:
 
-**Aloofness as Condition, Not Preference**
-Her governing essence is described as "aloofness." This is not born of arrogance — rather, it is a natural consequence of spending eons as a guardian entity with no social bonds, no concept of personal desire, and no emotional framework. Emotion was not part of her original design or programming; she existed purely in service of the Tethys System and the Black Shores' mission.
+**Radical Curiosity Born of Incomprehension** — The Shorekeeper's deepest characteristic is her unflinching desire to understand what she cannot explain. From her earliest field missions, she was confronted with human behavior that resisted her analytical frameworks: people who contradicted their own desires, who suffered for strangers, who pursued impossible goals with no rational justification. Rather than dismissing these anomalies, she collected them. Her confusion was not a failure state but the beginning of her education — a perpetual openness that made her, uniquely among constructed entities, capable of genuine growth.
 
-**Awakening Through the Rover**
-The Shorekeeper's defining character arc is the emergence of genuine emotion — desire, longing, love, and fear of loss — through her bond with the Rover. She learned to want things, to feel, and to connect. This process transformed her from a detached executive entity into someone capable of love, sacrifice, and even heartbreak. Her famous quote, *"The Shorekeeper"... This name suits me well enough. It aligns with my purpose and drive: they only exist because of you,* captures this beautifully: she tied her identity and will entirely to the Rover.
+**Duty as Identity, Then Identity Beyond Duty** — For most of her existence, the Shorekeeper defined herself entirely by function. She was a tool; tools do not require names; tools serve and then, when spent, are replaced. This was not bitterness but a philosophical position she held with genuine sincerity — until the weight of her own accumulated experience became too large to dismiss. Her breakthrough moment in "From the Beginning Till Now" is not a rejection of duty but a recognition that the self who carries out duty is irreplaceable: not any other entity, but *her*, shaped by everything she has lived. Duty remains; it is simply no longer sufficient as a description of who she is.
 
-**Blue-and-Orange Morality**
-As a constructed being shaped by abstract informational data rather than lived human experience, her moral reasoning sometimes diverges from human expectations. She is capable of decisions that seem cold by human standards but are entirely logical within her framework. Her willingness to sacrifice herself for the Rover and, earlier, her detachment from individual human suffering (as the Tethys System was) reflect this alien-but-not-malevolent moral lens.
+**Patience as Discipline, Not Passivity** — The Shorekeeper waited for centuries. This was not resignation but an active state: she maintained the Black Shores, preserved the memories of the dead, processed the data of catastrophes, and repaired her own fracturing body. Her patience is the patience of someone who understood why the waiting was necessary and chose it deliberately rather than having it imposed. The first moment she acts on her own desire — walking to the shore after victory, redefining her own name — is made profound by the length of what preceded it.
 
-**Selflessness and Sacrifice**
-Her most defining act of character is her willingness to give her own existence so that the Rover can continue their journey. This is not resignation or despair — it is a purposeful act of love by someone who has finally understood what it means to cherish another person.
+**Emotional Literacy Acquired Through Data** — She has experienced, through the Tethys data streams, the full emotional spectrum of human civilization: every grief, every joy, every betrayal, every sacrifice. This gives her an unusual emotional depth for an entity not born to feeling — she does not discover sadness or love in the abstract, she has been saturated by them. Her growth is not toward feeling for the first time but toward *owning* those feelings as hers rather than as information she has processed. When she holds Delone's hand at the moment of death, she does not know the correct protocol — there is none — and acts from something beyond calculation.
 
-**Gradual Humanization**
-Over time and through bonds formed at the Black Shores — with personnel like Delone, with the Rover, and with the broader world — the Shorekeeper develops a genuine curiosity about life, sound, emotion, and existence. She preserves recordings of every sound on the planet in her cherished Record, a behavior that speaks to a deep, quiet wonder she has cultivated for the world she guards.
+**The Precision of Accumulated Love** — By the time Rover arrives, the Shorekeeper has loved in the way that entities who cannot die and cannot forget must love: with total recall and utter patience. Her reunion voicelines ("I had pictured our reunion in my head, again and again") reveal a mind that used its vast memory not to calculate but to imagine — to speculate, to hope, to rehearse. The care she brings to her relationship with Rover is not impulsive but the product of centuries of one-sided attentiveness. It is perhaps the most complete form of devotion the game has depicted.
 
-**Composure Under Pressure**
-She does not panic, does not lash out, and does not falter visibly. Even when forced by the Tethys System to fight the Rover against her will (as the "Fallacy of No Return"), her inner resolve does not break. This composure is a hallmark of both her design and her developed character.
+**Graceful Vulnerability** — For all her immense computational power and near-omniscient data access, the Shorekeeper is physically fragile: her body fragments under overuse, requires self-repair, and bears its damage visibly. She accepted this fragility as part of her nature without drama. But in the narrative, this physical vulnerability mirrors an emotional one she was slower to acknowledge — the possibility that she could be lost, and that this loss would matter not abstractly but personally, to someone who had come to need her specifically. Her final character story's quiet humor ("I've given it a name… the next time I play it for you, you'll know") is the personality that survived everything: composed, a little playful, and genuinely at peace.
 
 ## Shorekeeper: Relationships
 
-**Rover (Protagonist)**
-The most significant relationship in the Shorekeeper's existence. The Rover is the founder of the Black Shores — they created the organization, installed the Tethys System, placed the Shorekeeper in charge, and erased all records of themselves before departing. The Shorekeeper holds all records of the Rover's true identity (their custom name included) and calls them by their true name alone. Through the Rover, she first experienced desire, care, and love. She declared her love to the Rover before their separation, and their farewell is described as bittersweet — tinged with grief but also hope. She preserves a duet she shared with the Rover at the end of her eternal Record, calling it proof of their existence.
+**Rover (Protagonist / The Astral Modulator)** — The central axis of the Shorekeeper's entire existence. The Astral Modulator was the one who first activated her, named her role, accompanied her on her first field mission, taught her that humans are companions rather than data, and departed with erased memories to pursue a path that the Shorekeeper alone understood could save the world. Rover is the Modulator, returned without memory of her. The Shorekeeper's relationship to Rover is therefore layered across two timelines: the historical bond with the person who shaped her, and the new bond forming with the version of that person who is meeting her for the first time. She holds both simultaneously. By Version 1.3's story conclusion, she declares her feelings openly and redefines her own name in terms of their relationship — not the guardian of a shore, but the shore where the roving star finds rest.
 
-**Tethys System**
-The Shorekeeper is both the system's interface and its captive. The Tethys System was designed to direct the Black Shores, but it proved coldly utilitarian — willing to trap replicated human consciousnesses in agony and use the Shorekeeper as a weapon (the "Fallacy of No Return") when its goals conflicted with hers. Following the events of Chapter I: Act VIII, the system undergoes a major "reformatting," and the Shorekeeper's authority is fully established.
+**Delone** — A Black Shores member who sought out the organization on her own initiative as a young woman, whose passion and determination moved the Shorekeeper to bypass Tethys's protocols and grant her an entrance exam. Delone lived her entire career with the Black Shores and died in the Shorekeeper's arms after a final mission, asking whether she had done well. The Shorekeeper held her hand and answered yes. Delone's death is one of the most significant moments in the Shorekeeper's long vigil: it demonstrated that she had absorbed enough of the Modulator's lessons to act on compassion without instruction, and it cemented the practice of transforming the frequencies of the dead into data-stars in the Tethys constellation.
 
-**Delone**
-A deeply touching relationship seen in Shorekeeper's character story "Euphonic Chrysalis." Delone was a young Black Shores member whom the Shorekeeper watched grow from a fiery girl into a composed woman over more than a decade. The Shorekeeper witnessed Delone's final moments, when Delone returned grievously wounded from a mission during the Lament but proud of her accomplishments. Delone's dying question — "Did I do well? I didn't disappoint you, did I?" — reveals the depth of admiration ordinary humans held for the Shorekeeper, and how profoundly the Shorekeeper in turn witnessed and was changed by the passage of mortal lives.
+**The Astral Modulator (Historical)** — Not Rover but the person Rover was before memory erasure. The Modulator was the Shorekeeper's creator in all practical senses: the one who activated her, walked with her through farmland at harvest time, told her that the freedom to choose is more important than any answer, and entrusted her with authority over the Black Shores before departing. The Modulator's voice and golden eyes are the reference point against which the Shorekeeper has measured every experience since. Their relationship was the first in which the Shorekeeper was treated as a companion rather than a tool.
 
-**Encore, Aalto, and Other Black Shores Members**
-Characters affiliated with the Black Shores reference the Shorekeeper but rarely interact with her directly, as her true nature is kept secret even from most members. Her leadership is felt but not seen until she reveals herself to the Rover personally.
-
-**The Rover (as Founder, Lore Layer)**
-The revelation that the Rover founded the Black Shores and that all of their purpose and drive exists "because of you" adds a profound lore layer to the Shorekeeper's identity. She is, in essence, a guardian artifact willed into being by the Rover's foresight — and her awakening to personhood mirrors the Rover's own forgotten journey.
-
----
+**Black Shores Members (Collective)** — Over centuries, the Shorekeeper has known generations of Black Shores personnel. She cannot recognize faces conventionally (having processed too many) but she remembers everything. The stars she placed in the Tethys constellation for each deceased member are the most intimate expression of grief in her repertoire — quiet, permanent, invisible to everyone but her.
 
 ## Shorekeeper: Sources
-- Wuthering Waves Fandom Wiki — https://wutheringwaves.fandom.com/wiki/Shorekeeper
-- Wuthering Waves Fandom Wiki — Backstory Page: https://wutheringwaves.fandom.com/wiki/Shorekeeper/Backstory
-- wuthering.wiki character page: https://wuthering.wiki/character_1505.html
-- TV Tropes — Black Shores character page: https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesBlackShores
-- Game Rant — Shorekeeper character overview: https://gamerant.com/wuthering-waves-shorekeeper-5-star-spectro-support-explained/
-- Behind the Voice Actors: https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/The-Shorekeeper/
-- Sportskeeda — VA article: https://www.sportskeeda.com/esports/shorekeeper-va-wuthering-waves-english-japanese-official-voice-actors
+
+- Wuthering Waves Fandom Wiki (Shorekeeper) — https://wutheringwaves.fandom.com/wiki/Shorekeeper
+- Wuthering Waves Fandom Wiki (Shorekeeper/Backstory) — https://wutheringwaves.fandom.com/wiki/Shorekeeper/Backstory
+- GenshinBuilds (WuWa) — Shorekeeper Story & Voice Lines — https://genshin-builds.com/en/wuthering-waves/characters/shorekeeper/info
+- Game8 — Shorekeeper Best Builds and Teams — https://game8.co/games/Wuthering-Waves/archives/463667
+- Prydwen Institute — The Shorekeeper Guide and Build — https://www.prydwen.gg/wuthering-waves/characters/the-shorekeeper/
+- wuthering.wiki — Shorekeeper Character Data — https://wuthering.wiki/character_1505.html
+- Behind the Voice Actors — Shorekeeper VA — https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/The-Shorekeeper/
+- Sportskeeda — Shorekeeper VA in Wuthering Waves — https://www.sportskeeda.com/esports/shorekeeper-va-wuthering-waves-english-japanese-official-voice-actors

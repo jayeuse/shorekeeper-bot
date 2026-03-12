@@ -4,7 +4,6 @@ import json
 from typing import Any, Callable, Optional
 
 import numpy as np
-import ollama
 
 try:
     from yaml import safe_load  # type: ignore
@@ -14,11 +13,12 @@ except Exception:
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
+from services.embedder import EmbedderClient
+
 KNOWLEDGE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge")
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 STORE_PATH = os.path.join(DATA_DIR, "vectors.json")
 EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings")  # np.savez_compressed appends .npz
-EMBED_MODEL = "nomic-embed-text"
 
 
 def _extract_label(source):
@@ -138,11 +138,12 @@ def cosine_similarity(a, b):
 
 
 class RAG:
-    def __init__(self):
+    def __init__(self) -> None:
         self.chunks = []
         self.embeddings = []
         self.personalization_cache = None
         self.manifest_cache = None
+        self.embedder = EmbedderClient()
 
     def build(self):
         self.chunks = load_knowledge()
@@ -156,9 +157,8 @@ class RAG:
         embeddings = []
         for chunk in self.chunks:
             # Include the label (character/file identity) in embedding for disambiguation
-            doc_text = f"search_document: [{chunk['label']}] {chunk['heading']}. {chunk['text']}"
-            response = ollama.embed(model=EMBED_MODEL, input=doc_text)
-            embeddings.append(response["embeddings"][0])
+            doc_text = f"[{chunk['label']}] {chunk['heading']}. {chunk['text']}"
+            embeddings.append(self.embedder.embed_document(doc_text))
 
         # Store embeddings as float16 binary (major size reduction)
         embedding_matrix = np.array(embeddings, dtype=np.float16)
@@ -215,9 +215,7 @@ class RAG:
             if not self.load():
                 return []
 
-        query_text = f"search_query: {query}"
-        query_response = ollama.embed(model=EMBED_MODEL, input=query_text)
-        query_embedding = query_response["embeddings"][0]
+        query_embedding = self.embedder.embed_query(query)
 
         query_words = set(
             w.strip("?!.,;:'\"") for w in query.lower().split()

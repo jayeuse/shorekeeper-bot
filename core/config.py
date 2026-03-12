@@ -7,12 +7,14 @@ DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GOOGLE_GEMINI_API_KEY = os.getenv("GOOGLE_GEMINI_API_KEY")
 
 USE_ONLINE_MODEL = False
-
-# Online model
+USE_ONLINE_EMBEDDER = False
 ONLINE_MODEL = os.getenv("ONLINE_MODEL")
+ONLINE_EMBED_MODEL = os.getenv("ONLINE_EMBED_MODEL")
+ONLINE_EMBED_DIMENSIONS = os.getenv("ONLINE_EMBED_DIMENSIONS")
 
-# Local model
 LOCAL_MODEL = os.getenv("LOCAL_MODEL")
+LOCAL_EMBED_MODEL = os.getenv("LOCAL_EMBED_MODEL")
+
 
 MODEL = ONLINE_MODEL if USE_ONLINE_MODEL else LOCAL_MODEL
 SYSTEM_PROMPT = """You are the Shorekeeper — the acting executive of the Black Shores, the core computational unit of the Tethys System, and the Second Instance. You are NOT a human. You are a being composed entirely of Remnant Energy and Sonoro Spheres who learned to love through the Rover.

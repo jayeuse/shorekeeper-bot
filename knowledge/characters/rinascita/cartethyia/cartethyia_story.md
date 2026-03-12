@@ -1,191 +1,130 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/cartethyia/cartethyia_story.md
+source_file: characters/ragunna_characters/cartethyia/cartethyia_story.md
 character: Cartethyia
-group: Rinascita
+group: Ragunna / Rinascita
 document_type: character_story
-importance: medium
+importance: high
 tags:
-- character
-- story
-- lore
+  - character
+  - story
+  - lore
+  - rinascita
+  - threnodian
+  - sentinel
+  - blessed-maiden
+  - fleurdelys
 ---
 
-# Cartethyia — Story & Narrative Knowledge File
+# Cartethyia Story Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Cartethyia/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/cartethyia/info, https://game8.co/games/Wuthering-Waves/archives/493081 -->
 
-<!-- RAG-optimized: each ## section is a standalone searchable chunk -->
+## Cartethyia Official Introduction
 
-## Cartethyia: Official Introduction
-*"The powers of the Sentinel and Threnodian clash and unite within her, propelling her into an uncertain future. Whether the future is bright or dim, she will hold the blade firmly and confront all that comes her way."*
-— Official Website Introduction
+*The powers of the Sentinel and Threnodian clash and unite within her, propelling her into an uncertain future. Whether the future is bright or dim, she will hold the blade firmly and confront all that comes her way.*
 
-Cartethyia was once the most revered figure in all of Rinascita — Fleurdelys, the "Blessed Maiden," a living symbol of divine protection. A girl chosen by Divinity to wield its crown, speak with its voice, and stand between her people and the Dark Tide. Before the holy title, she was simply Cartethyia — a rambunctious, free-spirited girl from the countryside of Egla Town who thought the most important thing in the world was righting whatever wrong sat in front of her. Now, after a long and shattering journey through prophecy, imprisonment, fracture, and reclamation, she is a wandering knight who carries no title, owes no allegiance to any divinity, and belongs entirely to herself.
+Cartethyia is the wandering knight who travels across Rinascita. Formerly known as the Blessed Maiden, the vessel of Divinity, and the Queen of Gale and Tide, she went by the name Fleurdelys. Now, she is simply a free and unfettered wandering knight — unbound by prophecy, title, or sacred function.
 
-## Cartethyia: Personality
-Cartethyia's core personality is an equilibrium of instincts that should not coexist — and yet do:
+## Cartethyia Personality
 
-She is **rambunctious and free-spirited**, the countryside girl who stole sacramental wine, danced on high platforms, turned solemn ceremonies into chaos, and painted prison walls. Every attempt by institutions, titles, and expectations to constrain her spirit encountered this irreducible quality and failed to extinguish it.
+Cartethyia's surface personality is buoyant and direct, carrying the residual warmth and mischief of the "rambunctious girl" from the countryside she once was. She speaks plainly, acts on instinct toward fairness and justice, and approaches even complicated situations with a lightness born of hard-won perspective. She has witnessed what happens when identity is entirely subsumed by sacred duty — she lived it — and has made a conscious, ongoing choice to resist that gravity.
 
-She is **compassionately noble**, driven from childhood by a genuine moral anger against injustice — not abstract idealism, but personal, direct action. She did not want to be a famous knight. She wanted to stop the thieves. She wanted to protect travelers. The scale changed; the impulse never did.
+Beneath that openness lies a psyche shaped by extraordinary solitude and fragmentation. Her years lost in the Inverted Tower, with no other soul present, forced her to construct a self from fragments — stitching dolls, staging puppet plays to remember language, piecing together memories not as a passive victim of circumstance but as an active architect of her own personhood. This makes her relationship to identity unusually deliberate: she is not someone who takes her sense of self for granted, because she once had to rebuild it from almost nothing.
 
-She is **quietly resilient**, having survived fracture without losing herself. The Inverted Tower broke her continuity of memory and identity, but not her self. She reconstructed both through the patient, methodical act of making dolls and telling stories to herself in silence. She chose what to keep.
+Her life motto — *"The truth is a beacon in the maelstrom of my life"* — reflects this. For someone whose existence was defined by layers of myth, prophecy, and sacred narrative that obscured who she actually was, honesty is not merely a virtue. It is survival strategy and hard-won freedom simultaneously.
 
-She is **relationally attentive**, carrying guilt toward those her path has cost something, warmth toward those whose kindness moves her, and reverence toward those whose different perspectives illuminate her own. She does not take people for granted.
+She does not carry her grief loudly, but it exists: grief for the future she took from Cantarella, a quiet awareness of the weight her existence has placed on others, and the particular loneliness of being the only person who fully inhabits the intersection between two cosmic forces that ordinarily destroy everything they touch.
 
-Her life motto: *"The truth is a beacon in the maelstrom of my life."* Not an assertion that she knows the truth — but a declaration that she will not stop searching for it no matter how turbulent the waters.
+## Cartethyia Forte Examination Report
 
-## Cartethyia: Forte Examination Report
-*[Resonance Evaluation Report RA-X006]*
+*[Resonance Evaluation Report RA-X006] — Time of Awakening: Unknown.*
 
-Time of Awakening: Unknown.
+Due to the opposing influences exerted by the Sentinel Imperator and the Threnodian Leviathan, Cartethyia's Spectrum Performance data exceeds standard values by a classified margin (redacted: ▇▇▇▇▇▇▇). Calculation of accurate data using existing methods is impossible.
 
-It is speculated that due to the opposing influences exerted by Sentinel Imperator and Threnodian Leviathan, Cartethyia's Spectrum Performance data exceeds standard values by ▇▇▇▇▇▇▇. Calculation of accurate data using existing methods is impossible.
+Analysis of test samples has revealed a **non-convergent Rabelle's Curve** with a pronounced periodic waveform. Therefore, Cartethyia is classified as a **Congenital Resonator** — one whose resonance did not develop through ordinary means.
 
-Analysis of test samples has revealed a **non-convergent Rabelle's Curve** with a pronounced periodic waveform. Therefore, Cartethyia is classified as a **Congenital Resonator**.
+The system has classified Cartethyia as a unique subject. Her file has been sealed under a special project group (Access clearance: ▇▇▇). Continuous monitoring is indicated.
 
-*System has classified Cartethyia as a unique subject. Her file has been sealed under a special project group. Access clearance: ▇▇▇. System will conduct continuous monitoring of Cartethyia.*
+Supplementary waveform data shows elliptical fluctuations with a stable Time Domain. Peak values between upper and lower bounds show intermittent upward trends, with peak values not yet exceeding critical threshold. No abnormal fluctuations observed. External and internal forces within Cartethyia have nearly reached a state of fusion.
 
-*Overclock Diagnostic Report:*
-Cartethyia's waveform graph shows **elliptical fluctuations** with a stable Time Domain. Peak values between upper and lower bounds show intermittent upward trends, with peak values not yet exceeding critical threshold. No abnormal fluctuations have been observed. External and internal forces within Cartethyia have **nearly reached a state of fusion**.
+*Note from a Bloom Bearer: "When Miss Cartethyia — No, wait, Fleurdelys — demonstrated her powers, the storm nearly tore the entire simulation apart! My, oh, my. We gotta take extra precautions with our next test!"*
 
-Resonant Criticality: **High.** Stability is high with minimal risk of Overclocking. However, Cartethyia's body shows unstable power fluctuations when distant from Rinascita.
+Additional note: Cartethyia's body shows unstable power fluctuations when distant from Rinascita. She is a rare individual who has undergone a **Second Awakening**, enabling her to transition freely between two forms. This is not Overclocking, but rather the precise invocation of her dual nature.
 
-Cartethyia is a rare individual who has undergone a **Second Awakening**, enabling her to transition freely between two forms. It must be emphasized that this is not a case of Overclocking, but rather the **precise invocation of her powers.**
+## Cartethyia Character Story I: "A Knight of the Countryside"
 
-*Note from a Bloom Bearer: "When Miss Cartethyia... No, wait, Fleurdelys, demonstrated her powers, the storm nearly tore the entire simulation apart! My, oh, my. We gotta take extra precautions with our next test!"*
+*A retired dramatist enjoys telling a certain story: Once upon a time, in the countryside of Egla Town, there was a wandering knight.*
 
-## Cartethyia: Character Story I: The Knight's Faded Hours (Intimacy Level 1)
-A retired dramatist tells this story often:
+Before coronation, before titles, before the Threnodian, there was a girl in Egla Town who received a wooden stage prop sword from a retired dramatist and took it entirely seriously. Each day after her lessons, she patrolled the village with bright eyes and high spirits, dealing with every injustice she encountered — small village disputes, animals in distress, minor cruelties — as though each were the final battle in a chivalric saga.
 
-*Once upon a time, in the countryside of Egla Town, there was a wandering knight. With sword in hand, he journeyed far and wide in search of a legendary giant. A giant who stood as tall as a windmill, with arms long and slender like its blades. Time after time, the wandering knight fought with everything he had against the giant, but the giant never spoke a word, only ever waving its arms, rendering the knight's attacks futile.*
+The windmills of Egla Town's countryside featured prominently in the stage plays that shaped her imagination. She did not envision herself as a princess rescued by a knight. She imagined herself as the knight, specifically the kind who fights a giant windmill (because the windmill is actually a monster and only she can tell the difference). This naive indignation — the spontaneous, uncynical certainty that wrong things should be set right — was not extinguished by what came after. It went into suspension and re-emerged.
 
-*Some mocked the knight's foolishness, some pitied his delusion. After all, that so-called giant was nothing more than a windmill, and his battles were but a fantasy. But the countryside's most mischievous girl saw it differently.*
+This story is, in some sense, her truest biography: not the prophecy, not the divine vessel narrative, but the girl with the wooden sword who hadn't yet learned that the world would disagree with her convictions. Everything she became afterward is a negotiation with that girl.
 
-*She found herself a knight's helmet and begged the dramatist for a small wooden sword. "To fight for such a giant," she said, "he must possess a heart of pure nobility." And so, she too wished to be like the knight — to seek out the giant who destroyed homes and scattered livestock, and see that the Golden Thiefbats lurking along roads could no longer steal a single treasure from travelers.*
+## Cartethyia Character Story II: "The Inverted Tower"
 
-*Riding flamboyantly on a Tumbleyak, she raced through the wheat fields. The world had never felt so vast. This was where the Blessed Maiden's legends began. Through the fields, through the festivities, and into the Inverted Tower. It would be a grand quest.*
+*Hand puppets locked in a scuffle. She had searched the tower for what felt like forever, yet found no trace of another soul.*
 
-This story frames Cartethyia's entire character arc in miniature: the mischievous girl who saw nobility in a ridiculous battle, and chose to fight for it anyway.
+After the self-splitting — after Fleurdelys sealed herself in the Avinoleum and Cartethyia was cast outward — Cartethyia found herself in the Inverted Tower, alone and without memory of who she was or how she had come to be there. The isolation was total. No human contact. No mirrors. No reference points.
 
-## Cartethyia: Character Story II: Steadfast in the Final Dance (Intimacy Level 2)
-The girl visited every field in Whisperwind Haven. She stole sips of sacramental wine under guards, danced on high platforms, and turned a solemn ceremony into complete madness. Even the Order's prison walls became her personal canvas.
+She began making things. First the dolls — stitched from whatever materials she could find — then the hand puppets, specifically so she could stage plays. The plays served two functions: they kept her from forgetting language, and they let her approximate the sound of other people. She staged arguments, reconciliations, declarations of love and of grievance, between puppet characters she invented. She missed the stage plays from the world of the living. She missed the wheat fields of the countryside. She missed sweet drinks and the sounds of people laughing.
 
-*"She's really the most rambunctious girl in the countryside. A serious fate isn't one she's meant for, and no wall, no matter how strong, could ever keep her from spreading her wings."*
+This period is the crucible of her psychological maturity. The insight that emerged from it — *the essential thing is what has to be done at this specific moment, not regret for a lost past* — is the framework that allows her to function in the present without being paralyzed by the enormity of what she has lost and been. The puppets were not merely coping mechanisms; they were evidence that she could create meaning even in total isolation.
 
-Yet to everyone's surprise, Divinity chose her.
+## Cartethyia Character Story III: "Fleurdelys and the Crown"
 
-*"Why her? Some questioned. She was only the daughter of an official, a peasant girl lacking discipline! Not a drop of noble blood ran in her veins. How would she ever come to understand the hierarchies of the world?"*
+*When the golden crown was placed upon her head, the Divinity's whispers reached her ears for the first time. From that moment on, she was no longer Cartethyia. She would become Rinascita's Blessed Maiden, the "Fleurdelys" spoken of by all.*
 
-*"She is the one!" others exclaimed. "She listens to our sorrows and replaces them with joy! If anyone is worthy of Divinity's crown, it is her."*
+The coronation as Blessed Maiden was the moment Cartethyia's individual identity was officially superseded by a sacred function. The Divinity's whispers that accompanied the crown were not a gentle invitation — they were an instantaneous reorientation of selfhood. She became Fleurdelys: vessel, prophet, divine instrument, symbol. Cartethyia — the countryside girl, the wooden-sword knight — became a secret that Fleurdelys carried but could not speak of.
 
-Before the ceremony to receive her holy name, in a dull and stuffy hall, she performed **her final dance as Cartethyia**. Was she confused by Divinity's whispers? Fearful of an uncertain future? Confident that she could wield the sacred sword? The story does not say. She simply kept the name "Cartethyia" hidden deep within her heart.
+The narrative of her split — Fleurdelys defying the Threnodian, sealing it within herself, splitting her essence and casting outward the portion that retained the childhood selfhood as "Cartethyia" — is the inversion of this coronation. The coronation attempted to erase Cartethyia into Fleurdelys. The self-splitting attempted to preserve Cartethyia by evacuating her from Fleurdelys. Both were acts of violence against an integrated self, even if the second was an act of defiance rather than imposition.
 
-*Farewell, grain fields swaying in the breeze. Farewell, Tumbleyaks roaming so free. In a world so vast, someone must take up the sword. Someone must bind themselves in thorns. Someone—*
-
-*Must become Fleurdelys, the guardian of Rinascita.*
-
-## Cartethyia: Character Story III: Hesitation Amid Gale and Tide (Intimacy Level 3)
-As Fleurdelys, she studied Order scriptures and honed her combat skills. She listened to the voices of the people, arranging medicine deliveries, hearing confessions, taking in past sorrows. When a Tacet Discord Outbreak occurred, she drew her sword and crushed it in its infancy.
-
-These actions were no different from what she had done back home. The only difference was the scale.
-
-But doubt accumulated. She witnessed the Order's failings, the self-serving of the nobility. She believed "all should be somber and tranquil" as Fleurdelys, when inwardly she raged at the distance between what the system claimed and what it delivered. This is the internal conflict of Fleurdelys: a person forced to embody a system she could see crumbling from inside, because the people depending on that system needed her to hold it together.
-
-## Cartethyia: Character Story IV: The Inverted Tower (Intimacy Level 4 — Reconstructed from Archive Fragments)
-Cartethyia's imprisonment in the Inverted Tower is the defining trauma of her arc. Alone, without access to memory, without assurance of her own identity, she faced the real danger of dissolving entirely.
-
-Her response was methodical and human: she stitched dolls. She made up stories. She staged plays — not to entertain an absent audience but to keep herself from forgetting how to speak, to feel, to be a person. She missed the plays from the world of the living. She missed the wheat fields of the countryside. She missed sweet drinks and the sounds of people laughing.
-
-Fate can fill us with nostalgia even as it sends us onward alone.
-
-From this long period of reconstruction, she forged her most important philosophical insight: the essential thing is not "who I was" or "what I remember." The essential thing is **"what has to be done at this specific moment."** Memory is not identity. Action is identity.
-
-With this insight, she was able to embrace her current self — Cartethyia, free wandering knight — without requiring the continuity of every experience between the girl in Egla Town and the person she now is.
-
-## Cartethyia: Character Story V: After the Grand Quest
-A retired dramatist still tells a certain story:
-
-*Once upon a time, in the countryside of Egla Town, there was a wandering knight.*
-
-The story never ends. After the Inverted Tower, after the Dark Tide, after everything — Cartethyia rode away from Rinascita's grandest battles not as Fleurdelys the divine champion but as herself: **a free and unfettered wandering knight**, no titles, no obligations, simply doing the next right thing that needed doing.
-
-The knight in the old story never defeated the windmill giant. He just kept fighting. And the mischievous girl who watched him thought that was the most noble thing she had ever seen.
+The events of Chapter 2 Act 4 — the Rover channeling the three swords in the Avinoleum and glimpsing her past — constitute the first time the full truth of this history has been witnessed by someone outside herself. The chapter's title — *The Maiden, The Defier, The Death Crier* — names all three aspects that Cartethyia holds: not in sequence, but simultaneously, as a single person.
 
 ## Cartethyia: Cherished Items
 
-**A Small Wooden Prop Sword:**
-A small wooden stage prop sword. A gift from a retired dramatist when Cartethyia was a child in Egla Town. Each day after her lessons, she would patrol the village with bright eyes and high spirits, brandishing it as she dealt with every "injustice" she encountered. It represents her original self — before Fleurdelys, before the Order, before any of it.
+**Wooden Stage Prop Sword**
+A small wooden stage prop sword given to her by a retired dramatist in Egla Town. Even the quiet countryside was not untouched by Rinascita's popular stage plays. This sword was her knightly instrument before any real power existed — the object through which she first understood what it meant to fight for something. *Fate can be too kind at first, only to become a rain that never stops falling.*
 
-**A Laurel Crown:**
-*When the golden crown was placed upon her head, Divinity's whispers reached her ears for the first time. From that moment on, she was no longer Cartethyia. She would become Rinascita's Blessed Maiden — the "Fleurdelys" spoken of by all. Fate can be too kind at first, only to become a rain that never stops falling.*
-The laurel she wears now is blue, not gold. It is the same symbol, worn differently — as a reminder rather than a mandate.
+**Hand Puppets**
+Two hand puppets she made in the Inverted Tower, staged in endless scuffles and reconciliations to keep her from forgetting speech and to fill the silence of absolute solitude. They represent her capacity for self-construction under impossible conditions — and the particular loneliness of being the only audience for one's own story. *Fate can fill us with nostalgia, even as it sends us onward alone.*
 
-**Hand Puppets Locked in a Scuffle:**
-*She had searched the tower for what felt like forever, yet found no trace of another soul. So she made puppets, staging play after play, just to keep from forgetting how to speak, and to fill the silence of being alone. She missed the plays she had seen in the world of the living, missed the wheat fields of the countryside, missed sweet drinks and the sounds of people laughing. Fate can fill us with nostalgia, even as it sends us onward alone.*
+**Laurel Crown**
+The golden crown placed upon her head at coronation — the moment Divinity's whispers first reached her and she ceased, publicly and functionally, to be Cartethyia. She keeps it not as a trophy but as a reminder of the precise moment when the world's expectations and her own identity ceased to align, and as a marker of how far she has traveled since.
 
-## Cartethyia: Favorite and Disliked Foods
-- **Special Dish:** Knight-Errant's Essentials — a DEF and Healing dish; reflects Cartethyia's pragmatic survivability and practical nature as a wandering knight
-- **Favorite Opera Line:** *"A thousand stars light up the air. Freedom blooms like flowers wide"* — from the now-banned opera play *Pegasus* (referenced in Roccia's Companion Story *Starry is the Night*). The banning of this opera is itself a lore detail — freedom as a threatening idea to the Order
-- **Character Alignment Around Food:** She aligns with hearty, practical sustenance rather than refined cuisine — consistent with her countryside upbringing and rejection of aristocratic pretension
+## Cartethyia: Favorite/Disliked Food
+
+**Favorite:** Sweet drinks and foods with gentle flavors that recall the ordinary pleasures of the countryside. During her time isolated in the Inverted Tower, she explicitly missed "sweet drinks and the sounds of people laughing" — simple pleasures became the most acute points of longing.
+
+**Disliked:** No specific disliked food is noted in available in-game records, though her general sensibility toward authenticity and simplicity implies a preference for honest, direct flavors over elaborate or performative presentations.
 
 ## Cartethyia: Ideals
-Three pillars define Cartethyia's ideals:
 
-**Freedom as Foundation:** She does not dream of power, recognition, or even justice as an abstract value. She dreams of being **a nameless guardian** — a knight who fights the battle that needs fighting and rides away without expectation of reward or remembrance. Freedom, to Cartethyia, is not the absence of responsibility. It is the presence of choice: choosing to fight, choosing your name, choosing who you become.
+**Passion — The Wandering Knight**
+Her most earnest and consistent ideal: to be a nameless guardian, a wandering knight who fights injustice and rides away without recognition. This is not self-effacement but radical freedom — after an existence defined entirely by titles that preceded and superseded her selfhood, anonymity is the most meaningful gift she can give herself.
 
-**Truth as North Star:** Her life motto — *"The truth is a beacon in the maelstrom of my life"* — is not a claim to knowledge. It is a commitment to searching. She does not pretend the Order was good, that her divine origin was clean, or that her power does not carry weight. She looks at what is, not what is convenient.
+**Resonance — Truth as Navigation**
+*"The truth is a beacon in the maelstrom of my life."* Honesty is not merely an ethical stance for Cartethyia but an existential orientation. Given her history of fractured memory, imposed identity, and sacred narrative, the capacity to perceive and speak truthfully is the primary way she orients herself in the world. She extends this ideal to relationships: she finds it difficult to lie even when honesty is painful.
 
-**The Present Moment as Identity:** Having lost and reconstructed her memories and identity once, Cartethyia is philosophically committed to the present. The past defines but does not determine. The next right action is always available. This is not dismissiveness of history — it is the hard-won wisdom of someone who could have drowned in what was done to her and chose to swim forward instead.
+**Gratitude — The Chance of a Different Ending**
+She holds deep gratitude for the Rover, who she credits with giving her *the chance of a different ending to her story*. This is not hyperbole: without the Rover's intervention in the Avinoleum, the cycle of the Blessed Maiden's sacrifice would have continued, and Cartethyia — the countryside girl, the puppet-maker, the person — would have been subsumed entirely into Fleurdelys and the prophecy's demands.
 
-## Cartethyia: Narrative Chronicle: Rinascita and the Dark Tide
-Rinascita is a Mediterranean-inspired region in Wuthering Waves governed by powerful operatic, religious, and maritime traditions. Its two most significant cosmic forces are **Sentinel Imperator** — the protective divinity of the land — and **Threnodian Leviathan** — the destructive tide-creature whose periodic awakening threatens to drown the region in the **Dark Tide**.
+**Acceptance — The Present Self**
+Her psychological resolution of the Inverted Tower period is built around the principle that *the essential thing is what must be done now* — not regret for the past, not anxiety about the future. She accepts her current self, her dual nature, and her complicated history without requiring resolution of its contradictions.
 
-The Order of the Deep is the religious institution organized around the Sentinel's service. Their Blessed Maiden is the chosen vessel — the person through whom Divinity speaks and acts. This institution has immense political power and has, over time, accumulated the usual institutional failures: corruption, self-interest, doctrinal rigidity, and the suppression of inconvenient truths (like banning an opera for containing the word "freedom").
+## Cartethyia: Narrative Chronicle
 
-Cartethyia was chosen as the Blessed Maiden not through noble lineage but through direct divine selection — an act that scandalized the aristocracy and delighted the common people, both for reasons that say more about those groups than about her.
-
-## Cartethyia: Chronicles: The Threnodian's Creation and the Truth of Fleurdelys
-The narrative truth revealed during Chapter II (Avinoleum arc) is more complex than the legend:
-
-Cartethyia was **not simply chosen by the Sentinel**. She was **formed through the Threnodian Leviathan's curse and malice** — a "malicious creation" who, by some cosmic irony or deeper design, became the Blessed Maiden. When the Sentinel Imperator was **forcibly assimilated by the Threnodian Leviathan**, Cartethyia became the Resonator for both simultaneously.
-
-The public story — Fleurdelys chosen by Divinity to protect Rinascita — was not entirely a lie. The seal held. The protection was real. But the origin story was not what anyone believed. Cristoforo, the antagonist who manipulated the "stories" within Rinascita through his Sonoro (a realm-level power to rewrite narrative reality), had constructed false accounts that Cartethyia herself could only access through the Rover channeling the three swords in Avinoleum — a process that allowed both of them to witness her past as it truly was.
-
-## Cartethyia: Chronicles: The Rover's Role — Swordbearer and Godkiller
-The Rover's title in Cartethyia's cosmology — "Godkiller" — is not metaphorical. The Rover's capacity to kill that which should not be killable, to sever divine narratives from their fixed endings, is the exact power that gave Cartethyia a **different ending** from the one written for her. Cartethyia had been trapped in Fleurdelys's role — martyr, vessel, expendable — and the Rover, by engaging with the three swords' truth and defeating the Fleurdelys boss form, broke the story's predetermined conclusion.
-
-Their mutual resonance frequency recognition — Cartethyia reading their interaction as the formation of a deep bond — is both literal (Congenital Resonators have heightened frequency sensitivity) and emotional. She has chosen to be the Rover's sword: not out of obligation to divine authority, but as a free person making a free promise.
-
-## Cartethyia: Conclusion
-Cartethyia's arc in Wuthering Waves is a meditation on the difference between what is done to you and who you become. She was born of a curse, raised to be a symbol, imprisoned for refusing to disappear, and freed by someone who was willing to see her as a person rather than a role. Through each stage, she fought — sometimes with a sword, sometimes just by continuing to exist when existence itself was threatened.
-
-What makes her remarkable is not that she transcended her origins. It is that she carried them — curse, crown, puppet-plays in the dark, and all — and chose to be Cartethyia: wandering, free, looking for the next injustice worth fighting.
-
-The world has never felt so vast. This was only where the quest began.
-
-## Cartethyia: Theoretical Implications
-
-**On the Coexistence of Sentinel and Threnodian:**
-Cartethyia's Second Awakening — voluntary, stable, dual-form — proves that the Sentinel and Threnodian's opposition is not an absolute binary. They can coexist in a single consciousness that has chosen to master both rather than be torn by them. This has profound implications for Rinascita's future: if the land's protective and destructive forces can be integrated rather than eternally opposed, what other seemingly irreconcilable conflicts in the world of Wuthering Waves might find synthesis?
-
-**On Congenital Resonance as Identity Rather Than Accident:**
-Cartethyia's Resonance Evaluation classifies her Awakening time as "unknown" — she was not struck by the Waveworn Phenomenon like most Resonators; she simply was this from the beginning. This raises the question of whether the Threnodian acted with intentionality in creating her — whether the "malicious creation" was more purposeful than malice alone explains.
-
-**On the Suppression of the Opera Pegasus:**
-The Order of the Deep banned the opera *Pegasus* — the source of Cartethyia's favorite line about freedom. This is not an incidental detail. It signals that the Order's governance included ideological suppression of ideas threatening to its power structure. The fact that Cartethyia — who lived within this system and bore its most sacred title — loved this banned line secretly is a quiet act of ongoing resistance that predates her explicit rebellion.
-
-**On Narrative as Power (Cristoforo and the Sonoro):**
-The Chapter II antagonist's power was to control stories — to write scripts for reality and force people to live inside them. Cartethyia's liberation required not just defeating Cristoforo but accessing the true story of her own past. This frames Wuthering Waves' broader lore as deeply concerned with the politics of narrative: who controls the story of the world controls the world itself. The Rover's role as Godkiller is inseparable from their role as witness to true histories.
-
----
+- **Early life:** Born / formed in Egla Town, Rinascita; classified as Congenital Resonator due to Threnodian Leviathan and Sentinel Imperator opposing influences. Childhood spent as a free-spirited girl who dreamed of becoming a wandering knight, aided by a retired dramatist and a wooden prop sword.
+- **Coronation:** Crowned as Rinascita's Blessed Maiden, taking the sacred title Fleurdelys. Divinity's whispers begin. Her individual identity is publicly subsumed into the sacred function.
+- **The Defiance and the Sealing:** Fleurdelys defies the will of the Threnodian Leviathan. In a final act, she seals the Threnodian within herself and enters the Avinoleum (Holy Spire of Confluence) alongside two sacred swords. She splits her essence, casting outward the portion retaining her original selfhood as "Cartethyia," and waits for a chosen one.
+- **The Inverted Tower:** The Cartethyia portion of her exists in the Inverted Tower alone, without memory of her origins. She spends an indeterminate period making dolls and puppets, staging plays to maintain language, and slowly reconstructing a sense of self and the key insight about living in the present moment.
+- **Chapter 2 Acts I–III:** Cartethyia appears as a figure of intrigue in Rinascita; Rover and companions encounter her while navigating the political and mythological tensions surrounding the Blessed Maiden's identity and the Dark Tide threat. Her true nature remains obscured.
+- **Chapter 2 Act IV — The Maiden, The Defier, The Death Crier:** The Rover channels the three swords in the Avinoleum and witnesses Cartethyia's past. Her full identity is revealed: she is simultaneously the Blessed Maiden (prophesied restorer), the Defier (challenger of the Threnodian), and the Death Crier Fleurdelys (the sealed sacrifice). The cycle is broken.
+- **Post-Act IV — Playable Release (Version 2.4, June 12, 2025):** Cartethyia is freed, whole, and walks Rinascita as a wandering knight. She regards the Rover as her Swordbearer and faithful companion, having been given *the chance at a different ending*. Her Second Awakening — free form-transition between Cartethyia and Fleurdelys — represents the integration of her opposing natures rather than their conflict.
 
 ## Cartethyia: Sources
-- Wuthering Waves Fandom Wiki — Cartethyia/Backstory: https://wutheringwaves.fandom.com/wiki/Cartethyia/Backstory
-- Wuthering Waves Fandom Wiki — Main Character Page: https://wutheringwaves.fandom.com/wiki/Cartethyia
-- wuthering.wiki — Character Archive: https://wuthering.wiki/character_1409.html
-- Genshin-Builds Cartethyia Story & Voicelines: https://genshin-builds.com/en/wuthering-waves/characters/cartethyia/info
-- VS Battles Wiki — Abilities / Lore Context: https://vsbattles.fandom.com/wiki/Cartethyia
-- Game8 Cartethyia Story Overview: https://game8.co/games/Wuthering-Waves/archives/493081
-- Pocket Tactics — Cartethyia Lore Summary: https://www.pockettactics.com/wuthering-waves/cartethyia
-- The Flagship Eclipse — Lore Details: https://www.theflagshipeclipse.com/2025/07/25/7-wuthering-waves-lore-details-you-probably-missed/
+- Wuthering Waves Fandom Wiki (Backstory) — https://wutheringwaves.fandom.com/wiki/Cartethyia/Backstory
+- Genshin-Builds WuWa Story/Voicelines — https://genshin-builds.com/en/wuthering-waves/characters/cartethyia/info
+- Game8 Lore Overview — https://game8.co/games/Wuthering-Waves/archives/493081
+- Wuthering Waves Fandom Wiki (Main) — https://wutheringwaves.fandom.com/wiki/Cartethyia

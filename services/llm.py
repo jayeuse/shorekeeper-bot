@@ -3,15 +3,10 @@ import time
 import asyncio
 import inspect
 from typing import Any
-try:
-    import google.generativeai as genai
-except Exception:
-    genai = None
+from google import genai
+from google.genai import types
 
-try:
-    import ollama
-except Exception:
-    ollama = None
+import ollama
 
 from core.config import USE_ONLINE_MODEL, GOOGLE_GEMINI_API_KEY, ONLINE_MODEL, LOCAL_MODEL
 

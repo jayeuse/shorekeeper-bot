@@ -1,329 +1,275 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/black_shores/camellya/camellya_kit.md
+source_file: characters/black_shores_characters/camellya/camellya_kit.md
 character: Camellya
 group: Black Shores
 document_type: character_kit
 importance: high
 tags:
-- character
-- kit
-- combat
+  - character
+  - kit
+  - havoc
+  - sword
+  - main_dps
+  - blossom_mode
+  - budding_mode
+  - aoe
+  - basic_attack_dps
+  - 5star
+  - version_1_4
 ---
 
-# Camellya — Kit & Mechanics Knowledge File
-
-<!-- RAG-optimized: each ## section is a standalone searchable chunk -->
+# Camellya Kit Documentation
+<!-- Sources: https://www.prydwen.gg/wuthering-waves/characters/camellya/, https://game8.co/games/Wuthering-Waves/archives/473332, https://wuthering.gg/characters/camellya, https://wutheringlab.com/character/camellya-build/ -->
 
 ## Camellya: Combat Archetype and Role
-- **Attribute (Element):** Havoc
-- **Weapon:** Sword
-- **Primary Role:** Main Damage Dealer (S-Tier) — the first limited Havoc DPS in Wuthering Waves; benchmark for all Havoc DPS characters
-- **Secondary Roles:** Self-buffing burst DPS; aerial/vine-based combat specialist
-- **Scaling:** ALL damage scales off **ATK** (not HP); ~80% of total damage output is classified as Basic Attack DMG
-- **Key Resources:**
-  - **Crimson Pistils** (Forte Resource, max 100) — fuels the Forte system; grants Crimson Buds on consumption
-  - **Crimson Buds** (max 10) — each Bud amplifies Budding Mode attacks by +5% per Bud consumed (up to +50% additional), stacking on top of the flat +50% Budding Mode bonus
-  - **Concerto Energy** (max 100) — standard team resource; Camellya's Ephemeral ability requires 100 Concerto to activate (consuming 70 and leaving 30 unspent); her rotation requires 170 total Concerto generated per cycle
-  - **Blossom Mode** — entered via standard Resonance Skill; suspends Camellya on vines; enables aerial attack chain; drains STA; persists through character swaps
-  - **Budding Mode** — entered via Forte Circuit Ephemeral (requires 100 Concerto + Ephemeral off cooldown); the primary burst damage window; enhances all relevant attacks by 50% base (+5% per Crimson Bud consumed, max +50% additional); ends when all Crimson Pistils are consumed or on field swap
 
-## Camellya: Stats Baseline (Approximate — Level-by-Level)
-Camellya is an ATK-focused Main DPS with high HP and DEF scaling. Her ATK is the primary damage stat.
+- **Element/Attribute:** Havoc
+- **Weapon Type:** Sword
+- **Role:** Main DPS — Airborne Basic Attack hypercarry with exceptional AoE coverage. Camellya deals the majority of her damage through enhanced Basic Attack chains in Blossom Mode and Budding Mode. Her kit is centered on generating Concerto Energy rapidly through aerial vine attacks, then spending it on Ephemeral to enter the damage-amplified Budding Mode. She functions similarly to Jiyan as a high-field-time hypercarry but focuses on Basic Attack DMG rather than Liberation DMG, works with different support synergies, and has stronger inherent AoE radius.
+- **Tier:** T1.5 DPS (ToA and WhiWa as of Version 3.0; was T0 at launch in 1.4)
 
-| Level | HP | ATK | DEF |
-|-------|----|-----|-----|
-| Lv. 1 | ~1,000 | ~22 | ~55 |
-| Lv. 10 | ~2,600 | ~57 | ~142 |
-| Lv. 20 | ~4,200 | ~92 | ~230 |
-| Lv. 20+ (Asc.) | ~5,200 | ~114 | ~283 |
-| Lv. 30 | ~6,100 | ~134 | ~333 |
-| Lv. 40 | ~7,600 | ~167 | ~415 |
-| Lv. 40+ | ~8,600 | ~188 | ~467 |
-| Lv. 50 | ~9,800 | ~215 | ~533 |
-| Lv. 50+ | ~10,800 | ~236 | ~586 |
-| Lv. 60 | ~12,100 | ~264 | ~656 |
-| Lv. 60+ | ~13,100 | ~286 | ~708 |
-| Lv. 70 | ~14,400 | ~314 | ~779 |
-| Lv. 70+ | ~15,350 | ~332 | ~825 |
-| Lv. 80 | ~16,600 | ~358 | ~891 |
-| Lv. 80+ | ~17,550 | ~376 | ~937 |
-| Lv. 90 | ~18,800 | ~402 | ~1,003 |
+## Camellya: Key Resources (Forte Mechanics Overview)
 
-*Forte Attribute Bonus nodes add additional HP%, ATK%, and Crit Rate at unlockable milestones. Exact values verified against Wuthering Waves Fandom Wiki combat page.*
+Camellya's combat system revolves around two modal states and two tracked resources:
 
-## Camellya: Stats Baseline: Analysis
-Camellya's ATK stat at Lv.90 is competitive but not exceptionally high — she relies on ATK% stacking from echoes, weapons, and team buffs to push her absolute ATK into the 2,000+ range needed for optimal performance. Her HP and DEF scaling is notably above average, giving her better natural survivability than most DPS characters.
+- **Blossom Mode** (primary aerial state): Entered via Resonance Skill — Crimson Blossom. Camellya becomes airborne, is unable to move conventionally, and gains access to her entire enhanced attack suite (Vining Waltz, Blazing Waltz, Floral Ravage, Dodge Counter Atonement, Vining Ronde). This mode can be maintained indefinitely as long as STA holds. All attacks in this mode are classified as Basic Attack DMG.
+- **Budding Mode** (empowered aerial state): Entered via Forte Circuit — Ephemeral, when Concerto Energy is full. Costs 70 Concerto Energy and activates Sweet Dream, a passive that boosts all attack multipliers by +50% base and up to an additional +50% from consumed Crimson Buds (max +100% Sweet Dream total). Mode ends when all Crimson Pistils are consumed or Camellya swaps off-field.
+- **Crimson Pistils** (0–100): The fuel for all in-mode attacks. Replenished to 100 by casting Intro Skill Everblooming or by activating Ephemeral. Spent by every attack in Blossom or Budding Mode; every 10 Pistils spent regenerates 4 Concerto Energy and produces 1 Crimson Bud.
+- **Crimson Buds** (0–10 stacks, 15s duration): Generated by spending Pistils. Consumed at Ephemeral activation to amplify Sweet Dream — each Bud adds +5% to the bonus multiplier, up to +50% (at 10 Buds). Building to 10 Buds before activating Ephemeral is therefore the central optimization target.
 
-**Target Build Stats (S0, ideal endgame):**
-- ATK: 2,000+ (combined with buffs)
-- Crit Rate: ~70%
-- Crit DMG: ~250%
-- Havoc DMG Bonus: ~60%
-- Basic Attack DMG Bonus: ~25%
-- Energy Regen: 110–115% (base 100% + 10–15% for safety net)
+## Camellya Forte Circuit: Vegetative Universe
 
-## Camellya: Ascension Materials (Total — Level 1 to Level 90)
-- **Shell Credits:** 170,000 (ascension) + ~2,030,000 (all Forte upgrades) = **~2,200,000 total**
-- **Topological Confinement** (all 4 rarity tiers) — drops from the **Fallacy of No Return** boss in Tethys' Deep of the Black Shores (Forgery Challenge style); 46 total for full ascension:
-  - LF Topological Confinement: 4
-  - MF Topological Confinement: 12
-  - HF Topological Confinement: 12
-  - FF Topological Confinement: 4
-- **Nova** — world material from Black Shores area exploration; 60 total for full ascension
-- **Whisperin Cores** (LF / MF / HF / FF tiers) — enemy drops from Tacet Discord enemies in Huanglong and Black Shores areas; 4 + 12 + 12 + 4 for ascension
-- **Forte Upgrade Materials (Per Skill, Levels 1–10):**
-  - Shell Credits: 280,000
-  - Inert Metallic Drip: 5
-  - Reactive Metallic Drip: 5
-  - Polarized Metallic Drip: 8
-  - Heterized Metallic Drip: 11
-  - Topological Confinement (skill level material): 4
+**Crimson Pistil loop:** Every aerial or enhanced attack consumes Crimson Pistils. The Energy Regen Multiplier of these attacks is increased by +150% while Pistils are being consumed (i.e., Concerto generation is high). Every 10 Pistils spent produces 1 Crimson Bud + 4 Concerto. At 100 Pistils and 10 Buds, a full Ephemeral activation cycle returns 100 Pistils and converts all 10 Buds into +50% bonus on Sweet Dream.
 
-## Camellya: Basic Attack: Sanguine Blossom (5-Hit Chain)
-Performs up to 5 consecutive attacks dealing Havoc DMG. After Basic Attack Stage 3 **or** Heavy Attack Pruning, hold the Normal Attack Button to continuously spin and strike the target (this spin is **Basic Attack Vining Waltz** or **Blazing Waltz** in Blossom Mode), dealing Havoc DMG. Basic Attack Stage 4 automatically flows into Stage 5 without additional input.
+**Forte Circuit: Ephemeral** (replaces Resonance Skill when Concerto is full and not on CD): Consumes 70 Concerto Energy, deals Havoc DMG (Basic Attack DMG classification), enters Budding Mode, refills Crimson Pistils to 100, and consumes all current Crimson Buds to apply Sweet Dream amplification. Cooldown 25s.
 
-All Basic Attack variants deal **Basic Attack DMG type** — the single most important distinction in her kit, since the majority of buffs that stack on Camellya target this damage type specifically.
+**Budding Mode — Sweet Dream:** While active, all attacks listed below gain:
+- Base +50% DMG Multiplier
+- Up to +50% additional from Crimson Buds consumed (5% per Bud, max 10 Buds = +50%)
+- Maximum total Sweet Dream bonus: **+100%** DMG Multiplier on all affected attacks
 
-**Approximate ATK-based scaling per stage at Lv.1 and Lv.10:**
+Attacks affected by Sweet Dream: Normal Attack, Vining Waltz, Blazing Waltz, Vining Ronde, Dodge Counter Atonement, Resonance Skill Crimson Blossom, Resonance Skill Floral Ravage.
 
-| Stage | Lv.1 (% ATK) | Lv.10 (% ATK) |
-|-------|--------------|---------------|
-| Stage 1 | ~60% | ~100% |
-| Stage 2 | ~55%+55% | ~92%+92% |
-| Stage 3 | ~75% | ~125% |
-| Stage 4 | ~70% | ~115% |
-| Stage 5 | ~85% | ~140% |
-| Vining Waltz (Spin, per tick) | ~30–35% per hit | ~50–58% per hit |
-| Dodge Counter (Atonement) | ~80% | ~130% |
+While in Budding Mode, Camellya cannot gain new Crimson Buds, and the Energy Regen Multiplier of all affected attacks is reduced to 0% (so she cannot refill Concerto while in Budding Mode). Budding Mode ends when Pistils run out or she swaps off-field.
 
-*Note: In Budding Mode, all above attacks gain a flat +50% DMG Multiplier bonus on top of these base values, plus an additional +5% per Crimson Bud consumed at Ephemeral cast (max +50%), for a total possible bonus of +100% to all multipliers.*
+**Optimal pre-Ephemeral build:** Enter Blossom Mode → execute Vining Waltz and Blazing Waltz chains until 10 Crimson Buds are stacked (100 Pistils spent; yields 40 Concerto from Pistil consumption + generation from attacks) → cast Ephemeral → continue enhanced attacks under Sweet Dream +100% → exit when Pistils are depleted → Floral Ravage finisher → swap for buff reload.
 
-## Camellya: Basic Attack: Heavy Attack — Pruning
-Consumes STA to attack the target, dealing Havoc DMG. Can be performed in mid-air. Normally counts as Heavy Attack DMG, but **Inherent Skill 1 reclassifies it as Basic Attack DMG** — a critical change enabling it to receive all Basic Attack-focused buffs.
+## Camellya: Stats Baseline
 
-In Blossom Mode, becomes a **horizontal spin attack** (Basic Attack Blazing Waltz) with broader AoE hit coverage.
+| Stat | Lv. 1 | Lv. 90 |
+|---|---|---|
+| HP | 820 | 10,325 |
+| ATK | 36 | 450 |
+| DEF | 95 | 1,161 |
+| Crit. Rate | 5% | 5% |
+| Crit. DMG | 150% | 150% |
+| Energy Regen | 100% | 100% |
+| Max Resonance Energy | 125 | 125 |
 
-## Camellya: Resonance Skill: Crimson Blossom / Floral Ravage (Blossom Mode Entry/Exit)
-**Crimson Blossom** (standard Resonance Skill, ground or mid-air):
-- Camellya suspends herself using her vines, entering **Blossom Mode**
-- In Blossom Mode:
-  - Normal movement is disabled; she can only dodge (STA cost) to reposition
-  - Her Basic Attack chain shortens to 4 hits (Stage 1–4)
-  - Her spin attack becomes horizontal (wider AoE)
-  - All attacks while in Blossom Mode deal slightly increased damage vs. out-of-Blossom
-  - STA drains continuously while suspended
-  - She can cast skills and build Concerto Energy normally
-  - Blossom Mode persists through character swaps (she re-enters it when swapping back)
-- **Cooldown:** ~5s from entering/exiting
+*Forte minor node bonuses add +16% Crit DMG and +12% ATK%. Stats above exclude minor forte bonuses.*
 
-**Floral Ravage** (second Resonance Skill press in Blossom Mode):
-- Releases from vines; deals Havoc DMG; exits Blossom Mode
-- Provides concerto energy; follow with Basic Attack to continue chain
+## Camellya: Ascension Materials
 
-| | Lv.1 | Lv.5 | Lv.10 |
-|-|------|------|-------|
-| Crimson Blossom DMG (% ATK) | ~100% | ~130% | ~170% |
-| Floral Ravage DMG (% ATK) | ~80% | ~104% | ~136% |
+| Material Type | Total Required |
+|---|---|
+| LF Whisperin Core | ×4 |
+| MF Whisperin Core | ×12 |
+| HF Whisperin Core | ×12 |
+| FF Whisperin Core | ×4 |
+| Topological Confinement (Weekly Boss drop, Fallacy of No Return) | ×46 |
+| Nova (Local specialty, Black Shores map) | ×60 |
+| Shell Credits | 170,000 |
 
-## Camellya: Forte Circuit: Crimson Pistil, Crimson Bud, and Ephemeral
-**Crimson Pistil Resource (max 100):**
-- +100 Crimson Pistils: casting Intro Skill Everblooming
-- +100 Crimson Pistils: activating Forte Circuit Ephemeral
-- +50 Crimson Pistils: casting S6 Forte skill Perennial
+*Nova is gathered from the Black Shores underground map. Use the Prydwen or wuthering.gg Interactive Map to locate them efficiently.*
 
-**Crimson Bud Generation:**
-- Each time a Crimson Pistil-consuming attack hits and passes certain thresholds (via Normal Attacks or Vining Waltz), Camellya generates 1 Crimson Bud (maximum 10)
-- Crimson Buds accumulate passively during Blossom Mode and normal combat; the goal is to enter Ephemeral with as many Buds as possible (ideally 10 for the maximum +50% Sweet Dream bonus)
+## Camellya: Character Kit: Basic Attack — Burgeoning
 
-**Forte Circuit: Ephemeral (Core Burst Ability):**
-- Requires: 100 Concerto Energy + Ephemeral not on cooldown
-- When both conditions are met, the Resonance Skill button is replaced with Ephemeral
-- **Cost:** Consumes 70 Concerto Energy (leaves 30)
-- **Effect:** Deals massive Havoc DMG to all targets in a large AoE; this damage is counted as **Basic Attack DMG**; considered Forte Circuit damage
-- **Cooldown:** 25 seconds from cast
-- Entering Ephemeral immediately restores all 100 Crimson Pistils
-- All accumulated Crimson Buds are consumed immediately on cast; each Bud consumed increases **Sweet Dream** bonus by +5% (max 10 Buds = +50% bonus)
-- Camellya enters **Budding Mode** after Ephemeral
+Camellya performs up to 5 consecutive attacks dealing Havoc DMG. Stages 4 and 5 chain automatically. After Basic Attack Stage 3 or Heavy Attack Pruning, holding the Normal Attack button begins a continuous spinning attack chain. Both the standard chain and the hold-chain are the foundation for generating Crimson Pistils on the ground before Blossom Mode is available.
 
-**Budding Mode — Sweet Dream:**
-- Base effect: +50% DMG Multiplier to Normal Attack, Basic Attack Vining Waltz, Basic Attack Blazing Waltz, Basic Attack Vining Ronde, Dodge Counter Atonement, Resonance Skill Crimson Blossom, and Resonance Skill Floral Ravage
-- Additional: +5% per Crimson Bud consumed at Ephemeral cast, up to +50% (total max: +100% on top of all base multipliers = effectively doubled damage from these skills)
-- Crimson Pistils are consumed by the attacks listed above while in Budding Mode
-- **Energy Regen is set to 0% for all listed attacks** during Budding Mode — this is the price paid; she cannot gain Resonance Energy while her burst window is active
-- Budding Mode ends when: all Crimson Pistils consumed OR Camellya swaps off-field
+| Attack | Multiplier (Lv.1) |
+|---|---|
+| Stage 1 | 31.45% |
+| Stage 2 | 23.38% × 2 |
+| Stage 3 | 25.50% × 3 |
+| Stage 4 | 12.42% × 20 |
+| Stage 5 | 24.23% × 4 |
+| Heavy Attack (Pruning) | 44.33% × 3 |
+| Mid-air Attack | 33.00% × 2 |
+| Dodge Counter | 50.00% × 3 |
 
-**Ephemeral Scaling (% ATK, approximate):**
-| Level | Lv.1 | Lv.2 | Lv.3 | Lv.5 | Lv.8 | Lv.10 |
-|-------|------|------|------|------|------|-------|
-| Ephemeral DMG | ~560% | ~605% | ~651% | ~743% | ~882% | ~1,000%+ |
+*Note: With Inherent 1 (Seedbed), Heavy Attack Pruning is reclassified as Basic Attack DMG, making it eligible for Basic Attack DMG Bonus scaling.*
 
-*Exact Ephemeral multipliers at Lv.10 from in-game data approach ~1,000–1,100% ATK across all hits combined. Verify against Wuthering Waves Fandom Wiki Combat page for precise values.*
+## Camellya: Character Kit: Resonance Skill — Valse of Bloom and Blight
 
-## Camellya: Resonance Liberation: Fervor Efflorescent
-**Energy Cost:** 125 | Cooldown: 25s | Concerto Regen: 20
+**Crimson Blossom** (normal state): Attacks the target dealing Havoc DMG (Basic Attack classification), then immediately enters Blossom Mode, launching Camellya airborne. Can be cast in mid-air. Cooldown 4s.
 
-Camellya summons her vines and flowers in a dramatic AoE burst around herself, dealing Havoc DMG. This is a significant nuke — in optimal rotations it is cast immediately after or alongside Ephemeral to maximize the Budding Mode bonus window. The Liberation also provides a substantial amount of Concerto Energy (20), helping to rebuild toward the next Ephemeral cycle.
+**Blossom Mode:** While airborne, all standard actions are replaced by enhanced versions:
+- Normal Attack (1–4) → **Vining Waltz** (dash-spinning attacks in wide arc, 4 stages)
+- After Vining Waltz Stage 3, hold Normal Attack → **Blazing Waltz** (sustained spin dealing massive AoE Havoc DMG over its duration; Vining Waltz Stage 4 follows automatically)
+- Resonance Skill → **Floral Ravage** (finisher, ends Blossom Mode; cooldown shared with Crimson Blossom)
+- Dodge Counter → **Atonement** (after successful Dodge)
+- Jump → **Vining Ronde** (aerial repositioning attack; ends Blossom Mode)
 
-**Attribute Scaling (% ATK, approximate per hit):**
-| Level | Lv.1 | Lv.3 | Lv.5 | Lv.7 | Lv.10 |
-|-------|------|------|------|------|-------|
-| Liberation Total DMG | ~450% | ~540% | ~640% | ~756% | ~900%+ |
+All Blossom Mode attacks deal Havoc DMG classified as Basic Attack DMG. STA is consumed continuously while airborne. Floral Ravage should be used as a finisher immediately before swapping or entering Budding Mode.
 
-*S3 Resonance Chain increases this multiplier by +50%, making Liberation a substantially larger damage contribution at S3+.*
+| Attack | Multiplier (Lv.1) |
+|---|---|
+| Crimson Blossom DMG | 57.15% × 2 |
+| Vining Waltz 1 | 48.45% |
+| Vining Waltz 2 | 22.95% × 2 |
+| Vining Waltz 3 | 11.04% × 6 |
+| Vining Waltz 4 | 34.00% × 3 |
+| Blazing Waltz (full channel) | 11.04% × 19 |
+| Floral Ravage | 26.46% × 5 |
+| Vining Ronde | 26.64% × 3 |
+| Atonement (Dodge Counter) | 57.00% × 2 |
 
-## Camellya: Inherent Skill 1: Sanguine Bloom (Havoc + Basic Reclassification)
-- Increases Camellya's **Havoc DMG Bonus by +15%**
-- **Heavy Attack Pruning is now counted as Basic Attack DMG** (instead of Heavy Attack DMG)
-- This reclassification means every Basic Attack buff in the game — from Sanhua's Outro, S4 team buff, and weapon passives — also applies to her Heavy Attack, massively increasing it
+## Camellya: Character Kit: Resonance Liberation — Fervor Efflorescent
 
-## Camellya: Inherent Skill 2: Eternal Blossom (Havoc + Interruption Resistance)
-- Increases Camellya's **Havoc DMG Bonus by +15%** (total from both Inherent Skills: **+30% Havoc DMG Bonus** passively)
-- Grants **increased resistance to interruption** while casting Basic Attack, Basic Attack Vining Waltz, and Basic Attack Blazing Waltz
-- This interruption resistance is meaningful at S0; at S1, the Resonance Skill (Ephemeral) additionally gains interrupt immunity
+Camellya attacks the target dealing Havoc DMG. Can be cast in mid-air. This is the only ability in her kit not classified as Basic Attack DMG — it deals Liberation DMG. Despite being her least relied-upon damage source at S0, it should still be used when available as it contributes meaningful damage and contributes to overall rotation efficiency. At S3, its multiplier increases by 50% and Camellya gains +58% ATK while in Budding Mode after liberation.
 
-## Camellya: Intro Skill: Everblooming
-When swapping to Camellya with full Concerto Energy, she dashes in and deals Havoc DMG.
+| Stat | Value (Lv.1) |
+|---|---|
+| Skill DMG | 605.00% |
+| Cooldown | 25s |
+| Resonance Energy Cost | 125 |
+| Concerto Regen | 20 |
 
-**Critical mechanic:** Casting Everblooming instantly recovers **100 Crimson Pistils** — the full Forte resource in a single activation. This is why beginning every rotation with the Intro Skill is essential: it immediately enables Crimson Bud generation and the path to Ephemeral in the shortest possible window.
+## Camellya: Inherent Passives
 
-**Scaling (% ATK):**
-| Level | Lv.1 | Lv.5 | Lv.10 |
-|-------|------|------|-------|
-| Everblooming DMG | ~329% | ~420% | ~550%+ |
+**Seedbed (Inherent 1):** Camellya gains **+15% Havoc DMG Bonus**. Additionally, DMG dealt by Heavy Attack Pruning is now considered Basic Attack DMG (rather than Heavy Attack DMG), making it eligible for Basic Attack DMG Bonus scaling from Echoes and weapons. Straightforward and always active; the reclassification is particularly relevant because Basic Attack DMG Bonus is Camellya's most efficient substat.
 
-*S5 increases Intro Skill multiplier by +303% — transforming Everblooming from an energy-refill tool into a serious nuke in its own right.*
+**Epiphyte (Inherent 2):** Camellya gains **+15% Basic DMG Bonus**. Additionally, she gains increased resistance to interruption when casting Basic Attack (ground), Vining Waltz, and Blazing Waltz. The interruption resistance is especially valuable during the slow, stationary Blazing Waltz channel — without it, hits from enemies would break the spin and cost significant DPS. The +15% Basic DMG Bonus stacks multiplicatively with Basic Attack DMG Bonus.
 
-## Camellya: Outro Skill: Twining
-When Camellya exits the field, she strikes the target dealing Havoc DMG.
-- Base damage: **329.24% of ATK**
-- If Forte Circuit Ephemeral was activated during the current field session (activating the "Ephemeral Twining" trigger), the next Outro Skill **Twining** deals **additional Havoc DMG equal to 459.02% of ATK**
-- Combined Outro (Ephemeral Twining active): **329.24% + 459.02% = 788.26% ATK total** from the Outro alone
+## Camellya: Intro/Outro Skills
 
-This makes properly triggering Ephemeral before Outro mandatory for maximum damage output.
+**Intro Skill — Everblooming:**
+Camellya attacks the target dealing Havoc DMG. Recovers **100 Crimson Pistils** on cast. Generates 10 Concerto.
 
-*S5 increases Outro Skill multiplier by +68%, transforming Twining into an enormous burst hit.*
+With Inherent 2 (S1 provides additional Crit DMG on cast): Casting Everblooming with S1 grants **+28% Crit DMG** for 18s (once per 25s). This makes the Intro Skill a powerful damage-enabler — leading into Everblooming as the start of every rotation is strongly preferred.
 
-## Camellya: Materials Costs: Forte Skill Upgrade Summary
-Per skill to Level 10:
-- 280,000 Shell Credits
-- 5 Inert Metallic Drip + 5 Reactive Metallic Drip + 8 Polarized Metallic Drip + 11 Heterized Metallic Drip
-- 4 Topological Confinement (boss drop from Fallacy of No Return)
+| Stat | Value (Lv.1) |
+|---|---|
+| Skill DMG | 100.00% |
+| Concerto Regen | 10 |
 
-**Skill Leveling Priority:**
-1. Resonance Skill (governs Ephemeral multiplier — most impactful single upgrade)
-2. Forte Circuit (governs Sweet Dream bonus and Ephemeral mechanics)
-3. Resonance Liberation (direct nuke; high value at S3)
-4. Intro Skill (high damage at S5; strong at base for Pistil refill utility)
-5. Basic Attack (least priority — base multipliers are comparatively low)
+**Outro Skill — Twining:**
+Camellya attacks the target dealing Havoc DMG equal to **329.24% of ATK**. After activating Forte Circuit's Ephemeral, the next Twining also deals **additional Havoc DMG equal to 459.02% of ATK** — the empowered Twining fires on swap-out following an Ephemeral activation, and its enhanced version represents a meaningful burst of Havoc damage that should be timed to land with active ATK and DMG buffs.
 
-## Camellya: Resonance Chain Level 1 (S1): Crimson Dream
-- Casting Intro Skill Everblooming increases Camellya's **Crit DMG by +28%** for 18 seconds (trigger cooldown: once every 25s)
-- While casting Forte Circuit Ephemeral, Camellya is **immune to interruptions**
-- **Priority:** Very High — the +28% Crit DMG boost is free and unconditional during her burst window, and interrupt immunity on Ephemeral removes her biggest vulnerability at S0
+## Camellya: Skill Upgrade Materials
 
-## Camellya: Resonance Chain Level 2 (S2): Radiant Bloom
-- The **DMG Multiplier of Resonance Skill Ephemeral is increased by +120%**
-- **Priority:** Highest single value node — approximately +23% total real damage improvement for Camellya. Ephemeral is her primary burst ability; doubling its multiplier is transformative
+| Material | Total (All 6 Skills) |
+|---|---|
+| LF Whisperin Core | ×25 |
+| MF Whisperin Core | ×28 |
+| HF Whisperin Core | ×40 |
+| FF Whisperin Core | ×57 |
+| Inert Metallic Drip | ×25 |
+| Reactive Metallic Drip | ×28 |
+| Polarized Metallic Drip | ×55 |
+| Heterized Metallic Drip | ×67 |
+| Dreamless Feather (Weekly Boss — Dreamless in Tidebreak Zone) | ×26 |
+| Shell Credits | 2,030,000 |
 
-## Camellya: Resonance Chain Level 3 (S3): Blossom's Edge
-- The **DMG Multiplier of Resonance Liberation Fervor Efflorescent is increased by +50%**
-- When in **Budding Mode**, Camellya's ATK is increased by **+58%**
-- **Priority:** Very High — the +58% ATK during Budding Mode stacks multiplicatively with all other ATK% sources and applies to all Budding Mode attacks; the Liberation buff is a direct 50% increase to a major nuke
+**Skill Priority:** Resonance Skill (Forte upgrade: Ephemeral) > Forte Circuit > Resonance Liberation > Intro Skill > Normal Attack. Nearly 80% of Camellya's damage is Basic Attack type flowing through Forte mechanics; the Forte Circuit upgrade is mandatory. Resonance Skill enables Ephemeral and Blossom Mode. Liberation contributes a meaningful burst at S3+. Normal Attack and Intro Skill can be deprioritized in early investment phases.
 
-## Camellya: Resonance Chain Level 4 (S4): Thornbound Promise
-- Casting Everblooming (Intro Skill) gives **all team members +25% Basic Attack DMG Bonus** for 30 seconds
-- **Priority:** High — the 30-second duration covers the full rotation cycle for every DPS character on the team; makes Camellya a genuine team-wide Basic Attack buffer in addition to her personal DPS role; particularly impactful in teams with a secondary Basic Attack DPS
+## Camellya: Resonance Chains (Sequences)
 
-## Camellya: Resonance Chain Level 5 (S5): Eternal Garden
-- The **DMG Multiplier of Intro Skill Everblooming is increased by +303%**
-- The **DMG Multiplier of Outro Skill Twining is increased by +68%**
-- **Priority:** Moderate — the Intro and Outro damage are secondary to her main rotation (Ephemeral + Budding Mode); +303% on Intro is absurd in isolation but Intro is not a priority damage source at S0; becomes relevant in speedclear contexts
+**S1 — Sequence Node 1:**
+Casting Intro Skill Everblooming grants Camellya **+28% Crit DMG for 18s** (once per 25s). Camellya also becomes **immune to interruption while casting Ephemeral**. The Crit DMG bonus is a straightforward damage increase applied to every rotation that leads with Everblooming (which should be every rotation). The interruption immunity is quality-of-life that prevents enemy hits from canceling the Ephemeral activation and costing a full rotation. Widely considered mandatory for competitive play.
 
-## Camellya: Resonance Chain Level 6 (S6): Undying Crimson
-- The **DMG Multiplier of Forte Circuit Sweet Dream is additionally increased by +150%** (stacking on all Budding Mode bonuses)
-- Unlocks **Forte Circuit Perennial**: within 15 seconds after casting Ephemeral, if Concerto Energy is full and Perennial is not on cooldown, the Resonance Skill is replaced with Perennial
-  - Perennial **costs 50 Concerto Energy** and recovers 50 Crimson Pistils
-  - Deals Havoc DMG equal to **100% of Ephemeral's DMG** (counted as Basic Attack DMG)
-  - Cooldown: once per 25 seconds
-  - Camellya enters Budding Mode after casting Perennial and removes all Crimson Buds
-  - **Sweet Dream bonus when casting Perennial increases to +250%** (from the base +100% at max Buds)
-  - Immune to interruptions while casting Perennial
-- **Priority:** Theoretically very high (+80% theoretical DPS improvement) but rotation length extension reduces practical uptime of existing buffs, making real improvement closer to +55–60%. S6 Camellya is exceptionally powerful but requires rotation adaptation
+**S2 — Sequence Node 2:**
+The DMG Multiplier of **Forte Circuit Ephemeral is increased by +120%**. This is the largest single sequence jump in Camellya's chain: analysts assess a **~23% overall DPS increase**, since Ephemeral is one of her largest-multiplier single hits. Strongly recommended as a stopping point for players willing to invest beyond S1.
 
-## Camellya: Optimal Rotation Overview (S0, Full Concerto from Outro Swap)
-1. Character 2/3 builds full Concerto → swap to **Camellya** → triggers **Intro Skill Everblooming** (+100 Crimson Pistils, +28% Crit DMG at S1)
-2. Use **Echo Skill** (Crownless or Dreamless) — animation cancel with jump if using Nightmare: Crownless
-3. Cast **Resonance Skill** (Crimson Blossom) → enter **Blossom Mode**
-4. Basic Attack chain: BA1 → BA2 → BA3 → **Hold BA3** (Vining Waltz spin) → BA4 — building Concerto Energy and Crimson Buds
-5. Once Concerto hits 100, **Forte Circuit Ephemeral** activates — use it to enter **Budding Mode** (+50% to +100% damage multiplier)
-6. Immediately cast **Resonance Liberation Fervor Efflorescent** (Liberation provides concerto and counts during Budding window)
-7. Continue BA chain: BA1 → BA2 → BA3 → Hold → BA4 while consuming Crimson Pistils under Budding Mode bonus
-8. Once Concerto rebuilds to 100 again, **Outro Skill Twining** triggers (with Ephemeral Twining buff = **788.26% ATK** combined Outro)
-9. Swap out → repeat with supporting characters → swap back on next rotation
+**S3 — Sequence Node 3:**
+The DMG Multiplier of **Resonance Liberation Fervor Efflorescent is increased by +50%**. When in Budding Mode, Camellya's **ATK is increased by +58%**. The ATK increase in Budding Mode affects all Sweet Dream attacks, making it a substantial multiplicative boost to her peak damage window. The Liberation multiplier increase makes the ability worth casting eagerly rather than treating as a secondary priority.
 
-**Key timing notes:**
-- Entire on-field window for Camellya: ~25–35 seconds per rotation
-- She is one of the longest on-field DPS characters in the game; team selection should minimize field time needed for support characters
-- STA management during Blossom Mode requires positioning pre-commitment
+**S4 — Sequence Node 4:**
+Casting Everblooming grants **all team members +25% Basic Attack DMG Bonus for 30s**. This is one of the most team-relevant sequences in her chain — it directly buffs any teammate who deals Basic Attack DMG, which includes off-field sub-DPS like Sanhua and Roccia. However, because S4 requires three additional sequences past the high-value S2 stopping point, it is rarely considered a priority investment.
 
-## Camellya: Recommended Weapons
-- **Red Spring** (5★ Sword, Signature — Base ATK: 588, Crit Rate substat 24.3%) — the definitive best-in-slot; tailored entirely to her kit: +12% ATK base, +10% Basic Attack DMG Bonus per hit (×3 stacks, per second), **+80% Basic DMG Bonus** for 10 seconds when Concerto Energy is consumed; only character in the game who can efficiently trigger the Concerto consumption passive multiple times per rotation
-- **Emerald of Genesis** (5★ Standard) — Crit Rate substat; +12.8% ER; +6% ATK stacking ×2 on Resonance Skill cast; provides safety net for rotation and good raw stats; best non-signature 5★ option
-- **Blazing Brilliance** (5★ Standard) — Crit DMG substat; higher raw damage ceiling than Emerald at higher refinements; "stat stick" but effective
-- **Somnoire Anchor** (4★ Event Sword) — Best F2P option post-event; high base ATK; passive grants +2% ATK per stack (up to 10 = 20% ATK) and +6% Crit Rate at max stacks; pairs well with Camellya's long on-field time to naturally reach max stacks
-- **Commando of Conviction** (4★ Convene) — +15% ATK for 15s on Intro Skill cast; simple and reliable; slightly outclassed by Somnoire Anchor but broadly available
+**S5 — Sequence Node 5:**
+The DMG Multiplier of Intro Skill Everblooming is increased by **+303%** and the DMG Multiplier of Outro Skill Twining is increased by **+68%**. The Everblooming amplification converts her Intro from a minor damage hit to a significant burst; Twining's empowered version benefits from the enhanced multiplier as well.
+
+**S6 — Sequence Node 6:**
+The DMG Multiplier of **Forte Circuit Sweet Dream is additionally increased by +150%** (from +100% base max to +250% at S6). Additionally, this sequence unlocks **Forte Circuit Perennial** — within 15s after casting Ephemeral, if Concerto is full and Perennial is not on cooldown, Resonance Skill is replaced with Perennial: consumes 50 Concerto, recovers 50 Crimson Pistils, deals Havoc DMG equal to 100% of Ephemeral DMG (Basic Attack classification), and re-enters Budding Mode with Sweet Dream raised to **+250%** and all Crimson Buds cleared. Immune to interruption during Perennial. Effectively gives Camellya a second, more powerful Budding Mode window per rotation. Analysts report a **~55–60% actual DPS increase** over S0 (theoretical is higher; reduced by rotation length impact). Full constellation Camellya is among the highest-damage non-hyperscaled DPS characters in the game.
+
+| Sequence | Relative DPS vs. S0 |
+|---|---|
+| S0 | 100% baseline |
+| S1 | ~108–112% |
+| S2 | ~131–134% (major spike) |
+| S3 | ~140–148% |
+| S6 | ~155–162% (actual; ~180%+ theoretical) |
 
 ## Camellya: Recommended Echo Sets
-**Best Set: Sun-Sinking Eclipse / Havoc Eclipse (5-piece)**
-- 2-piece: +10% Havoc DMG Bonus
-- 5-piece: After releasing Basic Attack or Heavy Attack, gain +7.5% Havoc DMG Bonus per stack (×4 stacks, each lasts 15s) = **+30% additional Havoc DMG Bonus at full stacks** — total set bonus: **+40% Havoc DMG Bonus**
-- Fully ramping takes ~6 seconds of Basic Attack spam — trivially easy in Camellya's rotation
 
-**Alternative Set: Lingering Tunes (5-piece)**
-- 2-piece: +10% ATK
-- 5-piece: While on field, ATK increases by +5% every 1.5s (×4 stacks max = +20% ATK), plus +60% Outro Skill DMG
-- Better if Camellya's Outro is a major rotation damage contributor (S5)
+**Primary Build — Havoc Eclipse (5-piece):**
+The definitive set for Camellya at all investment levels. The 5-piece bonus grants **+7.5% Havoc DMG per Basic Attack or Heavy Attack hit**, stacking up to 4 times (max +30% Havoc DMG). Since nearly every attack Camellya performs in Blossom or Budding Mode is classified as Basic Attack DMG, she reaches and maintains the full 4-stack with minimal effort. This directly amplifies her highest-value attacks with no setup cost.
 
-**Main Echo Options:**
-- **Nightmare: Crownless** — Best-in-slot main echo for Havoc Eclipse set; passively provides +12% Havoc DMG and +12% Basic Attack DMG when in main echo slot; Active: jump-cancel after animation for instant cast
-- **Dreamless** — Strong alternative main echo; active skill provides 6 consecutive Havoc hits (5×54.08% + 1×270.40% ATK = 540.8% total) with easy cast; no animation cancel required; consistent and simple
+**Main Echo — Dreamless (4-cost):** The optimal main echo. The Dreamless ability performs 6 consecutive strikes dealing Havoc DMG; all of its hits are Havoc-element and contribute to Havoc Eclipse stacks. It also carries Havoc Eclipse's sonata effect. Use as a pre-Ephemeral buff: cast Dreamless before entering Budding Mode to stack Havoc Eclipse and let the active proceed through the empowered window.
 
-**Echo Cost Pattern:** 4-3-3-1-1 (standard DPS setup; avoids 4-4-1-1-1 which underperforms)
+**Alternative Main Echo — Crownless (4-cost):** Also carries Havoc Eclipse. Slightly lower personal DPS contribution than Dreamless at most investment levels, but viable and slightly easier to use in mid-air contexts.
 
-**Main Stats:**
-- 4-cost: Crit Rate OR Crit DMG (whichever is lower)
-- 3-cost ×2: Havoc DMG Bonus + ATK% (or double ATK% if using Red Spring in Tower of Adversity with mismatched element bonus — margin is under 1%)
-- 1-cost ×2: ATK flat
+**Cost Pattern:** ④ ③ ③ ① ①
 
-## Camellya: Best Team Compositions
-**Optimal (Premium):** Camellya + Sanhua + Shorekeeper
-- Sanhua (Outro: +38% Basic Attack DMG Amplification for incoming Resonator, 14s) provides the single most impactful external buff for Camellya; her entire kit takes ~8–10 seconds on field, maximizing Camellya's on-field time
-- Shorekeeper (Outro: 15% all DMG Amp + Crit Rate/Crit DMG buffs from Supernal Stellarealm) — stacks multiplicatively with Sanhua's Basic Attack buff
+**Stat Priority:**
+- 4-cost: Crit Rate or Crit DMG (whichever is lower to balance 1:2 ratio)
+- 3-cost: Havoc DMG Bonus × 2
+- 1-cost: ATK% × 2
+- Substats: Crit Rate ★★★ > Crit DMG ★★★ > ATK% ★★ > Basic Attack DMG Bonus ★★ > Flat ATK ★
+- Target stats (additional on top of base): ~10% Energy Regen minimum; Crit Rate 70–80%; Crit DMG 180–220%; ATK 2,000+
 
-**Optimal (Premium Alt):** Camellya + Lynae + Mornye/Shorekeeper
-- Lynae provides massive generalist buffs; considered equal or better to Sanhua at high investment
+## Camellya: Best Weapon
 
-**Standard F2P:** Camellya + Sanhua + Verina/Baizhi
-- Verina: Outro +10% All DMG Bonus for team; +10% ATK; broader buff toolkit
-- Baizhi: ATK buffs and healing; slightly lower ceiling than Verina but accessible
+**Red Spring (Signature, 5-star Sword):**
+ATK increased by **24%**. When dealing Basic Attack DMG, the wielder gains **20% Basic Attack DMG Bonus for 14s** (triggers once per second, up to 3 stacks = max +60% Basic Attack DMG Bonus). When Concerto Energy is consumed, gain **80% Basic DMG Bonus for 10s** (ends on swap; triggers once per second). Red Spring synergizes directly with every element of Camellya's kit: her ATK scaling, her Basic Attack classification, and her Concerto consumption (via Ephemeral). The 80% Basic DMG Bonus during Ephemeral activation windows is among the highest single-source DMG modifiers in the game.
 
-**Alternative:** Camellya + Danjin + Verina
-- Danjin Outro: Havoc DMG Amplification for incoming Resonator; supplements Camellya's naturally high Havoc DMG Bonus for double-stacking Havoc bonuses
+**Emerald of Genesis (5-star alternative):** Energy Regen + ATK stacking. Reduces reliance on ER substats, allowing more offensive stat allocation. Strong all-rounder when Red Spring is unavailable.
 
----
+**Blazing Brilliance (5-star alternative):** Crit Rate substat + Resonance Skill cast buff. Easier to achieve Crit balance but lower ceiling than Red Spring.
+
+**Somnoire Anchor (4-star):** Best free 4-star option. Grants up to +20% ATK (virtually free with Camellya's Concerto consumption pattern) and Crit Rate bonus. Obtainable through the Somnium Labyrinth event.
+
+**Lumingloss (4-star):** Basic Attack DMG Bonus passive. Straightforward synergy; useful if Somnoire Anchor is unavailable.
+
+**F2P (3-star):** Sword of Night. Significantly weaker than any 4-star option but functional as an absolute placeholder.
+
+## Camellya: Best Teams
+
+**Team 1 — Premium Meta:**
+**Camellya** (Main DPS) / Roccia (Sub-DPS / Buffer) / Shorekeeper (Healer / Crit Buffer). Roccia's Outro grants **Basic Attack DMG Amplification and Havoc DMG bonus** directly to Camellya's most impactful damage type. Shorekeeper provides +12.5% Crit Rate, +25% Crit DMG (at 250% ER), +15% Damage Amplification, and team healing. This team covers every damage multiplier relevant to Camellya simultaneously and is the highest-ceiling composition available.
+
+**Rotation:** Shorekeeper (Liberation → Outro) → Roccia (full kit → Outro) → Camellya (Intro/Everblooming → Blossom Mode → 10 Buds → Ephemeral → Budding Mode chain → swap after Pistils depleted) → repeat.
+
+**Team 2 — Standard Meta (F2P-Accessible):**
+**Camellya** (Main DPS) / Sanhua (Sub-DPS / Basic Attack Buffer) / Shorekeeper (Healer / Crit Buffer). Sanhua's Outro provides **Basic Attack DMG Amplification** (the most directly valuable buff for Camellya's damage type) and has extremely low field time (~8–10s for a full kit rotation), maximizing Camellya's time on field. Shorekeeper provides Crit buffs and healing. This is the most popular and widely recommended team for Camellya.
+
+**Team 3 — Budget (Verina Variant):**
+**Camellya** (Main DPS) / Sanhua (Sub-DPS) / Verina (Healer / ATK Buffer). Verina's Outro provides **ATK% and Healing** rather than Crit buffs, resulting in a lower damage ceiling than Shorekeeper. However, Verina's coordinated off-field attacks and passive team buffs make her a very strong budget choice. Preferred over Baizhi if both are available.
+
+**Team 4 — Danjin Variant (Budget Havoc Synergy):**
+**Camellya** (Main DPS) / Danjin (Sub-DPS) / Verina or Baizhi (Healer). Danjin's Outro provides **Havoc DMG Bonus** and ATK buff at S6. Lower ceiling than Sanhua due to Danjin's longer field time requirements, but usable for early-game progression.
+
+## Camellya: DPS Benchmarks
+
+Benchmarks from Prydwen and wutheringlab (Camellya S0, Red Spring R1, Havoc Eclipse 5-pc, Lv.90 full stats):
+
+| Investment | Notes |
+|---|---|
+| S0R0 (Somnoire Anchor) | Functional, approximately 30% below S0R1 |
+| S0R1 (Red Spring R1) | Full S0 damage ceiling baseline |
+| S2R1 | ~31–34% above S0R1 (Ephemeral +120% multiplier) |
+| S6R1 | ~55–62% above S0R1 (Perennial + Sweet Dream +150%) |
+
+Recommended rotation (S0): Shorekeeper Liberation → Outro → Sanhua Intro → Sanhua BA chain → Sanhua Outro → Camellya Intro (Everblooming; 100 Pistils restored) → Crimson Blossom (Blossom Mode) → Vining Waltz 1/2/3 → Blazing Waltz (full channel) → Vining Waltz 4 → repeat until 10 Buds → Ephemeral (Budding Mode, Sweet Dream +100%) → Vining Waltz 1/2/3 → Blazing Waltz (full channel) → Vining Waltz 4 → Floral Ravage (exit Blossom) → swap → Outro triggers Twining (empowered). Total rotation time approximately 20–25s.
 
 ## Camellya: Sources
-- Wuthering Waves Fandom Wiki — Camellya/Combat: https://wutheringwaves.fandom.com/wiki/Camellya/Combat
-- wuthering.gg Camellya Kit Data: https://wuthering.gg/characters/camellya
-- Prydwen.gg Camellya Build Guide: https://www.prydwen.gg/wuthering-waves/characters/camellya/
-- Game8.co Camellya Best Build: https://game8.co/games/Wuthering-Waves/archives/473332
-- Wutheringlab Camellya Build: https://wutheringlab.com/character/camellya-build/
-- GuildJen Camellya Character Guide: https://guildjen.com/camellya-character-guide/
-- Theria Games Ultimate Camellya Guide: https://theriagames.com/guide/wuthering-waves-ultimate-camellya-guide/
-- wutheringwaves.gg Camellya Guide: https://wutheringwaves.gg/camellya-guide/
-- Genshin-Builds Camellya Guide: https://genshin-builds.com/en/wuthering-waves/characters/camellya
-- MisterMenPlays Camellya Build: https://www.mistermenplays.com/wutheringwaves/builds/camellya
-- LootBar Camellya Kit Overview: https://lootbar.gg/blog/en/wuthering-waves-camellya-kit.html
-- TheGamer Camellya Build Guide: https://www.thegamer.com/wuthering-waves-camellya-build-guide/
+
+- Prydwen Institute — Camellya Guide and Build — https://www.prydwen.gg/wuthering-waves/characters/camellya/
+- Game8 — Camellya Best Builds and Teams — https://game8.co/games/Wuthering-Waves/archives/473332
+- wutheringlab — Camellya Build Guide — https://wutheringlab.com/character/camellya-build/
+- wuthering.gg — Camellya Build and Info — https://wuthering.gg/characters/camellya
+- MisterMenPlays — Camellya Build Guide — https://www.mistermenplays.com/wutheringwaves/builds/camellya
+- LootBar — Wuthering Waves Camellya Build — https://lootbar.gg/blog/en/wuthering-waves-camellya-build.html

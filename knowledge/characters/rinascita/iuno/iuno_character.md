@@ -1,108 +1,99 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/iuno/iuno_character.md
+source_file: characters/septimont_characters/iuno/iuno_character.md
 character: Iuno
-group: Rinascita
+group: Septimont
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - aero
+  - gauntlets
+  - septimont
+  - 5-star
+  - congenital-resonator
+  - priestess
+  - tetragon-temple
+  - prophecy
+  - memory-erasure
 ---
 
-# Iuno Character Documentation
-<!-- Sources: Wuthering Waves Fandom Wiki, Iuno/Backstory Wiki, TV Tropes (WuWa: Septimont), VS Battles Wiki, Shipping Wiki (Augiuno), Wutheringwaves-builds, Pocket Tactics, WuWaLabo, Wutheringlab -->
+# Iuno — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Iuno, https://wutheringwaves.fandom.com/wiki/Iuno/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/iuno/info, https://wutheringwaves.fandom.com/wiki/By_Moon%27s_Fated_Light, https://www.prydwen.gg/wuthering-waves/characters/iuno/, https://game8.co/games/Wuthering-Waves/archives/524889 -->
 
 ## Iuno Profile: Basic Information
-- **Name:** Iuno
-- **Title:** The Prodigy Priestess / Defiant Priestess of the Tetragon Temple / 127th Priestess of Septimont
-- **Identity:** Congenital Resonator; Priestess of the Tetragon Temple; Septimont's foremost seer and prophet
+- **Name:** Iuno (Chinese: 伊乌诺, Yī Wū Nuò)
+- **Alias / Title:** The 127th Priestess; Prodigy Priestess; Unwritten One; Defiant Priestess; Moon Arrow That Anchors Shifts of Fate
+- **Identity:** Congenital Resonator; prodigy Priestess of Septimont's Tetragon Temple; seer who traded the power of prophecy for a Forte she could fight with; the one who erased herself from collective memory to save Septimont
 - **Affiliation:** Tetragon Temple, Septimont
-- **Birthplace:** Septimont, Rinascita (born on the night of a hollowed moon — noted in the Priestess Register as significant)
-- **Release Version:** Introduced in Version 2.4; Released in Version 2.6 Phase 2 (September 17, 2025); Rerun in Version 3.0 (January 15–February 4, 2026)
+- **Birthplace / Origin:** Septimont, Rinascita — born on the night of the hollowed moon
+- **Release Version:** Wuthering Waves Version 2.6 (September 17, 2025); Introduced in Version 2.4
 - **Rarity:** 5-Star
 - **Element:** Aero
-- **Weapon:** Gauntlet
+- **Weapon Type:** Gauntlets
 - **Voice Actors:**
   - **JP:** Lynn (りん)
   - **EN:** Ella Boyes
   - **CN:** Jiang Yingjun (姜英俊)
-  - **KR:** Yoon Eun-seo (윤은서)
+  - **KR:** Yoon Eun Seo (윤은서)
 
 ## Iuno Profile: Ontological Overview
-Iuno is a playable Aero Congenital Resonator in Wuthering Waves — the 127th Priestess of Septimont's Tetragon Temple and the most celebrated seer in the city's history. She was born on the night of a hollowed moon, and the Tetragon's Priestess Register records that "her eyes hold the power to ▇▇▇▇" — the specific nature of her gift being partially classified or too sacred to write plainly. Her Forte aligns "extraordinarily closely with the frequency pattern of the natural moon, exhibiting a continuous, phase-like modulation" — effectively making her own resonance a living echo of the lunar cycle.
 
-Her ability is entirely unique in documented Resonator history: she can see the future with infallible accuracy by studying how moonlight changes. Unlike ordinary oracles, her visions are not vague impressions or symbolic premonitions — they are literal, specific previews of events that will occur. The Temple of Septimont uses these prophecies to guide the city's citizens, transcribing them as murals on the Temple's walls.
+Iuno is the 127th Priestess of Septimont's Tetragon Temple — and the most extraordinary one the institution has ever recorded, even if the record itself is haunted by a peculiar problem: the archivists who write it can never quite remember who it describes. She is a Congenital Resonator born under the hollowed moon, her Forte aligned so precisely with the natural moon's frequency that her hair turns translucent and glows like moonlight when her resonance activates. Her defining gift, as she received it, was foresight: she could read fate in the patterns of moonlight and see, with infallible clarity, what was coming.
 
-This gift is also a curse. Each act of defiance against fate — each time Iuno uses her power to prevent an event she has seen — costs her a part of her existence. "Using an ability to defy fate will cost her, her existence." The price is progressive and irreversible. In the climax of the False Sovereign arc (Version 2.6), she exchanged her prophetic sight entirely — sacrificing her clairvoyance to channel the power needed to become the moon arrow that pins the Dark Tide path — and in doing so, was erased from the memory of everyone in Septimont, including Augusta.
+The problem with infallible foresight, she eventually concluded, is that it showed her everything she could not change. Her mother Sibylla's peril. Septimont's doom. Her own end. She watched the prophecies accumulate and understood the shape of what the role of Priestess actually was: a witness. A ledger. Someone who observes fate rather than alters it. Three years before the game's present, she made the choice that defines her character arc: she traded her exceptional prophesying power for a Forte she could use to fight. She could no longer simply watch.
 
-She is described by Septimont's officials as "extreme in the line of Priestesses." Not everyone agrees with her behavior despite her undeniable capabilities. Her irreverent attitude, willingness to defy fate's machinations, and tendency to involve herself directly in combat rather than remaining a passive seer place her firmly outside the mold of what Septimont expects a Priestess to be.
+This decision carries a precise cost. Her Forte — her Resonance — depletes her existence. Each use of her power erodes her from the world, requiring "sleep" to recover. The sacrifice she ultimately makes in the Version 2.6 main quest is the logical conclusion of this trajectory: to save Septimont, she does not die. She disappears. Everyone who knew her, including her closest friend Augusta, forgets she ever existed. Only the Rover — whose fate cannot be written into any prophecy — remembers.
 
-Post–Version 2.6, the Temple acknowledges that Iuno's sacrifice has left the Priestesses unable to see Septimont's collective auguries as a whole. Her absence is felt institutionally as much as personally.
+## Iuno — Character/Appearance Design
 
-## Iuno – Character/Appearance Design
-Iuno is a young woman of average height with fair skin and striking blue eyes.
+Iuno reads immediately as a moon-themed figure, but the execution is precise and layered rather than generic. She is of average height with fair skin and vivid blue eyes, and her most striking feature is her hair: a gradient flowing from dark blue at the roots to pale blue at the ends, with an overlaid pattern of fine stars suggesting the night sky rendered as hair. It falls in mid-thigh-length twin tails that curl inward at the ends, held by ornamental laurel wreaths with rings that extend into a pair of abstract "wings." A single ahoge rises from the crown, mirrored by a strand of lighter blue below it.
 
-- **Hair:** Dark-to-light blue gradient with an overlaid starry cosmic pattern — as if her twin tails contain a slice of the night sky. Mid-thigh length, styled as twin tails that curl inward at the ends. She has a single ahoge atop her head with a mirroring light-blue strand below it, giving her head a playful, asymmetric quality.
-- **Accessories:** Ornamental laurel wreath holding her twin tails; wreath rings that extend into a pair of "wings" flanking her head. The laurel wreath is a deliberate Roman cultural reference — in Roman tradition, the laurel was sacred to Apollo (god of prophecy and the sun) and worn by victors and high-status individuals.
-- **Tacet Mark:** Located on the top of her left foot — a somewhat unusual placement that is consistent with the Tetragon Temple tradition of Magical Barefooters. Most priestesses walk without footwear.
-- **Outfit:** Temple priestess attire with the typical Tetragon colorway of white, blue, and orange robes. The Tetragon's priestesses uniformly wear garments in these colors, and Iuno's attire is consistent with this while also reflecting her more active combat role — she can clearly fight in it.
-- **Combat Weapon:** A Gauntlet — specifically, a circular lunar ring (Moonring) that she can unfold into a Moonbow by transitioning between Lunar Cycle states. The ring itself is visually described as a circle of pure blue-white light that resembles a moon phase when viewed from different angles.
-- **Forte Visual Effects:** When Iuno activates her Resonance ability, lunar-phase-shaped energy constructs manifest around her, and the tips of her hair turn translucent, "radiating a gentle glow that is almost indistinguishable from actual moonlight" (Priestess Register).
-- **Thematic Aesthetic:** Iuno's design is saturated with lunar symbolism. The moon in all its phases — new, crescent, half, full — is woven through her visual identity, animations, and mechanical kit. Her name references Juno, the Roman queen of the gods and patron of Rome, while her design draws upon lunar deities across traditions (Selene, Artemis, Tsukuyomi). The celestial, night-sky quality of her hair reinforces a sense that she exists somewhat beyond ordinary human time — a woman who sees a future others cannot.
-- **Complementary Design to Augusta:** Iuno's lunar aesthetic deliberately mirrors and complements Augusta's solar design. Where Augusta is gold, orange, and blazing heat, Iuno is cool blue, white, and soft nocturnal light. The "sun and moon" thematic pairing is not incidental — it shapes their character dynamic, their gameplay synergy, and their narrative role as Septimont's co-leaders.
+Her outfit is Romanesque in structure — draped fabric, layered skirts, sandal-style footwear, and delicate accessories appropriate to a priestess of a Roman-inspired city-state. The color palette is consistent: deep navy, pale silver-white, and translucent blue-white for elements that evoke light through water or thin cloud cover. Her Tacet Mark rests on the top of her left foot — positioned, unusually, low and often hidden, which suits a character whose role in events repeatedly involved being overlooked or forgotten.
 
-## Iuno – Psychological Profile
-Iuno is cocky, outspoken, rebellious, warm, and thoroughly delightful in equal measure. She is the Prodigy Priestess — a woman who could have been the most compliant, most revered seer Septimont ever had, and instead chose to be a thorn in fate's side.
+The most distinctive visual element of her combat form is her weapons: the **Moonring** (a large circular chakram) in her baseline state, and the **Moonbow** (a luminous bow manifested from moonlight) when she enters Lunar Cycle — New Moon. The shift between them is visually clear and thematically coherent: the ring suggests the full visible moon, the bow the crescent or aimed phases. Her in-combat appearance during Liberation reportedly features an extended animation involving a crescent moon backdrop that has become community-notable for its duration and spectacle.
 
-**Core Traits:**
-- Cocky and self-assured — she knows she is extraordinary and makes no pretense of false humility; she can be wrong and knows this too, but is never beaten by it
-- Outspoken and irreverent — she says what she thinks, expresses frustration with formal constraints, and does not perform traditional deference
-- Genuinely warm and generous — her relationship with Augusta, her mother Sibylla, and her broader community is characterized by authentic affection
-- Free-spirited from childhood — she walked over stone, moss, petals, springs, "never needed a reason, never chased meaning"; she simply wanted to feel everything
-- Deeply competitive and playful — she wagers with dice, enjoys games, delights in catching Senators in arguments; she is a priestess who loves gambling
-- Fundamentally defiant — her entire arc is a refusal to accept that fate's worst predictions must come true; she will bet her existence on the idea that it doesn't
+## Iuno: Psychological Profile
 
-**On Fate and Free Will:**
-Iuno's relationship with her own prophetic power is philosophically complex. She knows with near-certainty what will happen — and she hates it. Not because knowing is painful (though it often is), but because knowing creates the temptation to intervene, and intervening costs her. She chose, at the decisive moment, to pay the full price — to sacrifice not just a part of her existence but all of it, if that meant Septimont survived.
+**The Watcher Who Refused to Watch**
+Iuno's core identity conflict is simple: she was born to observe fate and gifted with perfect sight, but she found observation intolerable. The moment she understood that her prophetic power showed her the future without granting her the ability to change it, she began the process of dismantling the limitation. Trading her prophesying power for a fighting Forte is not impulsive — it is the deliberate, methodical rejection of passivity as a vocation. She would rather be wrong and fighting than right and helpless.
 
-Her birthday gift to the Rover captures this philosophy beautifully: "For a Priestess, the day of birth is the starting point that stretches towards the end. Hmm, a rather suitable line to mark the beginning of a prophecy. But the infinite possibilities of the void are already perfect. There's nothing more I could offer. So, I've prepared something else. See this little moon? It can change its phases. Take it and place it in your void. If you ever find the infinite paths ahead overwhelming, it will at least serve as an anchor of certainty."
+**Cockiness as Armor, Genuine as Baseline**
+Her fandom description emphasizes "cocky, outspoken, and rebellious," and these are accurate. But her personality was shaped by a mother, Sibylla, who raised her with no noble rules and genuine warmth — *wherever you go, I'm waiting at the end.* The bravado is real but it is built on a foundation of genuine love and freedom. She is not performing confidence to cover insecurity; she has the confidence of someone who was loved unconditionally. The cockiness is what that looks like in a person who has also watched too many futures she could not prevent.
 
-**On Friendship:**
-Her feelings for Augusta are not merely politically convenient. She says, as a Priestess: "I never peep into her fate because it's always been in her hands." This is an extraordinary thing for a seer to say — she has voluntarily blinded herself to Augusta's future as an act of trust and respect. Of all people, Iuno has seen the future of practically every citizen of Septimont. The one person she refuses to forecast is her best friend. Her certainty that she can win Augusta's friendship back from memory erasure — with her "charms alone" — is both funny and deeply touching.
+**The Weight of Carrying It Alone**
+She saw her own end. She knew how the arc concluded. She lied to Augusta — her closest friend — rather than share the burden, choosing to spare Augusta the grief of foreknowledge even at the cost of the intimacy that honesty would have permitted. This is the precise inversion of Cartethyia's truth-as-survival-principle: Iuno chose the lie, in full knowledge of what she was doing, as a gift. Whether it was the right choice is the question her arc refuses to answer cleanly.
 
-**On the Cost of Power:**
-Iuno knows that seeing the future erodes her existence. She hides this from others. Her willingness to bear this alone, without seeking sympathy or protection, is consistent with a personality that does not burden others with her own suffering. She chose to bet everything at the end — not because she didn't understand the cost, but because she understood it perfectly and decided Septimont was worth more than her continued existence within memory.
+**The Defiant Moon**
+Her personal motto — *I am the moon that never falls, here to rewrite the ending* — is both accurate and slightly ironic: the moon she is does not fall, but it does disappear. She rewrites the ending not by surviving it but by stepping outside the narrative entirely, erasing herself from the prophecy she was born to fulfill. She becomes the one thing she never was as a Priestess: unwritten.
 
-## Iuno Relationships
+**Warmth Beneath the Attitude**
+When she passes the Rover her bracelet and asks them to always think of her when wearing it, she is not performing sentiment. The request is functional — she is hoping that an entity whose fate cannot be written down will anchor her existence when everyone else's memory of her dissolves. But it is also genuine: she wanted to be remembered by someone. The tear she sheds at that moment says so.
 
-**Augusta (Ephor of Septimont — Best Friend):**
-Augusta and Iuno are the "sun and moon" of Septimont — complementary, mutually reliant, and capable of bringing out the best in each other. Their bond formed when Iuno first encountered Augusta and offered encouragement framed as prophecy, telling her she would lead Septimont into a new era. It was actually just a hunch. Iuno has never peeked into Augusta's fate since. She admires Augusta's unyielding resolve — "the kind of ruler who'd sacrifice everything for her people, even her own flesh and blood" — and wants to support her "as a priestess, as a friend... or even as someone she has forgotten." The finality of that last clause is heartbreaking. After her sacrifice, Augusta forgets her entirely. Iuno's confident her charms can win the friendship back. She's probably right.
+## Iuno: Relationships
 
-**Sibylla (Mother):**
-Sibylla is the anchor of Iuno's warmth. Where most parents of exceptional children impose rules, expectations, and direction, Sibylla understood that Iuno needed the opposite: freedom. She "bound her with no noble rules," let her run wild, embraced her longing to experience everything — and was always waiting at the end of whichever path Iuno chose. There was never just one path. The emotional security Sibylla gave Iuno is the foundation beneath her confidence — a person who was loved unconditionally does not need to perform worthiness. Iuno knows she is loved, and she passes that warmth outward freely.
+**Augusta**
+Her closest friend — the sun to her moon, as their dynamic is understood both narratively and by the communities of players who follow them. Iuno first encouraged Augusta at a moment of uncertainty, framing the encouragement as prophecy to make Augusta accept it. Their friendship deepened across shared leadership of Septimont: Iuno as High Priestess, Augusta as Ephor. The friendship is characterized by deep mutual understanding, a comfortable teasing dynamic, and a significant asymmetry in the Version 2.6 arc: Iuno chose not to tell Augusta the truth about her own fate, and Augusta — after Iuno's sacrifice — cannot remember her well enough to grieve. In-game, when Augusta and Iuno are fielded together, Augusta's voice line addresses Iuno as *my friend* with a warmth that persists even after the memory erasure — a trace of something she cannot name.
 
-**The Rover (Protagonist):**
-Iuno's relationship with the Rover is characterized by friendly competitiveness and genuine respect. Her voicelines to the Rover include "Let's prove our value to each other" and "With you? I'd be delighted." She gives the Rover the Lunarum Bough (a lunar artifact) as a birthday gift, contextualizing it carefully: a piece of certainty, an anchor, for someone who walks among infinite unwritten paths. She appears to treat the Rover as someone uniquely interesting — a person whose fate is literally "unwritten," which to a seer who can read almost every other person's future must be both deeply refreshing and quietly significant.
+**Sibylla (Mother)**
+A former Gladiator champion and the most formative figure in Iuno's life. Sibylla raised her without restrictive noble expectations — *there is never just one path; whichever one you choose, I am waiting at the end.* Iuno's very first attempt at reading a prophecy was about Sibylla's peril, and she dismissed it. The guilt of that dismissal and the image of her mother buried by a Dark Tide incursion she could not prevent is the event that defined her rejection of passive prophecy as a life role.
 
-**The Tetragon Temple (Institution):**
-Iuno's relationship with the Tetragon Temple is complex. She is their greatest asset — and their greatest headache. She is considered "extreme in the line of Priestesses" and not everyone approves of her behavior, even while acknowledging her gifts. Her active, combative, rebellious approach to the role of Priestess sits uneasily against the institution's more passive, guidance-oriented tradition. Her sacrifice leaves the Temple institutionally weakened (they can no longer see collective Auguries), which raises the question of whether Iuno's departure — voluntary though it was — has left Septimont spiritually exposed.
+**Rover (Protagonist)**
+The Rover is, in the precise technical sense, the only entity who can remember Iuno after her sacrifice — because the Rover's fate cannot be written into prophecy, and Iuno's erasure operated on the world's capacity to record her in fate. Iuno called the Rover an *unwritten blank* in the Chaos when their hands met, and trusted the Rover to follow the trail of moonlight and anchor her back into existence. The dynamic is that of radical mutual recognition: she is the one who cannot be written; they are the one who cannot be prophesied. Neither of them fits into the ledger.
 
-**The False Sovereign (Antagonist — Version 2.6):**
-The False Sovereign was the threat that catalyzed Iuno's sacrifice. She saw Septimont's destruction clearly — a vision she couldn't find a path around through ordinary means. Rather than accept the outcome as fixed, she exchanged her prophetic sight for combat power and became "the moon arrow" that physically pinned the Dark Tide and enabled the False Sovereign's defeat. This was not a desperate, impulsive choice — it was a calculated, fully-informed decision by someone who had seen the alternatives and determined this was the only one that worked.
+**Lillibet (Grandmother)**
+The elder Priestess of the Tetragon Temple, who first confirmed through prophecy that Iuno would come to the Temple. Lillibet is one of the few figures who maintained some awareness of Iuno's existence even through the erasure — she asked archivists to verify the Priestess Register entry multiple times — but could not herself explain or account for the entry she knew was real.
 
-**Lillibet and Other Priestesses:**
-Lillibet appears post-arc to acknowledge the Tetragon's new limitation — that the Priestesses can no longer see Septimont's collective Auguries. This implies an institutional awareness of what was lost with Iuno's sacrifice. The relationship between Iuno and her fellow priestesses is not elaborated in available sources, but Iuno's "extreme" classification suggests a degree of friction with the institution's more traditional members.
+**Lupa**
+A gladiator-adjacent peer in Septimont. Lupa's voicelines after Iuno's disappearance subtly reflect the shift — altered in small ways that suggest something is missing without naming it — one of several environmental details in Version 2.6 that acknowledge the weight of what Iuno chose.
 
----
-## Sources
-- Wuthering Waves Fandom Wiki – Iuno: https://wutheringwaves.fandom.com/wiki/Iuno
-- Wuthering Waves Fandom Wiki – Iuno/Backstory: https://wutheringwaves.fandom.com/wiki/Iuno/Backstory
-- TV Tropes – Wuthering Waves: Septimont: https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesSeptimont
-- VS Battles Wiki – Iuno (Wuthering Waves): https://vsbattles.fandom.com/wiki/Iuno_(Wuthering_Waves)
-- Shipping Wiki – Augiuno: https://shipping.fandom.com/wiki/Augiuno
-- Wutheringwaves-builds – Iuno Story & Lore: https://wutheringwaves-builds.com/character/iuno/
-- WuWaLabo – Iuno Guide: https://wuwalabo.com/en/characters/iuno-guide/
-- Pocket Tactics – Iuno release date, voice actors, and lore: https://www.pockettactics.com/wuthering-waves/iuno
-- Wuthering Waves Fandom Wiki – Septimont: https://wutheringwaves.fandom.com/wiki/Septimont
+## Iuno: Sources
+- Wuthering Waves Fandom Wiki — https://wutheringwaves.fandom.com/wiki/Iuno
+- Wuthering Waves Fandom Wiki (Backstory) — https://wutheringwaves.fandom.com/wiki/Iuno/Backstory
+- Wuthering Waves Fandom Wiki (By Moon's Fated Light) — https://wutheringwaves.fandom.com/wiki/By_Moon%27s_Fated_Light
+- Genshin-Builds WuWa Story/Voicelines — https://genshin-builds.com/en/wuthering-waves/characters/iuno/info
+- Pocket Tactics Character Guide — https://www.pockettactics.com/wuthering-waves/iuno
+- Prydwen Build Guide — https://www.prydwen.gg/wuthering-waves/characters/iuno/
+- Game8 Build Guide — https://game8.co/games/Wuthering-Waves/archives/524889
+- VS Battles Wiki — https://vsbattles.fandom.com/wiki/Iuno_(Wuthering_Waves)

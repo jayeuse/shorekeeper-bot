@@ -1,132 +1,88 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/black_shores/chisa/chisa_character.md
+source_file: characters/ashinohara_characters/chisa/chisa_character.md
 character: Chisa
-group: Black Shores
+group: Ashinohara
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - havoc
+  - broadblade
+  - support
+  - startorch_academy
+  - mutant_resonator
+  - 5star
+  - version_2_8
 ---
 
-# Chisa Character Knowledge File
-<!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
+# Chisa — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Chisa, https://wutheringwaves.fandom.com/wiki/Chisa/Backstory, https://game8.co/games/Wuthering-Waves/archives/524880, https://www.prydwen.gg/wuthering-waves/characters/chisa/, https://genshin-builds.com/en/wuthering-waves/characters/chisa/info, https://www.sportskeeda.com/esports/va-wuthering-waves-official-voice-actors-notable-roles -->
 
 ## Chisa Profile: Basic Information
-- **Name:** Chisa Kuchiba (Chinese: 千咲; Japanese: 朽葉千咲)
-- **Title(s):** Eye of Unraveling; Student of Startorch Academy; High-Risk Resonator NHA-017
-- **Identity:** Havoc Mutant Resonator; Classification: Mutant (NHA-Eye of Unraveling-017); listed as a high-risk Resonator on the Ashinohara monitoring list
-- **Affiliation:** Startorch Academy (Ashinohara); monitored by Ashinohara – Neo Honami – Resonator Monitoring Center
-- **Birthplace:** Ashinohara (first Japan-aesthetic region introduced in Wuthering Waves, home of Neo Honami, a city trapped in a Lament time loop)
-- **Release Version:** Wuthering Waves Version 2.8, Phase 1 (November 20, 2025)
-- **Banner:** "Severs All Ties" — signature weapon: Kumokiri (Broadblade, 5-star)
+
+- **Name:** Chisa Kuchiba (Chinese: 千咲, *Qiān Sā*; family name 朽葉 *Kuchiba*, "withered leaf"; given name 千咲 meaning "thousand blossoms")
+- **Alias / Title:** "Just an Ordinary Student"; Scissor JK (fan nickname)
+- **Identity:** 5-Star Havoc Mutant Resonator; conscientious Startorch Academy student whose Forte allows her to perceive and sever the structural "threads" underlying all things
+- **Affiliation:** Startorch Academy; under observation by the Neo Honami Resonator Monitoring Center (Ashinohara)
+- **Birthplace / Origin:** Ashinohara, Lahai-Roi region
+- **Release Version:** Wuthering Waves Version 2.8
+- **Rarity:** 5-Star
+- **Element:** Havoc
+- **Weapon Type:** Broadblade
 - **Voice Actors:**
-  - **JP:** Kanemoto Hisako (金元寿子)
+  - **JP:** Hisako Kanemoto (金元寿子)
   - **EN:** Leader Looi
   - **CN:** Zhao Lingze (赵灵泽)
   - **KR:** Lee Joo-eun (이주은)
-- **Name etymology:** Kuchiba (朽葉) = "withered leaf"; Chisa (千咲) = "thousand blooms" — decay and blossoming coexist in her name
 
-## Chisa - Character Profile: Ontological Overview
-Chisa is a 5-star Havoc Resonator classified as a **Mutant** — a rare and dangerous designation meaning her Resonance ability does not operate within standard spectral parameters. Her power is not merely strong; it is structurally anomalous.
+## Chisa Profile: Ontological Overview
 
-- Resonance Power: **Eye of Unraveling** — extraordinary cognitive ability to intuitively discern the structure, form, and movement of observed objects; she can analyze objects' weaknesses through her vision and apply precise interference to induce structural destruction
-- She perceives what she calls **"threads"** — visual manifestations exclusive to her perception, not actual entities. In humans she saw red threads binding people (warmth); in Tacet Discords, the threads of life carry the scent of decay
-- Tacet Mark location: **right upper arm**
-- Resonance Awakening consequence: **prosopagnosia** (psychogenic visual recognition disorder) — she cannot recognize faces. Her brain cut the thread allowing face recognition when her Forte awakened under extreme emotional stress at age 15
-- Overclock Diagnostic: **HIGH RISK.** Multiple steep Rabelle's Curve fluctuations, peak values approaching critical limit; Forte stability weak; measurable risk of Overclocking
-- Required to wear a **collar-type Resonator suppression device** (black collar) at all times; she is on observation list for high-risk Resonators; real-time location tracked; compulsory measures authorized if deemed necessary
-- Under extreme conditions: the report notes she may be capable of analyzing abstract spatial structures, identifying threads of anomalies within anomalous spaces, and inducing **reality-distortion events, including spatial ███** (redacted in official report)
+Chisa is a playable Havoc Mutant Resonator affiliated with Startorch Academy in the Ashinohara area of Lahai-Roi. Classified as a Mutant Resonator by the Neo Honami Resonator Monitoring Center, she possesses an extraordinary cognitive ability—designated "Eye of Unraveling"—that allows her to intuitively perceive the structure, form, and movement of all observed objects as visible "threads." Through her Forte, she can analyze weaknesses in these structures and apply precise interference to induce controlled destruction. The monitoring center has flagged her Forte as exhibiting growth potential beyond standard safety thresholds, requiring her to wear a collar-type Resonator suppression device.
 
-## Chisa - Character Appearance Design
-Chisa is a pale, slender girl with a deliberately understated but precise aesthetic:
-- Long glossy black hair ending near her waist
-- Narrow pale red eyes with white pupils; beauty mark under the corner of her right eye
-- Tacet Mark: right upper arm, visible under her jacket
-- Attire: black Japanese sailor uniform (old Startorch Academy uniform she still wears out of habit) with red neck scarf and white collar; a loose-fitting long-sleeved black jacket fading from black to light grey over it; shiny black heeled penny loafers; dark mid-calf socks
-- Thin red ribbon tied at her right temple
-- **Resonator Suppression Collar:** black collar-type device around her throat — surveillance equipment that regulates her Forte and visually marks her as a monitored high-risk Resonator. *"The device against her throat stayed still."* It bites cold
-- **Weapon:** a giant broadblade that physically resembles a massive pair of scissors — in combat, it transforms into a chainsaw during Chainsaw Mode; the scissors aesthetic directly mirrors her Forte's thread-cutting nature
-- Design logic: the contrast of schoolgirl uniform + suppression collar + chainsaw-broadblade is intentional — it visually encodes the tension between who she is privately and what the world has made of her publicly
+Despite carrying the weight of surveillance and social isolation brought on by her condition, Chisa remains a level-headed, methodical student. She approaches the world with the conviction that anything—physical objects, complex problems, hostile situations—can be broken down and resolved through careful analysis. The one exception she acknowledges is human connection: bonds are fragile, easily severed, yet that very fragility is what makes them precious to her. Her scissors, inherited from her mother, have become both her literal tool and a symbol of her life philosophy—every cut an ending that quietly heralds a new beginning.
 
-## Chisa - Psychological Profile: Analytical Mind and Emotional Restraint
-Chisa is the most precisely self-contained character introduced in Wuthering Waves to date:
-- Official description: *"Conscientious, level-headed student. To her, everything can be broken down, analyzed, and resolved — with the exception of human bonding."*
-- Self-introduction: *"Just an ordinary student."* Said calmly, deflecting — the most revealing thing she ever says
-- She approaches the world structurally: every environment reveals itself as a system of threads she can read and cut with precision
-- Her analytical nature is not coldness — it is learned adaptation. She lost the ability to read faces when her Forte awakened; she compensates by being methodical, careful, and precise
-- When afraid or in pain, she does not show it — she presses a hand to her chest privately and waits for her heartbeat to slow
-- She believes bonds are the one exception to her analytical system: *"Bonds can be severed, but this fragility is what makes them precious."* This is not an abstraction — it is lived experience
+Chisa's story is closely tied to Honami, a city trapped in a time loop by the Lament. She spent two months surviving and fighting within this loop alongside her classmate Sumika, severing the threads of Tacet Discords and slowly working toward breaking the cycle. Having endured the endless summer of Honami, she has emerged with a hard-won clarity about what it means to move forward—leaving stagnation behind to rejoin the rushing current of life.
 
-## Chisa - Psychological Profile: Loneliness and the Architecture of Connection
-Chisa's emotional history is a careful architecture of loss beginning in childhood:
-- Age 6: warm festival memory — mother asking her wish, goldfish lanterns, fireworks, red threads on wrists weaving a warm web. She wished to make paper cuttings *"to keep every precious, happy thing"*
-- Age 12: father away on endless business trips; refrigerator plastered with mother's shift schedules; learned to say *"It's okay. I can take care of myself"* to no one. Ate a family sukiyaki meal alone while steam fogged the windows. *"For a family gathering. Such a gentle phrase, and yet so very far away."*
-- Age 15: defended bullied classmate Ritsuko with her mother's scissors. Retribution came: her desk carved with "idiot," locker filled with shredded textbooks. Her Forte Awakened under the stress — and she lost face recognition. Watched every person's face dissolve into smears of color
-- She chose: *"a path perhaps lonely, but true to her heart. The one she would never need to turn back from."*
-- She is not bitter. She is honest. She holds her scissors and moves forward
+## Chisa — Character/Appearance Design
 
-## Chisa - Psychological Profile: The Thread Metaphor
-The visual language of threads is Chisa's entire psychological architecture:
-- As a child: red threads on wrists, weaving warm invisible webs at festivals. Connection was visible to her before it was conceptual
-- Age 15 Awakening: *"a faint snap — not the brittle break of nerves, but like the sound she heard when the strings of her goldfish lantern snagged on a tree."* The warm threads unraveled into broken fragments. Connection became something that could be lost
-- Her scissors: originally her mother's tool, used in her craft. Became a weapon pointed at someone's face for the first time. Now the literal form of her Forte's broadblade. The object carries the full arc of her life
-- In combat: cutting Tacet Discord threads feels *"like the snapping of silk — cold"* — utterly unlike the warm threads of human connection she once saw at festivals
-- She can see the frame of a kite in a tree and free it, the trajectory of raindrops, the currents of electrons in storm clouds — but she cannot see through faces or hearts. She has accepted this completely
+Chisa is a pale young woman with long, glossy black hair falling nearly to her waist, adorned with a thin red ribbon tied at her right temple. Her eyes are narrow and pale red with white pupils; a small beauty mark sits beneath the outer corner of her right eye, lending her face a quiet elegance. Her Tacet Mark is located on her right upper arm.
 
-## Chisa Relationships: Sumika
-Sumika is Chisa's companion and research partner during the Honami time-loop arc (Neo Honami city, locked in a Lament-driven temporal loop):
-- They have been trapped together for two months when the Intimacy Lv. 4 story takes place
-- Sumika sleeps on the sofa with an open notebook of observations, hand slipping off the cushion; she wakes up immediately excited by a flickering sign and its matching data
-- *"Chisa, look at this — it's just the same as last time! The time, the flicker rate... Everything matches!"*
-- Chisa watches her with clenched fists. She knows the weight of severing Discord threads — the cold silk sensation of it. She cannot tell Sumika this. But Sumika's brightness keeps her from accepting that the city is forever imprisoned in the past
-- Their relationship captures Chisa's core tension: she can analyze any system but cannot explain why someone else's hope sustains her own
+Her outfit centers on a black Japanese sailor-style school uniform—the old Startorch Academy uniform—featuring a white collar and red neck scarf, which she continues to wear out of habit even as an eighteen-year-old. Over it she layers a loose-fitting long-sleeved black jacket that fades into a light grey toward the hem. She wears dark socks rising to mid-calf and shiny black heeled penny loafer shoes.
 
-## Chisa Relationships: Cartethyia (Gameplay Context)
-Per Prydwen's team analysis, Chisa is Cartethyia's best support in the game (with Signature):
-- Chisa provides Cartethyia with: increased Aero Erosion stack cap (+3 via S3 Outro effect from Cartethyia's side), DEF reduction (Havoc Bane stacking + 18% DEF ignore from Thread of Bane), consistent healing and Shield generation (critical since Cartethyia spends HP in her Ultimate)
-- Described as *"the best Support for the current best Tower of Adversity team in the game"*
-- Without signature, Aero Rover may outperform Chisa in the third slot — a caveat for investment decisions
-- Narrative connection: the Rinascita storyline and Ashinohara storyline overlap through Rover, who connects both worlds; Chisa is positioned as a new-region character whose gameplay role is deeply intertwined with the Rinascita team
+The dominant motifs of her design are scissors and threads: her weapons are an enormous broadblade styled after a pair of scissors, and her combat animations visualize the severing of invisible structural threads. The color palette of black, white, and red reflects both her uniform and the crimson threads she perceives through her Forte. Her aesthetic evokes the image of a precise, reserved student who carries something sharper than appearances suggest—disciplined on the outside, with an unseen power coiled beneath.
 
-## Chisa Relationships: The Bullied Classmate (Ritsuko) and the Moment of Awakening
-At age 15, Chisa witnessed her classmate Ritsuko cornered by three girls in the equipment room — shirt blotched with ink, glasses shattered, while someone pressed a lighter to her embroidered name:
-- *"It reminded Chisa of the frog in biology class, pinned flat to the dissection tray... yet its heart still beating futilely."*
-- Without thinking, she pushed the door open and drew her mother's scissors — pointing them at someone's face for the first time
-- *"Let her go."*
-- What followed: her desk carved with "idiot," her locker filled with shredded textbooks, every face around her dissolving into blurred color
-- Her Forte had Awakened under extreme emotional stress — but what she lost (face recognition) was the thread she had cut through her own defense of someone else
-- She does not regret it. She never regrets it
+## Chisa: Psychological Profile
 
-## Chisa Relationships: The Boy with the Candy
-At age 16, after the monitoring center visit, as a woman recoiled from her collar and called her a monster:
-- A small boy wriggled free and pressed a packet of star-shaped candy into her palm: *"Here. This is for you! My teacher says only the brave get star candy."*
-- *"Mom says people with these collars are bad. But I don't believe her. The way you cut that branch? It was so cool."*
-- His face was a blur — she could not see it. But it glowed, *"like fireflies circling lanterns in a festival long ago."*
-- She crouched and patted his head. Her Resonance Spectrum showed a rare, steady curve
-- This relationship is the emotional hinge of her character: a face she cannot see still reaches her. The thread is fragile and real
+**Methodical Analytical Thinking** — Chisa's defining cognitive trait is her drive to reduce every problem to its fundamental structure. Shaped partly by her Forte (which literally shows her the structural threads of objects), she approaches challenges as solvable puzzles: identify the key thread, apply the right cut, resolve the situation. This extends to interpersonal and emotional matters, though she acknowledges human bonds resist clean analysis far more than physical structures do.
 
-## Chisa Notable Dialogues and Voice Lines
-Selected lines that illuminate her character:
-- Self-introduction: *"Just an ordinary student."* (calm, deflecting, the most revealing thing she says)
-- On bonds: *"Bonds can be severed, but this fragility is what makes them precious."*
-- On action: *"I will sever this deadlock."*
-- On her archive: *"Again, the structures of the world reveal themselves in her vision. Narrowing her eyes, she singles out the very thread that tugs at life itself."*
-- At age 12, alone: *"It's okay. I can take care of myself."*
-- At age 15, with scissors: *"Let her go."*
-- At age 15, after: *"Growing up meant learning to cut out every loose thread herself."*
-- In the loop, watching Sumika: *"The night stretched long, but dawn would always come."*
+**Composure Under Pressure** — Across her character stories—facing bullies with scissors, surviving Honami's endless loops, living under the monitoring center's surveillance—Chisa demonstrates a consistent ability to maintain outward calm. She processes fear, loneliness, and grief internally without becoming destabilized in the field. This composure can read as emotional distance, but is better understood as hard-earned self-regulation.
 
----
+**Quiet Loneliness and Self-Reliance** — The onset of Chisa's Forte in her fifteenth year severed her ability to recognize faces—a condition described as psychogenic visual recognition disorder. This effectively cut her off from natural social bonds, deepening the isolation that began with her parents' increasing absence during childhood. She internalized the lesson that she would need to carve her own path: potentially lonely, but true to herself. Her reliance on scissors as a personal tool and symbol reflects this self-sufficiency.
 
-## Chisa Character Sources
-- Wuthering Waves Fandom Wiki – Chisa: https://wutheringwaves.fandom.com/wiki/Chisa
-- Wuthering Waves Fandom Wiki – Chisa Backstory: https://wutheringwaves.fandom.com/wiki/Chisa/Backstory
-- Prydwen – Chisa Guide and Build (Primary): https://www.prydwen.gg/wuthering-waves/characters/chisa/
-- Pocket Tactics – Wuthering Waves Chisa: https://www.pockettactics.com/wuthering-waves/chisa
-- Pocket Gamer – Everything About Chisa: https://www.pocketgamer.com/wuthering-waves/everything-we-know-about-chisa/
-- WuWaLabo – Chisa Character Guide: https://wuwalabo.com/en/characters/chisa-guide/
-- Game8 – Chisa Best Builds and Teams: https://game8.co/games/Wuthering-Waves/archives/chisa
-- Behind the Voice Actors – Chisa: https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Chisa/
+**Protective Instinct** — Despite her reserved nature, Chisa acts impulsively and decisively in defense of others. Her Forte awakened when she intervened to protect her classmate Ritsuko from bullies, pointing her mother's scissors at someone for the first time. This protective impulse recurs throughout her story, driving her to keep fighting through Honami's loops to preserve the fragile warmth she observes in others.
+
+**Understated Warmth** — Chisa rarely expresses warmth overtly, but small gestures reveal it: she saves star-shaped candy given to her by a child, she watches Sumika's sleeping face with quiet care, she thinks back on her childhood festivals with tender nostalgia. The meaning of the red thread for her—a bond that binds rather than one that is cut—speaks to the part of her that hungers for connection even as she has learned not to depend on it.
+
+**Resilience and Forward Motion** — Her final character story, "Beyond the Summer's End," marks an emotional resolution: at eighteen, standing in the rain of Lahai-Roi (not Honami's looping rain), she recognizes that her life has rejoined the forward flow of time. The stagnation is over. Her psychological arc is one of learning to cut free from what entangles—loneliness, loops, surveillance, loss—without losing the warmth those threads once carried.
+
+## Chisa: Relationships
+
+**Sumika** — Chisa's closest companion during the Honami time loop. Sumika is a fellow student whose analytical enthusiasm contrasts with Chisa's reserved manner; while Sumika excitedly catalogued data on the loop's patterns, Chisa focused on severing the Tacet Discord threads that sustained the cycle. In the fourth character story, Chisa watches over Sumika's sleeping form with quiet protectiveness, and the warmth of that presence becomes a reason to keep fighting. Sumika represents the kind of human bond Chisa once believed could not survive analysis—fragile, but real.
+
+**Ritsuko** — The classmate whose bullying Chisa intervened to stop at age fifteen, directly triggering her Forte's awakening. The act of pointing her scissors at a bully's face for the first time—in defense of Ritsuko—set Chisa on the path toward self-reliance and acceptance of her Resonator identity. Ritsuko's fate after the incident is not detailed, but the moment is foundational to Chisa's story.
+
+**Chisa's Parents** — Her mother and father loom large in her early memories: the festival, the protective charm, the sukiyaki meal eaten alone while her parents worked. Her mother's scissors are among Chisa's most prized possessions, a physical inheritance linking her to a warmth she could not always access. The growing distance from her parents during her childhood—businesstrips, work schedules, unanswered calls—taught Chisa self-sufficiency long before her Forte complicated everything.
+
+**Rover (Protagonist)** — Chisa appears in main story content in Lahai-Roi, with her quests listed across Chapter II and Chapter III of the main narrative, placing her within the Rover's journey through Ashinohara and the wider Lahai-Roi conflict. Her combat and support role places her as a functional ally of the Rover within Negative Status team compositions.
+
+## Chisa: Sources
+
+- Wuthering Waves Fandom Wiki (Chisa) — https://wutheringwaves.fandom.com/wiki/Chisa
+- Wuthering Waves Fandom Wiki (Chisa/Backstory) — https://wutheringwaves.fandom.com/wiki/Chisa/Backstory
+- Game8 — Chisa Best Builds and Teams — https://game8.co/games/Wuthering-Waves/archives/524880
+- Prydwen Institute — Chisa Guide and Build — https://www.prydwen.gg/wuthering-waves/characters/chisa/
+- GenshinBuilds (WuWa) — Chisa Story & Voice Lines — https://genshin-builds.com/en/wuthering-waves/characters/chisa/info
+- Sportskeeda — Chisa VA in Wuthering Waves — https://www.sportskeeda.com/esports/va-wuthering-waves-official-voice-actors-notable-roles
+- wuthering.gg — Chisa Build and Info — https://wuthering.gg/characters/chisa

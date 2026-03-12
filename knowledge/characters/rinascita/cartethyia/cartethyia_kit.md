@@ -1,400 +1,302 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/cartethyia/cartethyia_kit.md
+source_file: characters/ragunna_characters/cartethyia/cartethyia_kit.md
 character: Cartethyia
-group: Rinascita
+group: Ragunna / Rinascita
 document_type: character_kit
 importance: high
 tags:
-- character
-- kit
-- combat
+  - character
+  - kit
+  - aero
+  - sword
+  - dps
+  - hp-scaling
+  - aero-erosion
+  - dual-form
 ---
 
-# Cartethyia Kit & Mechanics Knowledge File
-<!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
+# Cartethyia Kit Documentation
+<!-- Sources: https://www.prydwen.gg/wuthering-waves/characters/cartethyia/, https://game8.co/games/Wuthering-Waves/archives/507777, https://wutheringlab.com/character/cartethyia-build/, https://wutheringwaves.fandom.com/wiki/Cartethyia -->
 
 ## Cartethyia: Combat Archetype and Role
 - **Element/Attribute:** Aero
 - **Weapon Type:** Sword
-- **Role:** Main DPS (Hypercarry; capable of Quickswap)
-- **Scaling Stat:** HP (unique — first DPS in Wuthering Waves to scale entirely off Max HP rather than ATK)
-- **Damage Type:** Aero DMG, Aero Erosion DMG, Basic Attack DMG
-- **Combat Style:** Dual-form melee burst fighter — cycles between Cartethyia form (fast attacks, Sword Shadow summoning, Aero Erosion application) and Fleurdelys form (high-burst AoE, enemy grouping, Conviction-fueled ultimate)
-- **Specialty:** Aero Erosion stack management; self-heal on Ultimate; enemy stagnation (crowd control); wide AoE damage; air-combat prowess (large portion of rotation spent airborne)
-- **Tier:** T0 in Tower of Adversity (ToA); T1 in Whimpering Wastes (per Prydwen patch 3.0 assessment)
-- **Overall:** Considered the highest single-team damage dealer in Wuthering Waves in her best conditions as of Patch 3.0
+- **Role:** Main DPS — dual-form hypercarry dealing massive HP-scaled Aero and Aero Erosion DMG; uniquely capable of both self-applying Aero Erosion debuffs and maximizing Aero Erosion DMG amplification buffs, reducing reliance on dedicated enablers
+- **Scaling:** HP (all multipliers scale off Max HP, not ATK — a first in WuWa at her release)
+- **Damage Profile:** Aero DMG, Basic Attack DMG, and Aero Erosion DMG in combination; finisher burst via Resonance Liberation — Blade of Howling Squall
 
 ## Cartethyia: Key Resources (Forte Mechanics Overview)
-Cartethyia's gameplay is built around three interconnected resources:
 
-**Sword Shadows (Cartethyia Form)**
-- Three distinct Sword Shadows: Sword of Divinity (summoned by Basic Attack Stage 4), Sword of Discord (summoned by Heavy Attack or Intro Skill), Sword of Virtue (summoned by Resonance Skill)
-- Only 1 of each type may exist at once; each lasts 20 seconds
-- Performing Mid-air Attack recalls all active Sword Shadows; the type and number recalled determine the form of Plunging Attack and grant corresponding buffs (Heart of Virtue, Mandate of Divinity, Power of Discord)
-- Recall multiplier scales significantly: 1 sword = 2.84% HP, 2 swords = 1.66%×3 HP, 3 swords = 5.68%×3 HP
+Cartethyia's gameplay revolves around two interconnected resource systems across her two forms.
 
-**Forte Gauges — Heart of Virtue / Mandate of Divinity / Power of Discord**
-- Granted upon recalling specific Sword Shadow types via Mid-air Attack
-- **Heart of Virtue:** In Fleurdelys form, Basic Attack Stage 4 creates a force field to stagnate enemies; increases Fleurdelys's resistance to interruption; removed when Manifest ends
-- **Mandate of Divinity:** In Fleurdelys form, Aero Erosion DMG Amplified by 50% and damage interval halved for enemies within range; removed when Manifest ends
-- **Power of Discord:** In Fleurdelys form, certain attacks raise Aero Erosion stacks on all nearby targets to the highest count among them; removed when Manifest ends
+In her **Cartethyia (normal) form**, she generates three distinct **Sword Shadows** through specific attacks: the Sword of Divinity (Basic Attack Stage 4), the Sword of Discord (Heavy Attack or Intro Skill), and the Sword of Virtue (Resonance Skill). Each shadow lingers on the field for up to 20 seconds (max 1 of each). A Mid-air Plunge Attack recalls all active shadows; the recalled combination determines bonus damage type and quantity, and grants her one or more of three special buffs — **Heart of Virtue**, **Mandate of Divinity**, and **Power of Discord**.
 
-**Conviction (Fleurdelys Form)**
-- A secondary gauge that only exists when Fleurdelys is active in Manifest state
-- Fleurdelys restores Conviction on hit with her attacks
-- At 120 Conviction, the Resonance Liberation changes from "A Knight's Heartfelt Prayers" to "Blade of Howling Squall"
-- Can freely swap back to Cartethyia form (pausing Manifest timer) while below 120 Conviction
+In her **Fleurdelys (transformed) form**, she builds **Conviction** (0–120) through all attacks. Reaching 120 Conviction unlocks **Resonance Liberation — Blade of Howling Squall**, her massive finishing nuke. The three buff states carried from the Sword Shadow recall persist into this form and fundamentally alter her Fleurdelys moveset's properties.
 
-## Cartethyia: Stats Baseline: Level 1 – 90
-All values are base stats (without Minor Fortes or Echo bonuses):
+## Cartethyia Forte Circuit: Sword Shadows / Conviction
 
-| Level | HP      | ATK | DEF |
-|-------|---------|-----|-----|
-| 1     | ~1,710  | ~36 | ~71 |
-| 10    | ~3,710  | ~79 | ~153|
-| 20    | ~5,740  | ~122| ~237|
-| 30    | ~7,530  | ~160| ~310|
-| 40    | ~9,320  | ~198| ~384|
-| 50    | ~10,840 | ~230| ~447|
-| 60    | ~12,090 | ~257| ~498|
-| 70    | ~13,220 | ~281| ~546|
-| 80    | ~14,020 | ~298| ~579|
-| 90    | 14,800  | 313 | 611 |
+**Sword Shadow Generation (Cartethyia form):**
+- Basic Attack Stage 4 → summons **Sword of Divinity's Shadow** (lasts 20s, max 1)
+- Heavy Attack → summons **Sword of Discord's Shadow** (lasts 20s, max 1)
+- Resonance Skill — Sword to Bear Their Names → summons **Sword of Virtue's Shadow** (lasts 20s, max 1)
+- Intro Skill — Sword to Mark Tide's Trace → summons Sword of Discord's Shadow
 
-- Max Energy: 125
-- Base CRIT Rate: 5%
-- Base CRIT DMG: 150%
-- Base Healing Bonus: 0%
-- Base Aero DMG: 0%
+**Mid-air Plunge (Cartethyia form — recall mechanic):**
+- Recalling 0 swords: 2.84% HP
+- Recalling 1 sword: 2.84% HP
+- Recalling 2 swords: 1.66%×3 HP
+- Recalling 3 swords: **5.68%×3 HP** (Aero Erosion DMG — peak recall damage)
+- Recalling all 3 grants Heart of Virtue + Mandate of Divinity + Power of Discord simultaneously
 
-## Cartethyia: Stats Baseline: Max Analysis
-At Level 90 with all Minor Fortes unlocked:
-- HP: 14,800 base → +12% from Minor Forte HP bonus → ~16,576 HP
-- CRIT Rate: 5% base → +8% from Minor Forte → 13% base
-- For optimal endgame performance, targets: ~50,000 HP total, ~70% CRIT Rate, ~270% CRIT DMG
-- Energy Regen: Requires 115%–120% to comfortably execute full rotation
-- Recommended final stat spread per Prydwen: Energy Regen (until ~115–120%) → CRIT Rate = CRIT DMG → HP% → Basic Attack DMG% = Liberation DMG%
-- All of Cartethyia's abilities scale off HP, not ATK — this makes ATK-scaling echoes, weapons, and buffs largely wasted on her
+**Buff State Effects in Fleurdelys form:**
+- **Heart of Virtue:** Basic Attack Stage 4 creates a force field that Stagnates nearby targets; Fleurdelys's interruption resistance increases
+- **Mandate of Divinity:** Aero Erosion DMG Amplified by 50% and Aero Erosion tick interval halved for nearby enemies
+- **Power of Discord:** Stages 5/Mid-air 2/Enhanced Heavy/May Tempest Break the Tides raise Aero Erosion stacks on all nearby targets to the highest count among targets
+
+**Conviction Generation (Fleurdelys form):**
+- All attacks restore Conviction on hit
+- At 120 Conviction → Resonance Liberation button replaces to cast Blade of Howling Squall
+- Below 120 Conviction → pressing Resonance Liberation swaps back to Cartethyia form (no energy cost)
+
+## Cartethyia: Stats Baseline
+
+| Stat | Lv. 1 | Lv. 20 | Lv. 40 | Lv. 60 | Lv. 80 | Lv. 90 |
+|------|-------|--------|--------|--------|--------|--------|
+| HP | ~830 | ~2,163 | ~5,665 | ~10,785 | ~18,260 | ~21,735 |
+| ATK | ~18 | ~47 | ~123 | ~235 | ~397 | ~473 |
+| DEF | ~95 | ~248 | ~649 | ~1,236 | ~2,091 | ~2,490 |
+| Crit Rate | 5% | 5% | 5% | 5% | 5% | 5% |
+| Crit DMG | 150% | 150% | 150% | 150% | 150% | 150% |
+| Energy Regen | 100% | 100% | 100% | 100% | 100% | 100% |
+
+*Note: All damage multipliers scale from Max HP, not ATK. Target ~50,000 HP fully built. HP% is the primary stat bonus at each ascension.*
 
 ## Cartethyia: Ascension Materials
-Total materials required for full character ascension (Level 1 → 90):
-- 4× LF Tidal Residuum
-- 12× MF Tidal Residuum
-- 12× HF Tidal Residuum
-- 4× FF Tidal Residuum
-- 46× Unfading Glory
-- 60× Bamboo Iris (gathered from open world map in Rinascita)
-- 170,000 Shell Credits
 
-## Cartethyia: Basic Attack — Sword to Carve My Forms
-**Basic Attack – Cartethyia:**
-Performs up to 4 consecutive attacks dealing Aero DMG. Following Stage 4, inflicts 1 stack of Aero Erosion on targets and summons Sword of Divinity's Shadow (1 max, lasts 20s).
+| Ascension | Level Cap | Materials |
+|-----------|-----------|-----------|
+| 1 | 20 → 40 | Bamboo Iris ×4, LF Tidal Residuum ×4, Shell Credits ×5,000 |
+| 2 | 40 → 50 | Bamboo Iris ×8, MF Tidal Residuum ×4, Unfading Glory ×2, Shell Credits ×10,000 |
+| 3 | 50 → 60 | Bamboo Iris ×12, MF Tidal Residuum ×8, Unfading Glory ×4, Shell Credits ×15,000 |
+| 4 | 60 → 70 | Bamboo Iris ×16, HF Tidal Residuum ×4, Unfading Glory ×8, Shell Credits ×20,000 |
+| 5 | 70 → 80 | Bamboo Iris ×20, HF Tidal Residuum ×8, Unfading Glory ×12, Shell Credits ×40,000 |
+| 6 | 80 → 90 | Bamboo Iris ×24, FF Tidal Residuum ×4, Unfading Glory ×16, Shell Credits ×80,000 |
 
-**Heavy Attack – Cartethyia:**
-Consumes STA to attack, dealing Aero DMG and summoning Sword of Discord's Shadow (1 max, lasts 20s). Considered Basic Attack DMG. Can be performed mid-air.
+**Material Sources:**
+- **Bamboo Iris:** Gathered in Septimont near Titanbone Expanse and Capitoline Hill; purchasable from Silver Helmet vendor
+- **Unfading Glory:** Drops from Lioness of Glory boss (northwest Septimont)
+- **Tidal Residuum (LF/MF/HF/FF):** Rinascita Forgery Challenges; Item Exchange for LF/MF tiers via Oscillate Corals
 
-**Mid-air Attack – Cartethyia:**
-Plunging Attack costing STA, dealing Aero DMG (also Aero Erosion DMG). Recalls all Sword Shadows. Number and type recalled determines Plunging Attack form and grants Heart of Virtue, Mandate of Divinity, or Power of Discord. Next Normal Attack after Plunging begins at Stage 2.
+## Cartethyia: Character Kit: Basic Attack — Sword to Carve My Forms
 
-**Dodge Counter – Cartethyia:**
-Press Normal Attack after a successful dodge to deal Aero DMG.
+**Basic Attack — Cartethyia (4-hit chain)**
 
-**Attribute Scaling (Level 1 → Level 10 at Lv.1 values):**
-- Stage 1 DMG: 2.41% HP
-- Stage 2 DMG: 1.98% + 1.98% + 2.64% HP
-- Stage 3 DMG: 2.15% + 2.15% + 2.15% + 2.15% HP
-- Stage 4 DMG: 1.27%×3 + 3.80% HP
-- Dodge Counter DMG: 3.45% + 3.45% + 3.45% + 3.45% HP
-- Heavy Attack DMG: 1.05%×3 + 3.14% HP
-- Mid-air Attack (0 swords): 2.84% HP
-- Mid-air Attack (1 sword): 2.84% HP
-- Mid-air Attack (2 swords): 1.66%×3 HP
-- Mid-air Attack (3 swords): 5.68%×3 HP
-- Mid-air Attack STA Cost: 30 | Heavy Attack STA Cost: 20
+All hits deal Aero DMG (also counted as Aero Erosion DMG):
+- Stage 1: 2.41% HP
+- Stage 2: 1.98% + 1.98% + 2.64% HP
+- Stage 3: 2.15%×4 HP
+- Stage 4: 1.27%×3 + 3.80% HP — **inflicts 1 stack of Aero Erosion; summons Sword of Divinity's Shadow**
 
-## Cartethyia: Resonance Skill — Sword to Bear Their Names
-**Resonance Skill – Cartethyia:**
-Attacks the target, launches nearby enemies, then plunges them to the ground, dealing Aero DMG and inflicting 2 stacks of Aero Erosion on targets hit. Considered Basic Attack DMG. Can be performed mid-air. Summons Sword of Virtue's Shadow upon use (1 max, lasts 20s).
+**Heavy Attack — Cartethyia**
+- Deals Aero DMG; counted as Basic Attack DMG
+- Multiplier: 1.05%×3 + 3.14% HP
+- **Summons Sword of Discord's Shadow**; can be used mid-air; costs 20 STA
 
-**Attribute Scaling (Level 1 values):**
-- Skill DMG: 3.47%×3 + 4.46% HP
-- Concerto Energy Regen: 10
-- Cooldown: 14 seconds
+**Mid-air Attack — Cartethyia (Plunge)**
+- Base plunge: 2.84% HP (Aero Erosion DMG)
+- 1 shadow recalled: 2.84% HP
+- 2 shadows recalled: 1.66%×3 HP
+- 3 shadows recalled: **5.68%×3 HP** (peak)
+- Recalling shadows also grants Heart of Virtue / Mandate of Divinity / Power of Discord
+- Costs 30 STA
 
-Note: This is a critical rotation skill — it simultaneously deals damage, inflicts 2 Aero Erosion stacks, and summons Sword of Virtue, enabling all three Sword Shadows to be active simultaneously.
+**Dodge Counter — Cartethyia**
+- 3.45%×4 HP; Aero DMG
 
-## Cartethyia: Resonance Liberation — A Knight's Heartfelt Prayers (Transformation)
-**A Knight's Heartfelt Prayers:**
-Reduces HP to 50% of Max HP and transforms Cartethyia into Fleurdelys, entering the Manifest state for 12 seconds. (No HP cost if HP is already below 50%.) Clears all Conviction upon entry. Ending the Manifest state does NOT clear Resonance Energy.
+## Cartethyia: Character Kit: Resonance Skill — Sword to Bear Their Names
 
-While in Manifest, certain Fleurdelys attacks instantly trigger 1 instance of Aero Erosion DMG and reduce target's Aero Erosion stack by 1 (affected attacks: Basic Attack Stage 5, Mid-air Attack Stage 2, Resonance Skill May Tempest Break the Tides).
+Cartethyia launches nearby enemies into the air and slams them down, dealing Aero DMG (counted as both **Basic Attack DMG** and **Aero Erosion DMG**), inflicting **2 stacks of Aero Erosion**, and summoning **Sword of Virtue's Shadow**.
 
-**Attribute Scaling (Level 1 values):**
-- Resonance Energy Cost: 125
-- Cooldown: 25 seconds
-- Concerto Regen: 20
+- Multiplier: 3.47%×3 + 4.46% HP
+- Concerto Regen: 10
+- Cooldown: 14s
+- Can be used mid-air
 
-Note: This is Cartethyia's primary ultimate — it is not the damage dealing ultimate but the transformation ability. Its real function is enabling access to Fleurdelys form and setting up for Blade of Howling Squall.
+This is Cartethyia's primary Aero Erosion applicator and the key activator of the Sword of Virtue Shadow — essential to gathering all 3 swords before a recall plunge.
 
-## Cartethyia: Resonance Liberation — Blade of Howling Squall (Main DPS Ultimate)
-**Resonance Liberation – Blade of Howling Squall:**
-Activated when Fleurdelys has 120 Conviction. Removes all Conviction, ends Manifest, restores 50% of Max HP, then deals Aero DMG to all targets in an area along a straight line in front. Upon hitting targets, removes all Aero Erosion stacks; each stack removed Amplifies the DMG taken by targets by 20% (up to 5 stacks maximum, for a total of up to 100% amplification against a fully stacked target).
+## Cartethyia: Character Kit: Resonance Liberation — A Knight's Heartfelt Prayers
 
-Can be cast mid-air.
+**Phase 1 — Transformation**
+- Consumes **50% of Max HP** (no cost if HP is already below 50%)
+- Transforms Cartethyia into **Fleurdelys**, entering **Manifest state** for **12 seconds**
+- Grants **+60% Aero DMG Bonus** while in Manifest
+- Clears all Conviction on entry; Resonance Energy is NOT cleared
+- Concerto Regen on cast: 20; Cooldown: 25s; Resonance Energy Cost: 125
 
-**Attribute Scaling (Level 1 values):**
-- Blade of Howling Squall DMG: 6.60%×7 HP (per Prydwen)
-- Cooldown: 25 seconds
-- Concerto Regen: 20
+**Phase 2 — Conviction Building (Fleurdelys)**
+All Fleurdelys attacks restore Conviction. At 120 Conviction, Resonance Liberation button changes to cast Blade of Howling Squall. Below 120, pressing it swaps back to Cartethyia form (no energy cost).
 
-This is Cartethyia's primary burst window. With 5 Aero Erosion stacks consumed, it effectively amplifies itself by 100%, making pre-loading Erosion stacks before casting essential.
+**Phase 3 — Blade of Howling Squall (Finisher)**
+- Removes all Conviction; ends Manifest; **restores 50% Max HP**
+- Deals Aero DMG to all targets in a straight-line AoE in front
+- On hit: removes all Aero Erosion stacks from the target; **each stack removed Amplifies DMG taken by 20%, up to 5 stacks (100% maximum amplification)**
+- Multiplier: 6.60%×7 HP
+- Can be cast mid-air
 
-## Cartethyia: Forte Circuit — Tempest (Fleurdelys Form)
-When Cartethyia transforms into Fleurdelys, the following attacks replace or supplement her base kit:
+**Avatar Skills (Form Toggle):**
+- **Avatar — Cartethyia:** While Fleurdelys and Conviction < 120, press Reso Lib → performs BA Stage 2 as Cartethyia; pauses Manifest timer. Cooldown: 1.5s
+- **Avatar — Fleurdelys:** While in Manifest as Cartethyia, press Reso Lib → performs BA Stage 2 as Fleurdelys (no energy cost); resumes Manifest timer
 
-**Basic Attack – Fleurdelys:** Up to 5 consecutive attacks dealing Aero DMG, restoring Conviction on hit.
-- Stage 5 DMG: 3.63% + 14.49% HP (enormous hit)
-- Stage 4 (with Heart of Virtue): creates stagnation force field + increases interruption resistance
+## Cartethyia: Inherent Passives
 
-**Mid-air Attack – Fleurdelys:** Up to 3 consecutive air attacks costing STA, dealing Aero DMG and restoring Conviction. Hold Normal Attack to cast Stage 3. Can chain into Basic Attack Stage 3 afterward.
+**A Heart's Truest Wishes**
+- Healing received by all non-Cartethyia/Fleurdelys Resonators is increased by **20%**, and their resistance to interruption is enhanced
+- If **Rover: Aero** is in the team, Rover: Aero additionally restores **25 Windstrings** upon casting Omega Storm
 
-**Heavy Attack – Fleurdelys:** Thrust forward for focused strike dealing Aero DMG; restores Conviction. Considered Basic Attack DMG.
+**Wind's Indelible Imprint**
+- Targets with **1–3 stacks** of Aero Erosion take **+30% DMG** from Cartethyia and Fleurdelys
+- Targets with **more than 3 stacks** additionally take **+10% DMG** per extra stack (up to 3 additional stacks = maximum +60% total)
+- This makes maximizing and maintaining Aero Erosion stacks critical for her damage ceiling
 
-**Enhanced Heavy Attack – Fleurdelys:** While casting Heavy Attack, press Normal Attack to fall back and blast forward in a straight line, dealing Aero DMG + restoring Conviction. Considered Basic Attack DMG. Follow up with Basic Attack for Upward Cut – Fleurdelys.
+## Cartethyia: Intro/Outro Skills
 
-**Upward Cut – Fleurdelys:** While on the ground, Jump to cast, dealing Aero DMG and restoring Conviction.
+**Intro Skill — Sword to Mark Tide's Trace (Cartethyia)**
+- Dashes to target and strikes, dealing Aero DMG
+- **Inflicts 2 stacks of Aero Erosion**; summons **Sword of Discord's Shadow**
 
-**Dodge Counter – Fleurdelys:** After successful dodge, press Normal Attack to deal Aero DMG + restore Conviction. Can follow up with Basic Attack Stage 4.
+**Intro Skill — Sword to Call for Freedom (Fleurdelys)**
+- Forward thrust dealing Aero DMG; restores Conviction on hit
 
-**Resonance Skill – Sword to Answer Waves' Call:** Summons a force field near target that continuously pulls in nearby enemies. Deals Aero DMG and restores Conviction. Can be cast mid-air.
-
-**Resonance Skill – May Tempest Break the Tides:** Follow-up to the above. Calls down a giant Sword Shadow to crush an area around the target, creating a pull force field. Deals Aero DMG to ground targets and restores Conviction. Can be cast mid-air.
-
-**Forte Multipliers (Level 1 values):**
-- Basic Stage 1: 3.27% HP
-- Basic Stage 2: 1.83% + 0.92%×3 HP
-- Basic Stage 3: 1.08%×3 + 2.15% HP
-- Basic Stage 4: 1.38%×5 HP
-- Basic Stage 5: 3.63% + 14.49% HP
-- Dodge Counter: 1.61%×3 + 3.22% HP
-- Upward Cut: 2.29%×2 HP
-- Heavy Attack: 2.15% + 5.02% HP
-- Enhanced Heavy Attack: 3.91%×2 + 1.96% HP
-- Mid-air Attack 1: 1.50% + 1.50% + 1.55% HP
-- Mid-air Attack 2: 3.72% + 3.72% + 7.43% HP
-- Mid-air Attack 3: 1.11% HP
-- Sword to Answer Waves' Call: 0.94%×4 + 8.73% HP
-- May Tempest Break the Tides: 0.94%×2 + 3.54%×3 HP
-- Skill Cooldown: 14s | Heavy Attack STA: 20 | Mid-air Attack 1 STA: 5 | Mid-air Attack 2 STA: 5 | Mid-air Attack 3 STA: 30
-
-## Cartethyia: Inherent Skill 1 — A Heart's Truest Wishes
-The healing received by all Resonators other than Cartethyia/Fleurdelys in the team is increased by 20%, and their resistance to interruption is enhanced.
-
-If Rover: Aero is in the team, Rover: Aero additionally restores 25 Windstrings upon casting Omega Storm.
-
-This passive makes Cartethyia an excellent support for her own team — her presence alone improves healer efficiency and makes rotations safer.
-
-## Cartethyia: Inherent Skill 2 — Wind's Indelible Imprint
-Targets with 1 to 3 stacks of Aero Erosion take 30% more DMG from Cartethyia and Fleurdelys.
-
-Targets with more than 3 stacks of Aero Erosion additionally take 10% more DMG from Cartethyia and Fleurdelys per extra stack of Aero Erosion, up to 3 additional stacks (i.e., at 6 stacks: 30% + 30% = 60% more DMG).
-
-This is the core damage amplification passive. It creates the mathematical incentive to maintain maximum Aero Erosion stacks throughout the rotation — and why Ciaccona (off-field Erosion applier) and Aero Rover (Erosion stack cap increaser) are so integral to her best teams.
-
-## Cartethyia: Intro Skill — Sword to Mark Tide's Trace / Sword to Call for Freedom
-**Cartethyia – Sword to Mark Tide's Trace:**
-Deals Aero DMG and inflicts 2 stacks of Aero Erosion on targets hit. Summons Sword of Discord's Shadow. Press Normal Attack shortly after to perform Basic Attack Stage 2.
-
-**Fleurdelys – Sword to Call for Freedom:**
-Thrusts forward to impale the target, dealing Aero DMG and restoring Conviction. Press Normal Attack shortly after to cast Basic Attack Stage 2.
-
-**Attribute Scaling (Level 1 values):**
-- Sword to Mark Tide's Trace DMG: 1.05%×3 + 3.14% HP
-- Sword to Call for Freedom DMG: 2.15% + 5.02% HP
-- Concerto Energy Regen (both): 10
-
-## Cartethyia: Outro Skill — Wind's Divine Blessing
-Aero DMG dealt by the active Resonator in the team (other than Cartethyia/Fleurdelys) to targets with Negative Statuses is Amplified by 17.5% for 20 seconds.
-
-This is a meaningful buff for any Aero-damage teammate that benefits from the Negative Status condition, particularly valuable in Aero-heavy compositions.
+**Outro Skill**
+- Cartethyia leaves the field, spawning an Aero vortex that continuously deals Aero Erosion DMG for **8 seconds**
+- Active characters striking debuffed targets gain a **+17.5% DMG bonus** during this window
 
 ## Cartethyia: Skill Upgrade Materials
-Total materials required to level all skills to max:
-- 25× LF Tidal Residuum
-- 28× MF Tidal Residuum
-- 40× HF Tidal Residuum
-- 57× FF Tidal Residuum
-- 25× Inert Metallic Drip
-- 28× Reactive Metallic Drip
-- 55× Polarized Metallic Drip
-- 67× Heterized Metallic Drip
-- 26× When Irises Bloom
-- 2,030,000 Shell Credits
 
-**Skill Priority (recommended order):**
-1. Forte Circuit (Fleurdelys moves) — drives the majority of her burst damage
-2. Resonance Liberation — increases Blade of Howling Squall multiplier directly
-3. Basic Attack — improves Cartethyia form damage and Mid-air Attack values
-4. Resonance Skill — secondary damage contributor
-5. Intro Skill / Outro Skill — lowest priority
+Skill upgrades require: **Inert / Reactive / Polarized / Heterized Metallic Drip** (Forgery Challenge — Rinascita), **When Irises Bloom** (weekly boss drop from Fleurdelys at Avinoleum, accessible after completing Chapter 2 Act 4), and **Tidal Residuum** (LF/MF/HF/FF) from Rinascita Forgery Challenges.
 
-## Cartethyia: Resonance Chains (S1 – S6)
-**S1 – Sequence Node 1:** Gain Zeal for 10s when attacks defeat Aero Erosion-afflicted targets. In Zeal state, upon defeating enemies the next damaging move raises Aero Erosion on targets to the highest count among defeated enemies (within stack cap; Zeal consumed after). Also: when Fleurdelys's Conviction hits 30/60/90/120, increase Fleurdelys's CRIT DMG by 25% for 15s (up to 4 stacks, max +100% CRIT DMG). Stacks do not reset on new gains. Cleared after Blade of Howling Squall.
+| Skill Level | Metallic Drip | When Irises Bloom | Tidal Residuum | Shell Credits |
+|-------------|--------------|-------------------|----------------|---------------|
+| 2 | Inert ×3 | — | LF ×2 | 5,000 |
+| 3 | Inert ×5 | — | LF ×4 | 10,000 |
+| 4 | Reactive ×4 | — | MF ×3 | 15,000 |
+| 5 | Reactive ×6 | — | MF ×5 | 20,000 |
+| 6 | Polarized ×5 | When Irises Bloom ×1 | HF ×3 | 30,000 |
+| 7 | Polarized ×8 | When Irises Bloom ×1 | HF ×5 | 45,000 |
+| 8 | Heterized ×5 | When Irises Bloom ×2 | FF ×3 | 60,000 |
+| 9 | Heterized ×8 | When Irises Bloom ×2 | FF ×5 | 75,000 |
+| 10 | Heterized ×10 | When Irises Bloom ×3 | FF ×6 | 90,000 |
 
-**S2 – Sequence Node 2:** Upon casting A Knight's Heartfelt Prayers, increases the max stack limit of Aero Erosion by 3 stacks within range. The next attack inflicts 3 stacks of Aero Erosion on all targets in range and immediately triggers Aero Erosion DMG once (without consuming stacks). Also: Cartethyia form Basic Attack, Heavy Attack, Dodge Counter, and Intro Skill DMG Multipliers increased by 50%; Mid-air Attack DMG Multiplier increased by 200%. After Mid-air Attack, every 1 type of Sword Shadow recalled reduces Resonance Skill cooldown by 1s (up to 3s with all three recalled).
+**Skill Priority:** Resonance Liberation > Resonance Skill > Forte Circuit > Basic Attack > Intro Skill
 
-**S3 – Sequence Node 3:** Basic Attack Stage 5, Mid-air Attack Stage 2, Enhanced Heavy Attack, and Resonance Skill May Tempest Break the Tides (Fleurdelys) now inflict 2 stacks of Aero Erosion on targets. Also: Blade of Howling Squall DMG Multiplier increased by 100%.
+## Cartethyia: Resonance Chains (Sequences)
 
-**S4 – Sequence Node 4:** After any Resonator in the team inflicts Havoc Bane, Fusion Burst, Spectro Frazzle, Electro Flare, Glacio Chafe, or Aero Erosion, all Resonators in the team gain 20% DMG Bonus for all Attributes for 20 seconds.
+**S1**
+Max HP increased by 12%. For 15s after casting Intro Skill or Basic Attacks, ignore 8% of the target's DEF when dealing damage. If the target has at least 1 stack of Aero Erosion, DMG taken by the target is Amplified by 20%.
+*Value: Solid QoL and damage amplification. Worthwhile for Aero Erosion synergy, but not dramatically transformative.*
 
-**S5 – Sequence Node 5:** When Cartethyia or Fleurdelys takes a fatal blow, they survive and gain a Shield equal to 20% of Max HP for 10s (once every 10 minutes). Also: HP cost for A Knight's Heartfelt Prayers reduced to 25% of Max HP (from 50%).
+**S2**
+Upon casting Resonance Liberation, the Aero Erosion stack limit of opponents within range is increased by 3 (above the standard max). Her next attack applies 3 Aero Erosion stacks to all affected targets and triggers additional Aero Erosion DMG. Cartethyia gains increased damage multipliers and her Mid-air Attacks deal 200% additional damage. Resonance Skill cooldown is reduced.
+*Value: Game-changing — the single strongest Sequence Node. Dramatically increases mid-air attack burst damage and expands Erosion stack headroom, synergizing with her entire kit.*
 
-**S6 – Sequence Node 6:** After casting Blade of Howling Squall, raise all Aero Erosion stacks on the target hit to maximum. Blade of Howling Squall no longer removes Aero Erosion stacks on hit. Within 30s after casting either Intro Skill, A Knight's Heartfelt Prayers, or Blade of Howling Squall, when any Resonator in the team inflicts Aero Erosion on targets already at maximum Erosion stacks, immediately trigger Aero Erosion DMG once. Additionally: Fleurdelys receives a 40% unique DMG Bonus multiplier (confirmed post-launch — this is a unique multiplier type, not a standard DMG Bonus).
+**S3**
+Fleurdelys's Basic Attack Stage 5, Mid-air Attack Stage 2, Enhanced Heavy Attack, and May Tempest Break the Tides inflict 2 stacks of Aero Erosion on targets. The damage multiplier of Blade of Howling Squall is boosted by 100%.
+*Value: Extremely high ceiling impact — doubling the Blade of Howling Squall multiplier is massive in her burst rotation.*
 
-**Pull Priority Recommendations (per Wutheringlab and Prydwen):**
-- S1R1: Strong damage upgrade; CRIT DMG stacking makes Fleurdelys form devastating
-- S2R1: Removes dependence on Aero Rover for stack cap; massive Cartethyia form damage boost; ~45% DPS increase for double Mid-air Attack rotations
-- S3: Worthwhile if no Ciaccona (adds self-stacking in Fleurdelys); doubles Blade of Howling Squall multiplier
-- S6R1: Endgame investment — Fleurdelys receives 40% unique DMG boost; Erosion stacks are refilled and no longer consumed; Erosion triggers become frequent
+**S4**
+After any ally inflicts debuff damage, the entire team gains a 20% DMG bonus for all attributes.
+*Value: Strong team-wide multiplicative buff. Benefits all team members, especially in debuff-heavy compositions.*
 
-## Cartethyia: Echo Sets — Best Sets
-**Best Set:** Windward Pilgrimage (5-piece) — tailor-made for Cartethyia
-- Reason: The set provides Aero DMG bonuses that scale with Aero Erosion interactions. Since Cartethyia scales off HP rather than ATK, she uniquely benefits from the 4-4-1-1-1 echo cost setup (2× 4-cost, 3× 1-cost) which maximizes flat HP from 1-cost echoes (+22.8% HP + 2,280 flat HP per piece)
-- Using the standard 4-3-3-1-1 setup instead costs approximately 7% damage output
+**S5**
+When Cartethyia or Fleurdelys takes a fatal blow, they will not be downed; instead they gain a Shield equal to 20% of Max HP for 10 seconds (once per 10 minutes). The HP cost for casting Resonance Liberation — A Knight's Heartfelt Prayers is reduced to 25% of Max HP.
+*Value: Meaningful survivability utility. Reducing the Liberation HP cost from 50% to 25% also improves combat flow.*
 
-**Alternative Set:** Gusts of Welkin (for Aero-focused non-Ciaccona compositions)
-- Note: Only applicable if running a composition that still needs additional Aero DMG provision; normally outclassed by Windward Pilgrimage for Cartethyia herself
+**S6**
+Cartethyia's Outro Skill, Intro Skills, Resonance Liberation — A Knight's Heartfelt Prayers, and Resonance Liberation — Blade of Howling Squall raise Aero Erosion stacks on targets hit to the maximum count. Blade of Howling Squall no longer removes Aero Erosion stacks on cast. Within 30s after using these skills, when any Resonator inflicts Aero Erosion on a max-stack target, immediately triggers one additional Aero Erosion DMG instance. Targets take 40% more DMG from Fleurdelys.
+*Value: S6 enables a perpetual Erosion-stacked state and adds a 40% amplifier for Fleurdelys — transformational for sustained encounter DPS.*
 
-## Cartethyia: Echo Sets — Best Main Echo
-**Best Main Echo (4-cost slot 1):** Reminiscence: Fleurdelys
-- Grants the equipped Resonator 10% unconditional Aero DMG Bonus; Aero Resonators or Cartethyia gain an additional 10% Aero DMG Bonus
-- Total: +20% Aero DMG Bonus exclusively for Cartethyia
-- Echo Skill also deals good personal damage
+## Cartethyia: Recommended Echo Sets
 
-**Second 4-cost Slot:** Nightmare: Kelpie
-- Synergizes with Aero Erosion
+**Best (with Ciaccona): Windward Pilgrimage — 4-4-1-1-1**
+Since Cartethyia scales HP and not ATK, she can run two 4-cost echoes rather than the standard 4-3-3-1-1 configuration. The **Windward Pilgrimage** (Gusts of Welkin) sonata set provides Aero DMG Bonus synergy perfectly suited for her kit. Ciaccona's presence covers the remaining Aero DMG needs.
 
-## Cartethyia: Echo Sets — Echo Stat Priority
-**Echo Main Stats (4-4-1-1-1 configuration):**
-- 4-cost Slot 1 (Main): Reminiscence: Fleurdelys → Aero DMG Bonus main stat preferred
-- 4-cost Slot 2: CRIT Rate or CRIT DMG (whichever is needed to balance ratio)
-- 3× 1-cost Slots: HP% main stat on all three (maximizes total HP)
+**Best (without Ciaccona): Windward Pilgrimage — 4-3-1-1-1**
+Without Ciaccona, replace the second 4-cost with a 3-cost bearing an **Aero DMG Bonus** main stat to compensate for the missing buff source.
 
-**Substat Priority:**
-Energy Regen (until 115–120%) → CRIT Rate = CRIT DMG → HP% → Basic Attack DMG% = Liberation DMG% → HP flat
+**Main Echo:** Windcleaver (4-cost Aero main echo) — deals 27.36%×8 + 136.80% Aero DMG; grants +10% Aero DMG Bonus passive to equipped character
 
-## Cartethyia: Weapons — Best Weapon
-**Defier's Thorn (5-star Sword — Signature):**
-- Sub-stat: HP% (the ONLY sword in the game with HP% as sub-stat — uniquely suited to Cartethyia)
-- R1 Effect: HP +12%; after using Intro Skill or Basic Attack, ignores 8% of target's DEF; when target has 1+ stack Aero Erosion, damage is increased by 20%; at R1 full: ignores 16% DEF, and if target has Aero Erosion, the DMG taken by the target is Amplified by 40%
-- This weapon directly synergizes with every aspect of Cartethyia's kit — HP scaling, DEF ignore, and Aero Erosion exploitation
+**Echo Main Stats:**
+- 4-cost #1: CRIT Rate or CRIT DMG
+- 4-cost #2: CRIT Rate or CRIT DMG (with Ciaccona) / Aero DMG Bonus (without)
+- 3-cost (if used): Aero DMG Bonus
+- 1-cost ×3: HP% (flat HP from 1-cost echoes scales favorably given her HP-scaling kit)
 
-## Cartethyia: Weapons — Alternative Weapons
-**Red Spring (5-star):** Strong alternative with high Base ATK and useful CRIT DMG; increases Basic Attack DMG which covers a large portion of Cartethyia's rotation.
+**Sub-stat Priority:** CRIT Rate > CRIT DMG (maintain ~1:2 ratio) > HP% > Flat HP > Energy Regen
+**Target Stats:** ~50,000 HP | 70% CRIT Rate | 270%+ CRIT DMG | 115–120% Energy Regen
 
-**Unflickering Valor (5-star):** Increases Basic Attack DMG; viable in the absence of Defier's Thorn.
+## Cartethyia: Best Weapon
 
-**Guardian Sword (4-star — Best F2P Option):** The only 4-star or otherwise accessible sword with HP% main stat. An excellent free-to-play alternative that still leverages Cartethyia's HP-scaling identity.
+**Signature — Defier's Thorn (5★ Sword)**
+The only 5-star Sword with an **HP% sub-stat**, purpose-built for Cartethyia's scaling. Provides HP increases, DEF ignore on attacks, and Amplified DMG bonus when targets have Aero Erosion.
+- R1: HP +12%; after casting Intro Skill or Basic Attacks, ignores 8% DEF for 15s; targets with 1+ Aero Erosion stack take +20% Amplified DMG
+- R5: HP +24%; DEF ignore 16%; +40% Amplified DMG (effectively mandatory for full optimization)
 
-Note: Most swords with CRIT Rate or CRIT DMG sub-stats (such as standard 5-star options) remain functional but do not maximally exploit the HP-scaling design. A good CRIT-stat sword is still viable when the signature is unavailable.
+**Alternative — Red Spring (5★ Sword)**
+Strong Resonance Skill DMG focus. Viable when Defier's Thorn is unavailable; lacks HP scaling but offers high multipliers.
 
-## Cartethyia: Team Composition Guide — Best Team (with Chisa, patch 2.8+)
-**Cartethyia / Ciaccona / Chisa** (Current Best Team as of Patch 2.8+)
-- Chisa replaced Aero Rover in the #1 team: provides DEF reduction (Havoc Bane), significant DMG buffs, consistent healing, and +3 maximum Negative Status stacks via Outro, directly increasing the Aero Erosion stack limit
-- Ciaccona: quintessential Sub-DPS; low field time; provides multi-wave AoE off-field Aero Erosion application, multiple Aero DMG Bonus buffs throughout her kit, and Gusts of Welkin set bonus
-- Chisa uses: 3pc Thread of Severed Fate + 2pc Havoc Eclipse (or similar); Cartethyia uses: 5pc Windward Pilgrimage; Ciaccona uses: 5pc Gusts of Welkin
+**Alternative — Unflickering Valor (5★ Sword)**
+Increases Basic Attack DMG, which covers a substantial portion of Cartethyia's kit. Competitive option at R1.
 
-**Team Rotation (Chisa/Ciaccona/Cartethyia):**
-1. Chisa: Resonance Skill → Basic Attack (Death Snip cancel) → Resonance Liberation → Outro (swap)
-2. Ciaccona: Essence generation → Solo attack → Heavy Attack → Resonance Liberation → Outro (swap)
-3. Cartethyia: Intro Skill → Basic Attack ×3 → Resonance Skill → Mid-air Attack → Resonance Liberation (transform) → Fleurdelys combos → Build Conviction to 120 → Blade of Howling Squall
+**F2P Option — Guardian Sword (4★ Sword)**
+The only 4-star Sword carrying HP% as a main stat, making it Cartethyia's sole F2P-accessible weapon that meaningfully contributes to her core scaling.
 
-## Cartethyia: Team Composition Guide — Premium Team (Aero Rover)
-**Cartethyia / Ciaccona / Rover (Aero)** (Original Best Team at launch, still viable)
-- Aero Rover's Outro increases maximum Aero Erosion stack capacity by 3 (bringing total to 6) which enables Cartethyia's full Inherent Skill 2 damage bonus (up to +60% DMG at 6 stacks)
-- Aero Rover generates 25 bonus Windstrings when they cast Omega Storm if Cartethyia is in the team (from Cartethyia's Inherent Skill 1), slightly smoothing rotation
-- Rotation: Aero Rover → Ciaccona → Cartethyia (Intro → Basic Attack → Skill → Mid-air → Ult transform → Fleurdelys combo → Blade of Howling Squall)
+## Cartethyia: Best Teams
 
-## Cartethyia: Team Composition Guide — F2P / Budget Team
-**Cartethyia / Sanhua / Rover (Aero)** (Free-to-Play / Non-Ciaccona Option)
-- Sanhua (free 5-star) provides 38% Basic Attack DMG deepening buff — covers Cartethyia's largest damage source
-- Aero Rover raises Erosion stack cap and provides healing
-- Without Ciaccona, Cartethyia must build Erosion stacks herself by weaving between Cartethyia and Fleurdelys form mid-rotation — more complex but viable
-- Echo configuration changes to 4-3-3-1-1 if no Ciaccona (3-cost slot takes Aero DMG Bonus main stat)
+**S-Tier: Cartethyia + Ciaccona + Chisa**
+- **Cartethyia** (Main DPS): Core Aero Erosion damage and finisher
+- **Ciaccona** (Sub-DPS/Buffer): Maintains Aero Erosion stacks, provides massive Aero Erosion DMG bonus, enables full Aero set
+- **Chisa** (Sub-DPS/Support/Healer): Increases max Aero Erosion stack count by 3 (same as Aero Rover), provides DEF Shred via Havoc Bane and Outro, more consistent healing than Aero Rover
+*Rotation: Chisa skills → Ciaccona skills + Outro → Cartethyia enters with 5 Aero Erosion stacks, summons all 3 swords, recall plunge, Liberation → Blade of Howling Squall*
 
-**Alternative Support Options:**
-- Shorekeeper: Provides 15% All DMG Amplify + crit buffs + sustained healing; generalist option
-- Verina: 15% All DMG Amplify + ATK buff; does not benefit from ATK scaling on Cartethyia but DMG amplify is universal
-- Aalto (S6): Provides 23% Aero Deepen + extra Crit Rate buff through portal; limited uptime but accessible
-- Lupa: Fusion DMG buff synergy with Cartethyia's multi-hit attack pattern
+**A-Tier: Cartethyia + Ciaccona + Aero Rover**
+- **Aero Rover** (Sub-DPS/Support): Increases max Aero Erosion stack limit by 3; restores 25 Windstrings via Cartethyia's inherent passive when casting Omega Storm; provides healing and Aero DMG
+*Best in single-target situations where Aero Erosion is easy to maintain at max stacks.*
 
-## Cartethyia DPS Benchmarks: S0 to S6 (Source: Prydwen.gg — Primary)
-*All benchmarks at full Lv.90, Defier's Thorn R1, 5pc Windward Pilgrimage, Reminiscence: Fleurdelys main echo (4-cost CRIT Rate / 4-cost CRIT DMG / 1-cost HP / 1-cost HP / 1-cost HP), substats HP 45% / CRIT Rate 42% / CRIT DMG 84%. Solo damage — personal output only, does not include teammate damage contributions. Rotation time: 13.23s.*
+**A-Tier: Cartethyia + Ciaccona + Shorekeeper**
+- **Shorekeeper** (Support): Preferred for multi-wave Whimpering Wastes content where Aero Erosion ramping is unreliable; her buffs and rotation speed compensate
+*Best when Erosion uptime is inconsistent.*
 
-**Rotation used for benchmarks (Prydwen — Standard Rotation, 1 Target scenario):**
-Intro - Cartethyia → Basic P2 → Basic P3 → Basic P4 → Skill: Sword to Bear Their Names → Mid-air Attack - Cartethyia → Ultimate: A Knight's Heartfelt Prayers → (Skill 1) Forte: Sword to Answer Waves' Call → Forte: Fleurdelys Mid-air Attack P3 (Hold Basic during Resonance Skill) → Forte: Fleurdelys Basic P3 → Forte: Fleurdelys Basic P4 → Forte: Fleurdelys Basic P5 → (Skill 2) Forte: May Tempest Break the Tides → Forte: Fleurdelys Basic P3 → Forte: Fleurdelys Basic P4 → Forte: Fleurdelys Basic P5 → Ultimate: Blade of Howling Squall → Outro
+**F2P Option: Cartethyia + Sanhua + Baizhi or Verina**
+- **Sanhua** rotates in and out at high speed while providing Basic Attack DMG buffing; excellent F2P synergy
+- **Baizhi/Verina** provides healing and minor buffs
+*Capable of top-tier performance in right hands despite lacking Erosion-synergy support.*
 
-| Sequence | Total DMG       | DPS         | Relative to S0 |
-|----------|-----------------|-------------|----------------|
-| S0       | 1,092,186 DMG   | 82,553 DPS  | 100.00%        |
-| S1       | 1,281,482 DMG   | 96,861 DPS  | 117.33%        |
-| S2       | 1,609,951 DMG   | 121,689 DPS | 147.41%        |
-| S3       | 2,075,703 DMG   | 156,893 DPS | 190.05%        |
-| S4       | 2,228,889 DMG   | 168,472 DPS | 204.08%        |
-| S5       | 2,228,889 DMG   | 168,472 DPS | 204.08%        |
-| S6       | 2,826,809 DMG   | 213,666 DPS | 258.82%        |
+## Cartethyia: DPS Benchmarks
 
-*Source: Prydwen.gg — Cartethyia Guide and Build, Calculations tab (https://www.prydwen.gg/wuthering-waves/characters/cartethyia/). Note: S4 and S5 show identical damage because S5's survivability passive (fatal blow shield + HP cost reduction on transformation) does not directly increase Cartethyia's personal damage output. Benchmarks are solo personal damage only; team composition multiplies real-world performance significantly. Do not compare raw numbers between characters or use them as a pull metric — see Prydwen's disclaimer above the chart.*
+Cartethyia is rated as the **highest-damage single-target DPS in Wuthering Waves** at her full investment ceiling (Prydwen, Patch 3.0 update). Key benchmarks:
 
-**Damage Profile Breakdown (per Prydwen pie chart):**
-- Basic Attack DMG: **51.6%** — the largest share by far; Basic Attack scaling (both Cartethyia and Fleurdelys forms) drives the majority of her output
-- Liberation DMG: **23.6%** — Blade of Howling Squall is a massive single hit but occupies a smaller slice due to the long rotation time
-- Skill DMG: **12.5%** — Resonance Skill hits in both Cartethyia and Fleurdelys forms contribute meaningfully
-- Intro / Echo / Debuff: remaining ~12.3% split across Intro Skill hits, Echo procs, and Aero Erosion debuff ticks
+- **Optimal team (S6 + Sig + Ciaccona + Chisa S0):** Effectively free-clears 30–50% of end-game content without effort
+- **S0 + Signature + BIS team:** Top-tier single-target; competitive with best-in-class unit pairs; slight weakness in AoE multi-wave content (Whimpering Wastes) due to Aero Erosion re-application gaps when entire waves die simultaneously
+- **S0 + No Signature (Guardian Sword) + F2P team:** Still top-tier — her baseline kit is strong enough that the F2P team with Sanhua remains viable for high-end content
+- **S2 impact:** Mid-air Attack damage increases by 200%, representing the largest single-sequence power spike in her chain
 
-**Calculations build used (Prydwen):**
-- Weapon: Defier's Thorn R1
-- Echo Set: 5pc Windward Pilgrimage
-- Main Echo: Reminiscence: Fleurdelys
-- Echo Config: 4-cost (CRIT Rate) / 4-cost (CRIT DMG) / 1-cost (HP) / 1-cost (HP) / 1-cost (HP)
-- Substats: HP 45% / CRIT Rate 42% / CRIT DMG 84%
+**Rotation Outline (S0, BIS):**
+1. Pre-rotation: Apply Aero Erosion stacks via supports (Ciaccona → 5 stacks)
+2. Cartethyia enters via Intro Skill (Sword of Discord summoned, 2 Aero Erosion inflicted)
+3. Basic Attack Stage 4 (Sword of Divinity) → Resonance Skill (Sword of Virtue) → Heavy Attack if needed → Mid-air Plunge recalling all 3 Swords (5.68%×3 HP Aero Erosion DMG + buff states)
+4. Resonance Liberation → Fleurdelys form (60% Aero DMG Bonus active)
+5. Full Fleurdelys combo building Conviction to 120
+6. Blade of Howling Squall (removes up to 5 Aero Erosion stacks → +100% DMG taken amplification at max)
+7. Outro Skill → swap to supports
 
-**Teammate buffs included in calculations:**
-- Ciaccona + Woodland Aria + 5pc Gusts of Welkin + Nightmare: Kelpie
-- Rover (Aero) + Bloodpact's Pledge + 5pc Windward Pilgrimage + Reminiscence: Fleurdelys
-
-## Cartethyia: Character Strengths and Weaknesses in Actual Gameplay
-**Strengths:**
-- Highest damage ceiling in WuWa as of Patch 3.0 in optimal conditions
-- Built-in interruption resistance once rotation is learned; near-uninterruptable rotation inputs
-- Self-sufficient: heals herself on Blade of Howling Squall cast (restores 50% Max HP); self-applies Aero Erosion; self-amplifies Erosion via Inherent Skill 2
-- Extremely difficult to hit: a large portion of her rotation is spent airborne
-- Enemy stagnation and grouping in Fleurdelys form (Heart of Virtue force field)
-- Lots of swap-cancel windows — rewards skilled players with optimized quickswap
-- Even without signature weapon or best team, her raw damage is exceptional with good Echoes
-- Passively buffs teammates: improves healing received by 20%, gives resistance to interruption, funnels Windstrings to Aero Rover — makes whole team smoother
-
-**Weaknesses:**
-- Very expensive to fully optimize: best performance requires Ciaccona (limited), Chisa/Aero Rover (additional resources), and ideally signature weapons across the board
-- Lack of viable HP-scaling weapon alternatives — most swords don't serve her scaling
-- Without Ciaccona at S0, she cannot self-sustain full Erosion stacks or reach max stack cap for bonus amp on her Ultimate
-- Struggles in Whimpering Wastes (multi-wave content) when full enemy waves die simultaneously, resetting Erosion stacks and requiring ramp-up again
-- Complex kit: the Sword Shadow system, dual-form swapping, Conviction management, and Erosion stack micromanagement create a steep learning curve
-- HP cost on Transformation ultimate (50% of Max HP) can be dangerous in punishing content without good Echoes or healer support
-- Power fluctuations when far from Rinascita (lore-stated in Resonance Evaluation Report)
-
----
-
-## Cartethyia Kit Sources
-- Prydwen – Cartethyia Build and Guide (Primary): https://www.prydwen.gg/wuthering-waves/characters/cartethyia/
-- Game8 – Cartethyia Best Builds and Teams: https://game8.co/games/Wuthering-Waves/archives/507777
-- Wutheringlab – Cartethyia Build: https://wutheringlab.com/character/cartethyia-build/
-- Wuthering.gg Character Page: https://wuthering.gg/characters/cartethyia
-- Steam Guide – Version 2.4 Cartethyia Build: https://steamcommunity.com/sharedfiles/filedetails/?id=3493689407
-- Lootbar Build Guide (V3.0): https://lootbar.gg/blog/en/wuthering-waves-cartethyia-build-guide.html
-- LDShop Cartethyia Build Guide (2.8): https://www.ldshop.gg/blog/guide/cartethyia-build-guide.html
-- Buffget – Chisa Havoc Team 2.8 DPS Benchmark: https://buffget.com/news/wuthering-waves-best-chisa-havoc-teams-28-cartethyia-and-zhezhi-comps-1ohau94
-- Wutheringwaves.fandom.com – Cartethyia: https://wutheringwaves.fandom.com/wiki/Cartethyia
-- Prydwen – Tier List (patch context): https://www.prydwen.gg/wuthering-waves/tier-list/
+## Cartethyia: Sources
+- Prydwen Build Guide — https://www.prydwen.gg/wuthering-waves/characters/cartethyia/
+- Game8 Build Guide — https://game8.co/games/Wuthering-Waves/archives/507777
+- WutheringLab Build — https://wutheringlab.com/character/cartethyia-build/
+- Wuthering.gg — https://wuthering.gg/characters/cartethyia
+- Sportskeeda Resonance Chain Guide — https://www.sportskeeda.com/esports/wuthering-waves-wuwa-cartethyia-resonance-chain-guide
+- Game8 Ascension Materials — https://game8.co/games/Wuthering-Waves/archives/524308
+- LootBar Build Guide — https://lootbar.gg/blog/en/wuthering-waves-cartethyia-build-guide.html
+- Steam Community Build Guide — https://steamcommunity.com/sharedfiles/filedetails/?id=3493689407

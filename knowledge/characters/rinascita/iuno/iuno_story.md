@@ -1,233 +1,144 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/iuno/iuno_story.md
+source_file: characters/septimont_characters/iuno/iuno_story.md
 character: Iuno
-group: Rinascita
+group: Septimont
 document_type: character_story
-importance: medium
+importance: high
 tags:
-- character
-- story
-- lore
+  - character
+  - story
+  - lore
+  - septimont
+  - tetragon-temple
+  - prophecy
+  - memory-erasure
+  - sibylla
+  - sacrifice
+  - dark-tide
 ---
 
 # Iuno Story Documentation
-<!-- Sources: Wuthering Waves Fandom Wiki (Iuno, Iuno/Backstory, Septimont), TV Tropes (WuWa: Septimont), VS Battles Wiki (Iuno), Shipping Wiki (Augiuno), Wutheringwaves-builds (Iuno Story), Pocket Tactics, WuWaLabo -->
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Iuno/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/iuno/info, https://wutheringwaves.fandom.com/wiki/By_Moon%27s_Fated_Light, https://gamespace.com/all-articles/news/wuthering-waves-version-2-6-impressions-part-2-date-with-iuno-in-the-chaos/ -->
 
 ## Iuno Official Introduction
-*From the Official Wuthering Waves Website and Banner Introduction:*
 
-"Iuno, the prodigious Priestess of the Tetragon Temple. She is blessed with the infallible ability to see the future by studying how moonlight changes. While both blessed and cursed with the power to foretell the futures of others, her responsibilities are contrasted by her cocky, outspoken and rebellious attitude, embodying an eagerness to defy all of fate's cruelest machinations."
+*She is favored by fate under one name, and swept away by it in another. Yet never once has she been defeated, nor has she ever yielded. Now, witness the defiant Priestess. Witness what keeps her striding forward, never to look back. Witness how she walks the intricate web of destiny and becomes the only answer.*
 
-*Official Countdown Tagline (Version 2.6 pre-release):*
-
-"While the moon cycles, I remain the anchor."
-
-*Banner Introduction:*
-
-"She is favored by fate under one name, and swept away by it in another. Yet never once has she been defeated, nor has she ever yielded. Now, witness the defiant Priestess. Witness what keeps her striding forward, never to look back. Witness how she walks the intricate web of destiny and becomes the only answer."
-
-These lines are not promotional decoration. "Favored by fate under one name, and swept away by it in another" refers literally to her arc: she was once the beloved 127th Priestess, Septimont's greatest seer. After her sacrifice, she was swept from all memory. "Never once defeated, never yielded" — even in erasure, she remained the answer. She was still the one who won.
+Iuno is the renowned Prodigy Priestess of Septimont's Tetragon Temple — blessed with the infallible ability to see the future by studying how moonlight changes, and equally blessed with the outspoken refusal to simply accept what she sees.
 
 ## Iuno Personality
-Iuno's personality is one of Wuthering Waves' most carefully layered character portraits: a prodigy who knows her gift is a trap, and runs headlong into every consequence with a grin on her face.
 
-She is irreverent — she rolls dice, catches Senators in arguments with visible delight, and applies "charms" where other priestesses would apply solemnity. She is outspoken in a role that traditionally prizes inscrutability. She is competitive in an institution that prizes calm. She is fundamentally, constitutionally, happily unable to sit still.
+Iuno's personality is defined by a constitutive tension between gift and agency. She was born with perfect foresight — the ability to read fate through moonlight with what the Tetragon Temple describes as infallible clarity — and she spent the formative years of her life learning that seeing everything does not mean being able to change anything. The girl who grew up free-spirited and joyful, raised by a mother who attached no noble rules to her choices, encountered a kind of invisible cage: she could see every door but could not open the ones that mattered most.
 
-But underneath the playful exterior is someone who has been carrying a profound weight since childhood: the knowledge that she can see what is coming, and that changing it costs her. Every act of defiance against fate carves away a piece of her existence. She has known this for years. She hid it from everyone. And when the moment came that required her to pay everything, she didn't hesitate.
+Her response was not despair. It was recalibration. She traded the very power that distinguished her — her prophesying ability, the source of her institutional value and her public identity as Septimont's greatest Priestess — for a Forte that could participate in events rather than observe them. This is not impulsiveness; it was a deliberate, informed, costly decision made with full understanding of what was lost. The Priestess role, as she eventually articulated it, felt passive to her: prophecy as a chain rather than a key. She chose the key.
 
-This is not recklessness. It is a person who has been slowly, deliberately, carefully practicing the trade of paying costs her whole life — and who finally arrived at the bill and found that she still believed it was worth it.
+The surface personality that Septimont knows is cocky, quick, and frequently smug in ways that come across as charming rather than abrasive. She teases Augusta with the ease of someone who knows exactly how far she can push before it becomes cruel, and she stops there. She reads people well — which makes sense, given her background — but she uses that reading for warmth and humor rather than manipulation.
 
-Her warmth is not performance. Her birthday gift to the Rover — a little moon whose phases can change, intended as "an anchor of certainty" for someone walking infinite unwritten paths — reveals a person who notices how others experience the world and adapts her care to what they specifically need. She is not warm in a general or abstract sense. She is warm toward individuals, in particular ways, for reasons she has thought about.
+What Septimont does not know, except Augusta (and Augusta only partially), is that Iuno has been carrying her own ending alone for a long time. She saw how her story concluded. She made the choice not to share that burden in a way that would alter what Augusta would do in the field. Whether this was the right call — whether protecting Augusta from foreknowledge was a kindness or a withheld intimacy — is the question her arc leaves genuinely open.
 
 ## Iuno Forte Examination Report
-*From the Priestess Register, Tetragon Temple — Entry #127 (partial, as recorded in-game):*
 
-"This entry concerns the 127th Priestess of the Tetragon Temple, known as Iu▇. She was born on the night of hollowed moon. As a Congenital Resonator, her eyes are said to hold the power to ▇▇▇▇. Her Tacet Mark is located atop her left foot. When she activates her Resonance ability, ▇▇ energy constructs with the shape of lunar phases manifest around her, and the tips of her hair turn translucent, radiating a gentle glow that is almost indistinguishable from actual moonlight."
+*[Excerpt from the Priestess Register, Tetragon Temple — Entry: The 127th Priestess, Iu▇]*
 
-"Resonance spectral analysis reveals that her Forte aligns extraordinarily closely with the frequency pattern of the natural moon, exhibiting a continuous, phase-like modulation."
+She was born on the night of the hollowed moon. As a Congenital Resonator, her eyes are said to hold the power to ▇▇▇▇. Her Tacet Mark is located atop her left foot. When she activates her Resonance ability, ▇▇ energy constructs with the shape of lunar phases manifest around her, and the tips of her hair turn translucent, radiating a gentle glow almost indistinguishable from actual moonlight.
 
-*From the official character description:*
+Resonance spectral analysis reveals that her Forte aligns extraordinarily closely with the frequency pattern of the natural moon, exhibiting a continuous, phase-like modulation. Notably, three years ago, her Forte appeared to ▇▇▇▇. It became capable of An▇ and Mani▇, enabling her to shape moonlight into solid arrows that can reveal marked monsters hidden in the Dark Tide.
 
-"Iuno is a Priestess well-known in Septimont for being a prodigy. She is blessed with the infallible ability to see the future by studying how moonlight changes. Blessings can be curses by another name, some may say. And they may be correct, but Iuno is not one to bow to conventions."
+*Note from the archivists: When we archived this entry, Grandmother Lillibet asked us to verify it multiple times. Oddly, none of us could remember who had written it in the first place. And stranger still, no one seems to recall the Priestess described here. Could a powerful Priestess like her have truly existed? Somehow, this out-of-nowhere record feels as if it was written by the moonlight itself!*
 
-The Priestess Register entry's deliberate redactions are notable. The nature of what her eyes "hold the power to" is censored. The type of energy that forms her lunar constructs is censored. This suggests either that the Temple considers this information too sacred or dangerous to record plainly, or that the full nature of Iuno's Forte exceeds the classification framework the Temple uses. Her Forte modulation aligning with the natural moon — a celestial body with a period of approximately 29.5 days — means her frequency is uniquely slow, stable, and cyclical compared to typical Resonators.
+**Overclock Diagnostic Report (additional excerpt):** The waveform of this Priestess remains largely within controllable parameters, with no signs of Overclocking risk. However, multiple interruptions of varying durations have been observed, accompanied by a gradual and consistent decline in her frequency. This suggests a possible state of long-term depletion.
 
-The VS Battles Wiki assessment confirms: "As a consequence, using an ability to defy fate will cost her, her existence." This is not in the official Forte report — it is evidenced by the story itself. The formal report seems to acknowledge only the benign aspects of her ability. The cost is something the Temple may know, and that Iuno certainly knows, and that neither has made fully public.
+*Resonance Power Classification: Stasis, Cycle, Renewal*
 
-## Iuno Character Stories
+## Iuno Character Story I: "The First Prophecy"
 
-**Character Story 1 — Mother and Child:**
-Young Iuno was free in a way most children of prodigies are not allowed to be. She walked over stone, moss, petals, and bubbling springs — "she never needed a reason, never chased meaning. She simply couldn't sit still." She wanted to feel everything.
+*Just the thought of unseen places and untried things filled her with joy. She wanted to feel everything.*
 
-Her mother, Sibylla, was perhaps the only person who truly understood how to raise a child like that. She bound Iuno with no noble rules. She let her run wild and embraced her longing. There was never just one path. Whichever path Iuno chose, Sibylla was waiting at the end.
+Young Iuno grew up in a household that had no reason to be ordinary and was exactly that anyway. Her mother, Sibylla, was a former Gladiator champion. Her father, a famed blacksmith who forged bows. Neither imposed noble expectations on her. Sibylla specifically bound her with no rules — let her run wild, embraced her longing, made clear that whatever path she chose, her mother would be waiting at the end of it. This was an unusual freedom for someone already marked by prophecy before birth: the Tetragon Temple Priestesses had confirmed, through Grandmother Lillibet's foresight, that Iuno would come to them.
 
-The specific day described in Iuno's Character Story begins like any other: young Iuno runs up the stairs straight into her mother's arms. Sibylla bends down, pulls her close, hand on the back of her head, voice warm: "My Iuno did wonderfully as usual." Iuno blinks. She feels proud. Of course she did. What follows is the discovery of her Forte, her recognition as a prodigy, and the beginning of her path as Priestess — but the emotional foundation is this: she was loved, unconditionally, before any of it.
+She did come. She was gifted. She was almost immediately the most extraordinary Priestess the Temple had seen — perhaps ever seen. And she found herself watching a dying Priestess one night in the Temple garden, a white dove landing near an ancient laurel tree, the woman turning to her with weakening voice: *You were born able to see. So go. See it for us.* She said she would. The woman died without hearing her fulfill it.
 
-Sibylla's family has a history of bringing novelty to both Septimont and Ragunna. As one NPC notes: "She and her family always manage to bring something fresh to Septimont and Ragunna, even to themselves. And before you know it, those little novelties spark whole new trends." This suggests the Sibylla lineage carries its own kind of cultural influence — Iuno's irreverence may have been inherited.
+The harder moment came not long after: a vision that showed her mother's figure buried beneath the Dark Tide. Buildings collapsing. Arrows loosed from a bow — her arrows — swallowed by darkness before they could land. She watched herself fight and fail in a future she could already see. She could not change it.
 
-**Character Story 2 — The Prodigy and Her Price:**
-Iuno's recognition as the greatest Priestess Septimont had ever seen was not a gradual ascent — it was immediately apparent from the time her Forte manifested. The Tetragon Temple, which had housed seers for generations, had never recorded a Resonance frequency aligned this closely with the moon's natural pattern. Her prophetic visions were not partial or symbolic: they were complete, specific, and infallible.
+She sat again at her divination table after that. Ripples across the water. And she heard, or imagined she heard, a question forming in the silence: *You can see it all… but if you only watch, what does that make you?*
 
-What the Temple did not publicly record, and what Iuno likely discovered early through her own visions, is the cost: each act of defiance — each intervention in a fated event — carves away a portion of her existence. The precise mechanism is not described in available sources, but the implication is that her existence is finite in a way tied directly to how many times she uses her gift to alter what she has seen.
+## Iuno Character Story II: "The Trade"
 
-This makes every prophecy she acts upon a calculated sacrifice. She does not "defy fate" casually or accidentally. Every time she has used her power to change an outcome she foresaw, she has made a deliberate choice to pay for it. The question her character arc poses is: how far will she go? How much of herself will she spend?
+*She spoke of finding the end by tracing the beginning, of altering outcomes by understanding causes. They wanted to shape a better fate, but Iuno found herself speechless.*
 
-The answer, in Version 2.6, is: all of it.
+There was a period in the Tetragon Temple when Iuno sat in discussions with other Priestesses about whether fate could be redirected. They were intelligent discussions. They went nowhere she could use. Each time she saw her mother's future, nothing had changed. Each time she reached the edge of what prophecy could show, the wall was the same: she could see the shape of what was coming, but only the shape.
 
-**Character Story 3 — The First Encounter with Augusta:**
-The details of Iuno and Augusta's first meeting are not fully chronicled in available public sources. What is confirmed from Iuno's own reflection: "When we first met, I told her she'd lead Septimont into a new era, and she believed it to be one of my prophecies. But really, it was just a hunch."
+Three years before the game's present, she made the trade. The Tetragon Temple's records from this period are irregular — fragmentary in ways that suggest something was deliberately or causally obscured. What is clear from the Overclock Diagnostic Report's note about "gradual and consistent decline in her frequency" and "multiple interruptions of varying durations" is that her Forte's new form costs her something that manifests as depletion over time. Using her power erodes her existence. She must "sleep" to recover. She accepted this.
 
-This moment is quietly extraordinary. Iuno — a woman whose whole identity is that her predictions are infallible — told Augusta something she could not actually see. She offered encouragement dressed up as prophecy, not because she was lying exactly, but because she believed in Augusta enough to state it with the conviction of foresight even without the vision to back it up. She then chose, in all the years that followed, never to look into Augusta's fate at all: "I never peep into her fate because it's always been in her hands."
+What she gained was a Forte that could act: the Moonring and Moonbow that appear in her combat form, the ability to manifest lunar-phase constructs that interact with the physical world rather than merely showing it to her. She stepped out of the archive and into the arena. She was no longer only the one who watched. She was also the one who fought.
 
-The most powerful seer in Septimont's history deliberately refuses to see the one person she trusts most completely. It is an extraordinary act of respect and love.
+## Iuno Character Story III: "The Unwritten Ending"
 
-**Character Story 4 — The Cost of Defiance (Version 2.6 Climax):**
-*From the in-game story "By Moon's Fated Light" / "Rust, Sword and the Sun":*
+*A young Gladiator approached hesitantly. He raised a glass with polite care, his voice unsure. "You… you were with us earlier, right?" Iuno raised her eyebrows and said nothing. She just lifted her glass and clinked it against his.*
 
-Iuno had seen it. Septimont's destruction. The Dark Tide coming not just as a threat, but as a sealed outcome — a vision without an alternate path. Most Priestesses would transcribe such a vision on the Temple murals and wait for what came. The Priestesses of Septimont had long since accepted that not all fates could be prevented: "even a Priestess can die themselves due to not knowing how it happens."
+The Version 2.6 main story arc — Chapter II Acts VII through IX — is the culmination of everything Iuno's character had been building toward. The Rover and Augusta participate in the Great Hunt in the Sanguis Plateau, fighting against the False Sovereign while Iuno provides prophecy and combat support throughout. The arc goes as planned.
 
-Iuno was not most Priestesses.
+And then it doesn't go wrong. It completes. The False Sovereign is defeated. Septimont celebrates. The bonfire is lit, petals are thrown into the sky, the crowd roars. And no one remembers who the Priestess was who fought alongside them.
 
-She did not have the power to fight the False Sovereign conventionally. Her Forte was prophetic, not martial. But she had options. The Tetragon Temple's Sacred Flame — the same flame through which the Priestesses see futures — could be redirected. By surrendering her prophetic ability entirely, by trading everything her existence as a seer was built on, she could gain the combat power to become "the moon arrow" that physically pinned the Dark Tide between Septimont and its destiny.
+Iuno had known this was coming. Her Forte — the one she traded her prophesying power to obtain — carries the cost she had agreed to: using it fully, in the way she had used it here, erased her from collective memory. Not from existence, not from the physical world, but from the record of everyone who had known her. Augusta, who spent the most time with her of anyone in Septimont, cannot feel a trace of her presence. The archivists at the Tetragon Temple cannot remember who wrote the entry in the Priestess Register. Even Lupa's voicelines carry a subtle wrongness, a gap where something used to be. Iuno does not die. She becomes unwritten.
 
-She raised her hand and severed it all. "Drawing every line of power she could wield, with a reckless, defiant smile, she plunged the arrow downward."
+The Rover, whose fate cannot be written into any prophecy, is the exception. They are the *unwritten blank* — exactly like Iuno, but in a different direction. When the Rover follows the trail of moonlight into the Chaos and finds the fragments of Iuno's specter, the moment their hands meet, the anchoring begins. The Rover spends Act IX following Iuno's guidance through the Chaos, seeing her past unfold in memories around them, reconstructing who she was from what the darkness kept.
 
-The arrow struck. The Dark Tide was torn apart, "inch by inch, by the crackling blue-white light." The False Sovereign was defeated. Rinascita survived. And Iuno disappeared from the memory of everyone in Septimont — including Augusta — as the consequence of the cost she paid.
+She is returned. She is whole. But the world's memory of her has not come back with her — she is freed from her duties as Priestess and from the prophecy's demands, but the people who loved her do not know they are glad she is back. She sits beside the lakeside after the celebration, chin on her knees, hearing people call behind her, none of them using her name.
 
-She stood at the edge of the celebration, away from the brightest flames. Someone noticed her and asked who she was. The person next to them didn't recognize her either.
+She laughs anyway.
 
-## Iuno Cherished Items
+## Iuno: Cherished Items
 
-**The Lunarum Bough (Returned Artifact — Cherished Item):**
-*From the in-game description:*
+**Moon-Forged Bow**
+Crafted by her father, the bow-forging blacksmith, who had been working on it long enough that he greeted her return simply: *Ah, there you are. I've been hammering away at this bow for you.* The bow is the physical bridge between her two inheritances — her mother's combat heritage, her father's craft. It is the object through which she first learned she could be more than a watcher. Her combat Moonbow is its Forte-manifestation; the physical bow is the proof that her family believed she would fight before she believed it herself.
 
-"A broken branch sprouted from a once-fractured wound. It resembles the Lunarum Bough you once shaped in Chaos. However, with Iuno's bow already forged, a flawless bough no longer holds much meaning. Standing all the wear and tear of fate, it's no longer an offering for sacrifice, just a simple bough — undefined, unburdened, and free, as it should be. As a result, you and Iuno can finally watch it grow gently in peace now, in the unwritten future beyond the final end. A fresh sprout suits a new beginning, one rooted in hope."
+**The Bracelet (Given to Rover)**
+A bracelet she passed to the Rover with a specific request: *always think of me when you wear it.* She framed the explanation around her Forte's cost to existence and the recovery requirement. In practice, the request is what it sounds like: she was hoping that an entity outside the reach of prophecy and fate-recording would hold the memory of her when everyone else's dissolved. She shed a tear when she gave it. She did not explain the tear. The Rover kept the bracelet.
 
-The Lunarum Bough was the material from which Iuno's Moonbow was forged. After the bow's creation — which served as the moon arrow that defeated the False Sovereign — the bough is broken and fractured. But it is sprouting. It is growing. The most resonant detail: it is "no longer an offering for sacrifice, just a simple bough — undefined, unburdened, and free." The bough that was a weapon is becoming simply alive.
+## Iuno: Favorite/Disliked Food
 
-**The Irregular Dice:**
-*From the in-game description:*
+**Favorite:** Sweet, celebratory foods — the kind eaten at victories and gatherings. Her earliest positive food memories are tied to the freedom of childhood under Sibylla's care, and by extension to community and abundance rather than ceremony.
 
-"These several irregular, asymmetrical dice belong to Iuno. Septimontians seek joy in their competitive games, whether it's the spectacle of a gladiatorial match or the thrill of a casual wager."
+**Disliked:** Bitter things eaten alone — not because she dislikes bitter flavors per se, but because of the associations they carry. Some part of the humor in her post-sacrifice lakeside scene comes from the fact that the celebration is happening without her being fully in it.
 
-The dice are not loaded — they are irregular. Asymmetric. They produce genuinely unpredictable outcomes. For a woman who can see the future, owning dice that resist prediction is almost philosophically significant: they are the one domain she cannot foreknow. She plays with them anyway. Possibly she plays with them because of that.
+*Note: Specific in-game food preference data not fully confirmed in available sources. Cross-reference voice_actors.txt / in-game archive when complete data is available.*
 
-## Iuno Favorite/Dislike Food
-*Not explicitly confirmed in a dedicated "favorite food" entry in available sources. Characterization-based inferences:*
+## Iuno: Ideals
 
-Iuno's free-spirited nature and Sibylla's parenting style (no restrictive rules, embrace all experiences) suggest she likely has broad tastes and genuine curiosity about food — she wanted to "feel everything," and food was presumably no exception. Her competitive, playful nature suggests she might enjoy meals tied to social settings: feasts, competitive wagers at the tavern, anything with other people.
+**Passion — Refusal as a Form of Love**
+Iuno's most consistent ideal is not defiance for its own sake but the specific refusal to accept outcomes that matter. Her mother told her there is never just one path. Iuno took that seriously enough to trade the most exceptional thing she had — the ability to see every path — for the ability to walk down the ones that needed walking. The prophecy said Septimont would fall. She decided to become the thing that prophecy cannot account for.
 
-Her birthday message to the Rover does not reference food but instead emphasizes thoughtful, symbolic gifts — a "little moon" rather than something consumable — suggesting her love language is more conceptual than gastronomic.
+**Resonance — Bearing It Alone, Not Being Alone**
+She carried the knowledge of her own sacrifice alone. This could read as isolation, but her choice was informed by deep understanding of the people she protected — she knew what telling Augusta the full truth would do to Augusta's performance in the field and to Augusta's peace of mind. Bearing the burden alone was, in her reading, a form of care. Whether it was the right form is left to the player to decide.
 
-No specific cherished or disliked food is confirmed in publicly available Version 2.6–3.0 sources.
+**Gratitude — The End as Beginning**
+Her closing image — sitting alone by the lakeside, hearing people who do not know her name, laughing anyway — is the image the story leaves her in. She did not get the victory lap. She got something else: the genuine end of the prophecy she was born into, and the first moment of a life no longer entirely defined by it. The gratitude in that is quiet but real.
 
-## Iuno Ideals
+**Acceptance — The Moon That Never Falls**
+*I am the moon that never falls, here to rewrite the ending.* The moon does not fall; it waxes, wanes, disappears, and returns. Her cycle — prophesied erasure, Chaos-crossing recovery, the return no one remembers — maps exactly onto this. She did not escape fate. She changed what kind of fate it was.
 
-**On Her Role as a Seer:**
-"While the moon cycles, I remain the anchor."
-— This is Iuno's core self-definition. She is not the future itself, nor is she destiny. She is the thing that holds when everything else moves and changes. The moon cycles — fate shifts — but something needs to be constant and oriented. That is her. That is what she decided to be.
+## Iuno: Narrative Chronicle
 
-**On Fate:**
-"If I can't change what I see… then let me shatter it."
-— Said in the final moment before she cast the moon arrow. This is her philosophy distilled to its most confrontational form. She is not arguing that fate is always wrong. She is saying that when fate is wrong, she will pay whatever price is necessary to break it.
+- **Birth and childhood:** Born under the hollowed moon in Septimont as a Congenital Resonator; declared by Grandmother Lillibet's prophecy as destined for the Tetragon Temple. Mother: Sibylla (former Gladiator champion); Father: bow-forging blacksmith. Childhood characterized by unusual freedom and genuine warmth; grew up archery-skilled, free-spirited, and curious.
+- **Tetragon Temple:** Enters the Temple as prophesied. Quickly recognized as the most gifted Priestess of her generation. Witnesses a dying Priestess ask her to *see for us*, and promises she will.
+- **The First Vision:** Views a moonlight prophecy showing Sibylla's death and her own arrows failing against the Dark Tide. Begins a years-long struggle with the gap between seeing fate and being able to change it. Joins debates among Priestesses about fate-alteration — finds no actionable answer through prophecy alone.
+- **The Trade (~three years before present):** Exchanges her exceptional prophesying power for a Forte capable of combat action. Gains the Moonring and Moonbow; gains the Lunar Cycle resource system; gains the ability to fight. Accepts that using this power depletes her existence over time and requires recovery.
+- **Rise to prominence:** Becomes Septimont's High Priestess; develops close friendship with Augusta (whom she first encouraged through a prophecy she framed as more certain than it was, to give Augusta confidence). The friendship is described as the sun-and-moon pairing that shapes Septimont's leadership dynamic in the Version 2.4–2.6 arc.
+- **Foresees her own erasure:** Uses her remaining prophesying ability to see the Version 2.6 outcome clearly enough to know her role in it. Chooses not to tell Augusta, reasoning that the knowledge would alter Augusta's performance and peace in ways that would make the outcome worse.
+- **Version 2.4 — Introduction:** Iuno appears as a key figure in the Septimont arc, partnering with Augusta and the Rover to investigate the Dark Tide and the False Sovereign threat.
+- **Version 2.6 Acts VI–VIII — The Great Hunt:** Participates in the Great Hunt alongside Augusta and the Rover in the Sanguis Plateau. Provides prophecy support and combat engagement throughout the fight against the False Sovereign. The Sovereign is defeated.
+- **Version 2.6 Act VIII — The Erasure:** Iuno's sacrifice completes. She vanishes from the collective memory of everyone in Septimont. Augusta cannot remember her. The celebration proceeds without anyone noticing the absence.
+- **Version 2.6 Act IX — By Moon's Fated Light:** The Rover follows moonlight trails into the Chaos; finds Iuno's fragmented specter; the Rover's fate-unwritten status allows them to anchor her. They follow her guidance through the Chaos, witnessing memory-echoes of her past. Iuno is recovered and returned to physical wholeness — but the world's memory of her does not return.
+- **Post-rescue:** Iuno passes the Rover her bracelet and asks them to always think of her when wearing it. She is seen sitting alone by the lakeside, laughing quietly. The final image is ambiguous — not triumphant, not tragic, but something between resolved and beginning.
+- **Version 2.6 — Playable Release (September 17, 2025):** Iuno becomes a playable character. Her kit encodes the whole of her arc: the Lunar Cycle's waxing and waning, the healing and amplification she provides to those she protects, and the Moonbow that is her father's craft made luminous.
 
-**On Friendship:**
-"I never peep into her fate because it's always been in her hands. She's the kind of ruler who'd sacrifice everything for her people, even her own flesh and blood. You don't need a coronation to see that. It's obvious at a glance. Yet, that kind of responsibility she carries is heavier than anyone else can imagine. Even though I know she can handle it alone, I still want to help somehow. As a priestess, as a friend... or even as someone she has forgotten."
-— On Augusta. The final clause is the heart of the whole thing: "even as someone she has forgotten." She knew, when she made her sacrifice, that Augusta would not remember her. She chose it anyway.
-
-**On the Rover (Birthday):**
-"For a Priestess, the day of birth is the starting point that stretches towards the end. Hmm, a rather suitable line to mark the beginning of a prophecy. But the infinite possibilities of the void are already perfect. There's nothing more I could offer. So, I've prepared something else. See this little moon? It can change its phases. Take it and place it in your void. If you ever find the infinite paths ahead overwhelming, it will at least serve as an anchor of certainty... Happy Birthday, {PlayerName}."
-— The deepest articulation of her gift as an act of care: she cannot give the Rover (whose fate is unwritten) a prophecy. So she gives them the next best thing — not a future, but a constant. An anchor. A little moon, for when the void is too big.
-
-**On Being Forgotten:**
-She was confident she could win Augusta's friendship back. Just her charms. She has probably already started planning it.
-
----
-
-## Iuno Narrative Chronicle
-
-**Pre-Story — The Temple and the Gift:**
-Iuno was born on the night of a hollowed moon in Septimont, the daughter of Sibylla — a woman from a family known for bringing novelty and cultural freshness to Rinascita. From her earliest years, she was unusual: constantly moving, wanting to experience everything, refusing to be still. Her Forte manifested with extraordinary clarity — a Resonance frequency aligned more closely with the natural moon than any Resonator previously recorded by the Tetragon Temple. She was designated the 127th Priestess of Septimont and quickly recognized as the greatest prophetic talent in the Temple's history.
-
-**The Meeting with Augusta:**
-At some point before Augusta became Ephor — possibly during the period when Augusta was still a gladiator navigating the corruption of the old administration — Iuno encountered her and offered encouragement that she framed as prophecy: that Augusta would lead Septimont into a new era. It was actually a hunch. Iuno has never once looked into Augusta's fate since. This was the beginning of the most significant friendship either of them would have.
-
-**The Years as Priestess — Seeing and Paying:**
-Throughout her tenure as Priestess, Iuno fulfilled the Temple's traditional function: receiving visions from the Sacred Flame, transcribing them as murals for the people of Septimont, and advising the Ephor on matters of fate and foresight. What was not part of the Temple's traditional function: physically intervening in outcomes she found unacceptable, paying incremental costs to her existence, and developing a combat skillset substantially beyond what any previous Priestess had employed. The Temple found her "extreme." She apparently agreed and didn't care.
-
-**Version 2.6 — By Moon's Fated Light / Rust, Sword and the Sun:**
-The False Sovereign — a catastrophic Dark Tide manifestation — emerged as an existential threat to Rinascita. Iuno saw the outcome: Septimont's destruction. No ordinary path led away from it. The Rover (whose fate is "unwritten") was the variable that made intervention theoretically possible, but even with the Rover's involvement, the calculus required Iuno to contribute something she could not contribute at baseline combat power.
-
-She worked through it. She found the path. It required exchanging her prophetic sight — everything her identity was built on — for a single catastrophic offensive capability: becoming the moon arrow, channeling all her Resonance into a single strike that would pin the Dark Tide's path and tear it apart.
-
-She did it. With a "reckless, defiant smile." The False Sovereign was defeated. The Dark Tide was repelled. Septimont survived. And Iuno was erased from the memory of its citizens — including Augusta — as the cost crystallized.
-
-**Post-Version 2.6 — Forgotten but Not Gone:**
-Iuno stood at the edge of the celebration at a camp in the Sanguis Plateaus, away from the brightest flames. She was not recognized. She did not intervene. She waited. Notably, her existence was not destroyed — she was erased from memory, not from being. The Lunarum Bough she carried is described as sprouting new growth post-story: "A fresh sprout suits a new beginning, one rooted in hope."
-
-The Temple acknowledges its new limitation: without Iuno's full prophetic capacity, the Priestesses can no longer see Septimont's collective Auguries. Individual fates remain accessible; the city's future as a whole cannot be read anymore. Lillibet confirms this, and it represents the institutional cost of Iuno's personal sacrifice.
-
-**Version 3.0 — Across Time's Waxes and Wanes (Rerun):**
-Iuno's banner returned in Version 3.0 (January 15–February 4, 2026), alongside Augusta's. The banner name — "Across Time's Waxes and Wanes" — directly references the Lunar Cycle metaphor at the heart of her character: time waxes, time wanes, the moon cycles. She remains the anchor.
-
----
-
-## Iuno Chronicles
-
-**Banner History:**
-- **First Release:** "Across Time's Waxes and Wanes" — Version 2.6, Phase 2 (September 17–October 9, 2025). Featured 4-stars: Aalto, Baizhi, Taoqi. Ran alongside Ciaccona's banner.
-- **Rerun:** "Across Time's Waxes and Wanes" — Version 3.0, Phase 1 (January 15–February 4, 2026).
-
-**Notable Trivia:**
-- Iuno's name is derived from Juno — the Roman goddess who was queen of the gods, protector of the Roman state, and patroness of marriage. Recent Septimont characters draw extensively from Roman naming conventions (Augusta, Septimont itself from "Septem Montes" / Seven Hills of Rome). However, Iuno's thematic associations more closely match lunar deities: Selene (Greek moon goddess), Diana/Artemis (Roman/Greek goddess of the moon and the hunt), and Tsukuyomi (Japanese moon god). Her Forte's moon-frequency alignment and her transformation into a "moon arrow" during her sacrifice bring her closer to lunar mythology than the administrative power of the Roman Juno.
-- Her EN voice actress Ella Boyes is known for voicing Columbina in Genshin Impact — a character also associated with an ethereal, somewhat otherworldly presence and significant narrative mystery. The casting creates an interesting parallel for players familiar with both games.
-- The Priestess Register entry for Iuno has deliberate redactions (▇▇▇▇) — rare in official in-game documents. This suggests the full nature of her Forte was considered sensitive or dangerous to record publicly, possibly even by the Temple that trained her.
-- Her Tacet Mark is on the top of her left foot — consistent with the Tetragon Temple's tradition of Magical Barefooters (most priestesses walk without footwear).
-- Iuno is described as the 127th Priestess. The numbering implies continuity stretching back well before the Lament, suggesting the Tetragon Temple and its line of seers have existed for generations in Septimont's history.
-- Her dice (Cherished Item) are "irregular, asymmetrical" — producing genuinely random outcomes. For a seer, this is remarkable: she owns objects specifically designed to be unpredictable.
-
----
-
-## Iuno Conclusion
-Iuno's story is the most quietly devastating in Wuthering Waves' Rinascita arc — and the most hopeful.
-
-She was the greatest prophet Septimont had ever known. She knew exactly how her gift worked. She knew exactly what it cost. She spent years paying those costs in increments, choosing, each time, to spend a little more of herself on outcomes she couldn't accept. And when the final bill came, she paid it in full, with her characteristic "reckless, defiant smile."
-
-She is forgotten now — or was, at the story's close. But the Lunarum Bough is sprouting. The little moon she gave the Rover can change its phases. Augusta's friendship, she is certain, can be won back with charms alone.
-
-The moon cycles. Iuno remains the anchor. Not because she is immovable — she ran wild her whole life — but because she keeps coming back. Through erasure, through sacrifice, through the slow wearing-away of everything a seer is, she kept striding forward, and never looked back.
-
-That is what the banner introduction was trying to say. "Witness the defiant Priestess." Not the tragic one. The defiant one.
-
-She won.
-
----
-
-## Iuno Theoretical Implications
-
-**On Fate and the Unwritten Rover:**
-The Rover's significance in Iuno's arc is not accidental. Iuno describes them as someone with an "unwritten" fate — the one individual whose future her prophetic sight cannot read. This has profound implications for the metaphysics of Wuthering Waves: if Iuno's gift is genuinely infallible for all other beings, the Rover's unreadability is not a limitation of Iuno's power but a property of the Rover themselves. They exist outside fate's grid. This makes them the only variable in any scenario Iuno can foresee — the one true wildcard in a world whose outcomes she can otherwise calculate. Her gift to them (a moon that changes phases, as "an anchor of certainty") reads differently in this context: it is a seer giving a gift of constancy to someone for whom constancy is structurally unavailable. It is Iuno offering, from the inside of fate, something fixed — to a person who stands outside it.
-
-**On Memory Erasure as a Forte Consequence:**
-Iuno was erased from memory rather than physically destroyed. This raises significant ontological questions about how Resonance interacts with collective consciousness on Solaris-3. The cost of her defiance seems to operate on a "social existence" register rather than a physical one — she remains physically present in the world (the sprouting bough, her ability to stand at the camp's edge), but has been excised from the relational network of memories that constituted her identity as Priestess. Whether this erasure is reversible — and whether someone whose fate is "unwritten" (the Rover) might be exempt from the memory alteration — is not confirmed in available sources but is a significant narrative question for future story content.
-
-**On the Temple's Collective Augury Loss:**
-Post-sacrifice, the Priestesses can no longer see Septimont's collective future. This leaves Septimont — a city whose governance, strategy, and cultural identity has been built partly around prophetic guidance for generations — fundamentally altered. The city that once had a seer who could see the fate of every individual and the fate of the city as a whole now has seers who can only see individual fates, without the integrating macro-view that Iuno provided. Whether this will expose Septimont to future threats it would have been forewarned about, or whether her removal fundamentally changes the nature of Septimont's relationship with fate, remains an open question in the narrative.
-
-**On the Sun-Moon Thematic Axis:**
-Augusta and Iuno's "sun and moon" dynamic is more than aesthetic. The sun is constant — blazing, unmoving in its position, the source that others orbit. The moon is cyclical — always returning, always changing phase, its light borrowed from the sun and reflected back. Augusta's power is absolute and always-burning; Iuno's power cycles, sometimes full and brilliant, sometimes hidden. Augusta leads by being the center; Iuno leads by being the constant that orients others when the center is obscured. The fact that Augusta continues without Iuno (the sun cannot know the moon is gone) while Iuno continues watching Augusta from the periphery (the moon is always turned toward the earth) maps the power differential between them — and the nature of Iuno's particular kind of love.
-
----
-## Sources
-- Wuthering Waves Fandom Wiki – Iuno: https://wutheringwaves.fandom.com/wiki/Iuno
-- Wuthering Waves Fandom Wiki – Iuno/Backstory: https://wutheringwaves.fandom.com/wiki/Iuno/Backstory
-- TV Tropes – Wuthering Waves: Septimont: https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesSeptimont
-- VS Battles Wiki – Iuno (Wuthering Waves): https://vsbattles.fandom.com/wiki/Iuno_(Wuthering_Waves)
-- Shipping Wiki – Augiuno: https://shipping.fandom.com/wiki/Augiuno
-- Wutheringwaves-builds – Iuno Story & Voice Lines: https://wutheringwaves-builds.com/character/iuno/
-- WuWaLabo – Iuno Guide & Lore: https://wuwalabo.com/en/characters/iuno-guide/
-- Pocket Tactics – Iuno release date, voice actors, and lore: https://www.pockettactics.com/wuthering-waves/iuno
-- Wuthering Waves Fandom Wiki – Septimont: https://wutheringwaves.fandom.com/wiki/Septimont
-- Wuthering Waves on X / Twitter: https://x.com/Wuthering_Waves/status/1950390901219454980
+## Iuno: Sources
+- Wuthering Waves Fandom Wiki (Backstory) — https://wutheringwaves.fandom.com/wiki/Iuno/Backstory
+- Wuthering Waves Fandom Wiki (By Moon's Fated Light) — https://wutheringwaves.fandom.com/wiki/By_Moon%27s_Fated_Light
+- Genshin-Builds WuWa Story/Voicelines — https://genshin-builds.com/en/wuthering-waves/characters/iuno/info
+- Wuthering Waves Fandom Wiki (Main) — https://wutheringwaves.fandom.com/wiki/Iuno
+- GameSpace Version 2.6 Impressions — https://gamespace.com/all-articles/news/wuthering-waves-version-2-6-impressions-part-2-date-with-iuno-in-the-chaos/
+- Steam Community Discussion (Iuno's Forte trade) — https://steamcommunity.com/app/3513350/discussions/0/595158831570596289/
