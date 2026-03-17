@@ -3,405 +3,390 @@ version: 1.0.0
 chunk_strategy: heading_based
 source_file: characters/rinascita/cantarella/cantarella_kit.md
 character: Cantarella
-group: Rinascita
+group: Rinascita / Ragunna / Fisalia Family
 document_type: character_kit
 importance: high
 tags:
-- character
-- kit
-- combat
+  - character
+  - kit
+  - combat
+  - havoc
+  - rectifier
+  - sub-dps
+  - healer
+  - support
+  - trance
+  - shiver
+  - mirage
+  - hazy-dream
+  - jolt
+  - perception-drain
+  - abyssal-rebirth
+  - dreamweavers
+  - echo-skill
+  - phrolova-team
+  - version-2-2
 ---
 
-# Cantarella Kit & Mechanics Knowledge File
-<!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
+# Cantarella Kit Documentation
+<!-- Sources: https://www.prydwen.gg/wuthering-waves/characters/cantarella/, https://wutheringlab.com/character/cantarella-build/, https://game8.co/games/Wuthering-Waves/archives/500493, https://www.ldshop.gg/blog/guide/wuthering-waves-cantarella-build-guide.html, https://lootbar.gg/blog/en/wuthering-waves-cantarella-build-guide.html, https://www.destructoid.com/best-cantarella-build-in-wuthering-waves-weapons-echoes-team-compositions-and-sequences/, https://wutheringwaves-builds.com/character/cantarella/ -->
 
 ## Cantarella: Combat Archetype and Role
-- **Element/Attribute:** Havoc
-- **Weapon Type:** Rectifier (jellyfish-styled parasol)
-- **Role:** Flexible Sub-DPS / Support / Healer hybrid — provides coordinated off-field attacks, team healing, Havoc DMG amplification, and Resonance Skill DMG buffs
-- **Scaling Stat:** ATK (standard ATK scaling; all skills scale off ATK%)
-- **Damage Type:** Havoc DMG; Basic Attack DMG (Perception Drain is classified as Basic Attack DMG despite being a Forte skill)
-- **Combat Style:** Stance-based fighter with two modes: Normal (builds Trance stacks via Basic Attacks, Skill, Liberation, Intro) → **Mirage State** (entered via Heavy Attack Delusive Dive; transforms Basic Attacks into Phantom Sting combo, builds Shiver for healing, unlocks Perception Drain finisher)
-- **Specialty:** Echo Skill synergy (both her Resonance Skill and Liberation are classified as Echo Skills, triggering Phrolova's Hecate coordinated attacks); coordinated attacks via Dreamweavers (jellyfish); team sustain via healing on every hit in Mirage
-- **Tier (Prydwen, Patch 2.8):** T1.5 Tower of Adversity (with Partner tag for Phrolova); Sub-DPS/Support role
-- **Best use case:** Third slot in Phrolova / Roccia / Cantarella (current best Echo Skill team); alternatively Jinhsi / Cantarella / Healer for Spectro-Havoc hybrid teams
 
-## Cantarella: Key Resources (Forte Mechanics Overview)
-Cantarella's Forte Circuit operates on three layered gauges: Trance, Shiver, and Mirage state duration.
+- **Element:** Havoc
+- **Weapon Type:** Rectifier (combat implementation: coral parasol)
+- **Role:** Flexible Sub-DPS / Healer / Support — simultaneously deals meaningful damage, heals the entire team, debuffs enemies, and provides off-field Coordinated Attacks
+- **Archetype:** Stance dancer (Outside Mirage → Inside Mirage); Trance accumulator → Mirage entry; Shiver accumulator → Perception Drain finisher; Hazy Dream debuffer; Jolt trigger; Dreamweaver off-field attack distributor; Outro Skill team Havoc + Resonance Skill amplifier
+- **Introduced:** Version 2.2 (March 27, 2025); rerun Version 2.5 Phase 2 and Version 2.8 Phase 1
 
-**Trance (max 5 points):**
-- Restored by: Intro Skill (+1), Basic Attack Stage 3 hit (+1), Resonance Skill Graceful Step (+1), Resonance Liberation Flowing Suffocation (+variable based on level)
-- At 1+ Trance: Heavy Attack becomes **Delusive Dive** — consumes stamina, deals Havoc DMG, and enters **Mirage** state for 8 seconds
-- During Mirage: each action (Phantom Sting hits, Abysmal Vortex, Shadowy Sweep) consumes 1 Trance to grant 1 Shiver and heal all nearby Resonators
+Cantarella occupies a unique position in the Havoc roster as a *"jack-of-all-trades"* unit per Destructoid: she provides team healing, significant off-field Coordinated Attack damage via Dreamweavers, the Hazy Dream debuff (which enables Jolt follow-up damage), meaningful personal damage via Perception Drain, and an Outro Skill that amplifies both the incoming character's Havoc DMG and Resonance Skill DMG simultaneously. Game8 describes her as *"Phrolova's best Sub-DPS due to her kit having multiple Echo Skills that trigger Hecate's attacks"* — her kit's Echo Skill frequency is Phrolova's most important synergy requirement, making Cantarella uniquely irreplaceable in that team rather than merely good.
 
-**Shiver (max 3 points, only active in Mirage):**
-- Gained by: consuming Trance during Mirage via Phantom Sting Basic Attacks, Abysmal Vortex (Mid-air), or Shadowy Sweep (Dodge Counter)
-- Each Shiver gained triggers team-wide healing
-- At 3 Shiver: Resonance Skill becomes **Perception Drain** — high-damage Havoc finisher (classified as Basic Attack DMG), suspends enemies in Hazy Dream, heals all Resonators, and is classified as an Echo Skill cast
+Her primary weakness is that she is genuinely *not* a Main DPS — while her Perception Drain has an impressive multiplier, her overall damage output is described by Wutheringlab as *"mediocre"* for a 5-star DPS slot, and she should not attempt to replace a dedicated Main DPS. Her correct role is as the second character in a rotation: Sub-DPS, healer, and buff-delivery system who enters, deploys her full combo, and swaps to the Main DPS with her Outro buffs active.
 
-**Mirage State (8 seconds):**
-- Entered via Delusive Dive (Heavy Attack with 1+ Trance)
-- Ends when: Trance is depleted, 8 seconds elapse, or player manually exits
-- During Mirage:
-  - Basic Attack → Phantom Sting (3-stage combo; Stage 3 triggers 3 Coordinated Attacks)
-  - Resonance Skill → Flickering Reverie (inflicts Hazy Dream debuff: slows enemy, triggers Jolt on hit for Havoc DMG)
-  - Healing Bonus increased by 25% (from Inherent Skill)
-  - Can cast all attacks mid-air
+## Cantarella: Key Resources — Trance and Shiver
 
-**Hazy Dream / Jolt mechanic:**
-- Flickering Reverie inflicts Hazy Dream: reduces enemy movement speed for 6.5 seconds
-- When a Hazy Dream target takes damage, **Jolt** triggers once: removes Hazy Dream, deals Havoc DMG (classified as Basic Attack DMG)
+Cantarella's combat system runs on two sequential resources: Trance (accumulated outside and inside Mirage to enter the state and unlock enhanced attacks) and Shiver (accumulated inside Mirage to reach Perception Drain and provide healing).
 
-## Cantarella: Stats Baseline: Level 1 – 90
-All values are base stats (without Forte bonuses or Echo bonuses):
+**Trance (0 to 5 points)**
+- The gate to Mirage entry; also governs how long Mirage lasts once entered
+- **Trance Generation:**
+  - **Intro Skill (Suite of Quietus or Tidal Surge):** +1 Trance on cast
+  - **Basic Attack Stage 3 hit:** +1 Trance (must hit an enemy; if the attack misses, no Trance is generated)
+  - **Resonance Skill — Graceful Step hit:** +1 Trance (hits or misses — the Resonance Skill generates Trance whether or not it connects per Wutheringlab; verify with Fandom Wiki)
+  - **Resonance Liberation cast:** +2 Trance; this is the fastest single Trance injection outside of the full Intro → Skill → Liberation build sequence
+  - **S1 — Midnight's Aria:** +1 additional Trance per Resonance Skill cast (effectively +2 Trance total per Resonance Skill at S1)
+- **Maximum:** 5 Trance points
+- **Trance Consumption — Heavy Attack: Delusive Dive:** When Cantarella has at least 1 Trance, holding the Heavy Attack button becomes Delusive Dive, which deals Havoc DMG and enters Mirage; **Delusive Dive consumes 1 Trance on activation** (not all Trance — just 1)
+- **Trance Consumption in Mirage — Phantom Sting attacks:** Each Basic Attack (Phantom Sting Stage 1, 2, or 3), Mid-air Attack (Abysmal Vortex), or Dodge Counter (Shadowy Sweep) that hits a target in Mirage consumes 1 Trance and grants 1 Shiver plus healing to all nearby Resonators
+- **Mirage duration:** 8 seconds if no Trance is used inside it; effectively controlled by how quickly the player spends remaining Trance via Phantom Sting attacks; Mirage ends when all Trance is depleted or the 8-second timer expires
 
-| Level | HP     | ATK  | DEF   |
-|-------|--------|------|-------|
-| 1     | ~1,160 | ~46  | ~122  |
-| 10    | ~2,515 | ~100 | ~265  |
-| 20    | ~3,890 | ~155 | ~409  |
-| 30    | ~5,098 | ~203 | ~536  |
-| 40    | ~6,307 | ~252 | ~663  |
-| 50    | ~7,341 | ~293 | ~772  |
-| 60    | ~8,182 | ~327 | ~860  |
-| 70    | ~8,949 | ~357 | ~940  |
-| 80    | ~9,496 | ~379 | ~998  |
-| 90    | 10,015 | 400  | 1,053 |
+**Shiver (0 to 3 points)**
+- Accumulated inside Mirage via Basic Attacks; gates both Perception Drain and healing
+- **Shiver Generation (in Mirage only):** Each Phantom Sting (Basic Attack), Abysmal Vortex (Mid-air Attack), or Shadowy Sweep (Dodge Counter) hit → consumes 1 Trance → grants 1 Shiver + team heal
+- **Shiver-triggered healing:** Every single Shiver gained provides an immediate heal to all nearby Resonators; Cantarella's primary healing delivery is through this repeated Shiver accumulation loop
+- **At 3 Shiver:** Resonance Skill transforms from Flickering Reverie → **Forte Circuit: Perception Drain** (the high-damage finisher); Resonance Skill icon turns purple visually to indicate readiness
+- Shiver is consumed entirely by Perception Drain cast; after Perception Drain, Shiver returns to 0 and the cycle can restart if Trance remains
 
-- Max Energy: 125
-- Base CRIT Rate: 5%
-- Base CRIT DMG: 150%
-- Base Healing Bonus: 0%
-- Base Havoc DMG: 0%
+**The Full Resource Loop (per rotation):**
+1. Build Trance outside Mirage via Intro Skill, Basic Attack Stage 3, Resonance Skill, Liberation
+2. Enter Mirage via Delusive Dive (Heavy Attack with ≥1 Trance)
+3. Cast Flickering Reverie (Resonance Skill in Mirage, ≤2 Shiver) → applies Hazy Dream
+4. Spend remaining Trance via Phantom Sting attacks (each one → Shiver + team heal)
+5. At 3 Shiver, Resonance Skill becomes Perception Drain → cast for high damage + full team heal + Hazy Dream reapplication
+6. Swap out with Outro Skill active to deliver +20% Havoc / +25% Resonance Skill buffs to incoming character
 
-## Cantarella: Stats Baseline: Max Analysis
-At Level 90 with all Minor Fortes and Attribute Bonuses unlocked:
-- ATK: 400 base; Minor Forte bonuses not publicly listed in available sources but assumed standard progression
-- HP: 10,015 — moderate HP pool; lower than tanks but sufficient for her hybrid support role
-- Healing scales off ATK, making ATK% substats valuable for both damage and sustain
-- Recommended final stat spread: CRIT Rate ~70% / CRIT DMG ~250%+ / ATK% / Havoc DMG% / Energy Regen (120-130%)
-- Key note: as a flexible unit, Cantarella can be built for either personal DPS (Midnight Veil set, Havoc DMG focus) or team utility (Empyrean Anthem set, CRIT Rate ~70% for reliable proc)
+## Cantarella: Stats Baseline
+
+| Level | HP | ATK | DEF |
+|-------|----|-----|-----|
+| Lv. 1 | ~840 | ~33 | ~91 |
+| Lv. 20 | ~2,185 | ~86 | ~237 |
+| Lv. 40 | ~4,170 | ~165 | ~453 |
+| Lv. 60 | ~6,730 | ~267 | ~731 |
+| Lv. 80 | ~9,270 | ~367 | ~1,007 |
+| Lv. 90 | ~10,545 | ~418 | ~1,146 |
+
+*Approximate figures; Forte Attribute Bonuses (CRIT DMG) not included. Verify exact values with the Wuthering Waves Fandom Wiki.*
 
 ## Cantarella: Ascension Materials
-Total materials required for full character ascension (Level 1 → 90):
-- 4× LF Whisperin Core
-- 12× MF Whisperin Core
-- 12× HF Whisperin Core
-- 4× FF Whisperin Core
-- 46× Lament Residue
-- 60× Violaca (open-world gather, Rinascita region — around Avinoleum)
-- 170,000 Shell Credits
 
-## Cantarella: Basic Attack — Phantom of the Sea
-**Basic Attack:**
-Performs up to 3 consecutive attacks, dealing Havoc DMG.
+| Ascension | Level Cap | Key Materials |
+|-----------|-----------|---------------|
+| 1 | 20→40 | LF Whisperin Core ×4, Seaside Cendrelis ×4, Shell Credits ×5,000 |
+| 2 | 40→50 | MF Whisperin Core ×4, Seaside Cendrelis ×8, Shell Credits ×10,000 |
+| 3 | 50→60 | HF Whisperin Core ×8, Seaside Cendrelis ×12, Axiom of Creation ×4, Shell Credits ×15,000 |
+| 4 | 60→70 | HF Whisperin Core ×8, Seaside Cendrelis ×16, Axiom of Creation ×8, Shell Credits ×20,000 |
+| 5 | 70→80 | FF Whisperin Core ×12, Seaside Cendrelis ×20, Axiom of Creation ×12, Shell Credits ×40,000 |
+| 6 | 80→90 | FF Whisperin Core ×12, Seaside Cendrelis ×24, Axiom of Creation ×16, Shell Credits ×80,000 |
 
-**Heavy Attack:** Consumes STA to attack the target, dealing Havoc DMG.
-
-**Heavy Attack – Delusive Dive:** When Cantarella has Trance (≥1 point), Heavy Attack becomes Delusive Dive. Deals Havoc DMG to the target, then Cantarella enters Mirage state. While in Mirage, casting Delusive Dive does not activate Mirage again. Can be cast in water (unique traversal property).
-
-**Mid-air Attack:** Consume STA to perform Plunging Attack, dealing Havoc DMG.
-
-**Dodge Counter:** Press Normal Attack right after a successful Dodge to attack the target, dealing Havoc DMG.
-
-**Mirage – Basic Attack Phantom Sting:**
-Performs up to 3 consecutive attacks, dealing Havoc DMG. Can be cast mid-air. When cast mid-air, consumes STA and the combo does not reset when Cantarella is airborne.
-- Hitting the target with Phantom Sting: consumes 1 Trance to obtain 1 Shiver and heals all nearby Resonators in the team
-- Stage 3 of Phantom Sting triggers **3 Coordinated Attacks**, dealing Havoc DMG (additional hits beyond the main attack)
-
-**Mirage – Mid-air Attack (Abysmal Vortex):** Press Jump to perform a Plunging Attack at the cost of STA, dealing Havoc DMG. When Abysmal Vortex hits a target: consume 1 Trance to obtain 1 Shiver and heal all nearby Resonators.
-
-**Mirage – Dodge Counter (Shadowy Sweep):** Attacks the target, dealing Havoc DMG. Press Normal Attack right after casting to cast Phantom Sting Stage 2. When Shadowy Sweep hits a target: consume 1 Trance to obtain 1 Shiver and heal all nearby Resonators.
-
-**Attribute Scaling (Level 1 values):** Exact multipliers not fully available in public sources; general scaling confirmed as ATK-based. Phantom Sting Stage 3 Coordinated Attacks and healing values scale with skill level upgrades.
-
-## Cantarella: Resonance Skill — Graceful Step / Flickering Reverie
-**Graceful Step (Normal mode):**
-Attacks the target, dealing Havoc DMG. Casting this skill recovers **1 point of Trance**. Press Normal Attack shortly after casting to start the Basic Attack combo from Stage 3.
-
-**Flickering Reverie (Mirage mode):**
-When in Mirage, Resonance Skill becomes Flickering Reverie. This is classified as an **Echo Skill** when being cast (triggers Phrolova's Hecate, Cantarella's own Abyssal Rebirth passive, and Echo Skill-based set bonuses).
-- Attacks the target, dealing Havoc DMG
-- Sends target into **Hazy Dream**: reduces target's movement speed for 6.5 seconds
-- When the target takes damage during Hazy Dream, **Jolt** is triggered once, removing Hazy Dream and dealing Havoc DMG (classified as Basic Attack DMG)
-- Can be cast mid-air
-
-**Attribute Scaling (Level 1 values):**
-- Graceful Step DMG: [Base ATK% multiplier not available in scraped sources; confirmed as moderate Havoc DMG]
-- Flickering Reverie DMG: [Base ATK% multiplier not available in scraped sources; confirmed as higher than Graceful Step]
-- Jolt DMG: [Confirmed as Basic Attack DMG classification]
-- Cooldown: 12 seconds (estimated standard Resonance Skill cooldown)
-
-## Cantarella: Resonance Liberation — Beneath the Sea (Flowing Suffocation)
-**Flowing Suffocation:**
-Deals Havoc DMG in an AoE and grants **Diffusion** to all Resonators in the team for 30 seconds.
-- **Diffusion:** Summons Dreamweavers (jellyfish) that perform **Coordinated Attacks** against enemies every second for the duration (21 total coordinated attacks over 30 seconds per Prydwen)
-- Recovers Trance (amount scales with skill level; estimated +1-2 Trance per cast baseline)
-- This skill is classified as an **Echo Skill** when being cast
-- Can be cast mid-air
-- Has a teleport effect to the target on cast
-
-**Attribute Scaling (Level 1 values):**
-- Flowing Suffocation DMG: [Base ATK% multiplier not available in scraped sources; confirmed as significant burst damage]
-- Dreamweaver Coordinated Attack DMG per tick: [Scales with Liberation skill level]
-- Cooldown: 25 seconds | Energy Cost: 125 | Concerto Regen: 20
-
-**Key note:** The 21 coordinated attacks over 30 seconds make this Liberation extremely valuable for building Incandescence stacks on Jinhsi or triggering Phrolova's Hecate repeatedly.
-
-## Cantarella: Forte Circuit — Abyssal Rebirth
-**Mirage State Mechanics (detailed):**
-Mirage lasts for 8 seconds. Ends when Trance is depleted.
-
-**Perception Drain (Forte finisher):**
-When Cantarella has 3 points of Shiver in Mirage, Resonance Skill becomes Perception Drain.
-- Deals Havoc DMG (classified as **Basic Attack DMG**, not Skill DMG)
-- Sends the target into **Hazy Dream** (same effect as Flickering Reverie)
-- Heals all Resonators in the team
-- This skill is classified as an **Echo Skill** when being cast
-- Can be cast mid-air
-
-**Attribute Scaling (Level 1 values):**
-- Perception Drain DMG: [Per sources, described as having a "high multiplier" and being Cantarella's primary personal damage source; exact ATK% not available]
-- Healing: [Scales off ATK; amount increases with Forte Circuit level]
-
-**Abyssal Rebirth (Intro Skill passive):**
-After casting Intro Skill, Cantarella enters Abyssal Rebirth state, which lasts for 25 seconds and can be activated once every 25 seconds.
-- During Abyssal Rebirth: for up to **6 times**, when Resonators in the team cast Echo Skill, Cantarella recovers **6 points of Concerto Energy**
-- Echoes with the same name can only trigger this effect once
-- This is Cantarella's primary Concerto Energy generation mechanic for quick-swap rotations
-
-**Traversal Passive:**
-When in water, Cantarella's swimming speed increases and STA cost decreases — makes her excellent for Rinascita exploration.
-
-## Cantarella: Inherent Skill 1 — Sea's Blessing
-Increase **Healing Bonus by 20%** (unconditional).
-
-This passive makes Cantarella's healing significantly more potent without requiring specific builds — stacking ATK% naturally benefits both her damage and her sustain.
-
-## Cantarella: Inherent Skill 2 — Dreamweaver's Grace
-Casting Echo Skill gives **6% Havoc DMG Bonus** for 10 seconds, stacking up to **2 times** (total +12% Havoc DMG Bonus).
-
-Since both her Resonance Skill (Flickering Reverie) and Resonance Liberation (Flowing Suffocation) are classified as Echo Skills, Cantarella can easily maintain 2 stacks of this buff for herself and potentially extend it further with actual Echo casts.
-
-**Additional Mirage Passive (from Forte):**
-When in Mirage, Healing Bonus is increased by **25%**. Combined with Inherent Skill 1, this gives Cantarella +45% Healing Bonus during Mirage state.
-
-## Cantarella: Intro Skill — Ripple / Tidal Surge
-**Ripple (Normal mode):**
-Attacks the target, dealing Havoc DMG. Press Normal Attack shortly after casting this skill to start the Basic Attack combo from **Basic Attack Stage 3** (immediately primes Trance generation).
-
-Casting Ripple recovers **1 point of Trance** and activates Abyssal Rebirth passive.
-
-**Tidal Surge (Mirage mode):**
-When in Mirage, Intro Skill becomes Tidal Surge. Triggers **3 Coordinated Attacks** on hit, dealing Havoc DMG.
-
-Casting Tidal Surge resets the combo of Basic Attack Phantom Sting (allows re-entry to Stage 1).
-
-**Attribute Scaling (Level 1 values):**
-- Ripple DMG: [Base ATK% multiplier not available; confirmed as moderate Havoc DMG]
-- Tidal Surge Coordinated Attacks: [3× separate hits; total DMG higher than Ripple]
-- Concerto Regen: 10
-
-## Cantarella: Outro Skill — Dreamweaver's Embrace
-Amplifies the incoming Resonator's **Havoc DMG by 20%** and **Resonance Skill DMG by 25%** for 14 seconds. **Switching Resonators ends this effect.**
-
-This is one of the strongest Outro buffs for Havoc characters and Resonance Skill-focused DPS. Critically, the buff expires on swap — the incoming character must remain on field to maintain the amplification.
-
-**Key implication:** Cantarella's Outro is designed for quickswap rotations where the next character performs their full combo before swapping again.
+**Total Ascension Shell Credits:** ~170,000
+- **Whisperin Cores (LF/MF/HF/FF):** Dropped by Whisperin Tacet Discord enemies; craftable via Synthesizer; available from Forgery Challenge: Marigold Woods
+- **Seaside Cendrelis:** Local specialty gathered from the Rinascita coastline areas; use the Prydwen Interactive Map to locate efficiently; also used by other Rinascita characters; note that these must be gathered in the overworld — no shop purchase option
+- **Axiom of Creation:** Weekly boss material from the **Lorelei** boss (Rinascita weekly challenge); Lorelei is both the source of the ascension material and the recommended main echo for Cantarella, creating a thematic and practical alignment
 
 ## Cantarella: Skill Upgrade Materials
-Total materials required to max all skills:
-- 25× LF Whisperin Core
-- 28× MF Whisperin Core
-- 40× HF Whisperin Core
-- 57× FF Whisperin Core
-- 25× Waveworn Residue 210
-- 28× Waveworn Residue 226
-- 55× Waveworn Residue 235
-- 67× Waveworn Residue 239
-- 26× Unnamed Sonoro
-- 2,030,000 Shell Credits
 
-**Skill Priority (recommended order):**
-1. **Forte Circuit** (Perception Drain) — highest personal damage multiplier; improves healing
-2. **Resonance Liberation** (Flowing Suffocation) — amplifies Dreamweaver Coordinated Attack damage; essential for both personal DPS and support value
-3. **Resonance Skill** (Flickering Reverie) — moderate damage contribution; secondary priority
-4. **Intro Skill** (Ripple/Tidal Surge) — provides Trance and Concerto gen; lower damage priority
-5. **Basic Attack** (Phantom Sting) — lowest direct damage contribution; primarily used for Shiver generation
+**Total Forte Shell Credits (all skills):** ~2,030,000
+- **Skill Books:** Verify appropriate Forgery Challenge type with Fandom Wiki
+- **Weekly Boss Material:** Axiom of Creation from Lorelei
 
-## Cantarella: Resonance Chains (S1 – S6)
-**S1 – Sequence Node 1:**
-- Casting Resonance Skill recovers **1 point of Trance**
-- DMG Multiplier of Resonance Skill Graceful Step, Resonance Skill Flickering Reverie, and Forte Circuit Perception Drain increased by **50%**
-- Immune to interruptions while casting Graceful Step, Flickering Reverie, and Perception Drain
+**Skill Upgrade Priority:** Forte Circuit (Perception Drain — highest multiplier + Shiver system + team heal) → Resonance Liberation (Flowing Suffocation / Beneath the Sea — Dreamweaver Coordinated Attack damage) → Resonance Skill (Graceful Step / Flickering Reverie — Trance generation, Hazy Dream application, Echo Skill count) → Basic Attack → Intro Skill. Forte Circuit is the clear first priority as Perception Drain is both the damage peak and the primary sustained healing delivery mechanism; Liberation second for the off-field Dreamweaver attack damage that continues throughout the Main DPS's window.
 
-This is Cantarella's most impactful single sequence: +50% multiplier to her three primary damage skills plus interruption immunity makes her significantly safer and stronger.
+## Cantarella: Character Kit: Basic Attack — Phantom Sting (Outside Mirage)
 
-**S2 – Sequence Node 2:**
-When in Mirage, Healing Bonus is increased by **25%**.
-The maximum number of Dreamweavers Cantarella can summon through Resonance Liberation Diffusion is increased by **5** (from 21 to 26 total coordinated attacks).
+**Standard Ground Chain (3 stages)**
+- Up to 3 consecutive Havoc DMG attacks classified as Basic Attack DMG
+- **Stage 3 hit:** Grants **+1 Trance**; also triggers **3 Coordinated Attacks** dealing Havoc DMG (these are Coordinated Attacks, not Echo Skill DMG; verify classification details with Fandom Wiki)
+- Stage 3 must hit an enemy to generate Trance; if the attack misses, no Trance is granted
 
-**S3 – Sequence Node 3:**
-Increase the DMG Multiplier of Basic Attack Phantom Sting by **80%**.
+**Heavy Attack**
+- Standard Havoc DMG (Stamina cost) when Cantarella has **no Trance**
+- When Cantarella has **≥1 Trance:** replaced by **Heavy Attack — Delusive Dive**
 
-This significantly boosts her Mirage Basic Attack damage, making her more viable as a personal DPS rather than pure support.
+**Heavy Attack — Delusive Dive (Trance required)**
+- Deals Havoc DMG to the target
+- Cantarella enters **Mirage** on cast
+- Consumes 1 Trance
+- Cannot be cast again while already in Mirage (re-casting Delusive Dive in Mirage does not re-enter a second Mirage)
+- Can be cast in water (exploration utility)
 
-**S4 – Sequence Node 4:**
-Casting Resonance Liberation Flowing Suffocation makes Cantarella's DMG ignore **30% of the target's DEF** for 10 seconds.
+## Cantarella: Character Kit: Basic Attack — Phantom Sting (Inside Mirage)
 
-DEF ignore is an extremely valuable multiplier that scales better than DMG% bonuses in high-DEF content.
+Inside Mirage, all of Cantarella's attack options change:
 
-**S5 – Sequence Node 5:**
-For the first 1.2 seconds of Hazy Dream, when the target takes an instance of DMG that does not inflict Hazy Dream, Jolt will not be triggered on the target.
+**Basic Attack — Phantom Sting Stages 1–3 (in Mirage)**
+- Each stage deals Havoc DMG
+- **Stage 3** triggers 3 Coordinated Attacks dealing Havoc DMG
+- Each of Stage 1, 2, and 3 **on hit:** consumes 1 Trance, grants 1 Shiver, heals all nearby Resonators
+- This is the primary Shiver accumulation mechanism; the standard in-Mirage loop is Phantom Sting 1 → 2 → 3 to reach 3 Shiver (consuming 3 Trance points in the process)
 
-This extends the debuff window slightly, allowing more coordinated damage before Jolt removes Hazy Dream.
+**Mid-Air Attack — Abysmal Vortex (in Mirage)**
+- Plunging Havoc DMG; on hit: consumes 1 Trance, grants 1 Shiver, heals all nearby Resonators
+- Alternative Shiver generation method; can be used in place of Stage 3 for faster Shiver-per-second generation in specific situations
 
-**S6 – Sequence Node 6:**
-- When Outro Skill is triggered, deal additional **480% Havoc DMG** to surrounding enemies (classified as Outro Skill DMG)
-- Grant the incoming Resonator **15% Havoc DMG Bonus** for 15 seconds (in addition to the existing 20% Havoc DMG + 25% Skill DMG buffs)
+**Dodge Counter — Shadowy Sweep (in Mirage)**
+- Havoc DMG after successful Dodge in Mirage; on hit: consumes 1 Trance, grants 1 Shiver, heals all nearby Resonators
+- Useful for both Shiver generation and survivability simultaneously
 
-S6 transforms her Outro into a nuke and extends her Havoc buff duration beyond the 14-second swap-ending limitation.
+**Mirage Duration and End Conditions:**
+- Mirage lasts **8 seconds** base duration; in practice, duration is controlled by how quickly Trance is spent via Phantom Sting/Abysmal Vortex/Shadowy Sweep
+- Mirage ends when all Trance is consumed OR the 8-second timer expires, whichever comes first
 
-**Investment notes:**
-- S0: Fully functional as support; viable healing and coordinated attacks
-- S1: Best single sequence — massive damage spike + safety
-- S2+S3+S4: Cantarella Hypercarry becomes viable; described by multiple sources as "extremely powerful" at 6+5 (S6 + R5 signature)
-- S6: Peak support performance; makes her Outro one of the strongest in the game
+## Cantarella: Character Kit: Resonance Skill
 
-## Cantarella: Echo Sets — Best Sets
-**Best Set for Havoc Teams: Midnight Veil (5-piece)**
-- 2-piece: +10% Havoc DMG Bonus
-- 5-piece: When dealing Havoc DMG, increases the next Resonator's Havoc DMG Bonus by 15% for 15 seconds
-- Ideal for mono-Havoc teams where both Cantarella and the main DPS benefit from the Havoc amplification
+**Resonance Skill — Graceful Step (Outside Mirage)**
+- Attacks the target, dealing Havoc DMG; Havoc DMG classified as Resonance Skill DMG
+- Grants **+1 Trance** (this triggers even if the attack misses per Wutheringlab; verify exact condition with Fandom Wiki)
+- 12-second cooldown
+- The fastest pre-Mirage Trance generator alongside Intro Skill and Liberation
 
-**Best Set for Utility/Universal Teams: Empyrean Anthem (5-piece)**
-- 2-piece: +10% Coordinated Attack DMG
-- 5-piece: When Coordinated Attacks hit, increases team's Resonance Skill DMG by 20% for 8 seconds (requires 70% CRIT Rate to reliably proc)
-- Ideal for Phrolova teams (Echo Skill synergy) or Jinhsi teams (Spectro DPS who doesn't benefit from Havoc-specific buffs)
+**Resonance Skill — Flickering Reverie (Inside Mirage, Shiver < 3)**
+- **This skill is classified as an Echo Skill** when cast — critical distinction for Phrolova team synergy (triggers Hecate's Enhanced Attack when Phrolova is off-field) and for the Abyssal Rebirth mechanic (Intro Skill Echo Skill passive Concerto recovery)
+- Attacks the target, dealing Havoc DMG
+- Sends the target into **Hazy Dream** for 6.5 seconds:
+  - Reduces target's movement speed for 6.5 seconds
+  - When the target takes damage while under Hazy Dream, **Jolt** is triggered: removes Hazy Dream, deals Havoc DMG classified as Basic Attack DMG
+  - **Only one Jolt triggers per Hazy Dream application** (S2 notably buffs this single Jolt's multiplier by +245%)
+- Can be cast in mid-air
+- 12-second cooldown
 
-**Alternative: Lingering Tunes (5-piece)** — provides ATK% buffs; viable if neither Midnight Veil nor Empyrean Anthem is fully farmed
+**Forte Circuit — Perception Drain (Inside Mirage, Shiver = 3)**
+- **Available only when Cantarella has 3 Shiver and is in Mirage; Resonance Skill icon turns purple when ready**
+- Consumes all 3 Shiver
+- **Also classified as Echo Skill** — same critical Phrolova/Hecate trigger and Abyssal Rebirth Concerto interaction as Flickering Reverie
+- Deals high Havoc DMG classified as **Basic Attack DMG** to target in an AoE
+- **Sends target into Hazy Dream** (enabling immediate Jolt follow-up)
+- **Heals all nearby Resonators** (major team heal; Destructoid: *"provides a large burst of healing to her entire team"*)
+- **Grants Cantarella a large amount of Concerto Energy** (enabling faster Outro rotation or Liberation)
+- Can be cast in mid-air
+- 18-second cooldown (the longest of her Resonance Skills; per Destructoid: *"her primary goal and should be used on cooldown"*)
+- **S3 interaction:** Perception Drain's DMG multiplier is increased by +50% (S1 also grants +50% to both Graceful Step and Flickering Reverie; all three receive the same boost from their respective sequences)
+- Wutheringlab: *"This skill deals over 1300% multiplier damage"* at relevant investment levels (verify exact max-level value with Fandom Wiki)
 
-## Cantarella: Echo Sets — Best Main Echo
-**Best 4-cost Main Echo (Havoc focus):**
-- **Lorelei** (Havoc boss) — provides Havoc DMG Bonus + Basic Attack DMG Bonus, both of which Cantarella scales off (Perception Drain is Basic Attack classified)
-- **Nightmare: Tempest Mephis** — alternative Havoc option with Liberation DMG focus
+**Skill Upgrade Priority:** Third — both Flickering Reverie and Perception Drain are important, but Perception Drain is covered under Forte Circuit priority; Graceful Step is primarily a Trance generator; the skill level primarily scales the Resonance Skill DMG multipliers
 
-**Best 4-cost Main Echo (Utility focus):**
-- **Any Coordinated Attack-focused Echo** — benefits from Empyrean Anthem set bonus
+## Cantarella: Character Kit: Resonance Liberation — Beneath the Sea / Diffusion
 
-## Cantarella: Echo Sets — Echo Stat Priority
-**Recommended Echo Configuration (4-4-3-3-1):**
-- 4-cost slot (main): CRIT Rate or CRIT DMG
-- Second 4-cost: CRIT DMG or CRIT Rate (balance to ~70% CRIT Rate for Empyrean proc; ~65% minimum for personal damage)
-- 3-cost slots: Havoc DMG% main stat (Midnight Veil build) or ATK% (general build)
-- 1-cost slot: ATK% main stat
+**Resonance Liberation — Flowing Suffocation (initial hit)**
+- Cantarella sweeps the area with Havoc DMG (classified as Resonance Liberation DMG)
+- **On cast:** Grants **+2 Trance** immediately; also triggers **Abyssal Rebirth**
+- **S2 interaction:** Liberation hit now also sends the target into Hazy Dream (same 6.5s debuff as Flickering Reverie); Jolt multiplier boosted by +245%
+- **S3 interaction:** Liberation DMG multiplier increased by +370% (Destructoid: *"turns her Liberation from mediocre damage into a real nuke"*); also automatically enters Cantarella into Mirage after casting (eliminating the need for a separate Delusive Dive)
+- **S6 interaction:** Cantarella's DMG ignores 30% DEF for 10 seconds after casting; Hazy Dream has a 1.2s immunity window where the first hit does not trigger Jolt (allowing follow-up DMG to stack before the single Jolt fires)
 
-**Substat Priority:**
-CRIT Rate = CRIT DMG (balance to ~70/250 ratio) → ATK% → Energy Regen (120-130%) → Havoc DMG% → Basic Attack DMG%
+**Resonance Liberation — Diffusion (sustained effect, 30 seconds)**
+- After Flowing Suffocation, all Resonators in the team gain the **Diffusion** effect: each Resonator summons **Dreamweavers** (jellyfish) that perform Coordinated Attacks, dealing Havoc DMG, triggered every second for the duration
+- Standard Dreamweaver count: scales with skill level
+- **S4 interaction:** Maximum Dreamweavers increased by +5 (additional off-field damage over the 30-second duration)
+- Dreamweaver Coordinated Attacks are the primary source of sustained off-field damage that Cantarella contributes during the Main DPS's field window; these attacks continue automatically without Cantarella being on-field
+- **Skill Upgrade Priority:** Second — the Dreamweaver Coordinated Attack multipliers and the Liberation hit multiplier both scale significantly with skill level; this is the primary source of Cantarella's off-field damage contribution
 
-**Note:** Since Cantarella's healing scales off ATK, stacking ATK% benefits both her damage and her team sustain simultaneously — making ATK% highly valuable.
+**Abyssal Rebirth (Passive triggered by Intro Skill or Liberation)**
+- After casting Intro Skill, Cantarella enters **Abyssal Rebirth state for 25 seconds** (once per 25 seconds)
+- During Abyssal Rebirth: for up to **6 times**, when any Resonator in the team casts an Echo Skill, Cantarella recovers **6 points of Concerto Energy** per trigger
+- **Unique Echo restriction:** Echoes of the same name can only trigger this effect once per Abyssal Rebirth window
+- Maximum Concerto recovery per Abyssal Rebirth: 6 triggers × 6 points = **36 Concerto Energy** from team Echo Skills
+- This mechanic rewards team compositions with high Echo Skill frequency and diverse echo selections, exactly mirroring the Phrolova/Hecate off-field trigger condition — team echo diversity benefits both Cantarella's Concerto cycling and Phrolova's Hecate activation count simultaneously
 
-## Cantarella: Weapons — Best Weapon
-**Stringless (5-star Rectifier — Signature):**
-- Sub-stat: CRIT DMG (72% at max level)
-- Base ATK: 500
-- R1 Effect: Increases ATK by **24%**. Casting Echo Skill within 10 seconds after casting Intro Skill or Basic Attacks grants **1 stack of Gentle Dream**. Echoes with the same name can only trigger this effect once, stacking up to **2 times**, lasting for 10 seconds. When reaching 2 stacks, casting Echo Skill no longer resets the duration. This effect activates up to once per 10 seconds. Switching to another Resonator ends this effect early. With 2 stacks, Gentle Dream increases **Basic Attack DMG Bonus by 24%** and **Havoc RES penetration by 15%**
-- The RES penetration and Basic Attack DMG boost are perfectly tailored to Cantarella's kit (Perception Drain is Basic Attack classified)
+## Cantarella: Inherent Passives
 
-## Cantarella: Weapons — Alternative Weapons
-**Rime-Draped Sprouts (5-star):** CRIT DMG secondary; Basic Attack DMG Bonus when using Resonance Skill — synergizes well with Flickering Reverie → Phantom Sting combo.
+**Inherent Skill 1 — Veiled Tempest**
+- **+20% Healing Bonus** (unconditional, permanent)
+- **Casting Echo Skill gives +6% Havoc DMG Bonus for 10 seconds, stackable up to 2 times** (+12% Havoc DMG Bonus at max stacks)
+- Flickering Reverie and Perception Drain are both classified as Echo Skills; in a standard rotation, both fire within the same active window, easily maintaining 2 stacks throughout Cantarella's on-field time
+- The Healing Bonus directly amplifies all Shiver-generated heals and the Perception Drain burst heal; IS1 is therefore simultaneously an offensive and defensive passive
 
-**Cosmic Ripples (5-star, Standard Banner):** Energy Regen secondary + Basic Attack DMG Bonus — strong F2P option; arguably as good as signature for pure support builds due to Energy Regen easing rotation requirements.
+**Inherent Skill 2 — Tidal Mastery**
+- **+20% Havoc DMG Bonus** (unconditional, permanent)
+- IS2 provides the largest unconditional Havoc bonus in Cantarella's kit; it applies to all Havoc DMG regardless of classification (Resonance Skill, Basic Attack, Liberation, Echo Skill)
 
-**Augment (4-star Battle Pass, R5):** Provides large ATK% bonus after casting Liberation — decent 4-star option; accessible and effective for sub-DPS builds.
+## Cantarella: Intro/Outro Skills
 
-**Static Mist (4-star):** Standard 4-star stat stick; accessible option but significantly weaker than 5-star alternatives.
+**Intro Skill — Suite of Quietus (Outside Mirage)**
+- Deals Havoc DMG; press Normal Attack shortly after to start the Basic Attack combo from Stage 3 (shortcut into the most Trance-efficient attack immediately)
+- Grants **+1 Trance** on cast
+- Triggers **Abyssal Rebirth** (25s Echo Skill Concerto recovery window)
 
-## Cantarella: Team Composition Guide — Best Team (Phrolova/Roccia/Cantarella)
-**Phrolova / Roccia / Cantarella** (Best Echo Skill Team, Patch 2.8, per Prydwen Partner designation)
-- Phrolova: Main DPS; Hecate (her Echo) triggers coordinated attacks every time an Echo Skill is cast by the team
-- Roccia: Glacio support; provides grouping, buffs, and her own Echo Skill casts to feed Phrolova's Hecate
-- Cantarella: Sub-DPS/support; her Resonance Skill (Flickering Reverie) and Liberation (Flowing Suffocation) are both Echo Skills, maximizing Hecate trigger rate
+**Intro Skill — Tidal Surge (Inside Mirage)**
+- When Cantarella is in Mirage and re-enters the field via Intro Skill, the next Intro Skill becomes Tidal Surge
+- Tidal Surge triggers **3 Coordinated Attacks** on hit, dealing Havoc DMG
+- Resets the combo of Basic Attack Phantom Sting (allowing the Stage 3 Coordinated Attacks to fire immediately)
+- Prydwen notes this as a meaningful additional damage source when the rotation allows a Mirage re-entry
 
-**Why this team:**
-- Cantarella's kit is uniquely designed for Echo Skill synergy — no other character provides as many Echo Skill casts in a single rotation
-- Her Abyssal Rebirth passive (6 Concerto Energy per Echo Skill cast, up to 6 times) ensures she can Outro quickly for the next character
-- Prydwen explicitly designates Cantarella with "Partner (Phrolova)" tag, indicating this is her optimal use case
+**Outro Skill — Unfinished Aria**
+- The incoming Resonator gains:
+  - **+20% Havoc DMG Amplification for 14 seconds**
+  - **+25% Resonance Skill DMG Amplification for 14 seconds**
+  - Both effects expire when the receiving character is switched out
+- The dual-buff Outro is Cantarella's primary support contribution and the reason she is used in teams beyond Phrolova:
+  - For **Phrolova:** +20% Havoc Amplification applies to Phrolova's on-field attacks; +25% Resonance Skill Amplification applies to Phrolova's Reincarnate finishers (Movement of Fate and Finality / Murmurs in a Haunting Dream, both classified as Resonance Skill DMG); this dual amplification is maximally aligned with Phrolova's two primary attack categories
+  - For **Jinhsi:** +25% Resonance Skill Amplification applies to Jinhsi's Resonance Skill attacks, which are central to her damage loop (Overflowing Radiance, Illuminous Epiphany)
+  - For **Havoc Rover / Camellya:** +20% Havoc Amplification directly enhances their primary elemental damage
+- **S2 interaction:** Healing Bonus is increased by +25% during Mirage (timing the Outro from inside Mirage provides additional healing value during the final heal burst of Perception Drain)
 
-**Standard Rotation (Phrolova/Roccia/Cantarella):**
-Cantarella: Intro (Ripple, +1 Trance) → Liberation (Flowing Suffocation, Echo Skill #1, summons Dreamweavers) → Basic Stage 3 (+1 Trance) → Skill (Graceful Step, Echo Skill #2, +1 Trance) → Heavy Attack (Delusive Dive, enter Mirage) → Skill (Flickering Reverie, Echo Skill #3) → Phantom Sting ×3 (Stage 3 triggers coordinated attacks, grants 3 Shiver) → Skill (Perception Drain, Echo Skill #4) → Outro
-Roccia: Intro → Roccia rotation (grouping + Echo Skill casts) → Outro
-Phrolova: Intro → Full Phrolova rotation with Hecate coordinated attacks firing constantly
+## Cantarella: Resonance Chains (Sequences)
 
-## Cantarella: Team Composition Guide — Alternative Teams
-**Jinhsi / Cantarella / Zhezhi or Verina** (Spectro-Havoc Hybrid)
-- Jinhsi: Spectro Main DPS; builds Incandescence stacks via coordinated attacks
-- Cantarella: Sub-DPS; her Dreamweavers (21 coordinated attacks over 30 seconds) rapidly build Jinhsi's Incandescence
-- Zhezhi or Verina: Support/healer third slot
+**S1 — Dark Tide's Embrace**
+- **Casting Resonance Skill recovers +1 Trance** (additional to the +1 already granted by Graceful Step; effectively +2 Trance per Resonance Skill cast)
+- **DMG Multiplier of Graceful Step, Flickering Reverie, and Perception Drain increased by +50%** each
+- **Immune to interruptions while casting Perception Drain**
+- *Impact:* Three simultaneous improvements — faster Trance accumulation (+1 Trance/Skill), meaningful DMG boost to all three Resonance Skill forms (which are Cantarella's primary damage tools), and interruption immunity during the high-commitment Perception Drain cast; one of the most efficient single sequences in the game for the price. Prydwen notes S1 as the most consistent-value first investment.
 
-**Why this works:**
-- Cantarella's coordinated attacks synergize perfectly with Jinhsi's Incandescence stacking mechanic
-- Cantarella's Outro provides 25% Resonance Skill DMG amplification, buffing Jinhsi's primary damage source
-- Use Empyrean Anthem Echo set on Cantarella (not Midnight Veil) since Jinhsi doesn't benefit from Havoc-specific buffs
+**S2 — Surrender to the Illusive Reverie**
+- **Resonance Liberation — Flowing Suffocation now sends the target into Hazy Dream** (enabling Jolt activation on the Liberation hit itself)
+- **DMG Multiplier of Jolt triggered by Cantarella is increased by +245%**
+- *Impact:* Destructoid: *"worth going for if you enjoy playing the character. It greatly boosts her personal damage output."* With S2, the Liberation-into-Mirage sequence can immediately apply Hazy Dream, fire a +245% multiplier Jolt on the next hit, and the standard Perception Drain Hazy Dream also becomes a +245% Jolt trigger; the damage ceiling of the full combo roughly doubles per Jolt opportunity
 
-**Standard Rotation:** Healer quick rotation → Cantarella rotation (prioritize Liberation for Dreamweavers) → Jinhsi full burst window with Incandescence stacks
+**S3 — Gaze into the Abyss**
+- **DMG Multiplier of Resonance Liberation — Flowing Suffocation increased by +370%**
+- **After casting Resonance Liberation, automatically enter Mirage** (eliminates the need for a separate Delusive Dive)
+- *Impact:* Destructoid: *"By far the best stopping point before S6."* The Liberation hit goes from negligible to a genuine burst event (+370% is one of the largest single-sequence multiplier additions in the game); automatic Mirage entry on Liberation cast removes one entire rotation step and makes the Liberation-to-Perception Drain path one step shorter; S3 is the recommended investment ceiling for players who want to maximize Cantarella's DPS contribution without going to S6
 
-**Roccia / Jinhsi / Cantarella** (alternative configuration):
-- Same concept but replaces dedicated healer with Roccia for additional grouping and buffs
-- Cantarella's healing may be sufficient for sustain depending on content difficulty
+**S4 — Behold Your Own Soul**
+- **+25% Healing Bonus while in Mirage** (stacking with the baseline IS1 +20% and Outro S2 interaction)
+- **Maximum Dreamweavers from Liberation Diffusion increased by +5**
+- *Impact:* Destructoid: *"by far the worst of her Sequences... Cantarella's healing is already great by default, so this is not worth getting at all unless you're going beyond it."* The +5 Dreamweavers do add sustained off-field damage over the 30-second Diffusion window, but the DPS increase is marginal; S4 is correctly the skip sequence
 
-## Cantarella: DPS Benchmarks: S0 to S6 (Source: Prydwen.gg — Primary)
-*Note: Cantarella's benchmarks are calculated in team context as a Sub-DPS/support. Her personal damage is secondary to her coordinated attack value and team buff provision. For exact numerical benchmarks, refer directly to Prydwen's Calculations tab: https://www.prydwen.gg/wuthering-waves/characters/cantarella/*
+**S5 — Dreams of the Sea**
+- **DMG Multiplier of Phantom Sting increased by +80%** (the in-Mirage Basic Attack chain that generates Shiver and healing)
+- *Impact:* Phantom Sting is cast frequently inside Mirage (3 times per standard Mirage window); +80% to all three stages is a meaningful personal DPS increase; S5 also makes the Mirage window itself more damage-dense while maintaining the same Shiver generation and healing throughput. A reasonable intermediate sequence between S3 and S6.
 
-**Team context (Phrolova / Roccia / Cantarella, per Prydwen):**
-- Cantarella's best performance is in Phrolova Echo Skill teams where her kit triggers Hecate repeatedly
-- Her "only major meta use case remains with Phrolova" (Prydwen, Patch 2.8)
-- Outside of Phrolova teams, performance is described as "sub-par" — she is viable with Jinhsi but not optimal compared to other supports
+**S6 — The Final Descent**
+- **Casting Resonance Liberation — Flowing Suffocation makes Cantarella's DMG ignore 30% of the target's DEF for 10 seconds**
+- **For the first 1.2 seconds of Hazy Dream, when the target takes an instance of damage that does not inflict Hazy Dream, Jolt will NOT be triggered** (the Hazy Dream immunity window prevents the first hit from consuming the Jolt, allowing damage to accumulate before it fires)
+- *Impact:* The 30% DEF Ignore is a multiplicative penetration effect that is most valuable against high-DEF enemies and in content where other amplifications are already stacked; the Hazy Dream immunity window ensures that AoE follow-up attacks from teammates can land on a Hazy Dream target before the single Jolt fires, ensuring all pending damage receives Hazy Dream's benefit before it clears. These two effects combined substantially elevate Cantarella's damage ceiling and damage delivery efficiency at S6. The maximum investment target for dedicated Cantarella players.
 
-**Sequence-by-sequence qualitative assessment:**
-- S0: Baseline support with healing, coordinated attacks, and Outro buffs — functional but not exceptional
-- S1: +50% multiplier to three primary damage skills + interruption immunity — best single sequence; massive quality-of-life and damage increase
-- S2+S3: Healing boost + Phantom Sting DMG boost — improves sustain and personal damage
-- S4: 30% DEF ignore — significant multiplier for endgame content
-- S5: Hazy Dream window extension — minor utility improvement
-- S6: Outro nuke (480% Havoc DMG) + extended Havoc buff (15% for 15s) — transforms her into premium support tier
+**Sequence Pull Priority:** S0 is functional but limited; **S1 is the most consistently recommended first purchase** (Prydwen, Destructoid); S3 as the stopping point for damage-focused investment; S6 for maximum ceiling.
 
-**Investment recommendation per sources:**
-- For Phrolova players: Cantarella is essential; prioritize getting her at minimum S0, ideally S1
-- For Jinhsi players: Cantarella is viable but not mandatory; Shorekeeper or other supports may be more versatile
-- For "whales" (per OSLink guide): S6 + R5 (6+5) Cantarella is "extremely powerful — go all in"
-- For F2P: prioritize Cantarella only if you have Phrolova or plan to pull Phrolova; otherwise she is a luxury pick
+## Cantarella: Recommended Echo Sets
 
-## Cantarella: Character Strengths and Weaknesses in Actual Gameplay
-**Strengths:**
-- Unique Echo Skill synergy — both her Skill and Liberation are classified as Echo Skills, triggering Phrolova's Hecate and other Echo-based effects
-- Team sustain via healing — provides consistent healing in Mirage without needing dedicated healer slot in some comps
-- Coordinated attacks — Dreamweavers provide 21 off-field attacks over 30 seconds, excellent for building stacks (Jinhsi's Incandescence) or applying consistent pressure
-- Strong Outro — 20% Havoc DMG + 25% Resonance Skill DMG amplification is one of the best Outro buffs in the game
-- Flexible build options — can be built as Sub-DPS (Midnight Veil) or utility (Empyrean Anthem) depending on team needs
-- Exploration utility — Abyssal Rebirth passive (faster swimming, reduced STA cost in water) makes her excellent for Rinascita traversal
-- Mirage flexibility — can cast all attacks mid-air during Mirage, providing excellent aerial combat control
+**Primary Recommendation: Midnight Veil (5-piece)**
+- The universally recommended set per Prydwen, Wutheringwaves-builds, and LDShop; purpose-matched to Cantarella's Havoc-element identity and Echo Skill frequency
+- **Midnight Veil 5-piece full effect:** Increases Havoc DMG; additionally provides a Havoc DMG Bonus to teammates when Cantarella casts an Echo Skill, supporting the team's Havoc characters during Cantarella's rotation and after she swaps out
+- **The team support aspect of Midnight Veil is the differentiator:** Unlike a pure personal-DPS set, Midnight Veil extends Cantarella's contribution beyond her own hits to the entire team's Havoc output window; this is why Wutheringwaves-builds specifically recommends it for both Cantarella herself and for Roccia in the Phrolova/Cantarella/Roccia team
+- The 5-piece provides full value across both Cantarella's active window (personal Havoc DMG Bonus) and passive window (team Havoc DMG Bonus from her Echo Skill triggers)
 
-**Weaknesses:**
-- Niche meta placement — Prydwen explicitly states her "only major meta use case remains with Phrolova" as of Patch 2.8; outside of that team, she underperforms
-- Not a full healer — cannot replace Verina or Shorekeeper; her healing is supplementary, not primary
-- Outro expires on swap — the 14-second Outro buff ends when switching Resonators, requiring careful rotation timing to maximize value
-- Mediocre personal damage at S0 — without S1's +50% multiplier and S4's DEF ignore, her personal DPS contribution is modest
-- Complex rotation — managing Trance, Shiver, Mirage state duration, and Echo Skill timing requires practice
-- Signature-dependent for optimal performance — Stringless's RES penetration and Basic Attack DMG are significantly better than alternatives
-- Energy generation reliant on team — Abyssal Rebirth passive requires teammates to cast Echo Skills within 25 seconds to build Concerto Energy efficiently
+**Alternative: Havoc Eclipse (5-piece)**
+- Used for maximum personal Havoc DMG Bonus focus; less team support value than Midnight Veil but higher personal ceiling when Cantarella is the primary damage-dealing Sub-DPS
+- Wutheringlab recommends this for DPS-oriented Cantarella builds specifically
 
----
+**Main Echo — Lorelei (4-Cost)**
+- The definitive best-in-slot main echo per Prydwen and multiple build guides
+- **On activation:** Lorelei's echo skill deals substantial Havoc Echo Skill DMG; the echo is also the source of the weekly boss material (Axiom of Creation) required for Cantarella's ascension, thematically and practically linking her character and her materials
+- The echo skill activation counts as an Echo Skill cast for the Abyssal Rebirth Concerto recovery (6 Concerto per unique echo activation while Abyssal Rebirth is active)
 
-## Cantarella Kit Sources
-- Prydwen – Cantarella Guide and Build (Primary): https://www.prydwen.gg/wuthering-waves/characters/cantarella/
-- Prydwen – Tier List (Partner Phrolova): https://www.prydwen.gg/wuthering-waves/tier-list/
-- Game8 – Cantarella Builds and Best Teams: https://game8.co/games/Wuthering-Waves/archives/500493
-- Wutheringlab – Cantarella Build: https://wutheringlab.com/character/cantarella-build/
-- Wuthering.gg – Cantarella Character Page: https://wuthering.gg/characters/cantarella
-- Wuthering-Builds.com – Cantarella Build Guide: https://wutheringwaves-builds.com/character/cantarella/
-- LDShop – WuWa 2.7 Cantarella Build Guide: https://www.ldshop.gg/blog/guide/wuthering-waves-cantarella-build-guide.html
-- Lootbar – Cantarella Build Guide: https://lootbar.gg/blog/en/wuthering-waves-cantarella-build-guide.html
-- OSLink – Cantarella Build Guide: https://www.oslink.io/blog/guide/wuthering-waves-cantarella-build-guide.html
-- GameRant – Cantarella Build Guide: https://gamerant.com/wuthering-waves-cantarella-build-guide-best-weapon-echo-skill-forte-priority/
-- Wuthering Waves Fandom Wiki – Cantarella Combat: https://wutheringwaves.fandom.com/wiki/Cantarella/Combat
+**Echo Main Stats Priority**
+- 4-Cost Echo (Lorelei): CRIT Rate or CRIT DMG depending on current ratio
+- 3-Cost Echoes (×2): CRIT DMG + Havoc DMG Bonus or ATK%
+- 1-Cost Echoes: ATK%
+
+**Sub-Stat Priority:** CRIT Rate (to ~75–80% with passives and Inherent Skill bonuses) > CRIT DMG > Havoc DMG Bonus > ATK% > Resonance Skill DMG Bonus. Note: IS2 (+20% Havoc DMG Bonus unconditionally) and IS1 (up to +12% Havoc Bonus from Echo Skill stacks) mean that a moderate amount of Havoc sub-stats on gear provides diminishing returns; CRIT stats are typically the better investment above threshold.
+
+## Cantarella: Recommended Weapons
+
+**Best-in-Slot — Sea of Desire (5-Star Signature Rectifier)**
+- Purpose-built for Cantarella's Echo Skill-centric kit and Havoc focus
+- **Stat:** CRIT Rate (high base — addresses the primary build requirement)
+- **Passive:**
+  - After dealing **Basic Attack DMG**: gain **+24% Havoc DMG Bonus** for 10 seconds (stackable up to 2 times = +48% maximum); Cantarella's Phantom Sting Basic Attacks and Perception Drain (classified as Basic Attack DMG) both trigger this
+  - After casting an **Echo Skill** (Flickering Reverie, Perception Drain, Liberation): gain **+12% ATK** for 10 seconds (stackable up to 2 times = +24% maximum)
+  - The dual buff structure directly matches Cantarella's two primary damage categories (Basic Attack DMG and Echo Skill), and both buffs maintain near-permanent uptime during her active window given how frequently she performs both action types
+- LDShop: *"a standout weapon tailored for Havoc-focused Resonators like Cantarella"*
+
+**Best Standard Alternative — Stringmaster (5-Star)**
+- The reliable standard-pool fallback; CRIT DMG stat; passive provides general resonance skill/echo skill bonus; functional but below signature ceiling
+
+**Best 4-Star — Jinzhou Keeper / Variation**
+- High-refinement 4-star options that provide CRIT Rate or ATK% at competitive values; Game8 documents these as the best non-5-star options; Variation specifically is noted for providing a strong passive for healer-support types
+
+**F2P Option — Rectifier of Night**
+- Craftable or obtainable from event/exploration; functional baseline weapon for early investment; verify current availability with the Fandom Wiki
+
+## Cantarella: Best Teams
+
+**Optimal: Phrolova / Cantarella / Roccia**
+- The definitive best Cantarella composition (see Phrolova kit documentation for full rotation); Cantarella is specifically *"essential"* in this team (Game8) because her dual Echo Skill activations (Flickering Reverie + Perception Drain) fire 2 of Hecate's allowed 10 Enhanced Attacks per Maestro window, and her Abyssal Rebirth Concerto recovery allows for faster subsequent rotations
+- **Cantarella's specific contributions:**
+  - Outro: +20% Havoc / +25% Resonance Skill Amplification to Phrolova on re-entry (maximally aligned with Phrolova's two damage categories)
+  - Echo Skills: each cast fires Hecate Enhanced Attack during Phrolova's off-field Maestro; Lorelei echo also counts
+  - Dreamweaver Coordinated Attacks: sustained off-field Havoc damage during the rotation's passive phases
+  - Hazy Dream + Jolt: supplementary damage triggered by Phrolova's and Roccia's hits during Cantarella's Hazy Dream windows
+  - Healing: sustained team health via Shiver-generated heals, removing the need for a dedicated healer
+- **Rotation overview (Cantarella window):**
+  1. Intro Skill (+1 Trance, Abyssal Rebirth active) → Normal Attack shortcut to Basic Attack Stage 3 (+1 Trance) → Resonance Skill Graceful Step (+1 Trance) → Liberation Flowing Suffocation (+2 Trance; now at ≥4 Trance total)
+  2. Heavy Attack Delusive Dive → enter Mirage (−1 Trance; now 3 Trance remaining)
+  3. Flickering Reverie (Echo Skill → Hazy Dream applied; Hecate fires Enhanced Attack)
+  4. Phantom Sting ×3 (Stages 1–2–3, each consuming Trance and granting Shiver + heal; Stage 3 also triggers 3 Coordinated Attacks)
+  5. Perception Drain at 3 Shiver (Echo Skill → high DMG + burst heal + Hazy Dream reapplication; Hecate fires Enhanced Attack)
+  6. Outro Skill active → swap to Phrolova/Roccia
+
+**Strong Alternative: Jinhsi / Cantarella / Zhezhi (or Verina)**
+- Cantarella's Outro +25% Resonance Skill Amplification is extremely valuable for Jinhsi, whose primary DPS skills (Overflowing Radiance, Illuminous Epiphany, Ordination Glow) are all Resonance Skill classified
+- OSLink guide notes this as the context where Cantarella becomes *"Jinhsi's best teammate"* — the Resonance Skill amplification provides a greater proportional boost for Jinhsi's kit than almost any other Outro buff available
+- Rotation for this team starts with Cantarella, follows with Zhezhi or Verina depending on the third slot, and enters Jinhsi's field window with the Cantarella Outro active for the Incarnation-mode burst
+
+**Havoc DPS Teams: Havoc Rover / Cantarella / Healer; Camellya / Cantarella / Roccia**
+- Any Havoc Main DPS benefits from Cantarella's +20% Havoc Amplification Outro, Hazy Dream Jolt follow-up damage, and Dreamweaver sustained Havoc Coordinated Attacks
+- Camellya + Cantarella has specific synergy: Cantarella's healing removes the need for a dedicated healer, allowing a more offensive third slot; Roccia groups enemies for both Camellya's AoE and Cantarella's AoE Perception Drain; the team has high combined Havoc Bonus contributions
+
+## Cantarella: Rotation Guide
+
+**Standard Rotation (any team)**
+1. Enter via **Intro Skill** (+1 Trance, Abyssal Rebirth window begins)
+2. Normal Attack shortcut → **Basic Attack Stage 3** (+1 Trance; if Abyssal Rebirth is active, the Stage 3 Coordinated Attacks may trigger Echo Skill Concerto recovery from teammates' echoes)
+3. **Resonance Skill — Graceful Step** (+1 Trance; or +2 at S1)
+4. **Resonance Liberation — Flowing Suffocation** (+2 Trance; Dreamweavers summoned for 30-second sustained damage; at S3: automatically enters Mirage; at S2: applies Hazy Dream)
+5. **Heavy Attack — Delusive Dive** (if not in Mirage already from S3; consumes 1 Trance; enters Mirage)
+6. **Resonance Skill — Flickering Reverie** (Echo Skill: Hazy Dream applied; Jolt armed; Hecate fires Enhanced Attack if Phrolova is off-field)
+7. **Basic Attack Phantom Sting ×3** (Stages 1–2–3 in Mirage; each hit: −1 Trance, +1 Shiver, +team heal; Stage 3 triggers 3 Coordinated Attacks)
+8. **Forte Circuit — Perception Drain** at 3 Shiver (Echo Skill: high Havoc DMG + burst team heal + Hazy Dream reapplied; Hecate fires Enhanced Attack; large Concerto Energy granted)
+9. **Outro Skill** → incoming character receives +20% Havoc Amplification + 25% Resonance Skill Amplification for 14 seconds
+
+**Fast Rotation (reduced field time)**
+For teams where Cantarella needs to spend minimal on-field time (e.g., when Phrolova's Maestro window is active and Hecate Enhanced Attack triggers are the priority):
+1. Intro Skill (+1 Trance)
+2. Resonance Skill Graceful Step (+1 Trance; +2 at S1)
+3. Liberation Flowing Suffocation (+2 Trance; Dreamweavers deployed)
+4. Delusive Dive (enter Mirage)
+5. Flickering Reverie (Hazy Dream; Echo Skill; Hecate trigger)
+6. Phantom Sting ×3 (3 Shiver built; 3 heals delivered)
+7. Perception Drain (burst damage + heal + Echo Skill; Hecate trigger)
+8. Outro → swap immediately
+Total field time: approximately 10–12 seconds
+
+**Key Rotation Rules**
+- Perception Drain's 18-second cooldown is the primary rotation timer: plan the full Trance accumulation → Mirage → Flickering Reverie → Phantom Sting × 3 → Perception Drain sequence to fit within the 18-second window between Perception Drain casts
+- Both Flickering Reverie and Perception Drain count as Echo Skill casts: in Phrolova teams, each fires one Hecate Enhanced Attack; in all teams, each triggers Abyssal Rebirth Concerto recovery (6 Concerto per unique echo cast) and IS1 Havoc DMG Bonus stacking
+- Hazy Dream from Flickering Reverie has 6.5 seconds before it expiries; the Jolt fires on the first hit that lands after application; in ideal timing, the first Phantom Sting hit immediately after Flickering Reverie fires the Jolt; S6's 1.2s immunity window prevents this premature firing, allowing more hits to land before the Jolt consumes the debuff
+
+## Cantarella: Sources
+
+- Prydwen Institute — Cantarella build guide, team compositions, Abyssal Rebirth mechanic: https://www.prydwen.gg/wuthering-waves/characters/cantarella/
+- Wutheringlab — Cantarella build, Trance/Shiver mechanics, fast rotation: https://wutheringlab.com/character/cantarella-build/
+- Game8 — Cantarella best builds, Phrolova team synergy, optimal combo: https://game8.co/games/Wuthering-Waves/archives/500493
+- LDShop — Cantarella complete build guide (V2.7/V2.8): https://www.ldshop.gg/blog/guide/wuthering-waves-cantarella-build-guide.html
+- Lootbar.gg — Cantarella build guide and weapon comparison: https://lootbar.gg/blog/en/wuthering-waves-cantarella-build-guide.html
+- Destructoid — Cantarella build guide with Sequence evaluation: https://www.destructoid.com/best-cantarella-build-in-wuthering-waves-weapons-echoes-team-compositions-and-sequences/
+- Wutheringwaves-builds — Cantarella full rotation, team compositions including Phrolova: https://wutheringwaves-builds.com/character/cantarella/
+- Wuthering.gg — Cantarella full kit descriptions, stat baseline: https://wuthering.gg/characters/cantarella
+- OSLink — Cantarella Phrolova/Jinhsi team guides: https://www.oslink.io/blog/guide/wuthering-waves-cantarella-build-guide.html

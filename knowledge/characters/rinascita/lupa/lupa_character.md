@@ -1,123 +1,110 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/lupa/lupa_character.md
+source_file: characters/septimont_characters/lupa/lupa_character.md
 character: Lupa
-group: Rinascita
+group: Septimont
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - fusion
+  - broadblade
+  - septimont
+  - 5-star
+  - non-congenital-resonator
+  - gladiator
+  - silva
+  - wolf
+  - memory-loss
+  - the-nameless
 ---
 
-# Lupa Character Knowledge File
-<!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
+# Lupa — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Lupa, https://wutheringwaves.fandom.com/wiki/Lupa/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/lupa/info, https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesSeptimont, https://www.prydwen.gg/wuthering-waves/characters/lupa/, https://game8.co/games/Wuthering-Waves/archives/520661 -->
 
 ## Lupa Profile: Basic Information
-- **Name:** Lupa (Chinese: 露帕)
-- **Title(s):** Star Gladiator of Septimont; Undefeated Champion; Shewolf of the Arena
-- **Identity:** Fusion Non-congenital Resonator; Resonance Power — Howling Flame; Gladiator (Arena Rank: Champion)
-- **Affiliation:** Septimont (formerly under House of Silva / Domina Julia's gladiatorial stable)
-- **Birthplace:** Small village outside Capitoline Hill, Rinascita (later relocated to Septimont)
+- **Name:** Lupa (Chinese: 露帕, Lù Pà)
+- **Alias / Title:** Star Gladiator of Septimont; The Nameless (identity during Dark Tide memory-loss arc); Contender Lupa (official arena designation)
+- **Identity:** Non-congenital Resonator; undefeated Gladiator champion of Colosseum Olymdos; former gladiatorial ward of House Silva; free agent post-Silva exposure
+- **Affiliation:** None (independent); formerly House Silva, Septimont
+- **Birthplace / Origin:** Small unnamed village near Capitoline Hill, Rinascita
 - **Release Version:** Wuthering Waves Version 2.4 Phase 2 (July 3, 2025)
-- **Banner:** "Shadow of Glory"
-- **Signature Weapon:** Wildfire Mark (Broadblade)
+- **Rarity:** 5-Star
+- **Element:** Fusion
+- **Weapon Type:** Broadblade
 - **Voice Actors:**
   - **JP:** Takahashi Minami (髙橋ミナミ)
   - **EN:** Kaja Chan
   - **CN:** Shuo Xiaotu (朔小兔)
   - **KR:** Kim Ye-ryeong (김예령)
 
-## Lupa - Character Profile: Ontological Overview
-Lupa is a 5-star Fusion Resonator classified as a Non-congenital Resonator — her Resonance ability did not manifest at birth but awakened during a childhood gladiatorial event. Her estimated Resonance duration exceeds ten years by the time of gameplay.
+## Lupa Profile: Ontological Overview
 
-Key ontological facts:
-- Resonance Power: **Howling Flame** — an alignment with fire that exhibits overlapping spectral signatures across multiple standard classifications, making definitive source classification inconclusive per the Resonance Evaluation Report
-- Resonance Awakening is accompanied by **partial wolf-like transformation**: visible tail, heightened olfactory and auditory sensitivity (self-reported)
-- Tacet Mark location: **left side of the waist**
-- Overclock status: **No signs or history of Overclocking.** Spectral waveform shows elliptical fluctuations with a stable Time Domain. Overclocking threshold is high; subject stability is robust
-- Classified as Non-congenital: her powers emerged through lived experience and combat rather than being present from birth, distinguishing her fundamentally from Cartethyia
-- Her gladiatorial record shows a consistent increase in both strength and precision of her Resonance abilities over time — she actively grows stronger with every fight
+Lupa is Septimont's most celebrated active gladiator — not by formal title, but by the straightforward metric of being undefeated in Colosseum Olymdos at the time of the game's Version 2.4 arc. She is a Non-congenital Resonator, meaning her Forte developed through ordinary pathways rather than extraordinary circumstance, and her Resonance Awakening comes with a partial wolf-like physical transformation: a visible tail, and by her own account, heightened olfactory and auditory sensitivity. Her combat Tacet Mark is located on the left side of her waist.
 
-## Lupa - Character Appearance Design
-Lupa is a tall, physically imposing young woman with an athletic, muscular build befitting a champion gladiator:
-- Long reddish-brown/auburn hair worn in a high ponytail, with a wolf tail manifesting during Resonance Awakening
-- Strong, confident posture — always carries herself like she owns the arena
-- Gladiatorial armor aesthetic: partial plate armor in deep red and gold over a shorter combat outfit, evoking Roman gladiatorial imagery
-- Her Tacet Mark (Resonance scar) is located on the left side of her waist
-- Carries a large Broadblade styled like a gladiator's weapon — broad, heavy, and designed for powerful sweeping strikes
-- Accessories include her iconic Wildfire Banner (a spear-like throwing weapon she hurls for her Resonance Skill)
-- Eyes are sharp, intense, amber-gold
-- Name etymology: "Lupa" is Latin for "she-wolf," directly referencing the Roman mythology of the She-Wolf who nursed the twins Romulus and Remus; additionally "Lupa" in Indonesian means "forget," a nod to her memory loss arc
+Her name carries two relevant etymologies simultaneously. "Lupa" is Latin for "she-wolf" — evoking the Roman myth of the wolf who nursed Romulus and Remus, and by extension the city of Rome's foundational imagery, consistent with Septimont's Roman-republic aesthetic. In Indonesian, "lupa" means "forget" — a direct reference to her narrative arc, in which she progressively loses her memories under the influence of the Dark Tide and the Tidal Blight that pursues her.
 
-## Lupa - Psychological Profile: Core Identity
-Lupa's personality is defined by total authenticity — she is exactly what she appears to be: fiery, competitive, direct, and deeply honorable.
+Her story is one of genuinely complicated social position: she arrived in Septimont as the child of former House Silva members who had been expelled from the nobility for arena defeats. They brought her to the Silva estate, she clawed through trial bouts against other prospects with her teeth gritted and her spear in hand, and she earned Domina Julia Silva's attention by being the last one standing. She fought under House Silva's banner and grew into the arena's brightest star. When she discovered the House had been fixing matches and tampering with equipment — including her own spear — she exposed them publicly, accepted her exile from the House, and continued fighting as a free gladiator, which is exactly what she always wanted to be.
 
-Core traits:
-- **Uncompromising drive:** She has never lost a match. Rather than causing complacency, this fuels a hunger to always find a more worthy opponent, something more intense, a fight where she truly has to give everything
-- **Guileless directness:** She doesn't play games off the arena. What she thinks, she says. What she feels, she does. This sometimes reads as bluntness but is never malicious
-- **Honor-bound:** She operates by a code. Betrayal, deception, and dirty tactics are antithetical to everything she believes the arena should represent
-- **Loneliness masked by fire:** She has outlasted every teammate she's ever had. She learned to stay silent after realizing that her attempts to reach out to struggling teammates were misread as condescension. She has adapted to isolation — but not by preference
-- **Self-reflection without self-pity:** She can sit in a dark room and think clearly about her failures without spiraling. When she does not know the answer, she waits. When she does, she acts
+## Lupa — Character/Appearance Design
 
-## Lupa - Psychological Profile: The Weight of Undefeated
-Lupa's perfect record is both her proudest achievement and a source of complex psychological weight:
-- She has never failed — but she has watched teammates fail, been sold out by those who resented her, and had people simply disappear from her life when they couldn't keep up
-- She has learned, painfully, that being the best can make others feel invisible. Her attempts to acknowledge this were poorly received. So she learned silence
-- She watches match recordings of a long-gone Gladiator who had no talent but loved the arena anyway — a kind of self-consolation that even joy in the arena is valid regardless of the result
-- Quote that defines her: *"She had tried to say something about it, but she quickly learned that even the act of 'trying to say something' could cut like blades."*
-- Her friendship with Rover represents the first relationship in a very long time where she genuinely feels she is on equal footing — and she quietly worries about what will happen to Rover if they ever face a true defeat
+Lupa is visually loud in a way consistent with gladiatorial spectacle — she is dressed for an audience. Her silhouette is immediately distinctive: tall, athletic, and crowned by two long white wolf ears that rise above her head, paired with a large white wolf tail visible behind her. The wolf features are part of her Resonance Awakening physical expression rather than costume, and they carry the weight of her animal motif throughout — she sniffs the Rover when she first meets them, she is described as having wolf-like mannerisms in combat (relentless, instinctive), and her entire Forte is built around canine metaphors: Wolflame, Wolfaith, Shewolf's Hunt, Dance With the Wolf.
 
-## Lupa - Psychological Profile: The Arena as Identity
-For Lupa, the arena is not just work — it is self-expression, self-discovery, and communion:
-- She describes her Resonance awakening moment as flames spilling from her limbs during a childhood mock battle, caused not by training but by the raw, wet anger of feeling invisible and uncared for in her own home
-- The arena is the only place where she is fully seen — the crowd, the lights, the opponent, everything is honest
-- *"She will relentlessly pursue the things she admires, cherishing each moment that allows her to indulge in competition and self-expression on stage."*
-- She chose gladiatorial life not to fulfill her parents' ambitions (though she answered yes to their questions without hesitation) but because it was the one place where she felt real
-- She cherishes the Bloodleaf Viburnum — the flower gladiators receive as a bouquet after victory — specifically because of the memory of the first time she laughed out loud in the waiting room after winning, bouquet still in hand, alone and genuinely happy
+Her outfit is arena-functional and visually striking: a primarily dark ensemble with vivid red-orange flame accents throughout — consistent with her Fusion element and her personal fire imagery. Her weapon, the Wildfire Banner, functions as both a broadblade and a massive flag or banner-pole, held and swung in ways that suggest it is simultaneously weapon and symbol. The visual comparison to a rallying standard or championship banner is deliberate: in Septimont, gladiators fight with their team identity behind them, and Lupa's banner is her identity.
 
-## Lupa Relationships: Rover (Best Teammate Ever)
-Lupa and Rover's relationship is defined as one of the most significant and equal connections in her life:
-- She calls Rover her *"best teammate ever"* — a title that, given her history of lost teammates and betrayals, is extraordinarily meaningful
-- After the events of saving Septimont, she worries quietly about Rover in a way she has never worried about anyone in the arena: she has seen how constant victory can destroy someone when a true defeat finally arrives
-- She feels that Rover is *"destined for something greater, something too vast to reach or change"* — and this creates a mix of admiration, protectiveness, and a particular sadness she has no words for
-- Her gift to Rover: a pair of Ta-da figurines she chose specifically because Rover's face lit up at the Echo sculptures in Septimont — the thoughtfulness of the gift reflects deep attention to who Rover actually is
-- She made a solemn promise: *"I will always be there, ready to offer help."*
+Her Tacet Mark sits on the left side of her waist. Her eyes are sharp and gold, the color of flame or, fittingly, wolf-eye amber. Her hair is pale silver-white. The overall design reads as "fire contained in a wolf": the cool white tones of her animal features against the warm red-orange flame detailing, the composed stance of a gladiator who has been in front of screaming crowds enough times that the noise no longer reaches her until the moment she chooses to let it in.
 
-## Lupa Relationships: Cartethyia
-Lupa and Cartethyia share a significant relationship that forms the emotional center of the Septimont storyline:
-- During the Dark Tide crisis, Lupa — referred to as "The Nameless" in her fragmented state — fought alongside Cartethyia even as the Dark Tide began possessing her from within
-- She felt deep shame at needing to be protected and slowing Cartethyia down, but fought on with gritted teeth regardless: *"Wish I could still be of use to my new friend here."*
-- Their relationship is defined by mutual stubbornness and genuine care: Cartethyia believes in Lupa's survival even when Lupa no longer does; Lupa protects Cartethyia from the full weight of what is happening
-- Cartethyia's relationship note from her own character file: *"Lupa treats Cartethyia as neither more nor less than she is — with unconditional acceptance, without fear or distancing after battle."* This is precisely what Lupa does: she sees clearly and does not flinch
-- Post-crisis, Lupa kept her promise and took Cartethyia and Rover on a *"carefree whirlwind tour through Septimont"* — her version of celebration is spending time with the people she chooses
+## Lupa: Psychological Profile
 
-## Lupa Relationships: Domina Julia and the House of Silva
-- The House of Silva is nobility in Septimont; Lupa carries their name but departed from their stable, noting: *"I'm sure they've thrown me out since I stepped away from the team"*
-- Domina Julia (Julia of the Silva family) was the one who singled Lupa out from the competition trials and brought her into the gladiatorial stable
-- Lupa's parents sold her to the Silva estate for a generous reward and disappeared into the shadows — Lupa did not linger in sorrow about this; the packed schedules allowed no room for grief
-- Her relationship with the House of Silva is one of professional debt she has since stepped away from — she is no longer their asset, she is her own person
-- Her parents' complicated relationship with the House of Silva (yearning for acceptance, fearing rejection) shaped Lupa's own emotional landscape: she learned early that relying on others for validation leads to pain
+**The Pure Competitor**
+Lupa's core desire is simpler than most characters of her caliber: she wants to fight, and she wants those fights to be real. The arena is where she most fully exists. The first time she stepped into Colosseum Olymdos, she fought like a creature unleashed — relentless, instinctive, wolf-like — and when she returned to the waiting room with her first bouquet still in hand, she heard herself laughing out loud. She was not performing for the crowd in that moment. She had simply found the place where she was entirely herself.
 
-## Lupa Notable Dialogues and Voice Lines
-Selected voice lines that illuminate her character:
-- On the arena: *"As a Gladiator, it's a great honor to claim the title with you, Rover."*
-- On her drive: *"As long as she can savor the adrenaline rush of battle, she doesn't mind if that same fire ends up consuming her whole."*
-- On Rover: *"She was no stranger to victory, and she knew better than most the double-edged nature of constant triumph."*
-- During the Dark Tide: *"Wish I could still do more..."*
-- On her past teammates: *"Eventually, Lupa learned to stay silent."*
-- On her gift to Rover: *"That journey they shared remains one of her brightest memories."*
-- On challenge: *"Any challenger, bring it on."*
+This is not ambition in the conventional sense. She does not fight to be famous, to restore her family's name, to claim the Ephor's seat, or to prove anything to anyone in particular. She fights because it is the purest form of self-expression available to her. The fact that it also happens to make her famous is a consequence, not the point.
 
----
+**Honor Worn Lightly, Held Absolutely**
+She discovered her patron House had been tampering with equipment — including her own spear — and she reported it immediately, without hesitation, accepting the social and economic cost of losing her House affiliation. Her reasoning requires no elaboration in the text and receives none. Rigged matches are not matches. That is the whole of her position.
 
-## Lupa Character Sources
-- Wuthering Waves Fandom Wiki – Lupa: https://wutheringwaves.fandom.com/wiki/Lupa
-- Wuthering Waves Fandom Wiki – Lupa Backstory: https://wutheringwaves.fandom.com/wiki/Lupa/Backstory
-- Genshin-Builds WW – Lupa Story & Voice Lines: https://genshin-builds.com/en/wuthering-waves/characters/lupa/info
-- Pocket Tactics – Wuthering Waves Lupa Release Date and Lore: https://www.pockettactics.com/wuthering-waves/lupa
-- Wuthering.gg – Lupa Character Page: https://wuthering.gg/characters/lupa
-- Game8 – Lupa Best Builds and Teams: https://game8.co/games/Wuthering-Waves/archives/520661
-- Behind the Voice Actors – Lupa: https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Lupa/
-- Prydwen – Lupa Guide and Build: https://www.prydwen.gg/wuthering-waves/characters/lupa/
+**Warmth and Zero Pretense**
+She calls the Rover "my fellow warrior" after crossing blades with them exactly once, with an immediacy that would seem presumptuous from anyone else and is simply sincere from her. She blocks reporters from pestering the Rover, pulls them away from crowds by the hand, shares a lounge with them in easy silence. Her affection for people she respects is immediate and practical — she does not audition it or condition it.
+
+**The Nameless**
+The Dark Tide arc is where her narrative complexity reveals itself fully. Under the Tidal Blight's influence, Lupa's memories begin to fray — she becomes "The Nameless," and by the story's darkest point she has to pause a long while before responding when Cartethyia speaks to her because forming a complete thought is becoming a struggle. She looks at Septimont drowning in the Dark Tide and does not know if it can still be saved. Her identity — the very thing that most defines her — is dissolving around the edges. She staggered forward anyway. That is the irreducible fact about her: she kept going even when she could not remember why.
+
+**Her Parents' Medal**
+The Cherished Item detail about her parents is the most quietly devastating thing in her file. They were cast out from House Silva — shamed, hardship-marked, finger-pointing lives — and when they heard she won her first match, they went to a blacksmith and had a medal forged. They had already severed ties with her by then. Their faces were blurring from her memory. They did it anyway. She is someone who received love in exactly this form — without reconciliation, without apology, expressed sideways through metal — and who has spent her life fighting in an arena that gives her something louder and clearer in return.
+
+## Lupa: Relationships
+
+**Rover (Protagonist)**
+Called "my fellow warrior" — Lupa's most reliable term of genuine regard. In Japanese dubbing she uses *aibou* (partner), which is a step warmer and more intimate than the English phrasing suggests. The relationship is established the instant their blades meet; she tells them their fighting style is beautiful, and she means it as the highest compliment available to her. She forms a competitive team with the Rover for the Great Agon, and their partnership carries through the Dark Tide arc.
+
+**Augusta**
+A respected peer operating at the top of Septimont's institutional hierarchy — the Ephor is the standard against which Gladiator power in the city is measured, and Augusta is the standard. The relationship between them functions as the implicit ceiling: Augusta's raw combat capacity is described as "far above" Lupa's, which is itself the calibration used to define what extraordinary means in Septimont. There is no resentment in this dynamic. Lupa simply knows the landscape. She asks the Rover about Augusta in the lounge with genuine interest rather than rivalry.
+
+**Iuno**
+Septimont peer. Lupa's voicelines in the post-Version 2.6 period carry a subtle wrongness following Iuno's erasure — a gap where something used to be — one of several in-game acknowledgments that the erasure is felt even by those who cannot name it.
+
+**Domina Julia Silva**
+Lupa's former patron and the head of House Silva. Lupa describes her as "arrogant to the core for all her capabilities" — a frank and comprehensive assessment. When the match-fixing evidence surfaced and Julia accused others while defending herself, Lupa stood her ground: the accusation was accurate, and the outcome — Julia's exposure by Augusta and the Silva House's expulsion from Septimont — was the correct one. Lupa did not flinch from the cost of losing the House.
+
+**Parents**
+Estranged. Their faces have blurred from Lupa's memory. They were formerly House Silva members who were cast out after arena defeats; when Lupa achieved her first victory, they had a medal made by a blacksmith and sent it to her despite the estrangement. This is the exact form their love took and she kept the medal.
+
+**Cartethyia**
+Companion during the Dark Tide arc's most critical phase. When Lupa is losing her memory and struggling to form thoughts, it is Cartethyia who keeps speaking to her — the one whose voice she has to wait long pauses to respond to, but who does not stop reaching. The dynamic is brief in the narrative but structurally meaningful: two characters from opposite ends of Rinascita's mythos, walking through a Septimont drowning in Dark Tide together.
+
+**Mya (The Lady of the Sea)**
+A Gladiator from twenty years before the game's present whose recordings Lupa watched repeatedly — *perhaps a kind of self-consolation*, the text notes, at the idea that even someone without exceptional talent could still find joy in the arena. Mya was eventually consumed by the Threnodian Leviathan, took her own life to resist its control, and became the Lady of the Sea. At the conclusion of Chapter II Act VI, it is Lupa who defeats the Lady of the Sea and finally frees Mya's Reverberation from its curse. She did not know, when she watched those recordings, that she would be the one to end that story.
+
+## Lupa: Sources
+- Wuthering Waves Fandom Wiki — https://wutheringwaves.fandom.com/wiki/Lupa
+- Wuthering Waves Fandom Wiki (Backstory) — https://wutheringwaves.fandom.com/wiki/Lupa/Backstory
+- Wuthering Waves Fandom Wiki (Shadow of Glory) — https://wutheringwaves.fandom.com/wiki/Shadow_of_Glory
+- Genshin-Builds WuWa Story/Voicelines — https://genshin-builds.com/en/wuthering-waves/characters/lupa/info
+- TV Tropes — Septimont Characters — https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesSeptimont
+- Wuthering Wiki Character Data — https://wuthering.wiki/character_1207.html
+- Pocket Tactics — Lupa Release & Lore — https://www.pockettactics.com/wuthering-waves/lupa
+- Behind the Voice Actors — https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Lupa/
+- Prydwen Build Guide — https://www.prydwen.gg/wuthering-waves/characters/lupa/
+- Game8 Build Guide — https://game8.co/games/Wuthering-Waves/archives/520661

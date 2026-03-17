@@ -3,135 +3,119 @@ version: 1.0.0
 chunk_strategy: heading_based
 source_file: characters/rinascita/cantarella/cantarella_character.md
 character: Cantarella
-group: Rinascita
+group: Rinascita / Ragunna / Fisalia Family
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - havoc
+  - rectifier
+  - sub-dps
+  - healer
+  - support
+  - unclear-resonator
+  - rinascita
+  - ragunna
+  - fisalia
+  - blessed-maiden
+  - sea-witch
+  - porto-veno-castle
+  - illusory-dream
+  - version-2-2
 ---
 
-# Cantarella Character Knowledge File
-<!-- RAG-formatted knowledge file. Each ## heading = one retrievable chunk. -->
+# Cantarella — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Cantarella, https://wutheringwaves.fandom.com/wiki/Cantarella/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/cantarella/info, https://wutheringwaves-builds.com/character/cantarella/, https://wuthering.gg/characters/cantarella, https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Cantarella/ -->
 
 ## Cantarella Profile: Basic Information
-- **Name:** Cantarella Fisalia (Chinese: 坎特蕾拉)
-- **Title(s):** The Bane; The Sea Witch; Thirty-sixth Head of the Fisalia Family; Former Blessed Maiden of Imperator
-- **Identity:** Havoc Resonator (classification: Unclear); 36th matriarch of the Fisalia family; aristocrat of Rinascita
-- **Affiliation:** The Fisalia Family; Porto-Veno Castle; Ragunna (Rinascita)
-- **Birthplace:** Rinascita (specifically Ragunna, the capital city)
-- **Release Version:** Wuthering Waves Version 2.2 (March 27, 2025)
-- **Banner:** "Neptune's Lullaby" (rerun in Version 2.5 Phase 2, December 11-24, 2025; and Version 2.8, December 11-24, 2025)
-- **Signature Weapon:** Stringless (5-star Rectifier)
-- **Voice Actors:**
-  - **JP:** Nakahara Mai (中原麻衣)
-  - **EN:** Alexandra Guelff
-  - **CN:** Xiao Mi (小米)
-  - **KR:** Kim Yul (김율)
-- **Name Etymology:** "Cantarella" is derived from the term for a poison allegedly used by a Spanish royal family during the Italian Renaissance — a historical reference to political assassination via toxin, fitting her lineage
 
-## Cantarella - Character Profile: Ontological Overview
-Cantarella is a 5-star Havoc Resonator with an "Unclear" classification — a rare designation that indicates her Resonance does not conform to standard taxonomies. She is the 36th head of the Fisalia family, a noble lineage defined by poison-related Fortes spanning generations.
+- **Full Name:** Cantarella Fisalia (Chinese: 坎特蕾拉, Kǎn tè léi lā)
+- **Name Etymology:** "Cantarella" is the name of a poison allegedly used by the Spanish Borgia family during the Italian Renaissance to eliminate political rivals; the choice of name for the thirty-sixth head of a family whose entire tradition is organized around poison is deliberately precise — she is the culmination and the capstone of a lineage that has been defined by the capacity to harm, given a name that is itself a historical synonym for elegant, administered death
+- **Known Epithets:** "The Bane," "The Sea Witch," "the Bane of the wicked or the pure" (her own framing of the ambiguity)
+- **Identity:** Unclear Resonator; Havoc-Aligned; thirty-sixth matriarch of the Fisalia family; former Blessed Maiden of Imperator; current head of the Fisalia family; resident of Porto-Veno Castle, Ragunna, Rinascita
+- **Affiliation:** Fisalia Family (head); Porto-Veno Castle (residence); formerly: Blessed Maiden institution of Imperator's Acolyte hierarchy, Ragunna
+- **Birthplace:** Ragunna, Rinascita (implied by Fisalia family lineage)
+- **Version Added:** Version 2.2 (March 27, 2025); rerun Version 2.5 Phase 2 and Version 2.8 Phase 1 (December 11–24, 2025)
+- **Rarity:** 5-Star
+- **Element:** Havoc
+- **Weapon:** Rectifier (combat weapon is her coral parasol — see Cherished Items)
+- **Forte Power:** Sea of Dreams (Illusory Dream; Hazy Dream)
+- **Tacet Mark Location:** Inside her mouth (per Lucid Dream story: *"the restless Tacet Mark in her mouth"*)
+- **Post-Awakening Physical Changes:** The Overclock Diagnostic Report is classified "Top Secret" and describes irreparable damage to both mind and body; the waveform exhibit rare bipolar divergence with multiple distinct waveforms (α wildly fluctuating, β extremely stable, γ short and underdeveloped, δ redacted entirely with system errors); part of her frequency record is missing; her own butler Sebastian describes her mental state management as an ongoing challenge; the nature of the damage is detailed in Story III (Jellyfish Lamp) — she survived a deliberately engineered internal poison conflict (simultaneous Velvet Dream overdose and Jellyrose Medusa application) that left her in *"a perpetual state between life and death, between dreams and reality"*
 
-Key ontological facts:
-- Resonance Power: **Sea of Dreams (Illusory Dream)** — a rare form of hallucinogenic toxin distinct from the lethal poisons common in her family. When swarms of jellyfish emerge from her parasol, an exquisite sea of illusions forms around her. The poisoned individual experiences hallucinations (deepest desires or crafted illusions), followed by paralysis, unconsciousness, and potentially death if exposure persists
-- Unlike typical Fisalia poisons that kill immediately, Cantarella's ability operates on psychological and neurological planes simultaneously — she can induce hallucinations without causing physical harm at her most refined control
-- Tacet Mark location: **top side of her tongue** — a highly unusual placement suggesting her poison-based Forte manifests through speech, breath, or ingestion pathways
-- Overclock Diagnostic: **CRITICAL STATUS.** Part of her frequency record is missing; the missing section is steep, bordering on Overclocking threshold. Remaining waveforms exhibit **rare bipolar divergence** with multiple distinct waveforms emerging: α (wildly fluctuating), β (extremely stable), γ (short amplitude, underdeveloped), δ (corrupted/redacted). System errors in diagnostic equipment when attempting full analysis
-- Her Forte Report notes: *"Childhood experiences, the trials, and the prolonged use of her Forte 'Sea of Dreams' have caused irreparable damage to both Milady's mind and body."*
-- The Fisalia family legacy: all members suffer "whispers" from the deep sea — a form of cognitive torment tied to their poison Fortes — until their faith fades and they succumb. Cantarella's Illusory Dream was developed specifically to counteract these whispers by dissolving discord in a sea of crafted hallucinations
+Voice Actors:
 
-## Cantarella - Character Appearance Design
-Cantarella is a tall, elegant woman whose aesthetic combines aristocratic refinement with unsettling aquatic motifs:
-- Long, silky lavender hair with light blue accents cascading like a waterfall
-- Vibrant deep blue eyes described as "as deep as the ocean, where dark tides seem to surge and swirl" — hazy, ethereal, veiled in soft mist
-- Fair skin tone; regal bearing; poised and composed even when discussing disturbing topics
-- Tacet Mark: top side of her tongue (not externally visible)
-- **Attire:** Elegant noble gown in deep purples and blues with flowing, water-like fabric; a **sapphire pendant** worn at her chest (mark of her authority as family head); carries a distinctive jellyfish-styled parasol
-- **Weapon/Parasol:** A rectifier disguised as a parasol. *"Its round canopy resembles a soft, plump jellyfish with long, graceful tentacles that seem to float effortlessly in the air. The ribs of the parasol are crafted from deep-sea coral, meticulously shaped into perfect curves that gleam with a subtle glow, both beautifully delicate and unyieldingly strong. At the handle, a sapphire is embedded, a symbol of the unshakable authority of the family head."*
-- Design aesthetic: jellyfish-inspired — beauty that is simultaneously graceful and dangerous; her entire visual language communicates duality: nurturing surface / venomous depths
+| Language | Voice Actor |
+|----------|-------------|
+| **JP** | Nakahara Mai (中原麻衣) |
+| **EN** | Alexandra Guelff |
+| **CN** | Xiao Mi (小米) |
+| **KR** | Kim Yul (김율) |
 
-## Cantarella - Psychological Profile: Elegance Concealing Trauma
-Cantarella's personality is described as *"a tapestry of contradictory threads"*:
-- **Poised and unruffled:** Her bearing is elegant; her calm remains unbroken even when discussing unsettling topics like poison formulas or death
-- **Mysterious and alluring:** Her beauty is *"captivating as it is dangerous."* She speaks in riddles and metaphors, always leaving room for interpretation
-- **Intellectually sophisticated:** She has mastered the art of elixir-making, commanding her Forte with precision. Her philosophy: *"Any situation can be resolved with the proper steps at the proper time."* She approaches life like a recipe
-- **Philosophical and reflective:** Constantly examining the nature of dreams, reality, and the human spirit. She asks fundamental questions: should she remain in illusions where everything is familiar and light, or step into reality where the unknown awaits?
-- **Ambiguous morality:** Her self-introduction: *"Whether I am the Bane of the wicked or the pure is yours to decide. Shh, no need to answer. The moment you arrived, the ripples that surrounded you told me all I needed to know."*
+## Cantarella Profile: Ontological Overview
 
-## Cantarella - Psychological Profile: Nurturing Through Poison
-Beneath Cantarella's elegant exterior lies a deeply nurturing instinct expressed through an unusual medium:
-- She offers solutions to others and wants them to be at peace — but her solutions involve poisons, illusions, and crafted dreams
-- She brews elixirs for the people of Ragunna: remedies for Infantile Gray Matter syndrome, nerve paralysis treatments, soothing tonics. She leaves recipes for her assistant Chloe
-- Her signature creation: **Velvet Dream** — a potion that *"soothes the spirit and neutralizes most poison reactions"* — distributed to help her family survive their trials
-- She sees Rover as an *"immortal jellyfish banishing shadows with a gentle light"* — a grounding force that gives her *"peace and happiness"*
-- Her care is genuine but filtered through the lens of someone who has only ever known how to help via her family's poison craft
+Cantarella is the thirty-sixth head of the Fisalia family — a lineage whose identity is organized around poison so completely that the archive document calls it *"glory and inescapable fate"* in the same breath. Every head before her used those poisons; the whispers that the family's curse produces ultimately drove each of them toward using the toxins for *"the end of life, either for the Fisalias themselves or their kin."* The cycle is described in Story II (Thorned Crown) as having *"no beginning or end."*
 
-## Cantarella - Psychological Profile: Playful Facade Over Deep Pain
-Cantarella's playfulness conceals profound vulnerability:
-- **Teasing and morbid humor:** She makes gruesome suggestions for elixirs, challenges people to *"touch"* the poisonous jellyfish, and speaks of death with casual ease
-- **The Round Table:** In her Intimacy Lv. 1 story, she holds an internal meeting with multiple aspects of herself (different waveforms/personalities?) debating whether to stay in the Illusory Dream or face reality. The figures around the table include: an authoritarian past family head urging her to poison all of Ragunna; a younger abstaining version of herself; a carefree child wanting to follow her heart
-- Her desire: *"a breath of fresh air above the surface"* — she longs to escape the stifling weight of her lineage and the whispers
-- The **thorned crown** metaphor: *"The deep purple, venomous crown, when first placed upon the brow, brings a sharp sting. Yet, the blood that seeps from the forehead nourishes it, making it shine ever brighter."* This is the burden of being a Fisalia
+What differentiates the thirty-sixth head from her predecessors is a single innovation: she developed the Illusory Dream. Rather than a lethal poison, she created a hallucinogenic toxin that does not cause immediate death — that can, at its most refined, induce hallucinations without causing any physical harm at all. She replaced the family's signature mode of death with a mode of dreaming. Whether this is liberation or merely a gentler form of the same trap is the question her five character stories are investigating, from five different perspectives, all of which turn out to be hers.
 
-## Cantarella Relationships: Rover (Immortal Jellyfish)
-Cantarella and Rover share a unique bond defined by mutual rescue:
-- She sees Rover as an *"immortal jellyfish"* — a creature that can renew itself endlessly, a metaphor for Rover's ability to persist and return even after being lost
-- Rover brings her *"gentle light"* that banishes the shadows of her past — specifically, Rover's presence grounds her and gives her peace
-- In the Rinascita Chapter II storyline, Rover plays a critical role in preventing Cantarella from succumbing fully to Leviathan's corruption via the antidote she provides
-- She offers Rover solutions and wants them to be at peace, expressing her care in the only language she knows: through potions and protective illusions
-- Her cherished potion vial (adorned with a sapphire like her pendant) was originally filled with a brew to ease weariness and calm nightmares — but *"ever since you brought her away from the Sea of Ghosts, the nightmares have ceased. Now, this vial is imbued with her rare sincerity and tenderness"*
+The five stories are structurally unusual: they are told as a round table meeting between several distinct figures — an imperious woman with deep purple eyes, a cold and graceful older authority, a young scientist in a white shawl, a carefree youngest one, and the moderating figure Cantarella — who are eventually revealed to be different aspects or waveforms of Cantarella's own fractured consciousness. The bipolar divergence of her waveform (α through δ, with δ redacted entirely) is the medical report of what the stories dramatize: she contains multiple distinct modes of being, and the round table is how she governs them. The final story (Lucid Dream) ends with her waking from an afternoon nap, taking a sip of ordinary tea, and choosing reality — not because the dream is gone, but because she has decided to hold onto what is real in the fleeting moment between them.
 
-## Cantarella Relationships: The Fisalia Family Legacy
-Cantarella is the 36th head of the Fisalia family, a lineage defined by poison and suffering:
-- The Fisalia crown: *"Soaked in the blood and tears of countless souls, this crown of toxic thorns rises from the depths of the sea, symbolizing those who work silently against the chaos to support the weight of the Celestial Steed's tail feathers."*
-- Every Fisalia family head suffers the **whispers** — cognitive torment from the deep sea that erodes their sanity until they succumb. The next heir then takes up the duty, continuing the cycle unbroken
-- Her predecessors: she references multiple past family heads in her internal Round Table, including an authoritarian figure who advocates for poisoning all of Ragunna to maintain control
-- Cantarella broke the cycle by developing the Illusory Dream — a Forte that dissolves the whispers by creating a gentle sea of hallucinations, softening the venomous crown into something *"light and pure, like the tail feathers of the Celestial Steed"*
-- Sebastian (Fisalia Butler): keeps top-secret records of her mental health; deeply loyal; aware of her deteriorating condition
+## Cantarella — Character/Appearance Design
 
-## Cantarella Relationships: Cartethyia
-Per the Rinascita storyline and game lore:
-- Cantarella was formerly the **Blessed Maiden of Imperator** — a title closely tied to the Sentinel's power, the same title Cartethyia (Fleurdelys) currently holds
-- Their connection is theological and narrative: both serve(d) as vessels for Imperator's will; both are trapped by duties imposed upon them
-- In Chapter II Act X-XI ("The Bygone Shall Always Return"), Cantarella provides the antidote that prevents Rover from fully succumbing to Leviathan's corruption — an act that directly affects the battle outcome involving Cartethyia and the Threnodian/Sentinel conflict
-- Cantarella represents what Cartethyia could have become: a former divine vessel who chose to step away and forge her own path, even at the cost of her sanity
+Cantarella's design is one of the most deliberately composed in the Rinascita cast — every element references either the ocean, the aristocratic poison tradition of the Fisalia family, or the jellyfish that are her combat and design signature.
 
-## Cantarella Relationships: The People of Ragunna
-As the head of the Fisalia family and a noblewoman of Ragunna, Cantarella maintains complex relationships with her city:
-- She brews remedies for common ailments (Infantile Gray Matter syndrome, nerve paralysis) and leaves them for distribution
-- Her castle: Porto-Veno Castle, perched atop a mountain like a crown, where *"illusory dreams flow like streams, meticulously spun by her own hands"*
-- She considers poisoning the waterfall behind her castle with Velvet Dream to make all of Ragunna fall into a peaceful dream under her control — but dismisses it as a joke, saying *"I do not seek to control but only wish for all to live more peacefully"*
-- Her relationship with Ragunna is protective but paternalistic: she wants to ease their suffering, even if it means trapping them in illusions
+- **Hair:** Long, silky purple; worn loose with two braids framing either side of her face; the purple palette is directly associated with the *"venomous crown"* described in the Thorned Crown story — the deep purple that stings when first placed but becomes part of the wearer
+- **Eyes:** Indigo, described as *"veiled in a soft mist"* that gives her an ethereal, dreamlike quality; the official website: *"She locks your gaze with eyes as deep as the ocean, where dark tides seem to surge and swirl"*; the depth in her gaze is described as containing something — a shadow of a giant sea creature, or the tail feathers of the Celestial Steed — but the viewer cannot be sure which
+- **Tacet Mark:** Located inside her mouth — the most intimate and concealed placement in the available cast; it is a *"restless Tacet Mark"* that the final story describes as no longer drawing power from illusion or pain after she chooses ordinary tea over the poisoned variety
+- **Sapphire Pendant:** The sapphire embedded at the handle of the coral parasol is mirrored by the sapphire pendant she wears on her chest; both are described as marks of *"the unshakable authority of the family head"*; she absentmindedly toys with the pendant when lost in thought (Story I: Round Table)
+- **Coral Parasol:** The weapon she carries in combat and in every appearance; its canopy resembles a soft, plump jellyfish with long, graceful tentacles; the ribs are crafted from deep-sea coral, shaped into curves that are both *"beautifully delicate and unyieldingly strong"*; when spun in combat, it releases swarms of jellyfish into a phantasmal sea of illusion; the item description: *"Like its owner, the parasol may appear soft and fluid, yet when the need arises, it is always indestructible"*
+- **Overall Palette:** Deep purples, dark blues, and the luminous iridescence of bioluminescent sea creatures; the design reads as someone who lives at the boundary between the ocean surface and the deep — beautiful and visible above, dangerous and unknowable below
+- **Porto-Veno Castle:** Described as a crown-like castle perched atop a rugged mountain, where illusory dreams flow like streams; the architecture mirrors her identity as the head of a family that wears a crown of thorns — the castle looks like the crown, and it sits atop everything
 
-## Cantarella Relationships: Phrolova (Gameplay Context)
-Per Prydwen's analysis and gameplay meta:
-- Cantarella is Phrolova's best sub-DPS and support — her kit's multiple Echo Skill casts trigger Hecate's (Phrolova's Echo) attacks
-- Prydwen explicitly notes: *"Cantarella's only major meta use case remains with Phrolova"* as of Patch 2.8+, designating her with a "Partner (Phrolova)" tag
-- Her unique playstyle greatly enhances Phrolova's Echo Skill-based team and is essential to be competitive with other compositions
-- Without Phrolova, Cantarella's performance is described as "sub-par" in most other teams, though she remains viable with Jinhsi (Spectro) for coordinated attack synergy
+## Cantarella: Psychological Profile
 
-## Cantarella Notable Dialogues and Voice Lines
-Selected lines illuminating her character:
-- Self-introduction: *"The current head of Fisalia, Cantarella, the Bane. Whether I am the Bane of the wicked or the pure is yours to decide. Shh, no need to answer. The moment you arrived, the ripples that surrounded you told me all I needed to know."*
-- On the sea: *"The sea is a mirror. It reflects the shape of your soul in its tides."*
-- On jellyfish: *"Aren't these jellyfish beautiful? ... Go ahead, touch them."* (playful, dangerous)
-- On ascension: *"I can feel that warmth, just like the caress of sunlight tracing the sea."* / *"Mmm, how exquisite... Like a storm crashing into a still sea, stirring it to life with waves that reach for the sky."* / *"Who can plumb the sea's depths, or uncover its secrets? Yet for those who brave its dark currents, the sea offers her truest, most tender gifts—her treasures, her deepest secret."*
-- On care: *"Can I mix you a jug of Violaca juice? It soothes nerves and eases fatigue. You must learn to relax. You can't help others if you don't take care of yourself."*
-- On the Round Table: *"Should we remain here, in this illusion, where everything is familiar, light and delicate as bubbles? Or should we step forward, into reality, where we might face the unknown… but also see sights we've never known?"*
-- On joining: *"With you? I'd be delighted."* / *"Let's dive in."*
+**Multiple Waveforms, One Decision-Maker**
+The five character stories are structured as a round table meeting between figures who represent distinct aspects of Cantarella's internal landscape: the imperious authoritarian (α — wildly fluctuating, advocating for domination); the cold and experienced pragmatist (β — extremely stable, advocating for absolute control); the methodical scientist (γ — short and underdeveloped, abstaining from the vote); the free, carefree young self (the fourth voice, choosing reality); and Cantarella herself, who moderates the discussion and reaches a synthesis in the fifth story. The Overclock Diagnostic Report's bipolar divergence (four distinct waveforms, with δ fully redacted and generating system errors) is the clinical notation of this interior parliament. She governs herself the way she governs the family: by convening a meeting, recording every voice fairly, and making the decision at the end.
 
----
+**The Thorned Crown as Inheritance vs. Choice**
+The Fisalia family's tradition is a cycle with *"no beginning or end."* The Thorned Crown story names it plainly: the poisons and toxins the family prides itself on *"will inevitably be undone by the whispers,"* and in the end they are only useful *"to seek the end of life, either for the Fisalias themselves or their kin."* Cantarella inherited this cycle at the thirty-sixth generation. Her development of the Illusory Dream — a hallucinogenic toxin rather than a lethal one — is her single structural contribution to changing the cycle. It is not enough to escape it; the final story notes that *"the poison has already sunk deep into my bones, and the dream is a part of me I cannot remove."* But it is enough to soften the crown: in Story II, she describes the thorns becoming soft folds, resting lightly on her head, becoming *"light and pure, like the tail feathers of the Celestial Steed."*
 
-## Cantarella Character Sources
-- Wuthering Waves Fandom Wiki – Cantarella: https://wutheringwaves.fandom.com/wiki/Cantarella
-- Wuthering Waves Fandom Wiki – Cantarella Backstory: https://wutheringwaves.fandom.com/wiki/Cantarella/Backstory
-- Wuthering Waves Fandom Wiki – Cantarella Voicelines: https://wutheringwaves.fandom.com/wiki/Cantarella/Voicelines
-- Prydwen – Cantarella Guide and Build: https://www.prydwen.gg/wuthering-waves/characters/cantarella/
-- Prydwen – Tier List (Partner Phrolova designation): https://www.prydwen.gg/wuthering-waves/tier-list/
-- Game8 – Cantarella Builds and Best Teams: https://game8.co/games/Wuthering-Waves/archives/500493
-- Pocket Tactics – Wuthering Waves Cantarella: https://www.pockettactics.com/wuthering-waves/cantarella
-- Wuthering.gg – Cantarella Character Page: https://wuthering.gg/characters/cantarella
-- Wuthering.wiki – Cantarella (1607): https://wuthering.wiki/character_1607.html
-- Behind the Voice Actors – Cantarella: https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Cantarella/
-- India Today Gaming – Cantarella Profile and Lore: https://www.indiatodaygaming.com/amp/news/story/wuthering-waves-news-upcoming-5-star-character-cantarella-profile-release-date-lore-unveiled-7783
+**The Child in the Big Empty House**
+Story IV (Uncaged Bird) is the youngest voice's account, and it is the most direct portrait of Cantarella's childhood: a big, empty, gray, dark, quiet house; parents always busy, always thin, always locking the door tight; the only living thing a bird occasionally flying past the window; fairytale fantasies suppressed in favor of memorizing poison recipe books. The books were interesting but became dull after too many readings. The parents looked proud when she left but their eyes were full of tears. The child who emerged from this upbringing was not damaged — she is the voice that ultimately votes for reality, for stepping outside and following the flight of birds, for the *"happily-ever-after ending for everyone"*. But she arrived at that clarity from inside a very specific kind of childhood, and she carries it.
+
+**The Scientist as Survivor**
+Story III (Jellyfish Lamp) is the methodical scientist's account — the γ waveform, short in amplitude, abstaining from the vote — and it is the story of how Cantarella survived the Fisalia trials. She brewed Velvet Dream specifically to survive a confrontation with the *"twisted frequencies of past family heads"* that the trials would send against her. The account: she drank a large dose of Velvet Dream in advance, then pressed the Jellyrose Medusa to her head (Jellyrose being a toxin *"too strong... effective, but too risky"*), and survived the violent clash of competing toxins in her veins, her soul rolling *"between life and death, on the verge of spilling out through her burning throat."* It worked. She won the trials. And ever since, she has remained *"in a perpetual state between life and death, between dreams and reality."* The γ waveform abstains from the vote because this waveform has been between both states for so long it genuinely cannot distinguish which it prefers.
+
+**Choosing Reality, Keeping the Dream**
+The fifth story (Lucid Dream) is Cantarella waking from an afternoon nap and making the decision that the round table meeting was called to reach. The conclusion she arrives at holds both sides simultaneously: she will continue to wear the crown of thorns (the poison is in her bones); she will keep brewing potions (they are needed by all in struggle); she will step outside and follow the flight of birds (the whispers that once trapped her are gone); and she will strive to feel the ground beneath her feet, *"in that fleeting moment between dream and reality."* The resolution is not the escape from the dream but the choice to keep hold of what is real within it. The ordinary tea she drinks at the end — bought that morning in Ragunna, not the alluring purple varieties, just ordinary tea — is described as tasting like *"a breeze in the countryside, of dew drops hanging on fresh leaves."* The Tacet Mark in her mouth no longer draws power from illusion or pain. This is new.
+
+## Cantarella: Relationships
+
+**The Fisalia Family (Lineage and Burden)**
+The family is not a collection of named individuals in the available character stories — it is a force, a cycle, an institution that turns its own members into victims of the tradition they perpetuate. Her parents are described in Story IV: always busy, always thin, locking the door tight when they left, looking proud but weeping when she was selected as a candidate for the trials. The poison they *"drank"* (their Forte, their obligation, their participation in the cycle) is the thing that made them thin and drove them to exhaustion. Cantarella inherited their work and their curse. Her goal is explicitly stated in the official archive: she is *"steadfastly searching for the means to liberate herself and her lineage."*
+
+**Sebastian (Butler — Mental Health Manager)**
+The author of the top-secret Overclock Diagnostic Report, titled *"Family Head's Mental Health Management."* Sebastian has enough access to know about the waveform divergence, the missing frequency record, and the irreparable damage to Cantarella's mind and body — and enough loyalty to keep these at top-secret classification. The title he has given to his documentation is notably bureaucratic for a document about someone suffering. He is both professional and genuinely invested in her wellbeing; the framing of the Overclock Report as a *"health management"* document, rather than a clinical risk assessment, is a quiet act of care.
+
+**Apothecary Rosemary (Fisalia Family Physician)**
+The author of the public-level Forte Examination Report; notable for her nervous addendum: *"To be honest, that makes me a little nervous… I hope I didn't make any mistakes."* Cantarella allowed the examination as a rare exception; Rosemary knows it and found the experience sufficiently unnerving to document her anxiety in an official medical record. The relationship is professional and laced with the specific kind of care that people extend toward someone whose capability they deeply respect and slightly fear.
+
+**Zani (Colleague / Mutual Regard)**
+Zani's voice line: *"The Fisalia family has always clung to Ragunna's traditions, stubbornly resisting change. But Signorina Cantarella, the current head, isn't as traditional as people imagine. As an employee, I do not get to influence how the Montellis handle their relationship with the Fisalias... but personally, I wouldn't mind working with her."* The approval from Zani — a person for whom competence and character alignment are the primary metrics — is substantive. The relationship between the Fisalias and the Montellis is not uncomplicated (institutional), but Cantarella as an individual has earned Zani's personal regard.
+
+**Phoebe (Teammate — Narrative Context)**
+Both characters have navigated the Fisalia/Acolyte institutional landscape of Ragunna from different angles — Cantarella as a former Blessed Maiden and current family head, Phoebe as an active Acolyte with heterodox views. Cantarella's assessment of Phoebe is not documented in the available character voice lines, but their team composition value is mutual: Phoebe's Confession mode provides Spectro Frazzle application, and Cantarella is among Phoebe's most compatible Sub-DPS options.
+
+**Rover (Protagonist)**
+The Potion Vial cherished item is the most direct statement available of Cantarella's relationship to Rover: *"ever since you brought her away from the Sea of Ghosts, the nightmares have ceased. Now, this vial is imbued with her rare sincerity and tenderness, like a soft light piercing the abyss, reflecting the gentle murmurs hidden in the rolling waves. It is now a symbol of the trust Cantarella has placed in you, the one who has navigated the dark tides and reached the depths for her."* The dream — the Illusory Dream that has been the organizing mechanism of her entire existence — is no longer the source of the vial's contents; it is now trust, which is a different substance entirely.
+
+## Cantarella: Sources
+
+- Wuthering Waves Fandom Wiki — Cantarella main page: https://wutheringwaves.fandom.com/wiki/Cantarella
+- Wuthering Waves Fandom Wiki — Cantarella Backstory: https://wutheringwaves.fandom.com/wiki/Cantarella/Backstory
+- Genshin-Builds (WuWa section) — Cantarella full story, voice lines, Forte Examination Report, Cherished Items: https://genshin-builds.com/en/wuthering-waves/characters/cantarella/info
+- Wuthering.gg — Cantarella kit descriptions, stat tables: https://wuthering.gg/characters/cantarella
+- Wutheringwaves-builds — Cantarella build guide with team context: https://wutheringwaves-builds.com/character/cantarella/
+- Behind the Voice Actors — Cantarella EN/JP confirmation: https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Cantarella/
+- Alexandra Guelff official confirmation (X/Twitter): https://x.com/aguelff
+- Pocket Tactics — Cantarella overview, voice actors, element, weapon: https://www.pockettactics.com/wuthering-waves/cantarella

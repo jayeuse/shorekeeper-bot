@@ -1,129 +1,94 @@
 ---
 version: 1.0.0
 chunk_strategy: heading_based
-source_file: characters/rinascita/carlotta/carlotta_character.md
+source_file: characters/rinascita_characters/carlotta/carlotta_character.md
 character: Carlotta
-group: Rinascita
+group: Montelli Family / Rinascita
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - glacio
+  - pistols
+  - main_dps
+  - rinascita
+  - ragunna
+  - montelli
+  - executor
+  - opal
+  - mutant_resonator
+  - 5star
+  - version_2_0
 ---
 
-# Carlotta Character Documentation
-<!-- Sources: Wuthering Waves Fandom Wiki, Carlotta/Backstory Wiki, Montelli Family Wiki, Game8, Prydwen, VS Battles Wiki, Pocket Tactics, Genshin-Builds, Sportskeeda, Wuthering.wiki -->
+# Carlotta — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Carlotta, https://wutheringwaves.fandom.com/wiki/Carlotta/Backstory, https://wuthering.wiki/character_1107.html, https://game8.co/games/Wuthering-Waves/archives/486251, https://genshin-builds.com/en/wuthering-waves/characters/carlotta/info, https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Carlotta/ -->
 
 ## Carlotta Profile: Basic Information
-- **Name:** Carlotta (Chinese: 珂莱塔, Kē Lái Tǎ)
-- **Title:** Second Daughter of the Montelli Family / The Opal / Art Investor of Ragunna
-- **Identity:** Congenital Resonator; Second Daughter of the Montelli Family; Art Investor; Secret Executor for Family "Troubles"
-- **Affiliation:** Montelli Family (Ragunna City, Rinascita); Averardo Bank; New Head of the Montelli Family (post-Threnodian defeat)
-- **Birthplace:** Unknown (adopted into the Montelli Family following an accident involving her Forte); Ragunna City, Rinascita (current residence)
-- **Release Version:** Wuthering Waves Version 2.0 (January 2, 2025 — first Rinascita character); Rerun expected in Version 2.9+ pending confirmation
+
+- **Name:** Carlotta Montelli (Chinese: 珂莱塔, *Kē Láitǎ*)
+- **Alias / Title:** Opal (codename, Montelli Executor); the second lady of the Montelli family; art investor; "Lady Carlo—" (overheard admiration)
+- **Identity:** Second daughter of the esteemed Montelli Family of Rinascita; Glacio Mutant Resonator; art investor by public profession, Executor of Montelli affairs by private vocation
+- **Affiliation:** The Montelli Family, Ragunna
+- **Birthplace:** Ragunna, Rinascita
+- **Release Version:** Wuthering Waves Version 2.0 (first limited 5-star Pistol character in the game)
 - **Rarity:** 5-Star
 - **Element:** Glacio
-- **Weapon:** Pistols
+- **Weapon Type:** Pistols
 - **Voice Actors:**
-  - **JP:** Ueda Kana (植田佳奈)
+  - **JP:** Kana Ueda (植田佳奈)
   - **EN:** Jennifer English
   - **CN:** Yan Yeqiao (闫夜桥)
   - **KR:** Kim Soon-mi (김순미)
 
-## Carlotta Profile: Ontological Overview
-Carlotta is a playable Glacio Mutant Resonator in Wuthering Waves — the second daughter of the esteemed Montelli Family of Rinascita and a sophisticated art investor who moves seamlessly through high society and business transactions. She is Ragunna City's most elegant paradox: a noblewoman who orchestrates social events by day and eliminates "troubles" that threaten her family's interests by night.
+## Carlotta Profile: Overview
 
-Her Resonance Forte allows her to create and manipulate crystalline constructs called "Moldable Crystals" — opalescent constructs that she describes as "not real jewels, merely crystals reshaped by my Forte." These crystals function as both ornamental decoration and lethal ammunition, embodying the duality at her core: beauty that kills, elegance that conceals violence. Her Tacet Mark is located on her right clavicle (collarbone area).
+Carlotta Montelli is the second daughter of Rinascita's Montelli Family — one of the great noble houses of Ragunna, a port city-state whose internal politics are as treacherous as the sea trade that sustains it. On the surface she is an art investor and a distinguished social presence: she moves through auction houses, business negotiations, and Ragunna's layered social hierarchies with the ease of someone who has mapped every room before entering it. Beneath this, she is "Opal" — the Montelli Executor, the black-gloved figure who quietly resolves the family's "troubles," a designation that encompasses everything from uncovering internal traitors to, when circumstances demand, eliminating threats with the same precision she brings to identifying undervalued art.
 
-Carlotta's personal history is deeply layered. She describes herself with brutal honesty: "I've been called many things: the abandoned orphan, descendant of the lesser branch, prominent young lady, and efficient executor. Each title represents a part of me, though none capture the whole." Her past before being adopted by Francesco Montelli (the Padrino of the Montelli Family) is marked by tragedy — an "accident involving her Forte" is mentioned without elaboration. Francesco adopted her into the Main Branch, not simply as charity, but recognizing something essential in her: the will to survive, to excel, and to protect what matters.
+She is the first Glacio DPS in the game designed around a Pistol weapon type, debuting in Version 2.0 alongside the launch of Rinascita as a region. Her Forte marks her as a Mutant Resonator: her Resonance Spectrum Pattern, showing features resembling stained glass and natural snowflakes, appeared without precedent in the existing classification system — traced to her instinctive act of using decorative objects as weapons when her Forte first awakened, which left an imprint on her resonance in the form of crystalline art-object imagery.
 
-Within the Montelli Family, every member who handles sensitive directives is assigned a codename and matching token. Carlotta's is "Opal" — a fitting name for someone whose external brilliance conceals multifaceted interior complexity. The black gloves she wears are not fashion; they are a family signal: "Those who wear black gloves must quietly resolve any 'troubles' to serve the family's needs." This role is not imposed — it is Carlotta's choice. In her own words: "The family has shown me the wider world, and now I will guide them into an even greater one — both in the name of the true Montelli and my own."
+## Carlotta — Character/Appearance Design
 
-Following the defeat of the Threnodian Leviathan and the rebuilding of Ragunna, Carlotta was appointed as the new Head of the Montelli Family, succeeding her grandfather Francesco. This appointment reflects both her capabilities and the trust placed in her by a family that values "emotional bonds and shared ideals above bloodlines and social standing."
+Carlotta is a young woman with long silver-white hair that cascades past her shoulders in elegant waves. Her eyes are a vivid blue, sharp and evaluative in their default expression — the gaze of someone who has made a profession of appraising things, and is always doing so. Her bearing is composed and subtly theatrical: she occupies physical space as if she has already decided where she will stand and how she will be seen from that position.
 
-## Carlotta – Character/Appearance Design
-Carlotta is a striking young woman with long, flowing silver-white hair that cascades past her shoulders, vivid heterochromatic eyes with pink and teal hues, and an aristocratic bearing that commands attention in any room.
+Her signature outfit is a striking composition of white, black, and magenta. The foundation is a short, sleeveless white dress with a high neckline and lace detailing, structured to suggest formality while remaining dynamic enough for movement. Over it drapes a vibrant magenta cape with intricate embroidery and blue interior lining — the cape is deliberately dramatic, flowing and cinematic, worn even on secret nighttime operations because Carlotta has decided that her aesthetic is non-negotiable regardless of tactical context. The outfit is anchored by a fitted black corset-style bodice introducing gothic structure. Thigh-high black boots with bold pink stockings complete the legs. A magenta headband with ribbons adorns her hair, and she accessorizes with black gloves — the most narratively significant element of her design.
 
-- **Hair:** Long silver-white hair worn loose and flowing — a color associated with frost, purity, and the Glacio element. The silvered hue evokes moonlight on snow and reinforces her identity as someone who operates in shadows and social elegance simultaneously.
-- **Eyes:** Heterochromatic — a vibrant mix of pink and teal. This unusual coloring sets her apart visually and may be tied to her Mutant Resonator classification. The Rover is given the codename "Cat's Eye" specifically because of the "luster of Cat's Eye gems" in their eyes — suggesting Carlotta has a practiced eye for reading people through subtle visual cues.
-- **Tacet Mark:** Located on her right clavicle/collarbone — a placement that is visible in formal attire but can be concealed with higher necklines, consistent with someone who alternates between public and clandestine roles.
-- **Outfit:** A striking blend of elegance and edge. She wears a short white sleeveless dress with a high neckline, embellished with lace and delicate patterns, creating a soft flowing silhouette. Over this: a vibrant magenta cape with intricate designs, trimmed with blue on the inside, flowing dramatically behind her. The outfit includes a fitted black corset-style bodice that enhances her figure and introduces gothic flair. Thigh-high black boots with bold pink stockings feature blue and magenta details, combining femininity with toughness. Under the dress: short black shorts for mobility. She accessorizes with black gloves (the family signal for executors), ornate jewelry, and a magenta headband with ribbons.
-- **Weapon:** Dual Pistols — Carlotta is the first 5-star Pistol wielder in Wuthering Waves. Her pistols fire crystalline projectiles formed from her Moldable Crystals. The ammunition is her Forte made tangible: opal-like constructs that explode on impact with Glacio energy.
-- **Thematic Aesthetic:** Carlotta's design is built on the tension between refinement and ruthlessness. The magenta cape, white dress, and jeweled accessories scream nobility and high society. The black gloves, corset, combat boots, and shorts underneath signal readiness for violence. Her aesthetic is Baroque meets assassin — ornate, theatrical, and deadly.
-- **Signature Accessory — The Black Gloves with Opal Gemstones:** "A pair of black gloves, their lustrous sheen reminiscent of the night, adorned with gemstones bearing the same name as the wearer — Opal. Within the family, there are many unspoken rules, subtle and unnecessary to voice aloud. One such rule is this: those who wear black gloves must quietly resolve any 'troubles' to serve the family's needs."
+The black gloves are not decorative. Within Montelli family unspoken code, those who wear black gloves are the ones who resolve "troubles." When Carlotta's grandfather Francesco gave her the gloves alongside the codename Opal, he was recognizing her as his Executor and handing her the full weight of what that means. The gloves are adorned with opal gemstones — the same gemstone as her codename — reinforcing that she wears her identity in plain sight: Carlotta Montelli and Opal are the same person, and she is not hiding either one.
 
-## Carlotta – Psychological Profile
-Carlotta is calculating, pragmatic, ambitious, adaptable, and — beneath it all — surprisingly kind. She is someone who has learned to wear many masks, and every mask is genuine.
+Her weapons — a pair of pistols in public mode and a large crystalline musket during her Liberation — reinforce the visual duality: the pistols are elegant and precise, associated with her social persona; the musket is massive, theatrical, and unmistakable, the weapon of someone who is not trying to be discreet about the scale of what she can do.
 
-**Core Traits:**
-- Highly intelligent and strategic — she reads people, situations, and power dynamics with surgical precision
-- Ambitious but not reckless — her ambition is tied to elevating Ragunna and the Montelli Family, not personal glory
-- Adaptable — "acting and behaving on the accord of her surroundings"; she shifts between roles seamlessly
-- Pragmatic to the point of ruthlessness when necessary — she will eliminate obstacles without hesitation if required
-- Kind, despite appearances — "on the outside, she is mysterious and may seem merciless, but in reality, she is quite kind"
-- Independent — she refuses to let tradition or blood alone define her worth; she earned her position
-- Unshakable determination — "won't stop until she achieves what she has her sights set on"
-- Deeply loyal to Francesco and the Montelli Family's ideals — not out of obligation, but genuine gratitude and shared vision
+## Carlotta: Psychological Profile
 
-**On Wearing Masks:**
-"My past is no secret within my family or among old acquaintances... I've been called many things: the abandoned orphan, descendant of the lesser branch, prominent young lady, and efficient executor. Each title represents a part of me, though none capture the whole. To dance on the edge of danger, one must learn to wear many masks. For the future of the Montelli family, I will play any role that's required of me."
+**The Art of Strategic Self-Presentation** — Carlotta's most consistent quality is the way she shapes her own image as deliberately as she shapes a room. She is not performing confidence or elegance: she genuinely possesses both. But she also understands that reputation is infrastructure — that being known as someone whose judgment is impeccable and whose word means something is more durable than any single tactical win. Her public persona as an art investor is not cover but function: she actually identifies and cultivates underappreciated artists, bringing them to prominence in ways that serve both her genuine aesthetic appreciation and the Montelli family's social capital simultaneously. She is one of the rare people for whom self-interest and genuine care are so aligned they are effectively the same thing.
 
-This is not self-deception. Carlotta knows precisely who she is: someone constituted by many truths simultaneously. The orphan is real. The executor is real. The art-loving investor is real. The noblewoman is real. Her strength is that she does not need to choose one at the expense of the others.
+**Pragmatic Idealism** — Carlotta is a bold strategist who does not confuse what she wants with what she can achieve now. The Montelli Code sometimes conflicts with her own sense of what Ragunna should become; she navigates this not by rebellion but by patient, precise positioning. She took the black gloves and the Executor role not because she was compelled but because she calculated that she could do more from within the system than outside it — and because her grandfather was the only person who believed in her before she had proven herself, and this matters to her more than she readily admits. Her ambition is not personal aggrandizement but civic: she wants Ragunna to be greater than it currently is, and she believes the Montellis — properly led — are the vehicle for that.
 
-**On Art:**
-Carlotta's passion for art is genuine. She attends auctions not merely for appearances but because she genuinely values artistic merit. Her commentary on paintings is thoughtful and engaged. When she manipulates auctions — driving up bids, orchestrating outcomes — it's strategic, yes, but also rooted in a real belief that art has intrinsic worth and that undervalued artists deserve recognition.
+**Vulnerability Wrapped in Fluency** — At the heart of Carlotta's arc in the companion quest is the revelation her "Mirror Self" levels at her: that she carried out her duty, in part, because she wanted approval. Surrounded by people who doubted her, who whispered she was lacking, the validation of being needed by the family was not incidental — it was sustaining. This is not a fatal flaw but a humanizing one: the impeccably composed Executor turns out to have been, for years, doing her job partly to prove to silent critics that they were wrong about her. Her journey through the companion quest involves acknowledging this without letting it become self-condemnation: she did genuinely good work, and the approval-seeking did not corrupt it. What changes is that she no longer needs it.
 
-**On Family:**
-"Some people see family as a matter of blood and heritage, while others, unbound by such conventions, consider those who share their ideals as family. I am deeply grateful for the protection, opportunities, and insight Grandfather has given me, along with the pride of being a Montelli. He embodies the spirit of the Montelli family, and I am determined to honor his legacy. Like him, I will lead our family forward with action, as a true Montelli would."
+**Discernment as Her Essential Competence** — Carlotta's Forte designation "Opal" is not arbitrary. Opal is a gemstone associated with light refraction, inner complexity, and the difficulty of categorizing what you are seeing. Carlotta's ability to identify hidden value — in art, in people, in situations — is her most applied talent. She recognizes Rover's quality immediately and recommends them to the Montelli family in a move that is simultaneously calculated and genuine: she has assessed Rover and found them worth investing in, and she does not distinguish between personal regard and professional endorsement because for her they are both expressions of the same capacity for accurate judgment.
 
-This is the emotional bedrock beneath her calculated exterior. Francesco did not just adopt her; he gave her identity, purpose, and belonging. Her loyalty is absolute because it is freely chosen, not coerced.
+**Controlled Warmth** — Despite her composed exterior and reputation for resolving "troubles" with unsentimental efficiency, Carlotta is genuinely warm with people she has decided are worth that warmth. Her relationship with her grandfather Francesco is the foundation of her character: he believed in her first, gave her scope to become who she is, and her loyalty to him — complicated and tested by the events of the companion story — is one of the few things she holds without strategic calculation. Her birthday line to Rover (promising a pistol reshaped by her Forte, framed as freedom rather than obligation) is characteristic: her gifts are always thought through to the point where they feel personal rather than transactional, because for Carlotta, understanding someone well enough to give them the right thing *is* the personal gesture.
 
-**On Violence:**
-Carlotta does not enjoy killing. She does it because it is necessary. The "troubles" she handles are threats to the family — traitors, external enemies, corrupt actors. Her weapon of choice (pistols at range) and her demeanor (calm, professional, efficient) reflect someone who treats violence as a tool, not an expression of self. The black gloves signify acceptance of a burden, not celebration of power.
+## Carlotta: Relationships
 
-## Carlotta Relationships
+**Francesco Montelli (Grandfather / Padrino)** — The Padrino of the Montelli Family and the person who recognized Carlotta's capabilities before anyone else did. It was Francesco who made her his Executor, gave her the opal gloves, and gave her a codename derived from her own name — a mark of trust rather than concealment. Their relationship is the emotional anchor of her character: she is loyal to him in a way that goes beyond institutional obligation, and the companion quest's central tension involves her discovering the depth of Francesco's long game and deciding how to reconcile her own values with the family's legacy. The scene where Francesco gently pats her shoulder and asks if she remembers when he gave her the gloves — recalling the past during a moment of present difficulty — captures exactly what their bond looks like: gentle, specific, weighted with history.
 
-**Francesco Montelli (Grandfather — Padrino of the Montelli Family):**
-Francesco is the single most important person in Carlotta's life. He is the current head (Padrino) of the Montelli Family, a pioneering innovator who broke the Order of the Deep's monopoly on Reserved Terminals, and the man who adopted Carlotta into the Main Branch after an accident involving her Forte. He taught her everything about the family's values: expansionist vision, pioneering spirit, and prioritizing shared ideals over bloodlines. Carlotta speaks of him with profound respect and gratitude: "He embodies the spirit of the Montelli family, and I am determined to honor his legacy. Like him, I will lead our family forward with action, as a true Montelli would." Post-Threnodian, Carlotta inherits leadership of the family, continuing Francesco's work.
+**Capollo Montelli (Uncle)** — The son of the Padrino and the family's official heir apparent. Capollo's attempt to sideline Carlotta by approaching Rover directly during the companion quest, offering to replace her as the Montelli's representative in Rover's alliance, is the political provocation that sets the companion story's main action in motion. He represents the faction within the Montellis who doubted Carlotta and whispered she was insufficient — the external voice of her own internal critic. His exposure and ouster at the story's end is both a political resolution and a personal one: it closes the chapter on needing to prove herself to people who were never actually looking fairly.
 
-**The Rover (Protagonist — Codename: "Cat's Eye"):**
-Carlotta and the Rover develop a complex working relationship built on mutual pragmatism and growing trust. She assigns the Rover the codename "Cat's Eye" — referencing the "luster of Cat's Eye gems" in the Rover's eyes — and brings them into the family's inner circle to help root out traitors. Throughout the companion story "If On a Rainy Night a Family," the Rover proves reliable, competent, and trustworthy. Carlotta values the Rover not as a tool but as a genuine ally. Her dialogue suggests she may develop romantic interest, though this is left deliberately ambiguous in available sources. The Rover is one of the few people outside the family whom Carlotta trusts with sensitive information.
+**Rover** — Carlotta's relationship with Rover is one of the most explicitly interest-laden in the game. She recommends them to the Montelli family (assigning them the Cat's Eye codename), works with them closely during the companion quest, and expresses both trust in their capabilities and a desire for continued collaboration that is clearly warmer than simple professional regard. Her voiceline confirming that Rover is the only person she has ever personally recommended to the Montelli family is striking: recommendation is her primary form of endorsement, and she does not extend it carelessly. The companion quest ends with her handing Rover the Cat's Eye brooch directly — formalizing an identity she gave them and trusting them to carry it forward.
 
-**Capollo Montelli (Uncle — Heir Apparent):**
-Capollo is Francesco's son and the official heir apparent to the Montelli Family. His relationship with Carlotta is tense and politically fraught. He views the Rover's alliance with Carlotta as destabilizing and attempts to replace her as the Montelli representative. Carlotta describes him as showing "little urgency" in investigating Benett's death despite being responsible for the vault — a sign of either incompetence or complicity. She navigates around him carefully, recognizing him as a political obstacle but not an active enemy. The story implies Capollo may be involved in internal family intrigue, though this is not definitively confirmed in available sources.
+**Francesco's Extended Network (Duncan, Benett, others)** — The companion story involves Carlotta working through the layers of Montelli family history: Benett, the deceased Vault Keeper whose circumstances trigger the investigation; Duncan, the ex-family member who provides the crucial connection to Scarlet Velvet; the Vault itself as a physical archive of everything the Montelli name contains. These characters illuminate Carlotta's institutional relationship: she is both administrator and inheritor of everything the family has done, and the process of investigating Benett's death requires her to assess the Montelli legacy honestly rather than protectively.
 
-**Benett (Montelli Vault Manager — Deceased):**
-Benett was the Montelli Family's vault manager who was accused of embezzlement and later killed by Tacet Discords outside Ragunna. Carlotta does not believe Benett was motivated by greed — she suspects his death was orchestrated and that he was attempting to send her a coded warning before he died. Her investigation into his murder is the core of her companion story. Benett's death becomes the key to uncovering a larger conspiracy within the family.
+**Zhezhi** — Carlotta's primary synergy partner in gameplay terms. As a fellow Glacio character, Zhezhi's Outro Skill provides Carlotta with both Glacio DMG Bonus and Resonance Skill DMG Bonus — the exact stats that maximize Carlotta's damage output. Their relationship in lore is not extensively documented, but their mechanical pairing is one of the strongest designed synergies in Version 2.0.
 
-**Duncan (Former Montelli Member):**
-Duncan is a former Montelli who left the family years ago and now believes that "all who inherit the Montelli name are doomed." Despite his cynicism, Benett's death draws him back, and he assists Carlotta and the Rover in their investigation. Duncan represents the darker side of the Montelli legacy: the costs of ambition, the weight of the name, and the casualties left behind. Carlotta treats him with professional courtesy but does not seek to bring him back into the fold.
+## Carlotta: Sources
 
-**Roccia (Fellow Resonator — Rinascita Character):**
-Carlotta expresses curiosity about Roccia, specifically about her box companion Pero: "I've always been curious about something. Just how much can her box, Pero, actually hold? New designs, costumes, the fine wines the troupe keeps hidden, shimmering sea gems and shells... And Roccia's thoughts and feelings, too. Though Roccia herself rarely speaks her mind, Pero seems to reveal them all." This suggests a warm, if distant, relationship — Carlotta admires Roccia's quiet competence and is intrigued by the bond between Roccia and Pero.
-
-**Brant (Captain — Potential Ally):**
-Carlotta describes Brant as "the captain leading his crew through tempestuous seas," noting that the Montelli Family once extended an invitation to him to formally join their organization. Brant declined, stating: "A captain's ship is his alone, and he will never abandon it." Carlotta respects this and is content with their relationship as "partners with aligned interests." She wonders whether his gaze reveals "ambition, or selflessness and passion" — suggesting she sees him as complex and worthy of careful observation.
-
-**Zani (Montelli Associate — Efficient Worker):**
-Carlotta notes that Zani excels at completing tasks with "haste, precision, and quality" despite being "wary of unnecessary, inefficient tasks." Carlotta recommends approaching Zani for challenging requests but warns that "the compensation must be appropriate." This suggests professional respect and an understanding that Zani operates transactionally rather than out of loyalty alone.
-
-**Phoebe (Fellow Resonator):**
-Carlotta views Phoebe with a mix of admiration and concern: "Phoebe is as pure and innocent as a budding lily. Her kindness and devotion are beyond question. Yet, without sufficient strength, such virtues might lead one into the trap of blind faith." This protective but somewhat condescending perspective suggests Carlotta sees Phoebe as naive and potentially vulnerable — someone who needs guidance or protection.
-
-**Cantarella Fisalia (Rival — Head of the Fisalia Family):**
-The Fisalia Family is the Montelli Family's historic rival in Ragunna's power dynamics. Cantarella, as the head of the Fisalia Family, represents both obstacle and opportunity. Community lore (fanworks, not confirmed canon) suggests Carlotta and Cantarella have a complicated relationship rooted in adolescent rivalry. Cantarella's invitation to negotiate a ceasefire signals a potential shift in Ragunna's political landscape, with Carlotta positioned as the Montelli negotiator.
-
----
-## Sources
-- Wuthering Waves Fandom Wiki – Carlotta: https://wutheringwaves.fandom.com/wiki/Carlotta
-- Wuthering Waves Fandom Wiki – Carlotta/Backstory: https://wutheringwaves.fandom.com/wiki/Carlotta/Backstory
-- Wuthering Waves Fandom Wiki – Montelli Family: https://wutheringwaves.fandom.com/wiki/Montelli_Family
-- Wuthering Waves Fandom Wiki – If On a Rainy Night a Family: https://wutheringwaves.fandom.com/wiki/If_On_a_Rainy_Night_a_Family
-- Wuthering Waves Fandom Wiki – Francesco Montelli: https://wutheringwaves.fandom.com/wiki/Francesco_Montelli
-- Game8.co – Carlotta Best Builds and Teams: https://game8.co/games/Wuthering-Waves/archives/486251
-- Game8.co – If On a Rainy Night a Family Walkthrough: https://game8.co/games/Wuthering-Waves/archives/492522
-- VS Battles Wiki – Carlotta Montelli: https://vsbattles.fandom.com/wiki/Carlotta_Montelli
-- Pocket Tactics – Wuthering Waves Carlotta Build: https://www.pockettactics.com/wuthering-waves/carlotta
-- Genshin-Builds – Carlotta Story & Voice Lines: https://genshin-builds.com/en/wuthering-waves/characters/carlotta/info
-- Wuthering.wiki – Carlotta Character Page: https://wuthering.wiki/character_1107.html
-- Sportskeeda – Carlotta Voicelines About Other Characters: https://www.sportskeeda.com/esports/wuthering-waves-carlotta-voicelines-characters
+- Wuthering Waves Fandom Wiki (Carlotta) — https://wutheringwaves.fandom.com/wiki/Carlotta
+- Wuthering Waves Fandom Wiki (Carlotta/Backstory) — https://wutheringwaves.fandom.com/wiki/Carlotta/Backstory
+- Wuthering Waves Fandom Wiki (If On a Rainy Night a Family) — https://wutheringwaves.fandom.com/wiki/If_On_a_Rainy_Night_a_Family
+- wuthering.wiki — Carlotta Character Archive — https://wuthering.wiki/character_1107.html
+- GenshinBuilds (WuWa) — Carlotta Story & Voice Lines — https://genshin-builds.com/en/wuthering-waves/characters/carlotta/info
+- Game8 — Carlotta Best Builds and Teams — https://game8.co/games/Wuthering-Waves/archives/486251
+- Behind the Voice Actors — Carlotta VA — https://www.behindthevoiceactors.com/video-games/Wuthering-Waves/Carlotta/
+- The Based Otaku — Carlotta EN and JP VAs — https://thebasedotaku.com/guides/wuthering-waves-carlottas-english-japanese-va/
+- TV Tropes — Characters in Wuthering Waves: Ragunna — https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWavesRagunna

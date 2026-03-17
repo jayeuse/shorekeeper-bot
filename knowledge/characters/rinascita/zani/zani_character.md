@@ -3,183 +3,118 @@ version: 1.0.0
 chunk_strategy: heading_based
 source_file: characters/rinascita/zani/zani_character.md
 character: Zani
-group: Rinascita
+group: Rinascita / Ragunna / Averardo Bank
 document_type: character_profile
-importance: medium
+importance: high
 tags:
-- character
-- profile
+  - character
+  - spectro
+  - gauntlet
+  - main-dps
+  - mutant-resonator
+  - rinascita
+  - ragunna
+  - montelli
+  - averardo-bank
+  - blazing-nightwalker
+  - frazzle
+  - version-2-3
 ---
 
-# Zani — Character Knowledge File
-
-<!-- RAG-optimized: each ## section is a standalone searchable chunk -->
+# Zani — Character Documentation
+<!-- Sources: https://wutheringwaves.fandom.com/wiki/Zani, https://wutheringwaves.fandom.com/wiki/Zani/Backstory, https://genshin-builds.com/en/wuthering-waves/characters/zani/info, https://wuthering.gg/characters/zani, https://www.pockettactics.com/wuthering-waves/zani -->
 
 ## Zani Profile: Basic Information
-- **Name:** Zani (Chinese: 赞妮 / Zànní)
-- **Alias / Title:** "Blazing Nightwalker" (past vigilante identity); "Butcher of Criminals" (urban legend moniker, which she finds ridiculous); "Best Employee" (official workplace designation)
-- **Identity:** Member of Averardo Vault's security team; Mutant Resonator with incubation period
-- **Affiliation:** The Montelli Family's Averardo Bank, Ragunna City
-- **Birthplace:** Rinascita
-- **Resonator Class:** Mutant Resonator (non-convergent Rabelle's Curve)
-- **Resonance Power:** Scorched Radiance (can temporarily store kinetic energy to enhance physical capabilities)
-- **Release Version:** Wuthering Waves Version 2.3 — April 2025 (Phase 1)
-- **Rerun:** Not yet available (as of documentation)
+
+- **Full Name:** Zani (Chinese: 赞妮, Zàn Nī)
+- **Name Etymology:** "Zani" (more commonly spelled Zanni) was a character type in Italian commedia dell'arte — an immigrant servant who was a shrewd, successful trickster. The naming is consistent with Rinascita's Italian cultural backdrop; the trickster servant who is actually the most capable person in the room mirrors Zani's role at the Averardo Bank
+- **Identity:** Mutant Resonator (incubation period); Spectro-Aligned; staff member of the Montelli Family's Averardo Bank, Ragunna; security team member; holder of "Best Employee" for longer than she cares to count; known after-hours as the **"Blazing Nightwalker"**
+- **Affiliation:** The Montelli Family / Averardo Bank (current); Ragunna, Rinascita
+- **Birthplace:** Ragunna, Rinascita
+- **Version Added:** Version 2.3, Phase 1 banner (April 29 – May 20, 2025); rerun in Version 3.2 Phase 2
 - **Rarity:** 5-Star
 - **Element:** Spectro
-- **Weapon:** Gauntlets (visually she wields a giant sword in combat animations)
-- **Voice Actors:**
-  - **JP:** Ueda Hitomi (上田瞳)
-  - **EN:** Alexandra Metaxa
-  - **CN:** Nie Xiying (聂曦映)
-  - **KR:** Won Esther (원에스더)
+- **Weapon:** Gauntlets (visually, her gauntlets morph into a massive sword/shield combination weapon)
+- **Forte Power:** Scorched Radiance
+- **Tacet Mark Location:** Runs diagonally across her back
+- **Post-Awakening Physical Changes:** Ram-like horns (black); slender tail extending from her coccyx; when her Forte activates, bright energy streams overflow from her horns, tail, and hair; glowing marks appear across her upper body — per Zani, these are old scars from a past assault that have healed over but remain as faint marks; the delicate scar tissue channels and concentrates energy during Forte activation
 
-## Zani — Character Profile: Ontological Overview
-Zani exists as one of the most fascinating and enigmatic Resonators documented by the Montelli Family's research division. Her Forte Examination Report reveals several unique characteristics:
+Voice Actors:
 
-**Awakening History:**
-The timing and cause of Zani's Awakening remain **unknown**. What is documented is that several years ago, during a severe assault orchestrated by ▇▇▇▇▇▇▇ (redacted), Zani was gravely injured. It was in the midst of this attack that she awakened her Forte, successfully repelling her assailants with her newfound abilities. The Resonance Spectrum Pattern analysis was unable to determine the cause of her Awakening.
+| Language | Voice Actor |
+|----------|-------------|
+| **JP** | Ueda Hitomi (上田瞳) |
+| **EN** | Alexandra Metaxa |
+| **CN** | Nie Xiying (聂曦映) |
+| **KR** | Won Esther (원에스더) |
 
-**Physical Mutations:**
-Following her Awakening, Zani underwent significant physical transformations:
-- **Ram-like horns** — black, curved horns protruding from her head with vents that glow bright yellow when her Forte is activated
-- **Slender tail** — extending from her coccyx with a pointed tip
-- **Tacet Mark** — runs diagonally across her back; when she activates her Forte, bright energy streams overflow from her horns, tail, and hair
-- **Glowing scars** — marks across her upper body that are barely visible to the naked eye under normal conditions; these healed scars from her past injuries facilitate the concentration of energy in these areas, manifesting as glowing patterns during Forte activation
+## Zani Profile: Ontological Overview
 
-**Resonance Classification:**
-Analysis of her test sample revealed a **non-convergent Rabelle's Curve**. This identifies Zani as a **Mutant Resonator with an incubation period** — a rare classification suggesting her abilities are still evolving and may develop further over time.
+Zani is a person with two jobs. During the day she is the best employee the Averardo Bank has ever had — she clocks in on time, handles the most dangerous fieldwork, has mastered every procedure, and receives the "Best Employee" badge so routinely that it has become just another trinket she pockets alongside her paycheck. At night she is the Blazing Nightwalker: a figure who moves across Ragunna's rooftops, delivers criminals to the Chamber of Discipline, never kills, never reveals herself, and disappears before anyone can get a clear look at the horns on her head.
 
-**Forte Mechanism:**
-Zani's Forte allows her to **temporarily store excess kinetic energy within her body** to enhance her physical capabilities. This stored energy manifests visibly as bright energy streams when she enters combat stance. The delicate structure of her healed scar tissue appears to act as conduits for this energy concentration.
+She arrived at the Montelli family in reverse order to how such arrangements usually work: she started fighting crime first, caused enough aftermath that she needed institutional backing to manage the consequences, and joined the Montellis specifically because they could help her handle it. Her loyalty to the family is real and practical rather than ideological — she will stand by Carlotta until Carlotta's vision of the world beyond the sea horizon becomes reality, not because she believes in the Montelli family's role in Ragunna, but because she trusts Carlotta specifically.
 
-**Overclock Assessment:**
-- **Resonant Criticality:** High (meaning she is naturally stable)
-- **Overclocking Risk:** Minimal
-- **Stability:** High — no history of Overclocking recorded
-- **Psychological State:** No current need for psychological counseling; her mental fortitude is described as "stronger than the Vault's explosion-proof walls"
-- **Stress Management:** Zani has developed "rather effective ways to unwind" — primarily through her "voluntary work after hours" (her euphemism for vigilante activities)
-
-**Theoretical Note from Research Division:**
-*"Zani's distinctive physical traits from her Awakening remind me of those long-forgotten legends the family collected. Those tales spoke of eerie, supernatural entities said to lurk in the shadows long before the Lament. Could there be a connection between those legends and the cause of her Awakening? Or is it just an odd coincidence?"*
-
-The response from a colleague: *"Don't overthink it. Maybe she was awakened by a Tumbleyak or a goat."*
-
-This exchange highlights the mystery surrounding her Awakening — her ram-like features evoke ancient legends, yet no concrete link has been established.
+The Fandom's character summary identifies a "fascinating duality": the fastidiously ordered professional by day, the nearly elemental force for justice at night. The character stories reveal it is less a duality than a single person whose governing commitments happen to manifest differently in different contexts. The order and punctuality are tools; so are the brass knuckles. The goal in both cases is the same: make the problem go away, make things better for the people she cares about, get home in time for pizza and Nectarwine at Margherita's before they close.
 
 ## Zani — Character/Appearance Design
-Zani's design embodies the duality of her character: the disciplined professional by day and the fierce vigilante by night.
 
-**Physical Features:**
-- Tall woman with pale skin
-- White hair worn loose
-- Dark red eyes with **slitted pupils** (predatory, non-human)
-- Distinct beauty mark under her right eye
-- **Dark eyebags** — visible signs of chronic sleep deprivation and insomnia
-- Black, curved ram-like horns
-- Slim tail with pointed tip
+Zani's design is built around contrasts — formal Montelli professional on the outside, midnight vigilante underneath — expressed in an Italian banking aesthetic layered over a supernatural physicality that she treats with complete matter-of-factness.
 
-**Standard Work Outfit (Day Form):**
-- High-collared white button-up shirt with cuffed sleeves reaching past her elbows; golden buttons
-- Bright red tie worn atop the shirt
-- Black leather harness crossing above her chest, hooked over her right shoulder, clasped with a circular golden buckle
-- Frilled collar beneath the shirt collar
-- Black choker matching her harness
-- Radio pouch on her right bicep
-- Black armband around her left bicep bearing the **Montelli family sigil**
-- Tight black high-waist pants with golden zips on each leg ending mid-thigh
-- Golden key-shaped earrings with green gems
-- Black half-palm leather gloves
-- Red socks
-- Strapless black high heels with red soles
+- **Hair:** White; falls just past her shoulders; typically worn down; during Forte activation, the energy streams that flow from the horns and tail also manifest in the hair — bright, luminous, briefly spectacular, and then gone; she tucks it away and goes back to work
+- **Eyes:** Dark red with slitted pupils (post-Awakening mutation); a beauty mark sits under her right eye; pronounced dark circles — the kind earned over years of working late every single night without exception; she describes the dark circles in her self-introduction as *"proof of my hard work, a badge of honor for my dedication"* and then adds: *"Ha, if I keep saying that, I might actually start believing it myself"*
+- **Horns:** Black, ram-like; a permanent post-Awakening physical mutation; Averardo Bank employees know she has them; the general Ragunna public who see the Blazing Nightwalker only get fragmented eyewitness accounts about *"strange hairpins"* or hair whipping in the wind, which is part of why her identity has remained unknown for years
+- **Tail:** Slender, pointed tip; extends from her coccyx; visible in combat animations; occasionally swishes of its own accord when she's nervous (Story V: *"her tail swishing behind her without her even realizing it"*)
+- **Outfit — Work Attire:** High-collared white button-up shirt with cuffed sleeves and golden buttons; bright red tie; black leather harness above her chest, clasping over her right shoulder with a circular golden buckle; frilled collar beneath the shirt collar; black choker matching the harness; right bicep pouch containing a radio; black armband on the left bicep bearing the Montelli family sigil; tight black high-waist pants with golden zips ending mid-thigh; black half-palm leather gloves; red socks; black strapless high heels with red soles
+- **Accessories:** Golden key-shaped earrings with green gems — the key shape is symbolic; in the Italian Renaissance, keys of this type were used by monasteries that functioned as centers of wealth and power; Zani's key earrings read as access, management, and trusted custodianship; the Montelli family sigil on her armband marks her rank and affiliation; the large alarm clock (styled as an oversized pocket watch) is her constant companion
+- **Weapon Morph:** Zani's gauntlets visually transform in combat into a massive sword/shield combination — consistent with the description of her blocking stance (Standard Defense Protocol) and her combat animations; the weapon reads as both a precision instrument and a blunt force one simultaneously, matching her combat approach (technique and power, in that order)
+- **Glowing Scars:** The marks that appear during Forte activation are specifically identified as healed scar tissue from the assault that triggered her Awakening; the structure of the healed skin concentrates energy; the scars are functionally integrated into her combat physiology, making the origin event of her Awakening not just a biographical fact but a literal part of how she fights
 
-**Combat Outfit (Inferno Mode / Forte Activated):**
-When Zani activates her Forte and enters Inferno Mode, her outfit undergoes a dramatic transformation reflecting the unleashing of her stored kinetic energy:
-- **Ripped shirt** — sleeves end before her shoulders; low-cut V-shaped collar dipping halfway down her chest
-- **Torn back** — the back of her shirt is completely torn, exposing her **Tacet Mark** running diagonally across her back
-- Tie loosely wrapped around her right arm instead of worn properly
-- Two thin black bands on both biceps
-- **Black choker adorned with golden horizontal stripes** matching her horns and the golden scars appearing on her body
-- Lower half remains the same
-- **Horn vents glow bright yellow**
-- **Golden glowing scars** manifest across her upper body as visible energy conduits
+## Zani: Psychological Profile
 
-**Color Language:**
-White (professional order), red (justice and retribution), black (the shadows she operates in), gold (the divine fire she channels) — her palette directly translates the balance between her disciplined daily life and her explosive nighttime persona.
+**Order as Infrastructure**
+Zani's commitment to punctuality, routine, and efficiency is not a personality quirk — it is the infrastructure that makes everything else possible. The Montelli family involves immense wealth and hidden secrets where *"even a minute's delay could lead to catastrophic losses."* The after-hours vigilante work requires discipline so rigorous that criminals who have been handled by the Blazing Nightwalker turn up at the Chamber of Discipline *"without anyone ever knowing her identity."* The orderliness is the cover. It is also the reason she can function at all under the sustained load she carries: the Fandom notes that she carries *"a subtle exhaustion that she tends to express as insomnia."* The structures she maintains — the alarm clock, the personal memo, the timed segments, the two-month procedural mastery when she joined the bank — are what keeps the exhaustion from breaking her.
 
-**Design Notes:**
-Zani's constant accessory is a **folding chair** she carries with her, which she uses for quick breaks during her busy schedule. This seemingly mundane item is so iconic to her character that it appears in promotional materials and combat animations — a symbol of her practical, no-nonsense attitude even in the midst of chaos.
+**Dry Humor as Survival**
+Zani's self-description in the self-introduction voice line is: *"I am Zani. I work for the Montelli family. Hmm? Oh, that's not eyeshadow. It's proof of my hard work, a badge of honor for my dedication. Ha, if I keep saying that, I might actually start believing it myself."* The escalation from deflection to self-awareness delivered in the same flat tone is her most characteristic verbal signature. Her Hobby voice line: *"I love my job! Really. No joke. Was I smiling? No? Then you get the idea."* The humor is not cynical — she genuinely values what she does — but it is the humor of someone who has been at this for a very long time and has learned that laughing at the weight of it is more sustainable than either ignoring the weight or collapsing under it.
 
-## Zani — Psychological Profile
-Zani's psychology is defined by a carefully maintained duality that has shaped her entire existence:
+**Protective Instinct as Core Motivation**
+The third cherished item — the doll given to her by the child she rescued — is the document of what actually drives her. The rescue was not a heroic act in her framing; it was *"just part of her everyday routine, nothing to brag about or seek recognition for."* But when she squatted down in front of the frightened girl and saw in those eyes *"herself, her past self. The lonely Zani. The helpless Zani. The Zani who couldn't do anything"* — the toy she accepted was the acknowledgment that this particular motivation, whatever else it is, is personal. She keeps the doll *"as a quiet reminder of her past,"* which is also a quiet reminder of what she is still doing and why.
 
-**The Fastidious Professional (Day Persona)**
-Zani has cultivated a public image of steadfast devotion to routine and order over decades of service to the Montelli family. She clocks in on time without fail, manages tasks with methodical precision, and has held the "Best Employee" designation longer than she cares to count. Her penchant for order extends to her personal habits — she plans her meals meticulously, follows strict routines, and finds genuine enjoyment in her carefully structured moments of leisure.
+**The "Lost Spark" and the Cost of the Night Work**
+The Fandom's character summary notes, based on the character stories, that Zani is *"quite candid about the fact that this vigorous vigilante work 'changed her,' causing a 'lost spark' and a crushing exhaustion."* The third character story (Night's Solitary Path) shows her alone in a dark alley with a knife wound in her shoulder, having already lost count of how many injuries she has taken in the past several months, thinking with complete practicality about whether she has time to rescue the girl before the Chamber of Discipline arrives. The practicality is not indifference — the moment of recognition in the girl's eyes is what breaks through it. But the person making those practical calculations has been doing this for years, alone, without acknowledgment, without anyone knowing who she is, and the toll is in the dark circles under her eyes and the dreams that are now just unfinished task-lists.
 
-Yet beneath this professional veneer lies a **dry, matter-of-fact weariness**. She views her work as inevitable if not always welcome, looking at inefficiency or busywork with practical disdain. Her exhaustion is not cynicism but realism — she knows exactly what she's doing and why, and she's accepted that this is simply who she is now.
+**Belonging Without Performance**
+Zani's Ideals voice line: *"I grew up in Ragunna, and I know every corner of this city like the back of my hand... I hope this quiet life never ends. I hope everyone finds their place. For me, that would be enough."* The yearning is for the ordinary texture of daily city life — the sea breeze, the familiar faces, the pizza smell from Margherita's — not for recognition or advancement or victory over corruption. The fighting is what she does to protect that texture. The texture itself is what she is protecting it for.
 
-**The Blazing Nightwalker (Night Persona)**
-Zani's secret history as the "Blazing Nightwalker" reveals a deep-seated sense of justice beyond the law. Years ago, during the chaos following the second Dark Tide and the Carnevale incident, Ragunna descended into lawlessness. When established channels proved useless, Zani took matters into her own hands, dismantling the reigning criminal syndicate single-handedly.
+## Zani: Relationships
 
-Her motives were never narcissistic or fueled by fame — in fact, she finds her heroic moniker "ridiculous" and actively avoids the limelight. This is a **pragmatic choice**: fame targets you, and being targeted interferes with the work. She hunted down gang leaders, delivered them to prison, and restored order through sheer force of will.
+**Carlotta (Employer — Head of the Montelli Family)**
+Zani's loyalty to Carlotta is specifically personal rather than institutional: *"Her vision has never been limited to Ragunna, or even Rinascita. Hers was about the world beyond the sea horizon. I don't know what kind of future she sees, but I'll stand by her until the day her vision becomes reality."* The phrasing — *"I don't know what kind of future she sees"* — is the tell; she has chosen loyalty that precedes full understanding, which is the deepest form of the commitment. In game narrative context, Zani serves as a guide and initial contact for Rover during the Rinascita main quest, operating under Carlotta's direction to receive and assist the player.
 
-**The Weight of the Past**
-This vigilante work fundamentally **"changed her,"** causing what she describes as a "lost spark" and crushing exhaustion that manifests as chronic insomnia. She is candid about this cost when directly asked, but not forthcoming otherwise. The dark eyebags are not aesthetic — they are the visible toll of years spent fighting in the shadows.
+**Alberto Montelli (Superior — Averardo Bank)**
+The manager who issues assignments and vacation approvals; Story V opens with Zani mentally replaying Alberto's speech (*"To us Montellis, the Carnevale is both an opportunity and a challenge"*) and finding it hollow — she works for the Bank because they pay her, not out of ideological alignment with the family's stated mission. The relationship is functional: Alberto has authority over her schedule, and the promised paid vacation after the Rover assignment is a concrete incentive that motivates her specific investment in Story V's events.
 
-Despite this personal cost, her internal drive to protect the innocent remains **steadfast**. Her mental strength is remarkable; she channels stress into what others might call "positive outlets" (her night work), though she herself would describe it more pragmatically as "voluntary work after hours."
+**Margherita (Friend — Trattoria Margherita owner)**
+The late-night pizza stop; the person Zani says *ciao* to after midnight who has learned to turn around and find an empty seat. Margherita represents the ordinary civilian texture of Ragunna that Zani is protecting: someone who knows Zani's order by heart (Nectarwine, potato wedges, extra gemberry jam and black pepper), who notices when she hasn't been in for a while, and who never sees her leave. The warmth of the relationship is understated and consistent — Zani recommends Trattoria Margherita to Rover as her go-to restaurant and nominates *"a slice of pizza freshly baked by Signorina Margherita after a long day at work"* as her favorite food.
 
-**Analytical Mind and Dry Wit**
-Zani is defined by her powers of observation, analytical nature, and quick wit. She reads situations with terrifying speed, connects seemingly unrelated clues, and acts decisively. Her dry sarcasm and understated humor are favorite devices — both defense mechanisms and her preferred mode of communication.
+**The Rescued Girl (Unnamed — Chapter Child)**
+The child rescued in Story IV (Night's Solitary Path) who gives Zani a toy as thanks. Zani accepts it, ruffles the girl's hair, says *"I'll take good care of it"* — and keeps the doll, not as a trophy but as a *"quiet reminder of her past."* The encounter is one of the very few places in the available stories where the text breaks Zani's practiced composure and shows the interior directly: she looks into the girl's eyes, sees herself, and allows the recognition to be named.
 
-Example from her voicelines: *"My past? Nothing worth mentioning, really. I clock in, do my work, clock out—then do it all over again."* — This is technically true and completely misleading, which is exactly how she prefers it.
+**Phoebe (Colleague/Associate)**
+Zani's assessment of Phoebe is specific and respectful: *"Many Acolytes would call this heresy, but not Phoebe. That's what makes her unique. She would never dismiss another's beliefs or efforts just because they do not align with her own."* The observation is about Phoebe's tolerance and epistemic openness — qualities Zani values precisely because they are not universal in the Chamber of Discipline. In gameplay, Phoebe is Zani's primary optimal teammate via the Confession mode Outro (100% Spectro Frazzle DMG Amplification), making the relationship both narrative and mechanical.
 
-**Loyalty and Moral Compass**
-Zani is fiercely loyal to those she trusts, always putting the Montellis' interests first. But this loyalty is **balanced by a strong moral compass**; she doesn't shy away from navigating dangerous political waters or taking on corruption when it obstructs justice. She values integrity and open-mindedness even in members of opposing factions, willing to form alliances when common goals align.
-
-**Quiet Compassion**
-Not overtly emotional, Zani possesses a strong, if unassuming, sense of compassion. She keeps a small cherished doll — a gift from one of the children she rescued — as a quiet reminder of why she fights. She has a protective instinct for others, particularly those close to her, constantly advising them to rest and not overwork themselves (advice she herself never follows).
-
-**The Dream of Peace**
-Zani dreams of a peaceful, secure Ragunna where every individual can find their niche — a dream inextricably tied to her sense of belonging to her hometown. Her fondest wish is for a world peaceful enough that she can finally **"sleep through the night,"** undisturbed by the constant fight for justice.
-
-**The Rover's Impact**
-The Rover's arrival brings what Zani describes as a "burst of color" into her otherwise highly regulated life. She recognizes the Rover's unique capacity for positive change, even admitting that their presence might render her own vigilante function "increasingly irrelevant" — **a development she welcomes**, as it brings her one step closer to the quiet life she secretly desires.
-
-## Zani Relationships
+**Ciaccona (Acquaintance — Bard)**
+Zani has seen her perform outside the city several times. The voice line recounts asking Ciaccona whether the age of heroes had ended: *"She answered that as long as there is suffering, someone will rise up to be the new hero."* The question Zani asked — and the fact that she asked it — is a quiet self-portrait: someone doing heroic work in secret, in the dark, wondering whether the category is still real. Ciaccona's answer is the one that lands.
 
 **Rover (Protagonist)**
-The Rover represents something Zani has rarely encountered: a catalyst for lasting positive change rather than just temporary order. She was tasked by the Montelli family to protect the Rover during the Carnevale, initially approaching this as just another assignment. However, she quickly recognized their unique capacity to bring about systemic improvement rather than the band-aid solutions she's been applying for years.
+The fifth character story is the moment of Rover's arrival — Zani thinking through her itinerary obsessively, her tail swishing with involuntary nervousness, and then spotting Rover through the bank gate. Her Thoughts V voice line is the most open declaration available: *"But then you came along, just as I'd grown numb to this way of living. Like the Carnevale itself, you brought a burst of color into my life."* The framing is deliberate — the Carnevale is Ragunna's festival of masks and joy and temporary transformation; Rover's appearance in her life functions the same way.
 
-Zani's attitude toward the Rover is pragmatic but genuinely hopeful. She sees them as someone who might make her own vigilante work obsolete — and she views this as a good thing. It would mean Ragunna has finally achieved the lasting peace she's been fighting for, allowing her to finally rest.
+## Zani: Sources
 
-**The Montelli Family**
-Zani's decades-long association with the Montellis is multifaceted. Joining them was a **tactical decision** — they provided structure, resources, and legitimacy that helped her continue her mission of maintaining order while also giving her cover to "tidy up" the residual chaos from her own nighttime activities.
-
-She is fiercely loyal to the family, but this loyalty exists alongside her independent moral framework. She will navigate dangerous political waters for them, but always within boundaries defined by her own sense of justice.
-
-**Alberto (Montelli Family Member)**
-Referenced in her character stories; assigns her the Rover protection task with the line: *"To us Montellis, the Carnevale is both an opportunity and a challenge. For Ragunna's future, we all must play our part."* Zani found these words hollow — she's not an actor playing a part; she works because they pay her. Yet she still executes assignments with her characteristic excellence.
-
-**Phoebe (Combat Synergy Partner)**
-In combat context, Phoebe is Zani's most significant teammate. Phoebe's ability to apply Spectro Frazzle enables Zani to access her full damage potential. While the relationship is primarily functional (optimal combat synergy), there's a growing fan interpretation (ship name "Zaphi") that sees their contrasting worldviews — Zani's pragmatic vigilante vs. Phoebe's devout faith — as complementary.
-
-**Margherita (Late-Night Food Vendor)**
-A regular connection point in Zani's nightly routine. Margherita runs a late-night food shop and knows Zani as "a regular" who shows up past midnight, exhausted, ordering "the usual" (Nectarwine, potato wedges, extra gemberry jam and black pepper). Margherita has learned to recognize the lifeless tone of Zani's voice — the sound of someone whose spirit has gone elsewhere, leaving only a weary shell.
-
-**The Children She Rescued**
-Though never named in detail, the children Zani saved during her vigilante years represent her core motivation. One gave her a small cherished doll, which she keeps as a personal reminder of why she continues fighting. These children symbolize the innocent she protects and the peaceful future she wants for Ragunna.
-
-**The Criminals She Hunted**
-Talos and his Black Alley gang, the "Plushie Slaughterer," and the unnamed criminal syndicate she dismantled — these represent the chaos she spent years fighting. She never killed any of them (contrary to urban legends), always delivering them to the proper authorities instead. Her restraint was not mercy but adherence to her principles: justice, not vengeance.
-
----
-
-## Sources
-- Wuthering Waves Fandom Wiki — Zani: https://wutheringwaves.fandom.com/wiki/Zani
-- Wuthering Waves Fandom Wiki — Zani/Backstory: https://wutheringwaves.fandom.com/wiki/Zani/Backstory
-- wuthering.gg Zani Character Page: https://wuthering.gg/characters/zani
-- Pocket Tactics — Who is Zani: https://www.pockettactics.com/wuthering-waves/zani
-- India Today Gaming — Who is Zani in Wuthering Waves: https://www.indiatodaygaming.com/news/story/who-is-zani-in-wuthering-waves-6022
-- Shipping Wiki — Zaphi (Zani x Phoebe): https://shipping.fandom.com/wiki/Zaphi
-- TV Tropes — Wuthering Waves Characters: https://tvtropes.org/pmwiki/pmwiki.php/Characters/WutheringWaves
-- Behind the Voice Actors — Zani VA: (verify official credits)
+- Wuthering Waves Fandom Wiki — Zani main page: https://wutheringwaves.fandom.com/wiki/Zani
+- Wuthering Waves Fandom Wiki — Zani Backstory (character overview, appearance, archive): https://wutheringwaves.fandom.com/wiki/Zani/Backstory
+- Genshin-Builds (WuWa section) — Zani full story, voice lines, Forte Examination Report, Cherished Items: https://genshin-builds.com/en/wuthering-waves/characters/zani/info
+- Wuthering.gg — Zani Forte Examination Report, kit data: https://wuthering.gg/characters/zani
+- Pocket Tactics — Zani element, weapon, voice actors, overview: https://www.pockettactics.com/wuthering-waves/zani
+- Sportskeeda — Zani element, weapon type, release version: https://www.sportskeeda.com/esports/news-wuthering-waves-wuwa-zani-s-attribute-weapon-type-revealed
+- Wuthering Waves Fandom Wiki — Zani Voicelines: https://wutheringwaves.fandom.com/wiki/Zani/Voicelines
