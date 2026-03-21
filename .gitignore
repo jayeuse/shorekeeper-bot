@@ -2,30 +2,62 @@
 .venv/
 venv/
 env/
-# Knowledge Files
-/old_data
-/knowledge_backups
+lib/
+lib64/
+bin/
+include/
+share/
 
-# todo list
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Cache and Testing
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+nosetests.log
+coverage.xml
+*.cover
+.hypothesis/
+.tox/
+.nox/
+
+# Knowledge and Project Files
+old_data/
+knowledge_backups/
 .todo/
-
-# claude configuration
 .claude/
+CLAUDE_BACKUP.md
 CLAUDE.md/
 /CLAUDE.md
 
 # Environment variables / secrets
 .env
-.env.local
-.env.production
-
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.egg-info/
-dist/
-build/
+.env.*
+!.env.example
 
 # IDE / Editor
 .vscode/
@@ -33,13 +65,30 @@ build/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 # Logs
 *.log
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Data (ChromaDB)
+# Data and Databases
 data/
+*.sqlite
+*.db
+*.db-journal
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
