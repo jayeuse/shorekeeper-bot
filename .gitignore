@@ -8,6 +8,9 @@ bin/
 include/
 share/
 
+# Agents
+.github/
+
 # Python
 __pycache__/
 *.py[cod]

@@ -46,4 +46,6 @@ dependencies = [
     "urllib3==2.6.3",
     "websockets==16.0",
     "yarl==1.23.0",
+    "fastapi==0.102.0",
+    "uvicorn[standard]==0.22.0",
 ]
