@@ -88,7 +88,7 @@ async def on_message(bot, msg):
         if context_text:
             messages.append({
                 "role": "system",
-                "content": f"Here is relevant knowledge to inform your response:\n\n{context_text}"
+                "content": f"Here is relevant knowledge to ground your response:\n\n{context_text}"
             })
 
         store_chat(str(msg.guild.id), str(msg.channel.id), msg.content, "user") #save conversation history

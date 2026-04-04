@@ -20,6 +20,12 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 STORE_PATH = os.path.join(DATA_DIR, "vectors.json")
 EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings")  # np.savez_compressed appends .npz
 
+# Trigger entity rescue when top semantic+keyword score is weak, or when top chunks
+# do not mention the named entity requested by the user.
+ENTITY_RESCUE_SCORE_THRESHOLD = 0.62
+ENTITY_RESCUE_BOOST_WEIGHT = 0.45
+ENTITY_RESCUE_TOP_SCAN = 3
+
 
 def _extract_label(source):
     """Extract a human-readable label from the source path.
@@ -210,7 +216,7 @@ class RAG:
         print(f"📚 Loaded {len(self.chunks)} chunks from existing knowledge base")
         return True
 
-    def search(self, query, top_k=8):
+    def search(self, query: str, top_k: int = 8) -> list[dict[str, Any]]:
         if not self.chunks:
             if not self.load():
                 return []
@@ -221,7 +227,7 @@ class RAG:
             w.strip("?!.,;:'\"") for w in query.lower().split()
         )
 
-        scored = []
+        scored: list[tuple[float, float, float, dict[str, Any]]] = []
         for chunk in self.chunks:
             if "embedding" not in chunk:
                 continue
@@ -241,6 +247,11 @@ class RAG:
 
         scored.sort(key=lambda x: x[0], reverse=True)
 
+        entity_candidates = self._extract_entity_candidates(query)
+        if self._should_run_entity_rescue(scored, entity_candidates, top_k):
+            scored = self._apply_entity_rescue(scored, entity_candidates)
+            scored.sort(key=lambda x: x[0], reverse=True)
+
         return [
             {
                 "text": chunk["text"],
@@ -251,6 +262,154 @@ class RAG:
             }
             for combined, _, _, chunk in scored[:top_k]
         ]
+
+    def _should_run_entity_rescue(
+        self,
+        scored: list[tuple[float, float, float, dict[str, Any]]],
+        entity_candidates: list[str],
+        top_k: int,
+    ) -> bool:
+        if not scored or not entity_candidates:
+            return False
+
+        top_score = scored[0][0]
+        if top_score < ENTITY_RESCUE_SCORE_THRESHOLD:
+            return True
+
+        scan_limit = max(1, min(top_k, ENTITY_RESCUE_TOP_SCAN, len(scored)))
+        top_chunks = [chunk for _, _, _, chunk in scored[:scan_limit]]
+        return not any(
+            self._chunk_mentions_entity(chunk, entity_candidates)
+            for chunk in top_chunks
+        )
+
+    def _apply_entity_rescue(
+        self,
+        scored: list[tuple[float, float, float, dict[str, Any]]],
+        entity_candidates: list[str],
+    ) -> list[tuple[float, float, float, dict[str, Any]]]:
+        rescued: list[tuple[float, float, float, dict[str, Any]]] = []
+        for combined, semantic_score, keyword_score, chunk in scored:
+            entity_score = self._entity_match_score(chunk, entity_candidates)
+            boosted = combined + (entity_score * ENTITY_RESCUE_BOOST_WEIGHT)
+            rescued.append((boosted, semantic_score, keyword_score, chunk))
+        return rescued
+
+    def _extract_entity_candidates(self, query: str) -> list[str]:
+        candidates: set[str] = set()
+        raw_query = query.strip()
+        lower_query = raw_query.lower()
+
+        identity_prefixes = (
+            "who is ",
+            "what is ",
+            "who was ",
+            "what was ",
+            "tell me about ",
+            "describe ",
+        )
+        for prefix in identity_prefixes:
+            if lower_query.startswith(prefix):
+                tail = raw_query[len(prefix):].strip(" ?!.,:;\"'")
+                if tail:
+                    candidates.add(tail)
+
+        quoted_patterns = re.findall(r'"([^"]+)"|\'([^\']+)\'', raw_query)
+        for double_quote, single_quote in quoted_patterns:
+            value = (double_quote or single_quote).strip()
+            if value:
+                candidates.add(value)
+
+        phrase_matches = re.findall(r"\b[A-Z][A-Za-z'-]*(?:\s+[A-Z][A-Za-z'-]*)*", raw_query)
+        capitalized_stopwords = {
+            "Who", "What", "When", "Where", "Why", "How", "Tell", "Describe",
+            "Explain", "The", "A", "An", "Is", "Are", "Was", "Were",
+        }
+        for phrase in phrase_matches:
+            words = [w for w in phrase.split() if w]
+            if not words:
+                continue
+            if all(word in capitalized_stopwords for word in words):
+                continue
+            if len(" ".join(words)) >= 3:
+                candidates.add(" ".join(words))
+
+        normalized = {
+            self._normalize_for_match(candidate)
+            for candidate in candidates
+            if candidate.strip()
+        }
+        return [candidate for candidate in normalized if candidate]
+
+    def _chunk_mentions_entity(self, chunk: dict[str, Any], entity_candidates: list[str]) -> bool:
+        heading = self._normalize_for_match(chunk.get("heading", ""))
+        source = self._normalize_for_match(chunk.get("source", ""))
+        label = self._normalize_for_match(chunk.get("label", ""))
+
+        metadata = chunk.get("metadata", {})
+        metadata_values = [
+            metadata.get("character", ""),
+            metadata.get("group", ""),
+            metadata.get("region", ""),
+        ]
+        tags = metadata.get("tags", [])
+        if isinstance(tags, list):
+            metadata_values.extend(tag for tag in tags if isinstance(tag, str))
+        metadata_blob = self._normalize_for_match(" ".join(str(v) for v in metadata_values if v))
+
+        for candidate in entity_candidates:
+            if candidate in heading or candidate in source or candidate in label or candidate in metadata_blob:
+                return True
+        return False
+
+    def _entity_match_score(self, chunk: dict[str, Any], entity_candidates: list[str]) -> float:
+        heading = self._normalize_for_match(chunk.get("heading", ""))
+        text = self._normalize_for_match(chunk.get("text", ""))
+        source = self._normalize_for_match(chunk.get("source", ""))
+        label = self._normalize_for_match(chunk.get("label", ""))
+
+        metadata = chunk.get("metadata", {})
+        metadata_values = [
+            metadata.get("character", ""),
+            metadata.get("group", ""),
+            metadata.get("region", ""),
+        ]
+        tags = metadata.get("tags", [])
+        if isinstance(tags, list):
+            metadata_values.extend(tag for tag in tags if isinstance(tag, str))
+        metadata_blob = self._normalize_for_match(" ".join(str(v) for v in metadata_values if v))
+
+        score = 0.0
+        for candidate in entity_candidates:
+            if candidate in heading:
+                score += 1.2
+                continue
+            if candidate in text:
+                score += 1.0
+                continue
+            if candidate in source or candidate in label:
+                score += 0.9
+                continue
+            if candidate in metadata_blob:
+                score += 0.8
+                continue
+
+            tokens = [t for t in candidate.split() if len(t) >= 3]
+            token_hits = 0
+            for token in tokens:
+                if token in heading or token in text or token in source or token in label or token in metadata_blob:
+                    token_hits += 1
+
+            if token_hits >= 2:
+                score += 0.6 + (0.1 * min(token_hits - 2, 2))
+            elif token_hits == 1:
+                score += 0.2
+
+        return min(score, 1.8)
+
+    def _normalize_for_match(self, value: str) -> str:
+        normalized = re.sub(r"[^a-z0-9]+", " ", value.lower())
+        return re.sub(r"\s+", " ", normalized).strip()
 
     def get_personalization_context(self):
         """Retrieve all chunks from the personalization directory (Cached)."""
@@ -342,7 +501,7 @@ class RAG:
         self.manifest_cache = "\n".join(lines)
         return self.manifest_cache
 
-    def _keyword_boost(self, query_words, chunk):
+    def _keyword_boost(self, query_words: set[str], chunk: dict[str, Any]) -> float:
         heading = chunk["heading"].lower()
         text = chunk["text"].lower()
         source = chunk["source"].lower()
