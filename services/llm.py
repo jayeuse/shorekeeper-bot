@@ -8,7 +8,7 @@ from google.genai import types
 
 import ollama
 
-from core.config import USE_ONLINE_MODEL, GOOGLE_GEMINI_API_KEY, ONLINE_MODEL, LOCAL_MODEL
+from core.config import LOCAL_CONTEXT_WINDOW, LOCAL_KV_CACHE_KEEP, USE_ONLINE_MODEL, GOOGLE_GEMINI_API_KEY, ONLINE_MODEL, LOCAL_MODEL, LOCAL_CONTEXT_WINDOW
 
 class LLMClient:
     def __init__(self):
@@ -20,6 +20,9 @@ class LLMClient:
         # Narrow config values to instance attributes for type checkers and runtime use
         assert LOCAL_MODEL is not None
         self.local_model: str = LOCAL_MODEL
+        self.local_context_window: int = LOCAL_CONTEXT_WINDOW
+        self.local_kv_cache_keep: int = LOCAL_KV_CACHE_KEEP
+
 
         if self.use_online:
             if not GOOGLE_GEMINI_API_KEY or not ONLINE_MODEL:
@@ -92,7 +95,13 @@ class LLMClient:
         # Preferred: coroutine function
         if inspect.iscoroutinefunction(chat_fn):
             try:
-                return await chat_fn(model=self.local_model, messages=messages, think=False)
+                return await chat_fn(model=self.local_model, 
+                                     messages=messages, 
+                                     think=False,
+                                     options={
+                                         "num_ctx": self.local_context_window,
+                                         "num_keep": self.local_kv_cache_keep,
+                                         })
             except Exception:
                 pass
 

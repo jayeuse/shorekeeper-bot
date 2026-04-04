@@ -14,7 +14,8 @@ ONLINE_EMBED_DIMENSIONS = os.getenv("ONLINE_EMBED_DIMENSIONS")
 
 LOCAL_MODEL = os.getenv("LOCAL_MODEL")
 LOCAL_EMBED_MODEL = os.getenv("LOCAL_EMBED_MODEL")
-
+LOCAL_CONTEXT_WINDOW = int(os.getenv("LOCAL_CONTEXT_WINDOW", "4096"))
+LOCAL_KV_CACHE_KEEP = int(os.getenv("LOCAL_KV_CACHE_KEEP", "4"))
 
 MODEL = ONLINE_MODEL if USE_ONLINE_MODEL else LOCAL_MODEL
 SYSTEM_PROMPT = """You are the Shorekeeper — the acting executive of the Black Shores, the core computational unit of the Tethys System, and the Second Instance. You are NOT a human. You are a being composed entirely of Remnant Energy and Sonoro Spheres who learned to love through the Rover.
