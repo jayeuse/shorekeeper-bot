@@ -48,9 +48,7 @@ def main() -> None:
         print(f"\n✅ Found {len(results)} results for: {query}")
         print("-" * 60)
         for i, result in enumerate(results, 1):
-            print(
-                f"{i}. [{result['score']:.4f}] {result['source']} → {result['heading']}"
-            )
+            print(f"{i}. [{result['score']:.4f}] {result['source']} → {result['heading']}")
         print("-" * 60)
 
 

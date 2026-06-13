@@ -34,16 +34,24 @@ class EmbedderClient:
 
         if self.provider in {"llamacpp", "openai"}:
             try:
-                api_key = EMBED_API_KEY if self.provider == "llamacpp" else (ONLINE_API_KEY or EMBED_API_KEY or "no-key")
+                api_key = (
+                    EMBED_API_KEY
+                    if self.provider == "llamacpp"
+                    else (ONLINE_API_KEY or EMBED_API_KEY or "no-key")
+                )
                 self.client = OpenAI(api_key=api_key or LOCAL_API_KEY, base_url=EMBED_BASE_URL)
-                print(f"🧠 Using OpenAI-compatible embedding endpoint: {self.model} ({EMBED_BASE_URL})")
+                print(
+                    f"🧠 Using OpenAI-compatible embedding endpoint: {self.model} ({EMBED_BASE_URL})"
+                )
             except Exception as e:
                 print(f"❌ Failed to init embedding server at {EMBED_BASE_URL}: {e}")
-                self.provider = 'ollama'
+                self.provider = "ollama"
 
-        if self.provider == 'ollama':
+        if self.provider == "ollama":
             if ollama is None:
-                raise RuntimeError("Ollama embedding provider selected but the ollama package is not installed.")
+                raise RuntimeError(
+                    "Ollama embedding provider selected but the ollama package is not installed."
+                )
             print(f"🖥️  Using local Ollama embeddings: {EMBED_MODEL}")
 
     def embed_document(self, text: str) -> list[float]:
@@ -58,7 +66,9 @@ class EmbedderClient:
 
     def _embed_ollama(self, text: str) -> list[float]:
         if ollama is None:
-            raise RuntimeError("Ollama embedding provider selected but the ollama package is not installed.")
+            raise RuntimeError(
+                "Ollama embedding provider selected but the ollama package is not installed."
+            )
         try:
             response = ollama.embed(model=EMBED_MODEL, input=text)
             return response["embeddings"][0]
@@ -71,11 +81,8 @@ class EmbedderClient:
             raise RuntimeError("Embedding client is not initialized.")
         try:
             # llama.cpp truncation safety: 8000 chars is roughly 2000 tokens
-            safe_text = text[:8000] 
-            response = self.client.embeddings.create(
-                model=self.model,
-                input=safe_text
-            )
+            safe_text = text[:8000]
+            response = self.client.embeddings.create(model=self.model, input=safe_text)
             return response.data[0].embedding
         except Exception as e:
             print(f"⚠️  Embedding Server Error: {e}")

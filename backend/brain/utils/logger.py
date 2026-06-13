@@ -25,9 +25,9 @@ def log_response(
     prompt_rate = prompt_tokens / prompt_dur if prompt_dur > 0 else 0
     eval_rate = eval_tokens / eval_dur if eval_dur > 0 else 0
 
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"📩 {msg.author} in #{msg.channel}")
-    print(f"📝 \"{user_content[:80]}{'...' if len(user_content) > 80 else ''}\"")
+    print(f'📝 "{user_content[:80]}{"..." if len(user_content) > 80 else ""}"')
     print(f"🤖 Model: {model}")
     print(f"🔍 Query: {query_type} (top_k={top_k})")
     print(f"⏱️  Total: {elapsed:.2f}s (RAG: {rag_duration:.2f}s, LLM: {llm_duration:.2f}s)")
@@ -38,4 +38,4 @@ def log_response(
     print(f"📊 Prompt: {prompt_tokens} tokens @ {prompt_rate:.1f} t/s")
     print(f"📊 Eval:   {eval_tokens} tokens @ {eval_rate:.1f} t/s")
     print(f"📏 Reply:  {len(reply_content)} chars")
-    print(f"{'='*50}")
+    print(f"{'=' * 50}")

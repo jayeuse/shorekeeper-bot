@@ -1,7 +1,8 @@
-import numpy as np
-from typing import Any, cast
-from pathlib import Path
 import sys
+from pathlib import Path
+from typing import Any, cast
+
+import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -55,7 +56,10 @@ def test_entity_rescue_prioritizes_text_mentions() -> None:
             heading='Phoebe Character Story II: "Home"',
             label="Phoebe Story",
             embedding=[0.20, 0.9798],
-            metadata={"character": "Phoebe", "tags": ["rinascita", "order_of_the_deep"]},
+            metadata={
+                "character": "Phoebe",
+                "tags": ["rinascita", "order_of_the_deep"],
+            },
         ),
     ]
 

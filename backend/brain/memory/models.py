@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import ClassVar
 
 from sqlalchemy import Index
@@ -23,4 +23,4 @@ class MemoryPair(SQLModel, table=True):
     user_message: str
     assistant_message: str
     topics: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), index=True)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC), index=True)

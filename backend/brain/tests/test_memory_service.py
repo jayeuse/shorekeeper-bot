@@ -1,30 +1,34 @@
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from services.memory import MemoryService
 
 
-def _build_service(tmp_path: Path) -> MemoryService:
-    return MemoryService(db_path=str(tmp_path / "memory_test.db"), recency_half_life_days=30.0)
+@pytest.fixture
+def memory_service(tmp_path: Path):
+    service = MemoryService(
+        db_path=str(tmp_path / "memory_test.db"),
+        recency_half_life_days=30.0,
+    )
+    yield service
+    service.close()
 
 
-def test_extract_topics_detects_expected_labels(tmp_path: Path) -> None:
-    service = _build_service(tmp_path)
-
-    topics = service.extract_topics("Tell me Camellya lore and skill rotation details")
+def test_extract_topics_detects_expected_labels(memory_service: MemoryService) -> None:
+    topics = memory_service.extract_topics("Tell me Camellya lore and skill rotation details")
 
     assert "character" in topics
     assert "lore" in topics
     assert "abilities" in topics
 
 
-def test_retrieve_relevant_prefers_user_scope(tmp_path: Path) -> None:
-    service = _build_service(tmp_path)
-
+def test_retrieve_relevant_prefers_user_scope(memory_service: MemoryService) -> None:
     # Same server, same channel, same user -> user scope.
-    service.store_exchange(
+    memory_service.store_exchange(
         server_id="s1",
         channel_id="c1",
         user_id="u1",
@@ -33,7 +37,7 @@ def test_retrieve_relevant_prefers_user_scope(tmp_path: Path) -> None:
     )
 
     # Same server and channel, different user -> channel scope.
-    service.store_exchange(
+    memory_service.store_exchange(
         server_id="s1",
         channel_id="c1",
         user_id="u2",
@@ -42,7 +46,7 @@ def test_retrieve_relevant_prefers_user_scope(tmp_path: Path) -> None:
     )
 
     # Same server, different channel and user -> server scope.
-    service.store_exchange(
+    memory_service.store_exchange(
         server_id="s1",
         channel_id="c2",
         user_id="u3",
@@ -50,7 +54,7 @@ def test_retrieve_relevant_prefers_user_scope(tmp_path: Path) -> None:
         assistant_message="Older records mention her and Phoebe.",
     )
 
-    results = service.retrieve_relevant(
+    results = memory_service.retrieve_relevant(
         query="Who is Sister Isabella?",
         server_id="s1",
         channel_id="c1",
@@ -65,9 +69,10 @@ def test_retrieve_relevant_prefers_user_scope(tmp_path: Path) -> None:
     assert {record.scope for record in results} == {"user", "channel", "server"}
 
 
-def test_retrieve_relevant_with_metrics_respects_threshold(tmp_path: Path) -> None:
-    service = _build_service(tmp_path)
-    service.store_exchange(
+def test_retrieve_relevant_with_metrics_respects_threshold(
+    memory_service: MemoryService,
+) -> None:
+    memory_service.store_exchange(
         server_id="s1",
         channel_id="c1",
         user_id="u1",
@@ -75,7 +80,7 @@ def test_retrieve_relevant_with_metrics_respects_threshold(tmp_path: Path) -> No
         assistant_message="Hello. The tides are calm.",
     )
 
-    results, scanned_count = service.retrieve_relevant_with_metrics(
+    results, scanned_count = memory_service.retrieve_relevant_with_metrics(
         query="Tell me Camellya ability rotation details",
         server_id="s1",
         channel_id="c1",

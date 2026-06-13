@@ -5,7 +5,6 @@ Run after adding frontmatter to markdown files.
 """
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -17,13 +16,14 @@ from services.rag import parse_frontmatter
 VECTORS_PATH = Path(__file__).parent.parent / "data" / "vectors.json"
 KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
 
+
 def update_vectors_with_metadata():
     if not VECTORS_PATH.exists():
         print(f"❌ {VECTORS_PATH} not found.")
         return False
 
     print(f"📖 Loading existing vectors from {VECTORS_PATH}...")
-    with open(VECTORS_PATH, "r", encoding="utf-8") as f:
+    with open(VECTORS_PATH, encoding="utf-8") as f:
         chunks = json.load(f)
 
     print(f"🔍 Processing {len(chunks)} chunks...")
@@ -47,7 +47,7 @@ def update_vectors_with_metadata():
 
         # Read file and parse frontmatter
         try:
-            with open(source_path, "r", encoding="utf-8") as f:
+            with open(source_path, encoding="utf-8") as f:
                 content = f.read()
         except Exception as e:
             print(f"⚠️  Failed to read {source_path}: {e}")
@@ -66,7 +66,7 @@ def update_vectors_with_metadata():
         updated += 1
 
         if (i + 1) % 100 == 0:
-            print(f"  Processed {i+1} chunks...")
+            print(f"  Processed {i + 1} chunks...")
 
     if updated > 0:
         # Write updated vectors (minified — no indent, no embeddings stored inline)

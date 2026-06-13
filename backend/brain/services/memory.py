@@ -1,11 +1,10 @@
 import math
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from memory.models import MemoryPair
 from memory.repository import MemoryRepository
-
 
 _WORD_RE = re.compile(r"[a-zA-Z0-9_]+")
 
@@ -88,6 +87,9 @@ class MemoryService:
         self.repository = MemoryRepository(db_path=db_path)
         self.recency_half_life_days = recency_half_life_days
 
+    def close(self) -> None:
+        self.repository.close()
+
     def store_exchange(
         self,
         server_id: str,
@@ -96,7 +98,7 @@ class MemoryService:
         user_message: str,
         assistant_message: str,
     ) -> int:
-        created_at = datetime.now(timezone.utc)
+        created_at = datetime.now(UTC)
         topics = self.extract_topics(f"{user_message}\n{assistant_message}")
         topics_str = ",".join(topics)
         return self.repository.store_exchange(
@@ -256,9 +258,9 @@ class MemoryService:
     def _recency_score(self, created_at: datetime) -> float:
         created = created_at
         if created.tzinfo is None:
-            created = created.replace(tzinfo=timezone.utc)
+            created = created.replace(tzinfo=UTC)
 
-        delta = datetime.now(timezone.utc) - created
+        delta = datetime.now(UTC) - created
         age_days = max(0.0, delta.total_seconds() / 86400.0)
         if self.recency_half_life_days <= 0:
             return 1.0

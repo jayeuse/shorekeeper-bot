@@ -1,15 +1,17 @@
+import json
 import os
 import re
-import json
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
 
 try:
     from yaml import safe_load  # type: ignore
+
     YAML_AVAILABLE = True
 except Exception:
-    safe_load: Optional[Callable[[str], Any]] = None
+    safe_load: Callable[[str], Any] | None = None
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
@@ -25,6 +27,7 @@ EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings")  # np.savez_compressed ap
 ENTITY_RESCUE_SCORE_THRESHOLD = 0.62
 ENTITY_RESCUE_BOOST_WEIGHT = 0.45
 ENTITY_RESCUE_TOP_SCAN = 3
+NON_KNOWLEDGE_MARKDOWN = {"AGENTS.md", "FORMAT_GUIDE.md"}
 
 
 def _extract_label(source):
@@ -67,7 +70,7 @@ def parse_frontmatter(content):
         return {}, content
 
     frontmatter_text = content[4:end_delim]  # Between first and second delimiters
-    remaining = content[end_delim + 5:]  # After "\n---\n"
+    remaining = content[end_delim + 5 :]  # After "\n---\n"
 
     # Ensure the imported safe_load is available for type checkers
     assert safe_load is not None
@@ -87,13 +90,13 @@ def load_knowledge():
         dirs[:] = [d for d in dirs if d != "references" and not d.startswith(".")]
 
         for file in sorted(files):
-            if not file.endswith(".md") or file == "FORMAT_GUIDE.md":
+            if not file.endswith(".md") or file in NON_KNOWLEDGE_MARKDOWN:
                 continue
 
             filepath = os.path.join(root, file)
             rel_path = os.path.relpath(filepath, KNOWLEDGE_DIR)
 
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 content = f.read()
 
             metadata, remaining_content = parse_frontmatter(content)
@@ -115,8 +118,11 @@ def chunk_by_heading(text, source="", metadata=None):
         if not section or section.startswith("<!--"):
             continue
 
-        lines = [line for line in section.split("\n")
-                 if not line.strip().startswith("<!--") and not line.strip().endswith("-->")]
+        lines = [
+            line
+            for line in section.split("\n")
+            if not line.strip().startswith("<!--") and not line.strip().endswith("-->")
+        ]
         cleaned = "\n".join(lines).strip()
 
         if len(cleaned) < 20:
@@ -125,14 +131,16 @@ def chunk_by_heading(text, source="", metadata=None):
         heading_match = re.match(r"^## (.+)", cleaned)
         heading = heading_match.group(1) if heading_match else "General"
 
-        chunks.append({
-            "id": f"{source}::{heading}".replace(" ", "_").lower(),
-            "text": cleaned,
-            "source": source,
-            "heading": heading,
-            "label": label,
-            "metadata": metadata,
-        })
+        chunks.append(
+            {
+                "id": f"{source}::{heading}".replace(" ", "_").lower(),
+                "text": cleaned,
+                "source": source,
+                "heading": heading,
+                "label": label,
+                "metadata": metadata,
+            }
+        )
 
     return chunks
 
@@ -171,22 +179,26 @@ class RAG:
         for i, chunk in enumerate(self.chunks):
             if i % 100 == 0:
                 print(f"   Progress: {i}/{len(self.chunks)}...")
-            
+
             doc_text = f"[{chunk['label']}] {chunk['heading']}. {chunk['text']}"
             vector = self.embedder.embed_document(doc_text)
-            
+
             if not vector:
                 failed_count += 1
                 # If it's a massive failure, stop early
                 if failed_count > 50:
-                    raise Exception("Too many embedding failures. Check your server connection/batch size.")
+                    raise Exception(
+                        "Too many embedding failures. Check your server connection/batch size."
+                    )
                 # Use a zero vector as fallback (will have 0 similarity)
-                vector = [0.0] * 768 # Default size for nomic-embed-text
-            
+                vector = [0.0] * 768  # Default size for nomic-embed-text
+
             embeddings.append(vector)
 
         if failed_count > 0:
-            print(f"⚠️  Warning: {failed_count} chunks failed to embed. They will be ignored in semantic search.")
+            print(
+                f"⚠️  Warning: {failed_count} chunks failed to embed. They will be ignored in semantic search."
+            )
 
         # Store embeddings as float16 binary (major size reduction)
         embedding_matrix = np.array(embeddings, dtype=np.float16)
@@ -196,8 +208,7 @@ class RAG:
 
         # Store metadata-only chunks as minified JSON (no embeddings)
         chunks_for_storage = [
-            {k: v for k, v in chunk.items() if k != "embedding"}
-            for chunk in self.chunks
+            {k: v for k, v in chunk.items() if k != "embedding"} for chunk in self.chunks
         ]
         with open(STORE_PATH, "w", encoding="utf-8") as f:
             json.dump(chunks_for_storage, f)
@@ -215,7 +226,7 @@ class RAG:
         if not os.path.exists(STORE_PATH):
             return False
 
-        with open(STORE_PATH, "r", encoding="utf-8") as f:
+        with open(STORE_PATH, encoding="utf-8") as f:
             self.chunks = json.load(f)
 
         # Load binary embeddings if present, fall back gracefully
@@ -246,9 +257,7 @@ class RAG:
         query_embedding = self.embedder.embed_query(query)
         # We continue even if query_embedding is empty by using keyword-only search
 
-        query_words = set(
-            w.strip("?!.,;:'\"") for w in query.lower().split()
-        )
+        query_words = set(w.strip("?!.,;:'\"") for w in query.lower().split())
 
         scored: list[tuple[float, float, float, dict[str, Any]]] = []
         for chunk in self.chunks:
@@ -302,8 +311,7 @@ class RAG:
         scan_limit = max(1, min(top_k, ENTITY_RESCUE_TOP_SCAN, len(scored)))
         top_chunks = [chunk for _, _, _, chunk in scored[:scan_limit]]
         return not any(
-            self._chunk_mentions_entity(chunk, entity_candidates)
-            for chunk in top_chunks
+            self._chunk_mentions_entity(chunk, entity_candidates) for chunk in top_chunks
         )
 
     def _apply_entity_rescue(
@@ -333,7 +341,7 @@ class RAG:
         )
         for prefix in identity_prefixes:
             if lower_query.startswith(prefix):
-                tail = raw_query[len(prefix):].strip(" ?!.,:;\"'")
+                tail = raw_query[len(prefix) :].strip(" ?!.,:;\"'")
                 if tail:
                     candidates.add(tail)
 
@@ -345,8 +353,22 @@ class RAG:
 
         phrase_matches = re.findall(r"\b[A-Z][A-Za-z'-]*(?:\s+[A-Z][A-Za-z'-]*)*", raw_query)
         capitalized_stopwords = {
-            "Who", "What", "When", "Where", "Why", "How", "Tell", "Describe",
-            "Explain", "The", "A", "An", "Is", "Are", "Was", "Were",
+            "Who",
+            "What",
+            "When",
+            "Where",
+            "Why",
+            "How",
+            "Tell",
+            "Describe",
+            "Explain",
+            "The",
+            "A",
+            "An",
+            "Is",
+            "Are",
+            "Was",
+            "Were",
         }
         for phrase in phrase_matches:
             words = [w for w in phrase.split() if w]
@@ -358,9 +380,7 @@ class RAG:
                 candidates.add(" ".join(words))
 
         normalized = {
-            self._normalize_for_match(candidate)
-            for candidate in candidates
-            if candidate.strip()
+            self._normalize_for_match(candidate) for candidate in candidates if candidate.strip()
         }
         return [candidate for candidate in normalized if candidate]
 
@@ -381,7 +401,12 @@ class RAG:
         metadata_blob = self._normalize_for_match(" ".join(str(v) for v in metadata_values if v))
 
         for candidate in entity_candidates:
-            if candidate in heading or candidate in source or candidate in label or candidate in metadata_blob:
+            if (
+                candidate in heading
+                or candidate in source
+                or candidate in label
+                or candidate in metadata_blob
+            ):
                 return True
         return False
 
@@ -420,7 +445,13 @@ class RAG:
             tokens = [t for t in candidate.split() if len(t) >= 3]
             token_hits = 0
             for token in tokens:
-                if token in heading or token in text or token in source or token in label or token in metadata_blob:
+                if (
+                    token in heading
+                    or token in text
+                    or token in source
+                    or token in label
+                    or token in metadata_blob
+                ):
                     token_hits += 1
 
             if token_hits >= 2:
@@ -444,10 +475,7 @@ class RAG:
                 return ""
 
         # Filter for personalization files
-        persona_chunks = [
-            c for c in self.chunks
-            if "personalization" in c["source"]
-        ]
+        persona_chunks = [c for c in self.chunks if "personalization" in c["source"]]
 
         # Sort by source filename to ensure consistent order
         persona_chunks.sort(key=lambda x: x["source"])
@@ -492,7 +520,6 @@ class RAG:
                     characters[group].append(char)
 
             elif parts[0] == "lore":
-                doc_type = metadata.get("document_type", "")
                 region = metadata.get("region", "")
                 label = chunk.get("label", source.replace("_", " ").title())
                 entry = region if region else label
@@ -505,7 +532,9 @@ class RAG:
                     other_topics.append(label)
 
         lines = ["=== KNOWLEDGE MANIFEST ==="]
-        lines.append("The following is a precise list of what is stored in your knowledge base. Reference ONLY these entries when asked what you know.\n")
+        lines.append(
+            "The following is a precise list of what is stored in your knowledge base. Reference ONLY these entries when asked what you know.\n"
+        )
 
         if characters:
             lines.append("Characters:")
@@ -532,14 +561,55 @@ class RAG:
         metadata = chunk.get("metadata", {})
 
         stopwords = {
-            "what", "who", "how", "why", "when", "where", "which",
-            "are", "is", "was", "were", "been", "being",
-            "the", "and", "for", "that", "this", "with", "from",
-            "you", "your", "her", "his", "she", "they", "our",
-            "can", "could", "would", "should", "will", "have", "has",
-            "about", "tell", "think", "know", "like", "does", "did",
-            "not", "but", "all", "some", "any", "more",
-            "work", "me",
+            "what",
+            "who",
+            "how",
+            "why",
+            "when",
+            "where",
+            "which",
+            "are",
+            "is",
+            "was",
+            "were",
+            "been",
+            "being",
+            "the",
+            "and",
+            "for",
+            "that",
+            "this",
+            "with",
+            "from",
+            "you",
+            "your",
+            "her",
+            "his",
+            "she",
+            "they",
+            "our",
+            "can",
+            "could",
+            "would",
+            "should",
+            "will",
+            "have",
+            "has",
+            "about",
+            "tell",
+            "think",
+            "know",
+            "like",
+            "does",
+            "did",
+            "not",
+            "but",
+            "all",
+            "some",
+            "any",
+            "more",
+            "work",
+            "me",
         }
 
         score = 0.0

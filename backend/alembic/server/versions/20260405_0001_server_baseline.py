@@ -5,14 +5,13 @@ Revises:
 Create Date: 2026-04-05 00:00:00
 """
 
-from typing import Sequence, Union
-
+from collections.abc import Sequence
 
 # revision identifiers, used by Alembic.
 revision: str = "20260405_0001_server"
-down_revision: Union[str, None] = None
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | None = None
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

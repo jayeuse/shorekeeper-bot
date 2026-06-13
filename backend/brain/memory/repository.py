@@ -1,17 +1,19 @@
-from datetime import datetime, timezone
-
-from sqlalchemy import func
-from sqlmodel import Session, col, select
+from datetime import UTC, datetime
 
 from memory.database import create_memory_engine
 from memory.migrations import upgrade_memory_database
 from memory.models import MemoryPair
+from sqlalchemy import func
+from sqlmodel import Session, col, select
 
 
 class MemoryRepository:
     def __init__(self, db_path: str) -> None:
         upgrade_memory_database(db_path)
         self.engine = create_memory_engine(db_path)
+
+    def close(self) -> None:
+        self.engine.dispose()
 
     def store_exchange(
         self,
@@ -23,7 +25,7 @@ class MemoryRepository:
         topics: str,
         created_at: datetime | None = None,
     ) -> int:
-        timestamp = created_at or datetime.now(timezone.utc)
+        timestamp = created_at or datetime.now(UTC)
         with Session(self.engine) as session:
             pair = MemoryPair(
                 server_id=server_id,
@@ -95,13 +97,19 @@ class MemoryRepository:
     def get_stats(self, server_id: str) -> dict[str, int]:
         with Session(self.engine) as session:
             total = session.exec(
-                select(func.count()).select_from(MemoryPair).where(MemoryPair.server_id == server_id)
+                select(func.count())
+                .select_from(MemoryPair)
+                .where(MemoryPair.server_id == server_id)
             ).one()
             users = session.exec(
-                select(func.count(func.distinct(MemoryPair.user_id))).where(MemoryPair.server_id == server_id)
+                select(func.count(func.distinct(MemoryPair.user_id))).where(
+                    MemoryPair.server_id == server_id
+                )
             ).one()
             channels = session.exec(
-                select(func.count(func.distinct(MemoryPair.channel_id))).where(MemoryPair.server_id == server_id)
+                select(func.count(func.distinct(MemoryPair.channel_id))).where(
+                    MemoryPair.server_id == server_id
+                )
             ).one()
 
         return {

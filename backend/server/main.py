@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from server.core.migrations import upgrade_server_database
 
 app = FastAPI()

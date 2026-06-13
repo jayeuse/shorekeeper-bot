@@ -1,3 +1,5 @@
+"""Manual Phrolova retrieval smoke checks; excluded from the pytest unit suite."""
+
 from services.rag import RAG
 
 print("Initializing RAG for Phrolova Test...")
@@ -19,8 +21,8 @@ for q in queries:
     print(f"🔹 Query: {q}")
     results = rag.search(q, top_k=3)
     for i, r in enumerate(results):
-        print(f"   {i+1}. [{r['score']:.4f}] {r['heading']} ({r['source']})")
+        print(f"   {i + 1}. [{r['score']:.4f}] {r['heading']} ({r['source']})")
         # Print a snippet of the text to verify content
-        snippet = r['text'][:100].replace('\n', ' ') + "..."
-        print(f"      \"{snippet}\"")
+        snippet = r["text"][:100].replace("\n", " ") + "..."
+        print(f'      "{snippet}"')
     print("-" * 50)

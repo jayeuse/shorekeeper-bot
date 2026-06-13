@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Load .env.local from project root
@@ -19,6 +20,7 @@ def _env_bool(name: str, default: bool) -> bool:
         return default
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
+
 # API Keys & URLs
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 ONLINE_API_KEY = os.getenv("ONLINE_API_KEY") or os.getenv("DEEPSEEK_API_KEY")
@@ -33,7 +35,9 @@ EMBED_API_KEY = os.getenv("EMBED_API_KEY", LOCAL_API_KEY)
 # - "openai"/"server": remote OpenAI-compatible API
 # - "ollama": legacy local path kept for compatibility
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", os.getenv("MODEL_TYPE", "llamacpp")).lower()
-EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", os.getenv("EMBEDDER_TYPE", LLM_PROVIDER)).lower()
+EMBEDDING_PROVIDER = os.getenv(
+    "EMBEDDING_PROVIDER", os.getenv("EMBEDDER_TYPE", LLM_PROVIDER)
+).lower()
 
 # Model Names
 ONLINE_MODEL = os.getenv("ONLINE_MODEL", "deepseek-chat")

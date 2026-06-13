@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from alembic import command
 from alembic.config import Config
 
+from alembic import command
 from server.core.config import SERVER_DATABASE_URL
 
 

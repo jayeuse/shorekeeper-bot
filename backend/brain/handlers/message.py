@@ -1,5 +1,6 @@
 import time
 from pathlib import Path
+
 from core.config import (
     MEMORY_CANDIDATE_POOL,
     MEMORY_DB_PATH,
@@ -9,11 +10,11 @@ from core.config import (
     MEMORY_RELEVANCE_THRESHOLD,
     SYSTEM_PROMPT,
 )
-from utils.logger import log_response
-from services.rag import RAG
+from handlers.conversation_context import get_chat, store_chat
 from services.llm import LLMClient
 from services.memory import MemoryRecord, MemoryService
-from handlers.conversation_context import store_chat, get_chat
+from services.rag import RAG
+from utils.logger import log_response
 
 rag = RAG()
 llm_client = LLMClient()
@@ -39,13 +40,26 @@ else:
     memory_service = None
 
 _META_PATTERNS = [
-    "what topics do you have", "what's in your database", "list your knowledge",
-    "what factions are in your records", "what groups do you know",
+    "what topics do you have",
+    "what's in your database",
+    "list your knowledge",
+    "what factions are in your records",
+    "what groups do you know",
 ]
 _CASUAL_PATTERNS = [
-    "how are you", "how do you feel", "tell me about yourself", "what do you think",
-    "what's your opinion", "do you like", "are you okay", "how have you been",
-    "good morning", "good night", "hello", "hi ", "hey ",
+    "how are you",
+    "how do you feel",
+    "tell me about yourself",
+    "what do you think",
+    "what's your opinion",
+    "do you like",
+    "are you okay",
+    "how have you been",
+    "good morning",
+    "good night",
+    "hello",
+    "hi ",
+    "hey ",
 ]
 
 
@@ -87,12 +101,10 @@ def _format_memory_context(memories: list[MemoryRecord]) -> str:
         topics = ", ".join(memory.topics)
         timestamp = memory.created_at.replace("T", " ")[:19]
         sections.append(
-            (
-                f"[Memory {index} | scope={memory.scope} | time={timestamp} | "
-                f"topics={topics} | score={memory.score:.3f}]\n"
-                f"User: {clip(memory.user_message)}\n"
-                f"Assistant: {clip(memory.assistant_message)}"
-            )
+            f"[Memory {index} | scope={memory.scope} | time={timestamp} | "
+            f"topics={topics} | score={memory.score:.3f}]\n"
+            f"User: {clip(memory.user_message)}\n"
+            f"Assistant: {clip(memory.assistant_message)}"
         )
     return "\n\n".join(sections)
 
@@ -104,9 +116,7 @@ async def on_message(bot, msg):
     is_mentioned = bot.user in msg.mentions
 
     is_reply_to_bot = (
-        msg.reference
-        and msg.reference.resolved
-        and msg.reference.resolved.author == bot.user
+        msg.reference and msg.reference.resolved and msg.reference.resolved.author == bot.user
     )
 
     if not (is_mentioned or is_reply_to_bot):
@@ -135,8 +145,7 @@ async def on_message(bot, msg):
             context_text = ""
             if context_chunks:
                 context_text = "\n\n".join(
-                    f"[{c['source']} - {c['heading']}]\n{c['text']}"
-                    for c in context_chunks
+                    f"[{c['source']} - {c['heading']}]\n{c['text']}" for c in context_chunks
                 )
 
             personalization = rag.get_personalization_context()
@@ -150,14 +159,16 @@ async def on_message(bot, msg):
             if memory_service is not None and query_type != "meta":
                 memory_start = time.time()
                 try:
-                    relevant_memories, memory_scanned = memory_service.retrieve_relevant_with_metrics(
-                        query=user_content,
-                        server_id=server_id,
-                        channel_id=channel_id,
-                        user_id=user_id,
-                        limit=MEMORY_RECALL_LIMIT,
-                        relevance_threshold=MEMORY_RELEVANCE_THRESHOLD,
-                        candidate_pool=MEMORY_CANDIDATE_POOL,
+                    relevant_memories, memory_scanned = (
+                        memory_service.retrieve_relevant_with_metrics(
+                            query=user_content,
+                            server_id=server_id,
+                            channel_id=channel_id,
+                            user_id=user_id,
+                            limit=MEMORY_RECALL_LIMIT,
+                            relevance_threshold=MEMORY_RELEVANCE_THRESHOLD,
+                            candidate_pool=MEMORY_CANDIDATE_POOL,
+                        )
                     )
                 except Exception as exc:
                     print(f"⚠️ Memory retrieval failed: {exc}")

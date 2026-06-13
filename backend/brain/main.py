@@ -1,7 +1,8 @@
+import sys
+
 from core.bot import bot
 from core.config import DISCORD_TOKEN
 from services.rag import RAG
-import sys
 
 print("🔄 Loading knowledge base...")
 rag = RAG()

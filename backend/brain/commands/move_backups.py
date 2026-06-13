@@ -10,6 +10,7 @@ from pathlib import Path
 KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
 BACKUP_DIR = Path(__file__).parent.parent / "knowledge_backups"
 
+
 def move_backups():
     if not KNOWLEDGE_DIR.exists():
         print(f"❌ Knowledge directory not found: {KNOWLEDGE_DIR}")
@@ -51,7 +52,7 @@ def move_backups():
     # Clean up empty directories in knowledge/
     print("\n🧹 Cleaning up empty directories in knowledge/...")
     cleaned = 0
-    for root, dirs, files in os.walk(KNOWLEDGE_DIR, topdown=False):
+    for root, dirs, _files in os.walk(KNOWLEDGE_DIR, topdown=False):
         for dir_name in dirs:
             dir_path = Path(root) / dir_name
             try:
@@ -65,6 +66,7 @@ def move_backups():
         print(f"  Removed {cleaned} empty directories")
 
     return True
+
 
 if __name__ == "__main__":
     move_backups()

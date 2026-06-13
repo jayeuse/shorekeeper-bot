@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from alembic import command
 from alembic.config import Config
-
 from memory.database import memory_database_url
+
+from alembic import command
 
 
 def upgrade_memory_database(db_path: str) -> None:

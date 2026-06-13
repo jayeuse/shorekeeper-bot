@@ -1,6 +1,6 @@
-
 conversation_context = {}
 conversation_context_limit = 16
+
 
 def store_chat(server, channel, message, role):
     if server not in conversation_context:
@@ -15,6 +15,7 @@ def store_chat(server, channel, message, role):
         chat.pop(0)
 
     chat.append({"role": role, "content": message})
+
 
 def get_chat(server, channel):
     if server not in conversation_context:

@@ -5,11 +5,11 @@ Run from project root: python add_frontmatter.py
 """
 
 import os
-import sys
 import shutil
-import yaml
 from pathlib import Path
-from typing import Any, Dict, List, cast
+from typing import Any, cast
+
+import yaml
 
 REPO_ROOT = Path(__file__).parent.parent
 KNOWLEDGE_DIR = REPO_ROOT / "knowledge"
@@ -17,7 +17,7 @@ BACKUP_DIR = REPO_ROOT / "knowledge_backups"
 EXCLUDE_DIRS = {"references", ".git", "__pycache__"}
 
 
-def _ensure_list(metadata: Dict[str, Any], key: str) -> None:
+def _ensure_list(metadata: dict[str, Any], key: str) -> None:
     v = metadata.get(key)
     if v is None:
         metadata[key] = []
@@ -39,7 +39,7 @@ def get_metadata_from_path(filepath):
     filename = parts[-1]
     name_no_ext = filename[:-3]  # Remove .md
 
-    metadata: Dict[str, Any] = {
+    metadata: dict[str, Any] = {
         "version": "1.0.0",
         "chunk_strategy": "heading_based",
         "source_file": str(rel_path),
@@ -59,19 +59,19 @@ def get_metadata_from_path(filepath):
                 metadata["document_type"] = "character_profile"
                 metadata["importance"] = "medium"
                 _ensure_list(metadata, "tags")
-                tags = cast(List[str], metadata["tags"])
+                tags = cast(list[str], metadata["tags"])
                 tags.extend(["character", "profile"])
             elif name_no_ext.endswith("_kit"):
                 metadata["document_type"] = "character_kit"
                 metadata["importance"] = "high"
                 _ensure_list(metadata, "tags")
-                tags = cast(List[str], metadata["tags"])
+                tags = cast(list[str], metadata["tags"])
                 tags.extend(["character", "kit", "combat"])
             elif name_no_ext.endswith("_story"):
                 metadata["document_type"] = "character_story"
                 metadata["importance"] = "medium"
                 _ensure_list(metadata, "tags")
-                tags = cast(List[str], metadata["tags"])
+                tags = cast(list[str], metadata["tags"])
                 tags.extend(["character", "story", "lore"])
             else:
                 metadata["document_type"] = "character_other"
@@ -107,7 +107,7 @@ def get_metadata_from_path(filepath):
                         else:
                             metadata["quest_type"] = "chapter"
                     _ensure_list(metadata, "tags")
-                    tags = cast(List[str], metadata["tags"])
+                    tags = cast(list[str], metadata["tags"])
                     tags.extend(["lore", "quest", region])
                 else:
                     # Region story/places files
@@ -115,19 +115,19 @@ def get_metadata_from_path(filepath):
                         metadata["document_type"] = "region_story"
                         metadata["importance"] = "medium"
                         _ensure_list(metadata, "tags")
-                        tags = cast(List[str], metadata["tags"])
+                        tags = cast(list[str], metadata["tags"])
                         tags.extend(["lore", "region", "story"])
                     elif "_places" in filename:
                         metadata["document_type"] = "region_places"
                         metadata["importance"] = "medium"
                         _ensure_list(metadata, "tags")
-                        tags = cast(List[str], metadata["tags"])
+                        tags = cast(list[str], metadata["tags"])
                         tags.extend(["lore", "region", "geography"])
                     elif "_territories" in filename:
                         metadata["document_type"] = "region_territories"
                         metadata["importance"] = "medium"
                         _ensure_list(metadata, "tags")
-                        tags = cast(List[str], metadata["tags"])
+                        tags = cast(list[str], metadata["tags"])
                         tags.extend(["lore", "region", "geography"])
                     else:
                         metadata["document_type"] = "region_other"
@@ -137,7 +137,7 @@ def get_metadata_from_path(filepath):
                 metadata["document_type"] = "lore_general"
                 metadata["importance"] = "medium"
                 _ensure_list(metadata, "tags")
-                tags = cast(List[str], metadata["tags"])
+                tags = cast(list[str], metadata["tags"])
                 tags.append("lore")
         else:
             metadata["document_type"] = "lore"
@@ -148,19 +148,19 @@ def get_metadata_from_path(filepath):
             metadata["document_type"] = "personality"
             metadata["importance"] = "high"
             _ensure_list(metadata, "tags")
-            tags = cast(List[str], metadata["tags"])
+            tags = cast(list[str], metadata["tags"])
             tags.extend(["shorekeeper", "personality"])
         elif "backstory" in filename:
             metadata["document_type"] = "backstory"
             metadata["importance"] = "high"
             _ensure_list(metadata, "tags")
-            tags = cast(List[str], metadata["tags"])
+            tags = cast(list[str], metadata["tags"])
             tags.extend(["shorekeeper", "backstory"])
         elif "relationships" in filename:
             metadata["document_type"] = "relationships"
             metadata["importance"] = "medium"
             _ensure_list(metadata, "tags")
-            tags = cast(List[str], metadata["tags"])
+            tags = cast(list[str], metadata["tags"])
             tags.extend(["shorekeeper", "relationships"])
         else:
             metadata["document_type"] = "personalization"
@@ -170,7 +170,7 @@ def get_metadata_from_path(filepath):
         metadata["document_type"] = "game_mechanics"
         metadata["importance"] = "medium"
         _ensure_list(metadata, "tags")
-        tags = cast(List[str], metadata["tags"])
+        tags = cast(list[str], metadata["tags"])
         tags.extend(["systems", "mechanics"])
 
     else:
@@ -195,7 +195,7 @@ def has_frontmatter(content):
 
 def add_frontmatter_to_file(filepath, dry_run=False, skip_backup=False):
     """Add YAML frontmatter to a markdown file if not present."""
-    with open(filepath, "r", encoding="utf-8") as f:
+    with open(filepath, encoding="utf-8") as f:
         content = f.read()
 
     if has_frontmatter(content):
@@ -237,9 +237,20 @@ def add_frontmatter_to_file(filepath, dry_run=False, skip_backup=False):
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description="Add YAML frontmatter to knowledge markdown files.")
-    parser.add_argument("--dry-run", action="store_true", help="Show what would be changed without writing")
-    parser.add_argument("--skip-backup", action="store_true", help="Skip creating backups in knowledge_backups/ directory")
+
+    parser = argparse.ArgumentParser(
+        description="Add YAML frontmatter to knowledge markdown files."
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would be changed without writing",
+    )
+    parser.add_argument(
+        "--skip-backup",
+        action="store_true",
+        help="Skip creating backups in knowledge_backups/ directory",
+    )
     args = parser.parse_args()
 
     md_files = []
@@ -256,7 +267,9 @@ def main():
     updated_count = 0
     for filepath in md_files:
         try:
-            if add_frontmatter_to_file(filepath, dry_run=args.dry_run, skip_backup=args.skip_backup):
+            if add_frontmatter_to_file(
+                filepath, dry_run=args.dry_run, skip_backup=args.skip_backup
+            ):
                 updated_count += 1
         except Exception as e:
             print(f"✗ Error processing {filepath}: {e}")

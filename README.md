@@ -28,7 +28,7 @@ shorekeeper_bot/
 │       └── main.py                 FastAPI app scaffold (`/` and `/health`)
 ├── frontend/                       Vite + React + TypeScript scaffold
 ├── .env.local                      Runtime environment variables
-└── uv.lock                         Locked Python dependency graph
+└── backend/uv.lock                 Locked Python dependency graph
 ```
 
 ## Prerequisites
@@ -43,11 +43,8 @@ shorekeeper_bot/
 ### 1) Python environment (uv)
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-
 cd backend
-uv pip install -r requirements.txt
+uv sync --dev
 cd ..
 ```
 
@@ -55,7 +52,7 @@ cd ..
 
 ```bash
 cd frontend
-npm install
+npm ci
 cd ..
 ```
 
@@ -144,15 +141,15 @@ It starts both `llama-server` processes in one terminal and stops both on `Ctrl-
 ### Run Discord bot runtime
 
 ```bash
-source .venv/bin/activate
-python backend/brain/main.py
+cd backend
+uv run python brain/main.py
 ```
 
 ### Run FastAPI backend
 
 ```bash
-source .venv/bin/activate
-uvicorn backend.server.main:app --host 127.0.0.1 --port 8001 --reload
+cd backend
+uv run uvicorn server.main:app --host 127.0.0.1 --port 8001 --reload
 ```
 
 Health check:
@@ -194,10 +191,27 @@ python -c "from services.rag import RAG; RAG().build()"
 python commands/verify_online_model.py
 
 # RAG regression scripts
-python tests/test_rag.py
-python tests/test_phrolova_lore.py
+python tests/rag_smoke.py
+python tests/phrolova_lore_smoke.py
 python tests/test_rag_entity_fallback.py
 ```
+
+## Quality Gates
+
+Run these before pushing changes:
+
+```bash
+cd backend
+uv run ruff format --check .
+uv run ruff check .
+uv run pytest
+
+cd ../frontend
+npm run audit
+npm run check
+```
+
+Model-backed retrieval smoke scripts remain manual because they require local chat and embedding servers.
 
 ## Security Reminder
 

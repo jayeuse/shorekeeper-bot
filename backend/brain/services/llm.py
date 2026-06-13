@@ -1,8 +1,9 @@
-import time
 import asyncio
 import inspect
 import re
-from datetime import datetime, timezone
+import time
+from datetime import UTC, datetime
+
 from openai import AsyncOpenAI
 
 try:
@@ -52,7 +53,9 @@ class LLMClient:
 
         if self.provider == "openai":
             if not ONLINE_API_KEY or not ONLINE_MODEL:
-                print("❌ ONLINE_API_KEY or ONLINE_MODEL missing. Falling back to local llama.cpp server.")
+                print(
+                    "❌ ONLINE_API_KEY or ONLINE_MODEL missing. Falling back to local llama.cpp server."
+                )
                 self.provider = "llamacpp"
             else:
                 self.client = AsyncOpenAI(api_key=ONLINE_API_KEY, base_url=ONLINE_BASE_URL)
@@ -84,17 +87,19 @@ class LLMClient:
             raise RuntimeError("Ollama provider selected but the ollama package is not installed.")
 
         client = ollama.AsyncClient()
-        chat_fn = getattr(client, "chat")
+        chat_fn = client.chat
 
         if inspect.iscoroutinefunction(chat_fn):
             try:
-                return await chat_fn(model=self.model, 
-                                     messages=messages, 
-                                     think=False,
-                                     options={
-                                         "num_ctx": self.context_window,
-                                         "num_keep": self.kv_cache_keep,
-                                         })
+                return await chat_fn(
+                    model=self.model,
+                    messages=messages,
+                    think=False,
+                    options={
+                        "num_ctx": self.context_window,
+                        "num_keep": self.kv_cache_keep,
+                    },
+                )
             except Exception:
                 pass
 
@@ -103,9 +108,11 @@ class LLMClient:
             return chat_fn(*args, **kwargs)
 
         try:
-            return await asyncio.to_thread(call_variant, model=self.model, messages=messages, think=False)
+            return await asyncio.to_thread(
+                call_variant, model=self.model, messages=messages, think=False
+            )
         except Exception as e:
-            raise RuntimeError(f"Ollama chat call failed: {e}")
+            raise RuntimeError(f"Ollama chat call failed: {e}") from e
 
     async def _chat_openai_compatible(self, messages):
         start_time = time.time()
@@ -126,7 +133,7 @@ class LLMClient:
                 }
 
             response = await self.client.chat.completions.create(**request_kwargs)
-            
+
             assistant_text = response.choices[0].message.content or ""
             assistant_text = _strip_think_block(assistant_text)
             usage = getattr(response, "usage", None)
@@ -136,13 +143,13 @@ class LLMClient:
 
             return {
                 "model": self.model,
-                "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                "created_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
                 "message": {"role": "assistant", "content": assistant_text},
                 "done": True,
                 "eval_count": completion_tokens,
                 "eval_duration": duration_ns,
                 "prompt_eval_count": prompt_tokens,
-                "prompt_eval_duration": 0
+                "prompt_eval_duration": 0,
             }
         except Exception as e:
-            raise RuntimeError(f"OpenAI-compatible model call failed: {e}")
+            raise RuntimeError(f"OpenAI-compatible model call failed: {e}") from e
