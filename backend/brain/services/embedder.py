@@ -1,78 +1,82 @@
-from typing import Optional
+from openai import OpenAI
 
-import ollama
-from google import genai
-from google.genai import types
+try:
+    import ollama
+except ImportError:  # pragma: no cover - optional when using llama.cpp/OpenAI-compatible servers
+    ollama = None
 
 from core.config import (
-    USE_ONLINE_EMBEDDER,
-    GOOGLE_GEMINI_API_KEY,
-    ONLINE_EMBED_MODEL,
-    LOCAL_EMBED_MODEL,
-    ONLINE_EMBED_DIMENSIONS,
+    EMBED_API_KEY,
+    EMBED_BASE_URL,
+    EMBED_MODEL,
+    EMBEDDING_PROVIDER,
+    LOCAL_API_KEY,
+    ONLINE_API_KEY,
 )
 
 
+def _normalize_provider(name: str) -> str:
+    value = name.strip().lower()
+    aliases = {
+        "server": "openai",
+        "openai-compatible": "openai",
+        "llama.cpp": "llamacpp",
+        "llama-cpp": "llamacpp",
+    }
+    return aliases.get(value, value)
+
+
 class EmbedderClient:
-    """Abstraction over local (Ollama/nomic-embed-text) and online (Gemini Embedding 2) embedders.
-
-    For local embeddings, the nomic-embed-text model uses a prefix convention:
-      - Documents: "search_document: <text>"
-      - Queries:   "search_query: <text>"
-
-    For Gemini embeddings, the equivalent is expressed via EmbedContentConfig.task_type:
-      - Documents: RETRIEVAL_DOCUMENT
-      - Queries:   RETRIEVAL_QUERY
-
-    Callers should pass plain text to embed_document() and embed_query(); this class
-    handles the prefix/task_type internally.
-    """
-
     def __init__(self) -> None:
-        self.use_online = USE_ONLINE_EMBEDDER
-        self._gemini_client: Optional[genai.Client] = None
-        self._embed_model: str = ONLINE_EMBED_MODEL or "gemini-embedding-2-preview"
-        self._embed_dimensions: int = ONLINE_EMBED_DIMENSIONS
+        self.provider = _normalize_provider(EMBEDDING_PROVIDER)
+        self.client: OpenAI | None = None
+        self.model = EMBED_MODEL
 
-        if self.use_online:
-            if not GOOGLE_GEMINI_API_KEY or not ONLINE_EMBED_MODEL:
-                print("❌ GOOGLE_GEMINI_API_KEY or ONLINE_EMBED_MODEL missing. Falling back to local embedder.")
-                self.use_online = False
-            else:
-                try:
-                    self._gemini_client = genai.Client(api_key=GOOGLE_GEMINI_API_KEY)
-                    print(f"✨ Using Online Embedder: {self._embed_model} (dim={self._embed_dimensions})")
-                except Exception as e:
-                    print(f"❌ Failed to initialize Gemini embedder: {e}. Falling back to local embedder.")
-                    self.use_online = False
+        if self.provider in {"llamacpp", "openai"}:
+            try:
+                api_key = EMBED_API_KEY if self.provider == "llamacpp" else (ONLINE_API_KEY or EMBED_API_KEY or "no-key")
+                self.client = OpenAI(api_key=api_key or LOCAL_API_KEY, base_url=EMBED_BASE_URL)
+                print(f"🧠 Using OpenAI-compatible embedding endpoint: {self.model} ({EMBED_BASE_URL})")
+            except Exception as e:
+                print(f"❌ Failed to init embedding server at {EMBED_BASE_URL}: {e}")
+                self.provider = 'ollama'
 
-        if not self.use_online:
-            print(f"🖥️ Using Local Embedder: {LOCAL_EMBED_MODEL}")
+        if self.provider == 'ollama':
+            if ollama is None:
+                raise RuntimeError("Ollama embedding provider selected but the ollama package is not installed.")
+            print(f"🖥️  Using local Ollama embeddings: {EMBED_MODEL}")
 
     def embed_document(self, text: str) -> list[float]:
-        """Embed a knowledge chunk for indexing."""
-        if self.use_online and self._gemini_client is not None:
-            return self._embed_gemini(text, task_type="RETRIEVAL_DOCUMENT")
+        if self.provider in {"llamacpp", "openai"}:
+            return self._embed_server(text)
         return self._embed_ollama(f"search_document: {text}")
 
     def embed_query(self, text: str) -> list[float]:
-        """Embed a search query."""
-        if self.use_online and self._gemini_client is not None:
-            return self._embed_gemini(text, task_type="RETRIEVAL_QUERY")
+        if self.provider in {"llamacpp", "openai"}:
+            return self._embed_server(text)
         return self._embed_ollama(f"search_query: {text}")
 
-    def _embed_gemini(self, text: str, task_type: str) -> list[float]:
-        assert self._gemini_client is not None
-        result = self._gemini_client.models.embed_content(
-            model=self._embed_model,
-            contents=text,
-            config=types.EmbedContentConfig(
-                task_type=task_type,
-                output_dimensionality=self._embed_dimensions,
-            ),
-        )
-        return list(result.embeddings[0].values)
-
     def _embed_ollama(self, text: str) -> list[float]:
-        response = ollama.embed(model=LOCAL_EMBED_MODEL, input=text)
-        return response["embeddings"][0]
+        if ollama is None:
+            raise RuntimeError("Ollama embedding provider selected but the ollama package is not installed.")
+        try:
+            response = ollama.embed(model=EMBED_MODEL, input=text)
+            return response["embeddings"][0]
+        except Exception as e:
+            print(f"⚠️  Ollama Error: {e}")
+            return []
+
+    def _embed_server(self, text: str) -> list[float]:
+        if self.client is None:
+            raise RuntimeError("Embedding client is not initialized.")
+        try:
+            # llama.cpp truncation safety: 8000 chars is roughly 2000 tokens
+            safe_text = text[:8000] 
+            response = self.client.embeddings.create(
+                model=self.model,
+                input=safe_text
+            )
+            return response.data[0].embedding
+        except Exception as e:
+            print(f"⚠️  Embedding Server Error: {e}")
+            return []

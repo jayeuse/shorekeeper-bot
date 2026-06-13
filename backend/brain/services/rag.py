@@ -138,9 +138,15 @@ def chunk_by_heading(text, source="", metadata=None):
 
 
 def cosine_similarity(a, b):
+    if a is None or b is None or len(a) == 0 or len(b) == 0:
+        return 0.0
     a = np.array(a)
     b = np.array(b)
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+    return np.dot(a, b) / (norm_a * norm_b)
 
 
 class RAG:
@@ -161,10 +167,26 @@ class RAG:
         print(f"📚 Embedding {len(self.chunks)} knowledge chunks...")
 
         embeddings = []
-        for chunk in self.chunks:
-            # Include the label (character/file identity) in embedding for disambiguation
+        failed_count = 0
+        for i, chunk in enumerate(self.chunks):
+            if i % 100 == 0:
+                print(f"   Progress: {i}/{len(self.chunks)}...")
+            
             doc_text = f"[{chunk['label']}] {chunk['heading']}. {chunk['text']}"
-            embeddings.append(self.embedder.embed_document(doc_text))
+            vector = self.embedder.embed_document(doc_text)
+            
+            if not vector:
+                failed_count += 1
+                # If it's a massive failure, stop early
+                if failed_count > 50:
+                    raise Exception("Too many embedding failures. Check your server connection/batch size.")
+                # Use a zero vector as fallback (will have 0 similarity)
+                vector = [0.0] * 768 # Default size for nomic-embed-text
+            
+            embeddings.append(vector)
+
+        if failed_count > 0:
+            print(f"⚠️  Warning: {failed_count} chunks failed to embed. They will be ignored in semantic search.")
 
         # Store embeddings as float16 binary (major size reduction)
         embedding_matrix = np.array(embeddings, dtype=np.float16)
@@ -222,6 +244,7 @@ class RAG:
                 return []
 
         query_embedding = self.embedder.embed_query(query)
+        # We continue even if query_embedding is empty by using keyword-only search
 
         query_words = set(
             w.strip("?!.,;:'\"") for w in query.lower().split()

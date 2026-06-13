@@ -1,7 +1,21 @@
 from typing import Any
 
 
-def log_response(msg: Any, user_content: str, model: str, response: dict, elapsed: float, rag_duration: float = 0.0, llm_duration: float = 0.0, query_type: str = "lore", top_k: int = 5) -> None:
+def log_response(
+    msg: Any,
+    user_content: str,
+    model: str,
+    response: dict,
+    elapsed: float,
+    rag_duration: float = 0.0,
+    llm_duration: float = 0.0,
+    query_type: str = "lore",
+    top_k: int = 5,
+    memory_scanned: int = 0,
+    memory_selected: int = 0,
+    memory_top_score: float = 0.0,
+    memory_duration: float = 0.0,
+) -> None:
     reply_content = response["message"]["content"]
 
     prompt_tokens = response.get("prompt_eval_count", 0)
@@ -17,6 +31,10 @@ def log_response(msg: Any, user_content: str, model: str, response: dict, elapse
     print(f"🤖 Model: {model}")
     print(f"🔍 Query: {query_type} (top_k={top_k})")
     print(f"⏱️  Total: {elapsed:.2f}s (RAG: {rag_duration:.2f}s, LLM: {llm_duration:.2f}s)")
+    print(
+        f"🧠 Memory: scanned={memory_scanned}, selected={memory_selected}, "
+        f"top_score={memory_top_score:.3f}, duration={memory_duration:.2f}s"
+    )
     print(f"📊 Prompt: {prompt_tokens} tokens @ {prompt_rate:.1f} t/s")
     print(f"📊 Eval:   {eval_tokens} tokens @ {eval_rate:.1f} t/s")
     print(f"📏 Reply:  {len(reply_content)} chars")
