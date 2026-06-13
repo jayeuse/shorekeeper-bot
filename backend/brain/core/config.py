@@ -21,6 +21,11 @@ def _env_bool(name: str, default: bool) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _env_csv(name: str, default: str = "") -> list[str]:
+    value = os.getenv(name, default)
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 # API Keys & URLs
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 ONLINE_API_KEY = os.getenv("ONLINE_API_KEY") or os.getenv("DEEPSEEK_API_KEY")
@@ -54,6 +59,22 @@ MEMORY_RECALL_LIMIT = int(os.getenv("MEMORY_RECALL_LIMIT", "3"))
 MEMORY_RELEVANCE_THRESHOLD = float(os.getenv("MEMORY_RELEVANCE_THRESHOLD", "0.22"))
 MEMORY_CANDIDATE_POOL = int(os.getenv("MEMORY_CANDIDATE_POOL", "60"))
 MEMORY_RECENCY_HALFLIFE_DAYS = float(os.getenv("MEMORY_RECENCY_HALFLIFE_DAYS", "30"))
+
+# Live search grounding
+SEARCH_ENABLED = _env_bool("SEARCH_ENABLED", True)
+SEARCH_PROVIDER = os.getenv("SEARCH_PROVIDER", "searxng").strip().lower()
+SEARCH_BASE_URL = os.getenv("SEARCH_BASE_URL", "http://127.0.0.1:8083").strip()
+SEARCH_TIMEOUT_SECONDS = float(os.getenv("SEARCH_TIMEOUT_SECONDS", "8"))
+SEARCH_MAX_RESULTS = int(os.getenv("SEARCH_MAX_RESULTS", "5"))
+SEARCH_MIN_QUERY_LENGTH = int(os.getenv("SEARCH_MIN_QUERY_LENGTH", "5"))
+SEARCH_TRIGGER_MODE = os.getenv("SEARCH_TRIGGER_MODE", "hybrid").strip().lower()
+SEARCH_EXPLICIT_PREFIX = os.getenv("SEARCH_EXPLICIT_PREFIX", "search:").strip()
+SEARCH_CURRENT_HINTS = _env_csv(
+    "SEARCH_CURRENT_HINTS",
+    "latest,current,today,news,update,look up,search",
+)
+SEARCH_SAFE_DOMAINS = _env_csv("SEARCH_SAFE_DOMAINS")
+SEARCH_BLOCK_PRIVATE_IPS = _env_bool("SEARCH_BLOCK_PRIVATE_IPS", True)
 
 # Paths
 _MEMORY_DEFAULT_DB_PATH = str(_PROJECT_ROOT / "database" / "memory" / "memory.db")

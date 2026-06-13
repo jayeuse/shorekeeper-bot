@@ -37,6 +37,7 @@ shorekeeper_bot/
 - `uv` (recommended dependency installer)
 - Node.js 20+
 - Two local `llama-server` instances: one for chat and one for embeddings
+- Docker Compose for the local SearXNG runtime
 
 ## Setup
 
@@ -84,6 +85,10 @@ EMBED_BASE_URL=http://127.0.0.1:8082/v1
 EMBED_API_KEY=no-key
 EMBED_MODEL=nomic-embed-text
 EMBED_MODEL_PATH=/mnt/sdb4/models/nomic-embed-text.gguf
+
+SEARCH_ENABLED=true
+SEARCH_PROVIDER=searxng
+SEARCH_BASE_URL=http://127.0.0.1:8083
 ```
 
 Example local startup with `llama.cpp`:
@@ -127,6 +132,33 @@ cd ~/llama.cpp/build/bin
 ```
 
 The alias is important: the app sends whatever you set in `LOCAL_MODEL` to `LOCAL_BASE_URL`, and whatever you set in `EMBED_MODEL` to `EMBED_BASE_URL`.
+
+Live search grounding expects a JSON-capable SearxNG instance at `SEARCH_BASE_URL`. The bot will continue replying if search is unavailable, but it will avoid claiming current facts with confidence.
+
+### 4) Local SearXNG runtime
+
+Create a local override file for the compose stack if you want to change the tracked defaults:
+
+```bash
+cp infra/searxng/.env.example infra/searxng/.env
+```
+
+The bot-facing local runtime is bound to `127.0.0.1:8083` only and uses the repo-owned config in `infra/searxng/core-config/settings.yml`.
+
+Start, stop, and inspect it with:
+
+```bash
+docker compose -f infra/searxng/docker-compose.yml up -d
+docker compose -f infra/searxng/docker-compose.yml down
+docker compose -f infra/searxng/docker-compose.yml ps
+docker compose -f infra/searxng/docker-compose.yml logs -f
+```
+
+SearXNG JSON verification:
+
+```bash
+curl "http://127.0.0.1:8083/search?q=latest%20Wuthering%20Waves%20update&format=json"
+```
 
 If you want one command instead of two terminals, use the bundled launcher:
 
@@ -190,11 +222,26 @@ python -c "from services.rag import RAG; RAG().build()"
 # Verify chat connectivity
 python commands/verify_online_model.py
 
+# Verify live search connectivity
+python commands/verify_search.py
+
 # RAG regression scripts
 python tests/rag_smoke.py
 python tests/phrolova_lore_smoke.py
 python tests/test_rag_entity_fallback.py
 ```
+
+## Local Startup Order
+
+Bring the local runtime up in this order:
+
+1. Start the llama.cpp chat and embedding servers.
+2. Start the SearXNG compose stack.
+3. Run `cd backend && uv run python brain/commands/verify_online_model.py`.
+4. Run `cd backend && uv run python brain/commands/verify_search.py`.
+5. Start the Discord bot with `cd backend && uv run python brain/main.py`.
+
+Shorekeeper live search is considered ready only when `verify_search.py` succeeds against `SEARCH_BASE_URL`.
 
 ## Quality Gates
 
