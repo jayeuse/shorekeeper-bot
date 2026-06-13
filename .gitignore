@@ -8,8 +8,9 @@ bin/
 include/
 share/
 
-# Agents
+# Agent-local guidance
 .github/
+**/AGENTS.md
 
 # Python
 __pycache__/
@@ -43,6 +44,7 @@ MANIFEST
 .coverage.*
 nosetests.log
 coverage.xml
+coverage/
 *.cover
 .hypothesis/
 .tox/
