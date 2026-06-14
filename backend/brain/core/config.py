@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 
@@ -24,6 +25,14 @@ def _env_bool(name: str, default: bool) -> bool:
 def _env_csv(name: str, default: str = "") -> list[str]:
     value = os.getenv(name, default)
     return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def _env_json(name: str, default: str):
+    value = os.getenv(name, default)
+    try:
+        return json.loads(value)
+    except Exception:
+        return json.loads(default)
 
 
 # API Keys & URLs
@@ -75,6 +84,33 @@ SEARCH_CURRENT_HINTS = _env_csv(
 )
 SEARCH_SAFE_DOMAINS = _env_csv("SEARCH_SAFE_DOMAINS")
 SEARCH_BLOCK_PRIVATE_IPS = _env_bool("SEARCH_BLOCK_PRIVATE_IPS", True)
+SEARCH_TRUSTED_DOMAINS_OFFICIAL = _env_csv("SEARCH_TRUSTED_DOMAINS_OFFICIAL")
+SEARCH_TRUSTED_DOMAINS_REFERENCE = _env_csv("SEARCH_TRUSTED_DOMAINS_REFERENCE")
+SEARCH_TRUSTED_DOMAINS_NEWS = _env_csv("SEARCH_TRUSTED_DOMAINS_NEWS")
+SEARCH_DEMOTED_DOMAINS = _env_csv("SEARCH_DEMOTED_DOMAINS")
+SEARCH_TOPIC_DOMAIN_OVERRIDES = _env_json("SEARCH_TOPIC_DOMAIN_OVERRIDES", "{}")
+
+# Analysis/search orchestration
+ANALYSIS_ENABLED = _env_bool("ANALYSIS_ENABLED", True)
+ANALYSIS_TIMEOUT_SECONDS = float(os.getenv("ANALYSIS_TIMEOUT_SECONDS", "6"))
+RAG_ANSWER_SCORE_THRESHOLD = float(os.getenv("RAG_ANSWER_SCORE_THRESHOLD", "0.62"))
+GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD = float(
+    os.getenv("GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD", "0.70")
+)
+
+# Legacy answerability config kept temporarily for compatibility during transition.
+ANSWERABILITY_ENABLED = _env_bool("ANSWERABILITY_ENABLED", ANALYSIS_ENABLED)
+ANSWERABILITY_TIMEOUT_SECONDS = float(
+    os.getenv("ANSWERABILITY_TIMEOUT_SECONDS", str(ANALYSIS_TIMEOUT_SECONDS))
+)
+DIRECT_ANSWER_CONFIDENCE_THRESHOLD = float(os.getenv("DIRECT_ANSWER_CONFIDENCE_THRESHOLD", "0.75"))
+SEARCH_FALLBACK_CONFIDENCE_THRESHOLD = float(os.getenv("SEARCH_FALLBACK_CONFIDENCE_THRESHOLD", "0.55"))
+
+# Legacy semantic-router config kept for compatibility during refactor cleanup.
+ROUTER_ENABLED = _env_bool("ROUTER_ENABLED", True)
+ROUTER_HISTORY_TURNS = int(os.getenv("ROUTER_HISTORY_TURNS", "4"))
+ROUTER_TIMEOUT_SECONDS = float(os.getenv("ROUTER_TIMEOUT_SECONDS", "6"))
+ROUTER_MAX_QUERY_CHARS = int(os.getenv("ROUTER_MAX_QUERY_CHARS", "240"))
 
 # Paths
 _MEMORY_DEFAULT_DB_PATH = str(_PROJECT_ROOT / "database" / "memory" / "memory.db")
