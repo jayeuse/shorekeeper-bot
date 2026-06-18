@@ -7,11 +7,12 @@ from typing import Any
 import numpy as np
 
 try:
-    from yaml import safe_load  # type: ignore
+    from yaml import safe_load as _safe_load
 
+    safe_load: Callable[[str], Any] | None = _safe_load
     YAML_AVAILABLE = True
 except Exception:
-    safe_load: Callable[[str], Any] | None = None
+    safe_load = None
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
@@ -159,8 +160,8 @@ def cosine_similarity(a, b):
 
 class RAG:
     def __init__(self) -> None:
-        self.chunks = []
-        self.embeddings = []
+        self.chunks: list[dict[str, Any]] = []
+        self.embeddings: list[list[float]] = []
         self.personalization_cache = None
         self.manifest_cache = None
         self.embedder = EmbedderClient()

@@ -48,6 +48,7 @@ def _resolve_memory_db_path() -> str:
     return str((project_root / MEMORY_DB_PATH).resolve())
 
 
+memory_service: MemoryService | None
 if MEMORY_ENABLED:
     try:
         memory_service = MemoryService(

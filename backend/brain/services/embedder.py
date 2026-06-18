@@ -1,9 +1,4 @@
-from openai import OpenAI
-
-try:
-    import ollama
-except ImportError:  # pragma: no cover - optional when using llama.cpp/OpenAI-compatible servers
-    ollama = None
+from typing import Any
 
 from core.config import (
     EMBED_API_KEY,
@@ -13,6 +8,15 @@ from core.config import (
     LOCAL_API_KEY,
     ONLINE_API_KEY,
 )
+from openai import OpenAI
+
+_ollama: Any | None
+try:
+    import ollama as _ollama
+except ImportError:  # pragma: no cover - optional when using llama.cpp/OpenAI-compatible servers
+    _ollama = None
+
+ollama: Any | None = _ollama
 
 
 def _normalize_provider(name: str) -> str:

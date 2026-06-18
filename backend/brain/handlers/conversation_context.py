@@ -1,4 +1,6 @@
-conversation_context = {}
+from typing import Any
+
+conversation_context: dict[Any, dict[Any, list[dict[str, str]]]] = {}
 conversation_context_limit = 16
 
 

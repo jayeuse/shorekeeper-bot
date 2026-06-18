@@ -3,13 +3,7 @@ import inspect
 import re
 import time
 from datetime import UTC, datetime
-
-from openai import AsyncOpenAI
-
-try:
-    import ollama
-except ImportError:  # pragma: no cover - optional when using llama.cpp/OpenAI-compatible servers
-    ollama = None
+from typing import Any
 
 from core.config import (
     LLM_PROVIDER,
@@ -22,6 +16,15 @@ from core.config import (
     ONLINE_BASE_URL,
     ONLINE_MODEL,
 )
+from openai import AsyncOpenAI
+
+_ollama: Any | None
+try:
+    import ollama as _ollama
+except ImportError:  # pragma: no cover - optional when using llama.cpp/OpenAI-compatible servers
+    _ollama = None
+
+ollama: Any | None = _ollama
 
 
 def _normalize_provider(name: str) -> str:
