@@ -283,7 +283,16 @@ class SearxNGSearchProvider:
             question_type=question_type,
             freshness_required=freshness_required,
         )
-        confidence_summary, exact_claim_allowed, evidence_summary, agreement_status, trusted_result_count, fallback_result_count, exact_claim_reason, response_mode = self._summarize_bundle_confidence(
+        (
+            confidence_summary,
+            exact_claim_allowed,
+            evidence_summary,
+            agreement_status,
+            trusted_result_count,
+            fallback_result_count,
+            exact_claim_reason,
+            response_mode,
+        ) = self._summarize_bundle_confidence(
             results,
             question_type=question_type,
             freshness_required=freshness_required,
@@ -306,7 +315,11 @@ class SearxNGSearchProvider:
         )
 
     def _classify_source(self, source: str, *, topic: str) -> tuple[str, float, str]:
-        topic_config = SEARCH_TOPIC_DOMAIN_OVERRIDES.get(topic.lower(), {}) if isinstance(SEARCH_TOPIC_DOMAIN_OVERRIDES, dict) else {}
+        topic_config = (
+            SEARCH_TOPIC_DOMAIN_OVERRIDES.get(topic.lower(), {})
+            if isinstance(SEARCH_TOPIC_DOMAIN_OVERRIDES, dict)
+            else {}
+        )
         preferred = topic_config.get("preferred", []) if isinstance(topic_config, dict) else []
         blocked = topic_config.get("blocked", []) if isinstance(topic_config, dict) else []
 
@@ -351,7 +364,10 @@ class SearxNGSearchProvider:
             return "guide"
         if _matches_domain_list(source, list(_ARTICLE_FARM_HOST_HINTS)):
             return "article_farm"
-        if path.strip("/") in {"", "main", "en/main", "main/news"} or len([part for part in path.split("/") if part]) <= 1:
+        if (
+            path.strip("/") in {"", "main", "en/main", "main/news"}
+            or len([part for part in path.split("/") if part]) <= 1
+        ):
             return "index_page"
         return "generic"
 
@@ -424,19 +440,29 @@ class SearxNGSearchProvider:
             score -= 0.6 if freshness_required else 0.1
         elif surface_class == "index_page":
             score -= 0.75 if freshness_required else 0.0
-        elif surface_class in {"patch_notes", "news_post"} and source_class in {"official", "news", "reference", "topic_preferred"}:
+        elif surface_class in {"patch_notes", "news_post"} and source_class in {
+            "official",
+            "news",
+            "reference",
+            "topic_preferred",
+        }:
             score += 1.0
         if provider_score is not None:
             score += min(provider_score, 3.0) * 0.1
-        evidence_score = entity_match_score * 0.45 + fact_match_score * 0.35 + specificity_score * 0.20
-        evidence_quality = "high" if evidence_score >= 0.75 else "medium" if evidence_score >= 0.45 else "low"
+        evidence_score = (
+            entity_match_score * 0.45 + fact_match_score * 0.35 + specificity_score * 0.20
+        )
+        evidence_quality = (
+            "high" if evidence_score >= 0.75 else "medium" if evidence_score >= 0.45 else "low"
+        )
         supports_exact_answer = (
             evidence_quality == "high"
             and entity_match_score >= 0.7
             and fact_match_score >= 0.55
             and specificity_score >= 0.4
             and source_class in {"official", "reference", "news", "topic_preferred"}
-            and surface_class not in {"download_page", "store_page", "guide", "article_farm", "index_page"}
+            and surface_class
+            not in {"download_page", "store_page", "guide", "article_farm", "index_page"}
             and freshness_bucket in {"recent", "aging"}
             and not any(hint in combined for hint in _PREVIEW_HINTS)
         )
@@ -506,7 +532,9 @@ class SearxNGSearchProvider:
                 str(item.get("content") or item.get("snippet") or ""),
                 max_length=_MAX_SNIPPET_LENGTH,
             )
-            published_at = _normalize_text(str(item.get("publishedDate") or ""), max_length=64) or None
+            published_at = (
+                _normalize_text(str(item.get("publishedDate") or ""), max_length=64) or None
+            )
 
             score_value = item.get("score")
             score: float | None = None
@@ -597,21 +625,22 @@ class SearxNGSearchProvider:
                         for result in results
                         if (
                             result.source_class == "fallback"
-                            and result.surface_class not in {"download_page", "store_page", "article_farm"}
+                            and result.surface_class
+                            not in {"download_page", "store_page", "article_farm"}
                             and result not in preserved
                         )
                     )
                 return preserved[:limit]
 
         non_demoted = [
-            result
-            for result in results
-            if result.source_class not in {"demoted", "mirror"}
+            result for result in results if result.source_class not in {"demoted", "mirror"}
         ]
         return (non_demoted or results)[:limit]
 
     def _token_match_score(self, phrase: str, combined_text: str) -> float:
-        tokens = [token for token in _WHITESPACE_RE.sub(" ", phrase.lower()).split() if len(token) > 2]
+        tokens = [
+            token for token in _WHITESPACE_RE.sub(" ", phrase.lower()).split() if len(token) > 2
+        ]
         if not tokens:
             return 0.0
         matches = sum(1 for token in tokens if token in combined_text)
@@ -659,7 +688,8 @@ class SearxNGSearchProvider:
             for index, result in enumerate(results[:5])
             if result.source_class in {"official", "reference", "news", "topic_preferred"}
             and result.evidence_quality in {"high", "medium"}
-            and result.freshness_bucket in {"recent", "aging", "undated" if not freshness_required else "recent"}
+            and result.freshness_bucket
+            in {"recent", "aging", "undated" if not freshness_required else "recent"}
         ]
         if len(trusted_candidates) < 2:
             return ("insufficient_trusted", set(), "fewer than two trusted results")
@@ -684,7 +714,9 @@ class SearxNGSearchProvider:
         if not results:
             return ("low", False, "No usable evidence", "none", 0, 0, "no results", "uncertain")
         trusted_result_count = sum(
-            1 for result in results if result.source_class in {"official", "reference", "news", "topic_preferred"}
+            1
+            for result in results
+            if result.source_class in {"official", "reference", "news", "topic_preferred"}
         )
         fallback_result_count = sum(1 for result in results if result.source_class == "fallback")
         agreement_status, participant_indexes, agreement_reason = self._agreement_status(
@@ -696,9 +728,7 @@ class SearxNGSearchProvider:
             result.agreement_participant = index in participant_indexes
         top = results[0]
         exact_claim_allowed = (
-            top.supports_exact_answer
-            and trusted_result_count >= 2
-            and agreement_status == "agree"
+            top.supports_exact_answer and trusted_result_count >= 2 and agreement_status == "agree"
         )
         if exact_claim_allowed:
             return (
@@ -722,7 +752,9 @@ class SearxNGSearchProvider:
                 agreement_reason,
                 "summary",
             )
-        if trusted_result_count >= 1 and any(result.evidence_quality in {"high", "medium"} for result in results[:3]):
+        if trusted_result_count >= 1 and any(
+            result.evidence_quality in {"high", "medium"} for result in results[:3]
+        ):
             return (
                 "medium",
                 False,

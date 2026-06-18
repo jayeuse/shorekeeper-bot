@@ -119,7 +119,9 @@ class _SuccessSearchProvider:
             agreement_status="agree" if self.exact_claim_allowed else "insufficient_trusted",
             trusted_result_count=2 if self.exact_claim_allowed else 1,
             fallback_result_count=0,
-            exact_claim_reason="trusted agreement" if self.exact_claim_allowed else "not corroborated",
+            exact_claim_reason="trusted agreement"
+            if self.exact_claim_allowed
+            else "not corroborated",
             response_mode="exact" if self.exact_claim_allowed else "summary",
             results=[
                 SearchResult(
@@ -386,7 +388,9 @@ def test_explicit_search_mode_disables_automatic_search(monkeypatch) -> None:
     search = _SuccessSearchProvider()
     stub_rag, _, log_calls = _configure_runtime(
         monkeypatch,
-        rag_results=[{"score": 0.10, "source": "lore.md", "heading": "Lore", "text": "Weak match."}],
+        rag_results=[
+            {"score": 0.10, "source": "lore.md", "heading": "Lore", "text": "Weak match."}
+        ],
         search_provider=search,
         llm_responses=[
             _analysis_response(
@@ -436,18 +440,27 @@ def test_current_domain_specific_fact_still_forces_search_not_rag(monkeypatch) -
     asyncio.run(
         message_module.on_message(
             bot,
-            _Message(content="<@999> whats the latest version of wuthering waves?", bot_user=bot_user),
+            _Message(
+                content="<@999> whats the latest version of wuthering waves?", bot_user=bot_user
+            ),
         )
     )
 
     assert stub_rag.calls == []
-    assert search.calls == [("latest version of wuthering waves", 5, "primary", "latest_release", True)]
+    assert search.calls == [
+        ("latest version of wuthering waves", 5, "primary", "latest_release", True)
+    ]
     assert log_calls[0]["final_path"] == "search-grounded"
 
 
 def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
     rag_results = [
-        {"score": 0.83, "source": "lore/black_shores.md", "heading": "Black Shores", "text": "The Black Shores are a sanctuary."}
+        {
+            "score": 0.83,
+            "source": "lore/black_shores.md",
+            "heading": "Black Shores",
+            "text": "The Black Shores are a sanctuary.",
+        }
     ]
     stub_rag, stub_llm, log_calls = _configure_runtime(
         monkeypatch,
@@ -468,7 +481,11 @@ def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content="<@999> tell me about black shores", bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot, _Message(content="<@999> tell me about black shores", bot_user=bot_user)
+        )
+    )
 
     assert stub_rag.calls == [("tell me about black shores", 5)]
     assert len(stub_llm.calls) == 2
@@ -497,7 +514,11 @@ def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> 
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content="<@999> what does transmission mean?", bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot, _Message(content="<@999> what does transmission mean?", bot_user=bot_user)
+        )
+    )
 
     assert len(stub_llm.calls) == 2
     assert log_calls[0]["rag_accepted"] is False
@@ -552,7 +573,11 @@ def test_search_with_weak_exact_claims_produces_search_grounded_path(monkeypatch
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)
+        )
+    )
 
     assert log_calls[0]["exact_claims_allowed"] is False
     assert log_calls[0]["search_evidence_summary"][0]["confidence_summary"] == "medium"
@@ -562,7 +587,9 @@ def test_search_with_weak_exact_claims_produces_search_grounded_path(monkeypatch
 def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) -> None:
     stub_rag, stub_llm, log_calls = _configure_runtime(
         monkeypatch,
-        rag_results=[{"score": 0.99, "source": "lore.md", "heading": "Lore", "text": "Irrelevant lore"}],
+        rag_results=[
+            {"score": 0.99, "source": "lore.md", "heading": "Lore", "text": "Irrelevant lore"}
+        ],
         search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
@@ -579,17 +606,26 @@ def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) 
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content='<@999> what does the word "approximately" mean?', bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot,
+            _Message(content='<@999> what does the word "approximately" mean?', bot_user=bot_user),
+        )
+    )
 
     assert stub_rag.calls == []
     assert log_calls[0]["final_path"] == "general-knowledge"
-    assert log_calls[0]["rag_rejection_reason"] in {"", "-"} or log_calls[0]["rag_accepted"] is False
+    assert (
+        log_calls[0]["rag_rejection_reason"] in {"", "-"} or log_calls[0]["rag_accepted"] is False
+    )
 
 
 def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
     stub_rag, _, log_calls = _configure_runtime(
         monkeypatch,
-        rag_results=[{"score": 0.99, "source": "identity.md", "heading": "Identity", "text": "Shorekeeper"}],
+        rag_results=[
+            {"score": 0.99, "source": "identity.md", "heading": "Identity", "text": "Shorekeeper"}
+        ],
         search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
@@ -606,7 +642,11 @@ def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content="<@999> whats your name?", bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot, _Message(content="<@999> whats your name?", bot_user=bot_user)
+        )
+    )
 
     assert stub_rag.calls == []
     assert log_calls[0]["final_path"] == "general-knowledge"
@@ -701,7 +741,11 @@ def test_logger_metadata_includes_surface_freshness_and_agreement(monkeypatch) -
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
 
-    asyncio.run(message_module.on_message(bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)))
+    asyncio.run(
+        message_module.on_message(
+            bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)
+        )
+    )
 
     first_result = log_calls[0]["search_results"][0]
     summary = log_calls[0]["search_evidence_summary"][0]

@@ -249,13 +249,22 @@ def _infer_target_entity(text: str) -> str:
 
 def _infer_requested_fact(text: str) -> str:
     lowered = _normalize_query_text(text).lower()
-    if any(term in lowered for term in ("stock price", "share price", "stock pricing", "price per share")):
+    if any(
+        term in lowered
+        for term in ("stock price", "share price", "stock pricing", "price per share")
+    ):
         return "price per share"
-    if any(term in lowered for term in ("latest version", "current version", "latest patch", "latest update")):
+    if any(
+        term in lowered
+        for term in ("latest version", "current version", "latest patch", "latest update")
+    ):
         return "latest version"
     if "banner" in lowered:
         return "current banners"
-    if any(term in lowered for term in ("your name", "what is your name", "whats your name", "who are you")):
+    if any(
+        term in lowered
+        for term in ("your name", "what is your name", "whats your name", "who are you")
+    ):
         return "identity"
     if any(term in lowered for term in ("meaning of", "what does", "definition")):
         return "definition"
@@ -278,7 +287,16 @@ def _infer_question_type(*, requested_fact: str, time_sensitive: bool, text: str
         return "definition"
     if requested_fact == "status update":
         return "event_status"
-    if any(term in lowered for term in ("tell me about", "who is", "what is black shores", "shorekeeper lore", "story of")):
+    if any(
+        term in lowered
+        for term in (
+            "tell me about",
+            "who is",
+            "what is black shores",
+            "shorekeeper lore",
+            "story of",
+        )
+    ):
         return "background_fact"
     return "generic" if time_sensitive else "background_fact"
 
@@ -298,16 +316,31 @@ def _infer_subject_domain(text: str) -> str:
 
 def _rag_is_eligible(question_type: str, user_content: str, rag_query: str) -> bool:
     lowered = _normalize_query_text(f"{user_content} {rag_query}").lower()
-    if question_type in {"definition", "identity", "current_metric", "latest_release", "current_availability", "event_status"}:
+    if question_type in {
+        "definition",
+        "identity",
+        "current_metric",
+        "latest_release",
+        "current_availability",
+        "event_status",
+    }:
         return False
-    if any(term in lowered for term in ("meaning of", "what does", "define", "dictionary", "your name", "who are you")):
+    if any(
+        term in lowered
+        for term in ("meaning of", "what does", "define", "dictionary", "your name", "who are you")
+    ):
         return False
-    if any(term in lowered for term in ("tell me about", "lore", "story", "black shores", "resonator", "faction")):
+    if any(
+        term in lowered
+        for term in ("tell me about", "lore", "story", "black shores", "resonator", "faction")
+    ):
         return True
     return question_type in {"background_fact"}
 
 
-def _extract_recent_user_queries(chat_history: list[dict], *, limit: int | None = None) -> list[str]:
+def _extract_recent_user_queries(
+    chat_history: list[dict], *, limit: int | None = None
+) -> list[str]:
     user_messages: list[str] = []
     max_items = limit if limit is not None else ROUTER_HISTORY_TURNS
     for message in reversed(chat_history):
@@ -353,7 +386,9 @@ def _build_deterministic_route_plan(user_content: str) -> RoutePlan | None:
                 reason="search_disabled",
                 deterministic_gate="explicit_search_disabled",
             )
-        stripped_query = _normalize_query_text(cleaned[len(prefix) :], max_chars=ROUTER_MAX_QUERY_CHARS)
+        stripped_query = _normalize_query_text(
+            cleaned[len(prefix) :], max_chars=ROUTER_MAX_QUERY_CHARS
+        )
         if len(stripped_query) < SEARCH_MIN_QUERY_LENGTH:
             return RoutePlan(
                 path="general",
@@ -433,7 +468,9 @@ def _build_deterministic_route_plan(user_content: str) -> RoutePlan | None:
 
 
 def _build_analysis_messages(user_content: str, recent_user_queries: list[str]) -> list[dict]:
-    history_lines = [f"{index}. {query}" for index, query in enumerate(reversed(recent_user_queries), start=1)]
+    history_lines = [
+        f"{index}. {query}" for index, query in enumerate(reversed(recent_user_queries), start=1)
+    ]
     history_block = "\n".join(history_lines) if history_lines else "None"
     system_prompt = (
         "You are a routing and query-analysis component for a Discord bot. "
@@ -472,7 +509,9 @@ def _analysis_fallback(user_content: str, recent_user_queries: list[str]) -> Ana
     )
     search_query = _rewrite_search_query(normalized)
     if _looks_elliptical_followup(normalized) and recent_user_queries:
-        search_query = f"{search_query} {_normalize_query_text(recent_user_queries[0]).lower()}".strip()
+        search_query = (
+            f"{search_query} {_normalize_query_text(recent_user_queries[0]).lower()}".strip()
+        )
     return AnalysisDecision(
         time_sensitive=time_sensitive,
         search_query=search_query,
@@ -494,7 +533,11 @@ def _validate_analysis_decision(payload: dict[str, Any]) -> AnalysisDecision | N
 
     if not isinstance(time_sensitive, bool):
         return None
-    if not isinstance(search_query, str) or not isinstance(rag_query, str) or not isinstance(reason, str):
+    if (
+        not isinstance(search_query, str)
+        or not isinstance(rag_query, str)
+        or not isinstance(reason, str)
+    ):
         return None
     if not isinstance(can_answer_from_general_knowledge, bool):
         return None
@@ -531,7 +574,9 @@ async def _run_analysis_pass(user_content: str, chat_history: list[dict]) -> Ana
 
     messages = _build_analysis_messages(user_content, recent_user_queries)
     try:
-        response = await asyncio.wait_for(llm_client.chat(messages), timeout=ANALYSIS_TIMEOUT_SECONDS)
+        response = await asyncio.wait_for(
+            llm_client.chat(messages), timeout=ANALYSIS_TIMEOUT_SECONDS
+        )
     except Exception as exc:
         print(f"⚠️ Analysis failed: {exc}")
         return _analysis_fallback(user_content, recent_user_queries)
@@ -591,7 +636,9 @@ async def _build_route_plan(user_content: str, chat_history: list[dict]) -> Rout
         text=analysis.rag_query or user_content,
     )
     return RoutePlan(
-        path="rag" if _rag_is_eligible(question_type, user_content, analysis.rag_query) else "general",
+        path="rag"
+        if _rag_is_eligible(question_type, user_content, analysis.rag_query)
+        else "general",
         query_type="general",
         query_text=analysis.rag_query,
         reason=analysis.reason,
@@ -744,7 +791,11 @@ def _evaluate_rag(query: str, *, question_type: str, user_content: str) -> RagDe
 
 def _meaningful_anchor_tokens(text: str) -> set[str]:
     stopwords = {"the", "and", "what", "who", "tell", "about", "your", "name", "mean", "meaning"}
-    return {token for token in re.findall(r"[a-z0-9]+", text.lower()) if len(token) > 3 and token not in stopwords}
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", text.lower())
+        if len(token) > 3 and token not in stopwords
+    }
 
 
 def _format_memory_context(memories: list[MemoryRecord]) -> str:
@@ -818,7 +869,11 @@ def _build_system_prompt(
     rag_decision: RagDecision | None,
     search_execution: SearchExecution,
 ) -> str:
-    system_sections = [SYSTEM_PROMPT, f"=== PERSONALITY & BACKSTORY ===\n{personalization}", manifest]
+    system_sections = [
+        SYSTEM_PROMPT,
+        f"=== PERSONALITY & BACKSTORY ===\n{personalization}",
+        manifest,
+    ]
     system_sections.append(
         "Resolved interpretation of the current user message:\n"
         f"{resolved_query}\n"
@@ -895,7 +950,9 @@ def _flatten_search_results(search_execution: SearchExecution) -> list[dict[str,
     return flattened
 
 
-def _flatten_search_evidence_summary(search_execution: SearchExecution) -> list[dict[str, str]] | None:
+def _flatten_search_evidence_summary(
+    search_execution: SearchExecution,
+) -> list[dict[str, str]] | None:
     if not search_execution.bundles:
         return None
     return [
@@ -935,7 +992,9 @@ async def on_message(bot, msg):
     if msg.author == bot.user:
         return
     is_mentioned = bot.user in msg.mentions
-    is_reply_to_bot = msg.reference and msg.reference.resolved and msg.reference.resolved.author == bot.user
+    is_reply_to_bot = (
+        msg.reference and msg.reference.resolved and msg.reference.resolved.author == bot.user
+    )
     if not (is_mentioned or is_reply_to_bot):
         return
 
@@ -1046,14 +1105,16 @@ async def on_message(bot, msg):
             if route_plan.path == "memory" and memory_service is not None:
                 memory_start = time.time()
                 try:
-                    relevant_memories, memory_scanned = memory_service.retrieve_relevant_with_metrics(
-                        query=route_plan.query_text,
-                        server_id=server_id,
-                        channel_id=channel_id,
-                        user_id=user_id,
-                        limit=MEMORY_RECALL_LIMIT,
-                        relevance_threshold=MEMORY_RELEVANCE_THRESHOLD,
-                        candidate_pool=MEMORY_CANDIDATE_POOL,
+                    relevant_memories, memory_scanned = (
+                        memory_service.retrieve_relevant_with_metrics(
+                            query=route_plan.query_text,
+                            server_id=server_id,
+                            channel_id=channel_id,
+                            user_id=user_id,
+                            limit=MEMORY_RECALL_LIMIT,
+                            relevance_threshold=MEMORY_RELEVANCE_THRESHOLD,
+                            candidate_pool=MEMORY_CANDIDATE_POOL,
+                        )
                     )
                 except Exception as exc:
                     print(f"⚠️ Memory retrieval failed: {exc}")
@@ -1067,9 +1128,15 @@ async def on_message(bot, msg):
             if route_plan.path == "search":
                 search_execution = await _execute_search_plans(
                     route_plan.search_plans or [],
-                    reason="search_explicit" if route_plan.deterministic_gate == "explicit_search" else "analysis_time_sensitive",
+                    reason="search_explicit"
+                    if route_plan.deterministic_gate == "explicit_search"
+                    else "analysis_time_sensitive",
                 )
-                final_path = "explicit-search" if route_plan.deterministic_gate == "explicit_search" else "search-grounded"
+                final_path = (
+                    "explicit-search"
+                    if route_plan.deterministic_gate == "explicit_search"
+                    else "search-grounded"
+                )
             elif route_plan.path == "rag":
                 rag_start = time.time()
                 rag_decision = _evaluate_rag(
@@ -1085,7 +1152,8 @@ async def on_message(bot, msg):
                     if (
                         analysis is not None
                         and analysis.can_answer_from_general_knowledge
-                        and analysis.general_knowledge_confidence >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
+                        and analysis.general_knowledge_confidence
+                        >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
                     ):
                         final_path = "general-knowledge"
                     else:
@@ -1118,7 +1186,9 @@ async def on_message(bot, msg):
                             analysis_used=route_plan.analysis_used,
                             analysis_time_sensitive=analysis.time_sensitive if analysis else None,
                             analysis_search_query=analysis.search_query if analysis else "",
-                            analysis_rag_query=analysis.rag_query if analysis else route_plan.query_text,
+                            analysis_rag_query=analysis.rag_query
+                            if analysis
+                            else route_plan.query_text,
                             can_answer_from_general_knowledge=(
                                 analysis.can_answer_from_general_knowledge if analysis else False
                             ),
@@ -1137,13 +1207,24 @@ async def on_message(bot, msg):
             else:
                 rag_duration = 0.0
                 analysis = route_plan.analysis_decision
-                auto_search_enabled = SEARCH_TRIGGER_MODE not in {"explicit", "manual", "off", "disabled"}
+                auto_search_enabled = SEARCH_TRIGGER_MODE not in {
+                    "explicit",
+                    "manual",
+                    "off",
+                    "disabled",
+                }
                 general_safe = (
                     analysis is not None
                     and analysis.can_answer_from_general_knowledge
-                    and analysis.general_knowledge_confidence >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
+                    and analysis.general_knowledge_confidence
+                    >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
                 )
-                if analysis is not None and analysis.time_sensitive and auto_search_enabled and not general_safe:
+                if (
+                    analysis is not None
+                    and analysis.time_sensitive
+                    and auto_search_enabled
+                    and not general_safe
+                ):
                     search_execution = await _execute_search_plans(
                         route_plan.search_plans or [],
                         reason="analysis_time_sensitive_fallback",
@@ -1182,11 +1263,22 @@ async def on_message(bot, msg):
                             search_duration=search_execution.duration,
                             search_error=search_execution.error,
                             search_query_plans=(
-                                [{"label": plan.label, "query": plan.query, "purpose": plan.purpose} for plan in (route_plan.search_plans or [])]
+                                [
+                                    {
+                                        "label": plan.label,
+                                        "query": plan.query,
+                                        "purpose": plan.purpose,
+                                    }
+                                    for plan in (route_plan.search_plans or [])
+                                ]
                                 or None
                             ),
-                            search_evidence_summary=_flatten_search_evidence_summary(search_execution),
-                            exact_claims_allowed=_search_execution_exact_claims_allowed(search_execution),
+                            search_evidence_summary=_flatten_search_evidence_summary(
+                                search_execution
+                            ),
+                            exact_claims_allowed=_search_execution_exact_claims_allowed(
+                                search_execution
+                            ),
                             deterministic_gate=route_plan.deterministic_gate,
                             analysis_used=route_plan.analysis_used,
                             analysis_time_sensitive=analysis.time_sensitive,
@@ -1253,10 +1345,12 @@ async def on_message(bot, msg):
             manifest = rag.get_manifest()
             resolved_query = route_plan.query_text or user_content
             full_system_prompt = _build_system_prompt(
-                source_path="memory" if route_plan.path == "memory" else (
-                    "search" if final_path in {"search-grounded", "explicit-search"} else (
-                        "rag" if final_path == "rag-grounded" else "general"
-                    )
+                source_path="memory"
+                if route_plan.path == "memory"
+                else (
+                    "search"
+                    if final_path in {"search-grounded", "explicit-search"}
+                    else ("rag" if final_path == "rag-grounded" else "general")
                 ),
                 personalization=personalization,
                 manifest=manifest,
@@ -1302,7 +1396,10 @@ async def on_message(bot, msg):
                     search_duration=search_execution.duration,
                     search_error=search_execution.error,
                     search_query_plans=(
-                        [{"label": plan.label, "query": plan.query, "purpose": plan.purpose} for plan in (route_plan.search_plans or [])]
+                        [
+                            {"label": plan.label, "query": plan.query, "purpose": plan.purpose}
+                            for plan in (route_plan.search_plans or [])
+                        ]
                         or None
                     ),
                     search_evidence_summary=_flatten_search_evidence_summary(search_execution),
@@ -1312,8 +1409,12 @@ async def on_message(bot, msg):
                     analysis_time_sensitive=analysis.time_sensitive if analysis else None,
                     analysis_search_query=analysis.search_query if analysis else "",
                     analysis_rag_query=analysis.rag_query if analysis else resolved_query,
-                    can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge if analysis else False,
-                    general_knowledge_confidence=analysis.general_knowledge_confidence if analysis else 0.0,
+                    can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge
+                    if analysis
+                    else False,
+                    general_knowledge_confidence=analysis.general_knowledge_confidence
+                    if analysis
+                    else 0.0,
                     analysis_reason=analysis.reason if analysis else route_plan.reason,
                     final_path="uncertain",
                     rag_top_score=rag_decision.top_score if rag_decision else 0.0,
@@ -1373,8 +1474,12 @@ async def on_message(bot, msg):
                 analysis_time_sensitive=analysis.time_sensitive if analysis else None,
                 analysis_search_query=analysis.search_query if analysis else "",
                 analysis_rag_query=analysis.rag_query if analysis else resolved_query,
-                can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge if analysis else False,
-                general_knowledge_confidence=analysis.general_knowledge_confidence if analysis else 0.0,
+                can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge
+                if analysis
+                else False,
+                general_knowledge_confidence=analysis.general_knowledge_confidence
+                if analysis
+                else 0.0,
                 analysis_reason=analysis.reason if analysis else route_plan.reason,
                 final_path=final_path,
                 rag_top_score=rag_decision.top_score if rag_decision else 0.0,

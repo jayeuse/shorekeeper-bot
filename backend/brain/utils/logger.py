@@ -79,7 +79,9 @@ def log_response(
         print(f"🧩 Analysis Reason: {analysis_reason}")
     if analysis_payload:
         print(f"🧩 Analysis Payload: {analysis_payload}")
-    print(f"📚 RAG: top_score={rag_top_score:.3f}, accepted={rag_accepted}, rejection={rag_rejection_reason or '-'}")
+    print(
+        f"📚 RAG: top_score={rag_top_score:.3f}, accepted={rag_accepted}, rejection={rag_rejection_reason or '-'}"
+    )
     if search_query:
         print(f"🔎 Search Query: {search_query}")
     if search_query_plans:
@@ -126,7 +128,9 @@ def log_response(
             quality_suffix = f" | {evidence_quality}" if evidence_quality else ""
             surface_suffix = f" | {surface_class}" if surface_class else ""
             freshness_suffix = f" | {freshness_bucket}" if freshness_bucket else ""
-            print(f"   [{index}] {title} | {source}{source_suffix}{surface_suffix}{freshness_suffix}{quality_suffix}{published_suffix}")
+            print(
+                f"   [{index}] {title} | {source}{source_suffix}{surface_suffix}{freshness_suffix}{quality_suffix}{published_suffix}"
+            )
             if url:
                 print(f"       {url}")
             if snippet:

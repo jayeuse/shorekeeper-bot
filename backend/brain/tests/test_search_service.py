@@ -206,7 +206,9 @@ def test_parse_results_demotes_social_results_for_factual_queries(monkeypatch) -
     assert results[0].source == "example.com"
 
 
-def test_parse_results_classifies_fandom_as_community_and_filters_when_trusted_exists(monkeypatch) -> None:
+def test_parse_results_classifies_fandom_as_community_and_filters_when_trusted_exists(
+    monkeypatch,
+) -> None:
     monkeypatch.setattr(search_module, "SEARCH_TOPIC_DOMAIN_OVERRIDES", {})
     monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_OFFICIAL", [])
     monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_REFERENCE", ["wikipedia.org"])
@@ -313,7 +315,7 @@ def test_search_bundle_marks_exact_claims_only_for_strong_specific_results(monke
                         "url": "https://example.com/finance/nvda/quote",
                         "content": "NVIDIA price per share today is 205.19 with specific market details.",
                         "publishedDate": "2026-06-14",
-                    }
+                    },
                 ]
             }
 
@@ -349,7 +351,9 @@ def test_search_bundle_marks_exact_claims_only_for_strong_specific_results(monke
 
 def test_parse_results_classifies_download_portal_as_mirror_not_official(monkeypatch) -> None:
     monkeypatch.setattr(search_module, "SEARCH_TOPIC_DOMAIN_OVERRIDES", {})
-    monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_OFFICIAL", ["wutheringwaves.kurogames.com"])
+    monkeypatch.setattr(
+        search_module, "SEARCH_TRUSTED_DOMAINS_OFFICIAL", ["wutheringwaves.kurogames.com"]
+    )
     monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_REFERENCE", [])
     monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_NEWS", [])
     monkeypatch.setattr(search_module, "SEARCH_DEMOTED_DOMAINS", [])

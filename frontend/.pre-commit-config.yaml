@@ -6,28 +6,28 @@ repos:
     hooks:
       - id: format-check
         name: frontend prettier check
-        entry: npm run format:check
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/frontend" && npm run format:check'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]
 
       - id: lint
         name: frontend eslint
-        entry: npm run lint
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/frontend" && npm run lint'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]
 
       - id: test-coverage
         name: frontend vitest coverage
-        entry: npm run test:coverage
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/frontend" && npm run test:coverage'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]
 
       - id: build
         name: frontend build
-        entry: npm run build
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/frontend" && npm run build'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]

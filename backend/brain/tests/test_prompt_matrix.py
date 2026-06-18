@@ -35,7 +35,9 @@ async def _build_route_with_analysis(
     decision: message_module.AnalysisDecision,
     chat_history: list[dict] | None = None,
 ) -> message_module.RoutePlan:
-    async def _fake_analysis(user_content: str, history: list[dict]) -> message_module.AnalysisDecision:
+    async def _fake_analysis(
+        user_content: str, history: list[dict]
+    ) -> message_module.AnalysisDecision:
         assert user_content == prompt
         return decision
 
@@ -51,9 +53,9 @@ async def _build_route_with_analysis(
         ("what time is it right now?", "datetime", "datetime"),
         ("what day is it today?", "datetime", "datetime"),
         ("whats the date and time now?", "datetime", "datetime"),
-        ("search: latest nvidia stock price", "search", "explicit_search"),
-        ("search: current weather in tokyo", "search", "explicit_search"),
-        ("search: now", "general", "explicit_search_short"),
+        ("search: latest nvidia stock price", "general", "explicit_search_disabled"),
+        ("search: current weather in tokyo", "general", "explicit_search_disabled"),
+        ("search: now", "general", "explicit_search_disabled"),
         ("what was the first question i asked?", "memory", "memory"),
         ("do you remember what i told you earlier?", "memory", "memory"),
         ("what did i tell you previously?", "memory", "memory"),
@@ -64,7 +66,9 @@ async def _build_route_with_analysis(
         ("what topics do you have?", "general", "meta"),
     ],
 )
-def test_prompt_matrix_deterministic_routes(prompt: str, expected_path: str, expected_gate: str) -> None:
+def test_prompt_matrix_deterministic_routes(
+    prompt: str, expected_path: str, expected_gate: str
+) -> None:
     plan = message_module._build_deterministic_route_plan(prompt)
 
     assert plan is not None
@@ -73,7 +77,15 @@ def test_prompt_matrix_deterministic_routes(prompt: str, expected_path: str, exp
 
 
 @pytest.mark.parametrize(
-    ("prompt", "decision", "expected_query", "expected_fact", "expected_type", "expected_domain", "expected_entity"),
+    (
+        "prompt",
+        "decision",
+        "expected_query",
+        "expected_fact",
+        "expected_type",
+        "expected_domain",
+        "expected_entity",
+    ),
     [
         (
             "whats the current nvidia stock price?",
@@ -361,7 +373,9 @@ def test_prompt_matrix_non_time_sensitive_route_plan(
         ),
     ],
 )
-def test_prompt_matrix_recent_user_turn_extraction(chat_history: list[dict], expected_recent: list[str]) -> None:
+def test_prompt_matrix_recent_user_turn_extraction(
+    chat_history: list[dict], expected_recent: list[str]
+) -> None:
     recent = message_module._extract_recent_user_queries(chat_history, limit=3)
 
     assert recent == expected_recent

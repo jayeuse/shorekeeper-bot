@@ -1,0 +1,19 @@
+default_install_hook_types:
+  - pre-commit
+
+repos:
+  - repo: local
+    hooks:
+      - id: backend-pre-commit
+        name: backend pre-commit suite
+        entry: bash -c 'cd backend && uv run pre-commit run --config ../backend/.pre-commit-config.yaml --all-files'
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, manual]
+
+      - id: frontend-pre-commit
+        name: frontend pre-commit suite
+        entry: bash -c 'cd backend && uv run pre-commit run --config ../frontend/.pre-commit-config.yaml --all-files'
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, manual]

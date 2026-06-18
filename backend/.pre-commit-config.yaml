@@ -6,28 +6,28 @@ repos:
     hooks:
       - id: ruff-format-check
         name: backend ruff format check
-        entry: uv run ruff format --check
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/backend" && uv run ruff format --check .'
         language: system
+        pass_filenames: false
         stages: [pre-commit, manual]
-        types_or: [python, pyi]
 
       - id: ruff-check
         name: backend ruff check
-        entry: uv run ruff check
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/backend" && uv run ruff check .'
         language: system
+        pass_filenames: false
         stages: [pre-commit, manual]
-        types_or: [python, pyi]
 
       - id: mypy
         name: backend mypy
-        entry: uv run mypy
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/backend" && uv run mypy'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]
 
       - id: pytest
         name: backend pytest
-        entry: uv run pytest
+        entry: bash -c 'cd "$(git rev-parse --show-toplevel)/backend" && uv run pytest'
         language: system
         pass_filenames: false
         stages: [pre-commit, manual]

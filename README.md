@@ -57,7 +57,19 @@ npm ci
 cd ..
 ```
 
-### 3) Environment variables
+### 3) Pre-commit hooks
+
+Install the repo-level hook after syncing backend dev dependencies:
+
+```bash
+cd backend
+uv run pre-commit install --config ../.pre-commit-config.yaml --hook-type pre-commit
+cd ..
+```
+
+The root hook dispatches to the backend and frontend pre-commit configs.
+
+### 4) Environment variables
 
 Copy `.env.example` to `.env.local` and adjust as needed:
 
@@ -245,12 +257,21 @@ Shorekeeper live search is considered ready only when `verify_search.py` succeed
 
 ## Quality Gates
 
-Run these before pushing changes:
+The installed pre-commit hook runs the backend and frontend validation suites before each commit.
+Run the same dispatcher manually from the repo root with:
+
+```bash
+cd backend
+uv run pre-commit run --config ../.pre-commit-config.yaml --all-files
+```
+
+Equivalent manual commands are:
 
 ```bash
 cd backend
 uv run ruff format --check .
 uv run ruff check .
+uv run mypy
 uv run pytest
 
 cd ../frontend
