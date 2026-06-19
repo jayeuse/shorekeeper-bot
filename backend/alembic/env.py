@@ -12,12 +12,17 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-backend_root = Path(__file__).resolve().parents[2]
+backend_root = Path(__file__).resolve().parents[1]
+brain_root = backend_root / "brain"
+if str(brain_root) not in sys.path:
+    sys.path.insert(0, str(brain_root))
 if str(backend_root) not in sys.path:
     sys.path.insert(0, str(backend_root))
 
-# Register server models into SQLModel metadata.
-import server.models as _server_models  # type: ignore[import-not-found]  # noqa: F401,E402
+# Register all models into SQLModel metadata.
+import database.models as _database_models  # noqa: F401,E402
+
+import server.models as _server_models  # noqa: F401,E402
 
 target_metadata = SQLModel.metadata
 

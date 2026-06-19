@@ -93,7 +93,6 @@ data/
 *.sqlite
 *.db
 *.db-journal
-database/
 
 # Jupyter Notebooks
 .ipynb_checkpoints

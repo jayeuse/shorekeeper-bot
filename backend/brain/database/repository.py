@@ -1,8 +1,8 @@
 from datetime import UTC, datetime
 
-from memory.database import create_memory_engine
-from memory.migrations import upgrade_memory_database
-from memory.models import MemoryPair
+from database.database import create_memory_engine
+from database.migrations import upgrade_memory_database
+from database.models import MemoryPair
 from sqlalchemy import func
 from sqlmodel import Session, col, select
 

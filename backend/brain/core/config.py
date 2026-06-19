@@ -133,10 +133,31 @@ def build_runtime_values(
         _require_nested(runtime_config, "providers", "online_model"),
         "",
     )
-    online_base_url = _coerce_str(
-        _require_nested(runtime_config, "providers", "online_base_url"),
-        "",
+    online_base_url = _coerce_str(active_env.get("ONLINE_BASE_URL"), "") or _coerce_str(
+        _require_nested(runtime_config, "providers", "online_base_url"), ""
     )
+
+    # --- Mode toggle: online vs local ---
+    mode = _coerce_str(active_env.get("MODE"), "local").lower()
+    if mode not in {"online", "local"}:
+        raise RuntimeError(f"MODE must be 'online' or 'local', got: {mode}")
+
+    # Online-specific overrides for LLM and embedder
+    online_llm_api_key = active_env.get("ONLINE_LLM_API_KEY")
+    online_llm_model = (
+        active_env.get("ONLINE_LLM_MODEL") or active_env.get("ONLINE_LLM_NAME") or online_model
+    )
+    online_embedder_model = (
+        active_env.get("ONLINE_EMBEDDER_MODEL")
+        or active_env.get("ONLINE_EMBEDDER_NAME")
+        or embed_model
+    )
+
+    # When MODE=online, override to openai providers
+    if mode == "online":
+        llm_provider = "openai"
+        embedding_provider = "openai"
+        online_model = online_llm_model
 
     search_provider = _coerce_str(_require_nested(search_config, "provider"), "").strip().lower()
     search_base_url = _coerce_str(_require_nested(search_config, "base_url"), "").strip()
@@ -166,11 +187,21 @@ def build_runtime_values(
         False,
     )
 
+    # Database connection (required when MODE=online)
+    database_url = active_env.get("DATABASE_URL") or active_env.get(
+        "SUPABASE_DIRECT_CONNECTION_STRING"
+    )
+    if mode == "online" and not database_url:
+        raise RuntimeError("DATABASE_URL is required when MODE=online")
+
     values: dict[str, Any] = {
         "PROJECT_ROOT": active_project_root,
         "DISCORD_TOKEN": _require_env(active_env, "DISCORD_TOKEN"),
-        "ONLINE_API_KEY": active_env.get("ONLINE_API_KEY") or active_env.get("DEEPSEEK_API_KEY"),
+        "MODE": mode,
         "ONLINE_BASE_URL": online_base_url,
+        "ONLINE_LLM_API_KEY": online_llm_api_key,
+        "ONLINE_LLM_MODEL": online_llm_model,
+        "ONLINE_EMBEDDER_MODEL": online_embedder_model,
         "LOCAL_API_KEY": _require_env(active_env, "LOCAL_API_KEY"),
         "LOCAL_BASE_URL": local_base_url,
         "EMBED_BASE_URL": embed_base_url,
@@ -180,6 +211,7 @@ def build_runtime_values(
         "ONLINE_MODEL": online_model,
         "LOCAL_MODEL": local_model,
         "EMBED_MODEL": embed_model,
+        "DATABASE_URL": database_url,
         "LOCAL_CONTEXT_WINDOW": _coerce_int(
             _require_nested(runtime_config, "llama", "local", "context_window"),
             0,
@@ -316,7 +348,10 @@ def build_runtime_values(
     }
 
     memory_default_db_path = str(active_project_root / "database" / "memory" / "memory.db")
-    values["MEMORY_DB_PATH"] = active_env.get("MEMORY_DB_PATH", memory_default_db_path)
+    if mode == "online":
+        values["MEMORY_DB_PATH"] = database_url
+    else:
+        values["MEMORY_DB_PATH"] = active_env.get("MEMORY_DB_PATH", memory_default_db_path)
     values["DATA_DIR"] = active_project_root / "backend" / "brain" / "data"
     values["VECTORS_PATH"] = values["DATA_DIR"] / "vectors.json"
     values["EMBEDDINGS_PATH"] = values["DATA_DIR"] / "embeddings.npz"
@@ -329,7 +364,10 @@ def build_runtime_values(
 _SETTINGS = build_runtime_values()
 
 DISCORD_TOKEN = _SETTINGS["DISCORD_TOKEN"]
-ONLINE_API_KEY = _SETTINGS["ONLINE_API_KEY"]
+MODE = _SETTINGS["MODE"]
+ONLINE_LLM_API_KEY = _SETTINGS["ONLINE_LLM_API_KEY"]
+ONLINE_LLM_MODEL = _SETTINGS["ONLINE_LLM_MODEL"]
+ONLINE_EMBEDDER_MODEL = _SETTINGS["ONLINE_EMBEDDER_MODEL"]
 ONLINE_BASE_URL = _SETTINGS["ONLINE_BASE_URL"]
 LOCAL_API_KEY = _SETTINGS["LOCAL_API_KEY"]
 LOCAL_BASE_URL = _SETTINGS["LOCAL_BASE_URL"]
@@ -345,6 +383,8 @@ EMBED_MODEL = _SETTINGS["EMBED_MODEL"]
 
 LOCAL_CONTEXT_WINDOW = _SETTINGS["LOCAL_CONTEXT_WINDOW"]
 LOCAL_KV_CACHE_KEEP = _SETTINGS["LOCAL_KV_CACHE_KEEP"]
+
+DATABASE_URL = _SETTINGS["DATABASE_URL"]
 
 MEMORY_ENABLED = _SETTINGS["MEMORY_ENABLED"]
 MEMORY_RECALL_LIMIT = _SETTINGS["MEMORY_RECALL_LIMIT"]

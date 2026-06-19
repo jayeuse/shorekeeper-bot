@@ -6,7 +6,10 @@ from core.config import (
     EMBED_MODEL,
     EMBEDDING_PROVIDER,
     LOCAL_API_KEY,
-    ONLINE_API_KEY,
+    MODE,
+    ONLINE_BASE_URL,
+    ONLINE_EMBEDDER_MODEL,
+    ONLINE_LLM_API_KEY,
 )
 from openai import OpenAI
 
@@ -38,17 +41,19 @@ class EmbedderClient:
 
         if self.provider in {"llamacpp", "openai"}:
             try:
+                base_url = ONLINE_BASE_URL if self.provider == "openai" else EMBED_BASE_URL
+                model = ONLINE_EMBEDDER_MODEL if self.provider == "openai" else EMBED_MODEL
+                self.model = model
                 api_key = (
                     EMBED_API_KEY
                     if self.provider == "llamacpp"
-                    else (ONLINE_API_KEY or EMBED_API_KEY or "no-key")
+                    else (ONLINE_LLM_API_KEY or EMBED_API_KEY or "no-key")
                 )
-                self.client = OpenAI(api_key=api_key or LOCAL_API_KEY, base_url=EMBED_BASE_URL)
-                print(
-                    f"🧠 Using OpenAI-compatible embedding endpoint: {self.model} ({EMBED_BASE_URL})"
-                )
+                self.client = OpenAI(api_key=api_key or LOCAL_API_KEY, base_url=base_url)
+                mode_tag = "remote" if MODE == "online" else "local"
+                print(f"🧠 Using {mode_tag} embedding endpoint: {self.model} ({base_url})")
             except Exception as e:
-                print(f"❌ Failed to init embedding server at {EMBED_BASE_URL}: {e}")
+                print(f"❌ Failed to init embedding server at {base_url}: {e}")
                 self.provider = "ollama"
 
         if self.provider == "ollama":
@@ -86,8 +91,15 @@ class EmbedderClient:
         try:
             # llama.cpp truncation safety: 8000 chars is roughly 2000 tokens
             safe_text = text[:8000]
-            response = self.client.embeddings.create(model=self.model, input=safe_text)
+            response = self.client.embeddings.create(
+                model=self.model, input=safe_text, encoding_format="float"
+            )
             return response.data[0].embedding
         except Exception as e:
-            print(f"⚠️  Embedding Server Error: {e}")
+            exc_type = type(e).__name__
+            resp = getattr(e, "response", None)
+            status = getattr(e, "status_code", None) or (resp.status_code if resp else None)
+            body = resp.text if resp else getattr(e, "body", None) or str(e)
+            prefix = f" (HTTP {status})" if status else ""
+            print(f"⚠️  Embedding Server Error{prefix} [{exc_type}] [model={self.model}]: {body}")
             return []

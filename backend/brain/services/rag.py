@@ -5,6 +5,8 @@ from collections.abc import Callable
 from typing import Any
 
 import numpy as np
+from sqlalchemy import text
+from sqlmodel import Session, create_engine
 
 try:
     from yaml import safe_load as _safe_load
@@ -16,6 +18,8 @@ except Exception:
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
+from core.config import DATABASE_URL, MODE
+from database.models import KnowledgeVector
 from services.embedder import EmbedderClient
 
 KNOWLEDGE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge")
@@ -126,7 +130,7 @@ def chunk_by_heading(text, source="", metadata=None):
         ]
         cleaned = "\n".join(lines).strip()
 
-        if len(cleaned) < 20:
+        if len(cleaned) < 20 or (len(cleaned.split("\n")) <= 1 and cleaned.startswith("#")):
             continue
 
         heading_match = re.match(r"^## (.+)", cleaned)
@@ -186,13 +190,15 @@ class RAG:
 
             if not vector:
                 failed_count += 1
+                print(f"   ⚠️  Failed to embed chunk {i}: {chunk['source']} :: {chunk['heading']}")
                 # If it's a massive failure, stop early
                 if failed_count > 50:
                     raise Exception(
                         "Too many embedding failures. Check your server connection/batch size."
                     )
                 # Use a zero vector as fallback (will have 0 similarity)
-                vector = [0.0] * 768  # Default size for nomic-embed-text
+                fallback_dim = len(embeddings[0]) if embeddings else 768
+                vector = [0.0] * fallback_dim
 
             embeddings.append(vector)
 
@@ -222,6 +228,49 @@ class RAG:
         print(f"✅ Knowledge base built: {len(self.chunks)} chunks saved")
         print(f"   Metadata: {STORE_PATH}")
         print(f"   Embeddings: {EMBEDDINGS_PATH}.npz (float16, compressed)")
+
+        if MODE == "online":
+            self._save_to_db()
+
+    def _save_to_db(self) -> None:
+        if not DATABASE_URL:
+            print("⚠️  DATABASE_URL not set, skipping database persistence")
+            return
+        if not self.chunks:
+            print("⚠️  No chunks or embeddings to persist")
+            return
+        if isinstance(self.embeddings, np.ndarray):
+            if self.embeddings.size == 0:
+                print("⚠️  No chunks or embeddings to persist")
+                return
+        elif not self.embeddings:
+            print("⚠️  No chunks or embeddings to persist")
+            return
+
+        engine = create_engine(DATABASE_URL)
+        records: list[KnowledgeVector] = []
+        for chunk, embedding in zip(self.chunks, self.embeddings, strict=False):
+            embedding_array = np.array(embedding, dtype=np.float32)
+            records.append(
+                KnowledgeVector(
+                    chunk_id=chunk["id"],
+                    source=chunk["source"],
+                    heading=chunk["heading"],
+                    label=chunk.get("label", ""),
+                    text=chunk["text"],
+                    metadata_json=json.dumps(chunk.get("metadata", {})),
+                    embedding_blob=embedding_array.tobytes(),
+                )
+            )
+
+        with Session(engine) as session:
+            session.execute(text("DELETE FROM knowledge_vectors"))
+            for record in records:
+                session.add(record)
+            session.commit()
+
+        engine.dispose()
+        print(f"   Database: {len(records)} vectors written to {DATABASE_URL[:40]}...")
 
     def load(self):
         if not os.path.exists(STORE_PATH):

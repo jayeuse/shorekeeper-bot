@@ -46,6 +46,8 @@ llm_client = LLMClient()
 
 
 def _resolve_memory_db_path() -> str:
+    if MEMORY_DB_PATH.startswith(("postgresql://", "postgres://")):
+        return MEMORY_DB_PATH
     if Path(MEMORY_DB_PATH).is_absolute():
         return MEMORY_DB_PATH
     project_root = Path(__file__).resolve().parents[3]

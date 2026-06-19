@@ -81,7 +81,7 @@ Default `.env.local` now keeps secrets and feature toggles:
 
 ```env
 DISCORD_TOKEN=your_discord_bot_token
-ONLINE_API_KEY=your_deepseek_api_key
+ONLINE_LLM_API_KEY=your_openrouter_api_key
 LOCAL_API_KEY=no-key
 EMBED_API_KEY=no-key
 

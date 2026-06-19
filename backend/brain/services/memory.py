@@ -3,8 +3,8 @@ import re
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
-from memory.models import MemoryPair
-from memory.repository import MemoryRepository
+from database.models import MemoryPair
+from database.repository import MemoryRepository
 
 _WORD_RE = re.compile(r"[a-zA-Z0-9_]+")
 

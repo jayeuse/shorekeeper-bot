@@ -12,8 +12,10 @@ from core.config import (
     LOCAL_CONTEXT_WINDOW,
     LOCAL_KV_CACHE_KEEP,
     LOCAL_MODEL,
-    ONLINE_API_KEY,
+    MODE,
     ONLINE_BASE_URL,
+    ONLINE_LLM_API_KEY,
+    ONLINE_LLM_MODEL,
     ONLINE_MODEL,
 )
 from openai import AsyncOpenAI
@@ -55,15 +57,18 @@ class LLMClient:
         self.client: AsyncOpenAI | None = None
 
         if self.provider == "openai":
-            if not ONLINE_API_KEY or not ONLINE_MODEL:
+            effective_key = ONLINE_LLM_API_KEY
+            effective_model = ONLINE_LLM_MODEL or ONLINE_MODEL
+            if not effective_key or not effective_model:
                 print(
-                    "❌ ONLINE_API_KEY or ONLINE_MODEL missing. Falling back to local llama.cpp server."
+                    "❌ ONLINE_LLM_API_KEY or ONLINE_MODEL missing. Falling back to local llama.cpp server."
                 )
                 self.provider = "llamacpp"
             else:
-                self.client = AsyncOpenAI(api_key=ONLINE_API_KEY, base_url=ONLINE_BASE_URL)
-                self.model = ONLINE_MODEL
-                print(f"✨ Using OpenAI-compatible remote model: {self.model} ({ONLINE_BASE_URL})")
+                self.client = AsyncOpenAI(api_key=effective_key, base_url=ONLINE_BASE_URL)
+                self.model = effective_model
+                mode_tag = "remote" if MODE == "online" else "OpenAI-compatible"
+                print(f"✨ Using {mode_tag} model: {self.model} ({ONLINE_BASE_URL})")
 
         if self.provider == "llamacpp":
             self.client = AsyncOpenAI(api_key=LOCAL_API_KEY, base_url=LOCAL_BASE_URL)
@@ -155,4 +160,8 @@ class LLMClient:
                 "prompt_eval_duration": 0,
             }
         except Exception as e:
-            raise RuntimeError(f"OpenAI-compatible model call failed: {e}") from e
+            resp = getattr(e, "response", None)
+            status = getattr(e, "status_code", None) or (resp.status_code if resp else None)
+            body = resp.text if resp else getattr(e, "body", None) or str(e)
+            prefix = f" (HTTP {status})" if status else ""
+            raise RuntimeError(f"OpenAI-compatible model call failed{prefix}: {body}") from e
