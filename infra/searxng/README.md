@@ -9,6 +9,12 @@ cp infra/searxng/.env.example infra/searxng/.env
 docker compose -f infra/searxng/docker-compose.yml up -d
 ```
 
+Or start it together with both local llama.cpp servers from the repo root:
+
+```bash
+./scripts/start-llama-local.sh
+```
+
 ## Stop
 
 ```bash

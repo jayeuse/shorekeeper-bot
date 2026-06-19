@@ -1,0 +1,221 @@
+<mxfile host="app.diagrams.net" modified="2026-06-19T12:00:00.000Z" agent="OpenCode" version="24.7.17" type="device">
+  <diagram id="search-flow" name="search.py Flow">
+    <mxGraphModel dx="2260" dy="1404" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="search.py Detailed Flow&#xa;Query Planning -> Provider Execution -> Result Parsing -> Ranking -> Confidence Gating -> Bot Outputs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="1200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane1" value="1. Query Planning Layer" style="swimlane;whiteSpace=wrap;html=1;startSize=32;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="110" width="420" height="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" value="2. Provider Construction / Entry" style="swimlane;whiteSpace=wrap;html=1;startSize=32;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="110" width="350" height="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3" value="3. SearXNG Request + Raw Result Parsing" style="swimlane;whiteSpace=wrap;html=1;startSize=32;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="110" width="430" height="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="lane4" value="4. Ranking / Filtering / Evidence Analysis" style="swimlane;whiteSpace=wrap;html=1;startSize=32;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="110" width="470" height="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="lane5" value="5. Bot-Facing Output / Consumers" style="swimlane;whiteSpace=wrap;html=1;startSize=32;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="110" width="390" height="1540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n1" value="Input from handler&#xa;- Normal chat analysis result&#xa;- Slash command query&#xa;- Explicit reason/label from caller" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="170" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" value="normalize_search_query()&#xa;- Trim whitespace&#xa;- Remove leading/trailing punctuation&#xa;- Optionally clip by ROUTER_MAX_QUERY_CHARS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="290" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="Decision: query length &lt; SEARCH_MIN_QUERY_LENGTH?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="120" y="430" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="Return None&#xa;Caller replies with &#34;too short / need more detail&#34;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="570" width="320" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="infer_search_requested_fact()&#xa;Examples:&#xa;- price per share&#xa;- latest version&#xa;- current banners&#xa;- identity&#xa;- definition&#xa;- status update" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="690" width="320" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="infer_search_target_entity()&#xa;Examples: Wuthering Waves, Genshin Impact, NVIDIA, Tesla, Shorekeeper" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="850" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="infer_search_question_type()&#xa;Maps requested fact + text shape to:&#xa;- current_metric&#xa;- latest_release&#xa;- current_availability&#xa;- identity&#xa;- definition&#xa;- event_status&#xa;- background_fact / generic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="970" width="320" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="infer_search_subject_domain()&#xa;- finance&#xa;- game&#xa;- language&#xa;- identity&#xa;- general" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1160" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="create_search_plan() -> SearchQueryPlan&#xa;Fields set:&#xa;- label&#xa;- query&#xa;- purpose&#xa;- target_entity&#xa;- requested_fact&#xa;- question_type&#xa;- freshness_required=True&#xa;- subject_domain&#xa;- confidence=1.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1290" width="320" height="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p1" value="create_enabled_search_provider(enabled)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="170" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="Decision: SEARCH_ENABLED?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="540" y="270" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="Return None&#xa;Search unavailable / disabled path" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="400" width="270" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="build_search_provider()&#xa;- Currently supports SEARCH_PROVIDER=searxng only&#xa;- Instantiates SearxNGSearchProvider" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="500" width="270" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" value="run_search_plans(plans, reason, search_provider)&#xa;- Short-circuits if provider is None or plans empty&#xa;- Tracks duration, errors, result count&#xa;- Stops on first bundle with non-empty results" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="650" width="270" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p6" value="For each SearchQueryPlan&#xa;call search_provider.search(&#xa;query, limit, topic, target_entity, requested_fact, question_type, freshness_required, label&#xa;)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="820" width="270" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="p7" value="Decision: provider error / no results?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="540" y="970" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="p8" value="Collect error text&#xa;- SearchError&#xa;- Unexpected error&#xa;- &#34;Search returned no results&#34;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1100" width="270" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p9" value="Return SearchExecution&#xa;- used=False if all plans fail&#xa;- used=True on first non-empty bundle&#xa;- includes provider, duration, error summary, bundles" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1240" width="270" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r1" value="SearxNGSearchProvider.search()&#xa;- GET {SEARCH_BASE_URL}/search&#xa;- params: q, format=json, language=en" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="170" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="Error handling&#xa;- Timeout -> SearchError&#xa;- HTTPError -> SearchError&#xa;- Invalid JSON -> SearchError" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="290" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="_parse_results(payload)&#xa;Validate payload contains results list" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="410" width="350" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" value="For each raw result item&#xa;- normalize title&#xa;- normalize snippet/content&#xa;- extract url and source host&#xa;- parse published date&#xa;- read provider score if present" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="510" width="350" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" value="Host / safety filtering&#xa;- drop if no title/url/source&#xa;- drop private/loopback/reserved hosts when enabled&#xa;- drop if not in SEARCH_SAFE_DOMAINS when safelist is configured" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="670" width="350" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r6" value="Build SearchResult skeleton&#xa;then attach ranking metadata from _score_result()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="810" width="350" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="r7" value="Sort descending by rank_score" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="910" width="350" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="r8" value="_filter_ranked_results()&#xa;- Prefer trusted sources for fresh/fact-specific searches&#xa;- Preserve fallback only if safe enough&#xa;- Otherwise remove demoted/mirror when possible" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="1000" width="350" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="r9" value="Return filtered ranked SearchResult[]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="870" y="1150" width="350" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" value="_classify_source()&#xa;Source classes:&#xa;- blocked&#xa;- topic_preferred&#xa;- official&#xa;- reference&#xa;- news&#xa;- mirror&#xa;- demoted&#xa;- community&#xa;- fallback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="170" width="390" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="_classify_surface()&#xa;Surface classes:&#xa;- wiki_page&#xa;- store_page&#xa;- download_page&#xa;- patch_notes&#xa;- news_post&#xa;- guide&#xa;- article_farm&#xa;- index_page&#xa;- generic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="350" width="390" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="_score_result() base scoring&#xa;- start from source trust score&#xa;- add topic match&#xa;- add entity match score * 3.0&#xa;- add fact match score * 2.5&#xa;- add specificity score * 1.5&#xa;- add small provider score bonus" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="530" width="390" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="Freshness logic&#xa;- parse ISO-ish date&#xa;- bucket: recent / aging / stale / undated&#xa;- if freshness_required, penalize old results&#xa;- reward recent dated items&#xa;- penalize preview / coming-soon style pages" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="710" width="390" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="Surface penalties / boosts&#xa;- penalize download/store/article_farm/guide/index pages&#xa;- boost trusted patch notes and trusted news posts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="880" width="390" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" value="Evidence strength&#xa;- entity_match_score&#xa;- fact_match_score&#xa;- specificity_score&#xa;- evidence_quality = high / medium / low" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="1010" width="390" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" value="supports_exact_answer?&#xa;Requires all of:&#xa;- high evidence quality&#xa;- strong entity/fact/specificity thresholds&#xa;- trusted source class&#xa;- acceptable surface class&#xa;- freshness in recent/aging&#xa;- no preview hints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="1140" width="390" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" value="_agreement_status()&#xa;- inspect top trusted candidates&#xa;- derive claim signature from result content&#xa;- latest_release -> version signature&#xa;- current_metric -> numeric signature&#xa;- else -> meaningful token signature&#xa;- outcome: agree / disagree / insufficient_trusted" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="1300" width="390" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="a9" value="_summarize_bundle_confidence()&#xa;Outputs on SearchBundle:&#xa;- confidence_summary&#xa;- exact_claim_allowed&#xa;- evidence_summary&#xa;- agreement_status&#xa;- trusted_result_count&#xa;- fallback_result_count&#xa;- exact_claim_reason&#xa;- response_mode (exact / summary / uncertain)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="1490" width="390" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="o1" value="SearchBundle returned to caller&#xa;- query&#xa;- results[]&#xa;- provider&#xa;- confidence summary metadata" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="170" width="310" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="o2" value="SearchExecution returned by run_search_plans()&#xa;- used / reason / provider / duration / error / bundles" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="300" width="310" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="o3" value="build_search_context_block()&#xa;Creates LLM prompt section with:&#xa;- grouped results&#xa;- evidence confidence&#xa;- exact-claim allowance&#xa;- agreement / reason / response mode&#xa;- per-result trust, freshness, penalties, snippets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="430" width="310" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="o4" value="search_execution_allows_exact_claims()&#xa;Consumer uses this to decide if exact current claims are safe" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="610" width="310" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="o5" value="serialize_search_results()&#xa;Flattens SearchExecution for logs / telemetry / debugging" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="730" width="310" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="o6" value="serialize_search_evidence_summary()&#xa;Flattens per-bundle evidence summary for logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="850" width="310" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="o7" value="Normal chat consumer&#xa;- analysis builds rag-only route now&#xa;- slash search path uses SearchExecution + prompt block + exact-claim gate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="970" width="310" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="o8" value="Slash command consumer&#xa;handle_search_interaction():&#xa;- create plan&#xa;- run plans&#xa;- short-circuit on disabled / unavailable / uncertain&#xa;- else send LLM grounded response" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="1110" width="310" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="o9" value="Core safety outcome&#xa;search.py does not just fetch results.&#xa;It decides whether the bot may safely give:&#xa;- an exact answer&#xa;- a cautious summary&#xa;- or an uncertainty response" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="1290" width="310" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n3" target="n5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n7" target="n8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n8" target="n9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="n9" target="p5"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p1" target="p2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p2" target="p3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p2" target="p4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p4" target="p5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p5" target="p6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p6" target="r1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r1" target="r2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r2" target="r3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r3" target="r4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r4" target="r5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r5" target="a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a1" target="a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a2" target="a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a3" target="a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a4" target="a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a5" target="a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a6" target="a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a7" target="r6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r6" target="r7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r7" target="r8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r8" target="r9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r9" target="a8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a8" target="a9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="a9" target="o1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o1" target="p7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e35" value="Fail / empty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p7" target="p8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e36" value="Success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p7" target="p9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p8" target="p9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="p9" target="o2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o2" target="o3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o2" target="o4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o2" target="o5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o2" target="o6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o3" target="o7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o4" target="o7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o3" target="o8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o4" target="o8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o5" target="o9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="o6" target="o9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="a7" target="o4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="a9" target="o9"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -3,12 +3,14 @@ import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
+from typing import Any, cast
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from handlers import conversation_context
 from handlers import message as message_module
-from services.search import SearchBundle, SearchError, SearchResult
+from handlers import search_command as search_command_module
+from services.search import SearchBundle, SearchResult
 
 
 class _StubRag:
@@ -146,30 +148,6 @@ class _SuccessSearchProvider:
         )
 
 
-class _EmptySearchProvider:
-    async def search(self, query: str, limit: int, **kwargs) -> SearchBundle:
-        return SearchBundle(
-            query=query,
-            provider="searxng",
-            used_fallback_query=False,
-            label=kwargs.get("label", ""),
-            confidence_summary="low",
-            exact_claim_allowed=False,
-            evidence_summary="No usable evidence.",
-            agreement_status="none",
-            trusted_result_count=0,
-            fallback_result_count=0,
-            exact_claim_reason="no results",
-            response_mode="uncertain",
-            results=[],
-        )
-
-
-class _FailingSearchProvider:
-    async def search(self, query: str, limit: int, **kwargs) -> SearchBundle:
-        raise SearchError("backend unavailable")
-
-
 class _CustomSearchProvider:
     def __init__(self, bundle: SearchBundle) -> None:
         self.bundle = bundle
@@ -180,18 +158,42 @@ class _CustomSearchProvider:
         return self.bundle
 
 
+class _InteractionResponse:
+    def __init__(self) -> None:
+        self.sent: list[str] = []
+        self.deferred = False
+
+    async def send_message(self, content: str) -> None:
+        self.sent.append(content)
+
+    async def defer(self, *, thinking: bool = False) -> None:
+        self.deferred = thinking
+
+
+class _InteractionFollowup:
+    def __init__(self) -> None:
+        self.sent: list[str] = []
+
+    async def send(self, content: str) -> None:
+        self.sent.append(content)
+
+
+class _Interaction:
+    def __init__(self) -> None:
+        self.response = _InteractionResponse()
+        self.followup = _InteractionFollowup()
+        self.user = SimpleNamespace(id=123, __str__=lambda: "Rover")
+        self.channel = SimpleNamespace(__str__=lambda: "bot")
+
+
 def _analysis_response(
     *,
-    time_sensitive: bool,
-    search_query: str,
     rag_query: str,
     can_answer_from_general_knowledge: bool,
     general_knowledge_confidence: float,
     reason: str,
 ) -> dict:
     payload = {
-        "time_sensitive": time_sensitive,
-        "search_query": search_query,
         "rag_query": rag_query,
         "can_answer_from_general_knowledge": can_answer_from_general_knowledge,
         "general_knowledge_confidence": general_knowledge_confidence,
@@ -218,11 +220,10 @@ def _final_response(text: str) -> dict:
     }
 
 
-def _configure_runtime(
+def _configure_message_runtime(
     monkeypatch,
     *,
     rag_results=None,
-    search_provider=None,
     llm_responses=None,
 ):
     conversation_context.conversation_context.clear()
@@ -237,12 +238,6 @@ def _configure_runtime(
     monkeypatch.setattr(message_module, "rag", stub_rag)
     monkeypatch.setattr(message_module, "llm_client", stub_llm)
     monkeypatch.setattr(message_module, "memory_service", None)
-    monkeypatch.setattr(message_module, "search_provider", search_provider)
-    monkeypatch.setattr(message_module, "SEARCH_ENABLED", True)
-    monkeypatch.setattr(message_module, "SEARCH_EXPLICIT_PREFIX", "search:")
-    monkeypatch.setattr(message_module, "SEARCH_MIN_QUERY_LENGTH", 5)
-    monkeypatch.setattr(message_module, "SEARCH_MAX_RESULTS", 5)
-    monkeypatch.setattr(message_module, "SEARCH_TRIGGER_MODE", "hybrid")
     monkeypatch.setattr(message_module, "ANALYSIS_ENABLED", True)
     monkeypatch.setattr(message_module, "ANALYSIS_TIMEOUT_SECONDS", 6.0)
     monkeypatch.setattr(message_module, "RAG_ANSWER_SCORE_THRESHOLD", 0.62)
@@ -253,10 +248,26 @@ def _configure_runtime(
     return stub_rag, stub_llm, log_calls
 
 
+def _configure_slash_runtime(monkeypatch, *, search_provider, llm_responses=None):
+    stub_rag = _StubRag()
+    stub_llm = _StubLLM()
+    stub_llm.responses = list(llm_responses or [])
+    log_calls: list[dict] = []
+
+    def _fake_log_response(*args, **kwargs) -> None:
+        log_calls.append(kwargs)
+
+    monkeypatch.setattr(search_command_module, "rag", stub_rag)
+    monkeypatch.setattr(search_command_module, "llm_client", stub_llm)
+    monkeypatch.setattr(search_command_module, "search_provider", search_provider)
+    monkeypatch.setattr(search_command_module, "log_response", _fake_log_response)
+    return stub_rag, stub_llm, log_calls
+
+
 def test_build_system_prompt_warns_when_exact_claims_not_allowed() -> None:
     execution = message_module.SearchExecution(
         used=True,
-        reason="analysis_time_sensitive",
+        reason="slash_search",
         query="query",
         provider="searxng",
         result_count=1,
@@ -302,16 +313,12 @@ def test_build_system_prompt_warns_when_exact_claims_not_allowed() -> None:
 def test_analysis_fallback_builds_safe_default() -> None:
     decision = message_module._analysis_fallback("whats the latest nvidia price?", [])
 
-    assert decision.time_sensitive is True
-    assert "nvidia" in decision.search_query
     assert decision.rag_query == "whats the latest nvidia price"
+    assert decision.can_answer_from_general_knowledge is False
 
 
 def test_on_message_uses_local_datetime_without_llm(monkeypatch) -> None:
-    stub_rag, stub_llm, log_calls = _configure_runtime(
-        monkeypatch,
-        search_provider=_SuccessSearchProvider(),
-    )
+    stub_rag, stub_llm, log_calls = _configure_message_runtime(monkeypatch)
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
     msg = _Message(content="<@999> whats the date today?", bot_user=bot_user)
@@ -324,133 +331,27 @@ def test_on_message_uses_local_datetime_without_llm(monkeypatch) -> None:
     assert log_calls[0]["deterministic_gate"] == "datetime"
 
 
-def test_on_message_explicit_search_bypasses_analysis(monkeypatch) -> None:
-    search = _SuccessSearchProvider()
-    _, stub_llm, log_calls = _configure_runtime(monkeypatch, search_provider=search)
+def test_message_search_prefix_no_longer_triggers_live_search(monkeypatch) -> None:
+    _, stub_llm, log_calls = _configure_message_runtime(
+        monkeypatch,
+        llm_responses=[
+            _analysis_response(
+                rag_query="search latest nvidia share price",
+                can_answer_from_general_knowledge=False,
+                general_knowledge_confidence=0.1,
+                reason="current fact requires slash search",
+            )
+        ],
+    )
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
     msg = _Message(content="<@999> search: latest nvidia share price", bot_user=bot_user)
 
     asyncio.run(message_module.on_message(bot, msg))
 
-    assert search.calls == [("latest nvidia share price", 5, "explicit", "current_metric", True)]
     assert len(stub_llm.calls) == 1
-    assert log_calls[0]["analysis_used"] is False
-    assert log_calls[0]["final_path"] == "explicit-search"
-
-
-def test_on_message_explicit_search_returns_disabled_when_search_off(monkeypatch) -> None:
-    search = _SuccessSearchProvider()
-    _, stub_llm, log_calls = _configure_runtime(monkeypatch, search_provider=search)
-    monkeypatch.setattr(message_module, "SEARCH_ENABLED", False)
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-    msg = _Message(content="<@999> search: latest nvidia share price", bot_user=bot_user)
-
-    asyncio.run(message_module.on_message(bot, msg))
-
-    assert search.calls == []
-    assert stub_llm.calls == []
-    assert "search is currently disabled" in msg.replies[0].lower()
-    assert log_calls[0]["final_path"] == "search-disabled"
-
-
-def test_time_sensitive_prompt_forces_search(monkeypatch) -> None:
-    search = _SuccessSearchProvider()
-    _, stub_llm, log_calls = _configure_runtime(
-        monkeypatch,
-        search_provider=search,
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="current nvidia stock price",
-                rag_query="current nvidia stock price",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="current external fact",
-            ),
-            _final_response("I checked the latest market data."),
-        ],
-    )
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-    msg = _Message(content="<@999> whats the current nvidia stock pricing?", bot_user=bot_user)
-
-    asyncio.run(message_module.on_message(bot, msg))
-
-    assert search.calls == [("current nvidia stock price", 5, "primary", "current_metric", True)]
-    assert len(stub_llm.calls) == 2
-    assert log_calls[0]["analysis_time_sensitive"] is True
-    assert log_calls[0]["final_path"] == "search-grounded"
-
-
-def test_explicit_search_mode_disables_automatic_search(monkeypatch) -> None:
-    search = _SuccessSearchProvider()
-    stub_rag, _, log_calls = _configure_runtime(
-        monkeypatch,
-        rag_results=[
-            {"score": 0.10, "source": "lore.md", "heading": "Lore", "text": "Weak match."}
-        ],
-        search_provider=search,
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="current nvidia stock price",
-                rag_query="current nvidia stock price",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="current external fact",
-            ),
-        ],
-    )
-    monkeypatch.setattr(message_module, "SEARCH_TRIGGER_MODE", "explicit")
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-    msg = _Message(content="<@999> whats the current nvidia stock price?", bot_user=bot_user)
-
-    asyncio.run(message_module.on_message(bot, msg))
-
-    assert search.calls == []
-    assert stub_rag.calls == []
     assert "do not know that accurately" in msg.replies[0].lower()
     assert log_calls[0]["final_path"] == "uncertain"
-
-
-def test_current_domain_specific_fact_still_forces_search_not_rag(monkeypatch) -> None:
-    search = _SuccessSearchProvider()
-    stub_rag, _, log_calls = _configure_runtime(
-        monkeypatch,
-        rag_results=[{"score": 0.99, "source": "lore.md", "heading": "Lore", "text": "Old lore"}],
-        search_provider=search,
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="latest version of wuthering waves",
-                rag_query="latest version of wuthering waves",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="latest external fact",
-            ),
-            _final_response("I checked the latest release reports."),
-        ],
-    )
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-
-    asyncio.run(
-        message_module.on_message(
-            bot,
-            _Message(
-                content="<@999> whats the latest version of wuthering waves?", bot_user=bot_user
-            ),
-        )
-    )
-
-    assert stub_rag.calls == []
-    assert search.calls == [
-        ("latest version of wuthering waves", 5, "primary", "latest_release", True)
-    ]
-    assert log_calls[0]["final_path"] == "search-grounded"
 
 
 def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
@@ -462,14 +363,11 @@ def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
             "text": "The Black Shores are a sanctuary.",
         }
     ]
-    stub_rag, stub_llm, log_calls = _configure_runtime(
+    stub_rag, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=rag_results,
-        search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
-                time_sensitive=False,
-                search_query="",
                 rag_query="tell me about black shores",
                 can_answer_from_general_knowledge=False,
                 general_knowledge_confidence=0.0,
@@ -495,14 +393,11 @@ def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
 
 def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> None:
     rag_results = [{"score": 0.22, "source": "lore.md", "heading": "Lore", "text": "Weak match."}]
-    _, stub_llm, log_calls = _configure_runtime(
+    _, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=rag_results,
-        search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
-                time_sensitive=False,
-                search_query="",
                 rag_query="what does transmission mean",
                 can_answer_from_general_knowledge=True,
                 general_knowledge_confidence=0.91,
@@ -527,14 +422,11 @@ def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> 
 
 def test_weak_rag_low_general_confidence_returns_uncertain(monkeypatch) -> None:
     rag_results = [{"score": 0.15, "source": "lore.md", "heading": "Lore", "text": "Weak match."}]
-    _, stub_llm, log_calls = _configure_runtime(
+    _, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=rag_results,
-        search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
-                time_sensitive=False,
-                search_query="",
                 rag_query="what is ligma exactly",
                 can_answer_from_general_knowledge=False,
                 general_knowledge_confidence=0.2,
@@ -553,48 +445,14 @@ def test_weak_rag_low_general_confidence_returns_uncertain(monkeypatch) -> None:
     assert log_calls[0]["final_path"] == "uncertain"
 
 
-def test_search_with_weak_exact_claims_produces_search_grounded_path(monkeypatch) -> None:
-    search = _SuccessSearchProvider(exact_claim_allowed=False, confidence_summary="medium")
-    _, _, log_calls = _configure_runtime(
-        monkeypatch,
-        search_provider=search,
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="current tesla stock price",
-                rag_query="current tesla stock price",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="current external fact",
-            ),
-            _final_response("I checked the latest market reports and can only answer cautiously."),
-        ],
-    )
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-
-    asyncio.run(
-        message_module.on_message(
-            bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)
-        )
-    )
-
-    assert log_calls[0]["exact_claims_allowed"] is False
-    assert log_calls[0]["search_evidence_summary"][0]["confidence_summary"] == "medium"
-    assert log_calls[0]["final_path"] == "search-grounded"
-
-
 def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) -> None:
-    stub_rag, stub_llm, log_calls = _configure_runtime(
+    stub_rag, _, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=[
             {"score": 0.99, "source": "lore.md", "heading": "Lore", "text": "Irrelevant lore"}
         ],
-        search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
-                time_sensitive=False,
-                search_query="",
                 rag_query='what does the word "approximately" mean',
                 can_answer_from_general_knowledge=True,
                 general_knowledge_confidence=0.9,
@@ -615,22 +473,16 @@ def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) 
 
     assert stub_rag.calls == []
     assert log_calls[0]["final_path"] == "general-knowledge"
-    assert (
-        log_calls[0]["rag_rejection_reason"] in {"", "-"} or log_calls[0]["rag_accepted"] is False
-    )
 
 
 def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
-    stub_rag, _, log_calls = _configure_runtime(
+    stub_rag, _, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=[
             {"score": 0.99, "source": "identity.md", "heading": "Identity", "text": "Shorekeeper"}
         ],
-        search_provider=_SuccessSearchProvider(),
         llm_responses=[
             _analysis_response(
-                time_sensitive=False,
-                search_query="",
                 rag_query="what is your name",
                 can_answer_from_general_knowledge=True,
                 general_knowledge_confidence=0.95,
@@ -652,12 +504,60 @@ def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
     assert log_calls[0]["final_path"] == "general-knowledge"
 
 
-def test_mixed_version_results_return_uncertain_not_exact(monkeypatch) -> None:
+def test_slash_search_returns_disabled_when_search_off(monkeypatch) -> None:
+    monkeypatch.setattr(search_command_module, "SEARCH_ENABLED", False)
+    _, _, log_calls = _configure_slash_runtime(monkeypatch, search_provider=None)
+    interaction = _Interaction()
+
+    asyncio.run(
+        search_command_module.handle_search_interaction(
+            cast(Any, interaction),
+            query="latest nvidia price",
+        )
+    )
+
+    assert interaction.response.sent == [
+        "Live search is currently disabled in my records, so I cannot look that up for you right now."
+    ]
+    assert interaction.followup.sent == []
+    assert log_calls[0]["final_path"] == "search-disabled"
+    assert log_calls[0]["query_type"] == "slash-search"
+    assert log_calls[0]["search_used"] is False
+
+
+def test_slash_search_returns_successful_search_reply(monkeypatch) -> None:
+    monkeypatch.setattr(search_command_module, "SEARCH_ENABLED", True)
+    search = _SuccessSearchProvider(exact_claim_allowed=True, confidence_summary="high")
+    _, stub_llm, log_calls = _configure_slash_runtime(
+        monkeypatch,
+        search_provider=search,
+        llm_responses=[_final_response("The latest reports place it at a steady value.")],
+    )
+    interaction = _Interaction()
+
+    asyncio.run(
+        search_command_module.handle_search_interaction(
+            cast(Any, interaction),
+            query="latest nvidia stock price",
+        )
+    )
+
+    assert interaction.response.deferred is True
+    assert interaction.followup.sent == ["The latest reports place it at a steady value."]
+    assert search.calls == [("latest nvidia stock price", 5, "slash", "current_metric", True)]
+    assert len(stub_llm.calls) == 1
+    assert log_calls[0]["final_path"] == "search-grounded"
+    assert log_calls[0]["search_used"] is True
+    assert log_calls[0]["search_query"] == "latest nvidia stock price"
+
+
+def test_slash_search_returns_uncertain_on_weak_evidence(monkeypatch) -> None:
+    monkeypatch.setattr(search_command_module, "SEARCH_ENABLED", True)
     bundle = SearchBundle(
         query="latest version of Wuthering Waves",
         provider="searxng",
         used_fallback_query=False,
-        label="primary",
+        label="slash",
         confidence_summary="low",
         exact_claim_allowed=False,
         evidence_summary="Current reports are mixed across trusted sources",
@@ -679,77 +579,53 @@ def test_mixed_version_results_return_uncertain_not_exact(monkeypatch) -> None:
                 freshness_bucket="recent",
                 evidence_quality="high",
                 supports_exact_answer=False,
-            ),
-            SearchResult(
-                title="Wuthering Waves Version 3.3",
-                url="https://example.com/news/3-3",
-                snippet="Version 3.3 patch notes.",
-                source="example.com",
-                published_at="2026-06-13",
-                score=1.0,
-                source_class="official",
-                surface_class="patch_notes",
-                freshness_bucket="recent",
-                evidence_quality="high",
-                supports_exact_answer=False,
-            ),
+            )
         ],
     )
-    _, stub_llm, log_calls = _configure_runtime(
+    _, stub_llm, log_calls = _configure_slash_runtime(
         monkeypatch,
         search_provider=_CustomSearchProvider(bundle),
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="latest version of Wuthering Waves",
-                rag_query="latest version of Wuthering Waves",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="latest external fact",
-            ),
-        ],
     )
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
-    msg = _Message(content="<@999> whats the latest version of wuthering waves?", bot_user=bot_user)
-
-    asyncio.run(message_module.on_message(bot, msg))
-
-    assert len(stub_llm.calls) == 1
-    assert "mixed or weak" in msg.replies[0].lower()
-    assert log_calls[0]["final_path"] == "uncertain"
-    assert log_calls[0]["search_evidence_summary"][0]["agreement_status"] == "disagree"
-
-
-def test_logger_metadata_includes_surface_freshness_and_agreement(monkeypatch) -> None:
-    search = _SuccessSearchProvider(exact_claim_allowed=False, confidence_summary="medium")
-    _, _, log_calls = _configure_runtime(
-        monkeypatch,
-        search_provider=search,
-        llm_responses=[
-            _analysis_response(
-                time_sensitive=True,
-                search_query="current tesla stock price",
-                rag_query="current tesla stock price",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
-                reason="current external fact",
-            ),
-            _final_response("I checked the latest market reports and can only answer cautiously."),
-        ],
-    )
-    bot_user = SimpleNamespace(id=999)
-    bot = SimpleNamespace(user=bot_user)
+    interaction = _Interaction()
 
     asyncio.run(
-        message_module.on_message(
-            bot, _Message(content="<@999> whats tesla stock price today?", bot_user=bot_user)
+        search_command_module.handle_search_interaction(
+            cast(Any, interaction),
+            query="latest version of Wuthering Waves",
         )
     )
 
-    first_result = log_calls[0]["search_results"][0]
-    summary = log_calls[0]["search_evidence_summary"][0]
-    assert "surface_class" in first_result
-    assert "freshness_bucket" in first_result
-    assert "agreement_status" in summary
-    assert "response_mode" in summary
+    assert stub_llm.calls == []
+    assert interaction.followup.sent == [
+        "Current reports are too mixed or weak for me to state that confidently. I would rather leave it uncertain than offer you a false exact answer."
+    ]
+    assert log_calls[0]["final_path"] == "uncertain"
+    assert log_calls[0]["search_used"] is True
+
+
+def test_register_search_command_registers_once() -> None:
+    class _FakeTree:
+        def __init__(self) -> None:
+            self.commands: dict[str, SimpleNamespace] = {}
+
+        def get_command(self, name: str):
+            return self.commands.get(name)
+
+        def command(self, *, name: str, description: str):
+            def _decorator(func):
+                self.commands[name] = SimpleNamespace(
+                    name=name,
+                    description=description,
+                    callback=func,
+                )
+                return func
+
+            return _decorator
+
+    tree = _FakeTree()
+
+    search_command_module.register_search_command(cast(Any, tree))
+    search_command_module.register_search_command(cast(Any, tree))
+
+    assert list(tree.commands) == ["search"]
+    assert tree.commands["search"].description == "Search the live web for current information"

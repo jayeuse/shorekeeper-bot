@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ipaddress
 import re
+import time
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Protocol
@@ -9,9 +10,12 @@ from urllib.parse import urlparse
 
 import httpx
 from core.config import (
+    ROUTER_MAX_QUERY_CHARS,
     SEARCH_BASE_URL,
     SEARCH_BLOCK_PRIVATE_IPS,
     SEARCH_DEMOTED_DOMAINS,
+    SEARCH_MAX_RESULTS,
+    SEARCH_MIN_QUERY_LENGTH,
     SEARCH_PROVIDER,
     SEARCH_SAFE_DOMAINS,
     SEARCH_TIMEOUT_SECONDS,
@@ -22,6 +26,7 @@ from core.config import (
 )
 
 _WHITESPACE_RE = re.compile(r"\s+")
+_PUNCTUATION_TRIM_RE = re.compile(r"^[\s\"'`]+|[\s\"'`?!.,:;]+$")
 _MAX_SNIPPET_LENGTH = 320
 _COMMUNITY_HOST_HINTS = (
     "fandom.com",
@@ -135,6 +140,32 @@ class SearchBundle:
     response_mode: str = "uncertain"
 
 
+@dataclass(slots=True)
+class SearchExecution:
+    used: bool
+    reason: str
+    query: str
+    provider: str
+    result_count: int
+    duration: float
+    error: str | None
+    bundles: list[SearchBundle] | None = None
+
+
+@dataclass(slots=True)
+class SearchQueryPlan:
+    label: str
+    query: str
+    purpose: str = ""
+    target_entity: str = ""
+    requested_fact: str = ""
+    question_type: str = ""
+    freshness_required: bool = False
+    subject_domain: str = ""
+    confidence: float = 0.0
+
+
+# Query planning helpers used by the bot-facing search orchestration.
 def _slugify_tokens(text: str) -> list[str]:
     return [token for token in re.findall(r"[a-z0-9]+", text.lower()) if len(token) > 2]
 
@@ -165,6 +196,119 @@ def _normalize_text(text: str, *, max_length: int | None = None) -> str:
     return f"{normalized[: max_length - 3].rstrip()}..."
 
 
+def normalize_search_query(text: str, *, max_chars: int | None = None) -> str:
+    normalized = " ".join(text.strip().split())
+    normalized = _PUNCTUATION_TRIM_RE.sub("", normalized)
+    if max_chars is not None:
+        normalized = normalized[:max_chars].rstrip()
+    return normalized
+
+
+def infer_search_target_entity(text: str) -> str:
+    lowered = normalize_search_query(text).lower()
+    if "wuthering waves" in lowered:
+        return "Wuthering Waves"
+    if "genshin impact" in lowered:
+        return "Genshin Impact"
+    if "nvidia" in lowered:
+        return "NVIDIA"
+    if "tesla" in lowered:
+        return "Tesla"
+    if "shorekeeper" in lowered:
+        return "Shorekeeper"
+    return ""
+
+
+def infer_search_requested_fact(text: str) -> str:
+    lowered = normalize_search_query(text).lower()
+    if any(
+        term in lowered
+        for term in ("stock price", "share price", "stock pricing", "price per share")
+    ):
+        return "price per share"
+    if any(
+        term in lowered
+        for term in ("latest version", "current version", "latest patch", "latest update")
+    ):
+        return "latest version"
+    if "banner" in lowered:
+        return "current banners"
+    if any(
+        term in lowered
+        for term in ("your name", "what is your name", "whats your name", "who are you")
+    ):
+        return "identity"
+    if any(term in lowered for term in ("meaning of", "what does", "definition")):
+        return "definition"
+    if any(term in lowered for term in ("news", "what happened", "event", "status")):
+        return "status update"
+    return ""
+
+
+def infer_search_question_type(*, requested_fact: str, time_sensitive: bool, text: str = "") -> str:
+    lowered = normalize_search_query(text).lower()
+    if requested_fact == "price per share":
+        return "current_metric"
+    if requested_fact == "latest version":
+        return "latest_release"
+    if requested_fact == "current banners":
+        return "current_availability"
+    if requested_fact == "identity":
+        return "identity"
+    if requested_fact == "definition":
+        return "definition"
+    if requested_fact == "status update":
+        return "event_status"
+    if any(
+        term in lowered
+        for term in (
+            "tell me about",
+            "who is",
+            "what is black shores",
+            "shorekeeper lore",
+            "story of",
+        )
+    ):
+        return "background_fact"
+    return "generic" if time_sensitive else "background_fact"
+
+
+def infer_search_subject_domain(text: str) -> str:
+    lowered = normalize_search_query(text).lower()
+    if any(term in lowered for term in ("stock", "share price", "price per share", "market")):
+        return "finance"
+    if any(term in lowered for term in ("wuthering waves", "genshin impact")):
+        return "game"
+    if any(term in lowered for term in ("meaning", "definition", "word")):
+        return "language"
+    if any(term in lowered for term in ("your name", "who are you")):
+        return "identity"
+    return "general"
+
+
+def create_search_plan(query: str, *, label: str, purpose: str) -> SearchQueryPlan | None:
+    normalized_query = normalize_search_query(query, max_chars=ROUTER_MAX_QUERY_CHARS)
+    if len(normalized_query) < SEARCH_MIN_QUERY_LENGTH:
+        return None
+    requested_fact = infer_search_requested_fact(normalized_query)
+    return SearchQueryPlan(
+        label=label,
+        query=normalized_query,
+        purpose=purpose,
+        target_entity=infer_search_target_entity(normalized_query),
+        requested_fact=requested_fact,
+        question_type=infer_search_question_type(
+            requested_fact=requested_fact,
+            time_sensitive=True,
+            text=normalized_query,
+        ),
+        freshness_required=True,
+        subject_domain=infer_search_subject_domain(normalized_query),
+        confidence=1.0,
+    )
+
+
+# Provider implementation and result ranking.
 def _matches_allowed_domain(hostname: str, safe_domains: list[str]) -> bool:
     if not safe_domains:
         return True
@@ -663,6 +807,27 @@ class SearxNGSearchProvider:
             score += 0.10
         return min(score, 1.0)
 
+    def _extract_metric_value(self, result: SearchResult) -> float | None:
+        combined = f"{result.title} {result.snippet}"
+        preferred_match = re.search(
+            r"(?:price|quote|share|stock|trading|trades|at|is)\D{0,20}(\d+(?:,\d{3})*(?:\.\d+)?)",
+            combined,
+            re.IGNORECASE,
+        )
+        if preferred_match:
+            try:
+                return float(preferred_match.group(1).replace(",", ""))
+            except ValueError:
+                return None
+
+        fallback_match = re.search(r"\b(\d+(?:,\d{3})*(?:\.\d+)?)\b", combined)
+        if not fallback_match:
+            return None
+        try:
+            return float(fallback_match.group(1).replace(",", ""))
+        except ValueError:
+            return None
+
     def _extract_claim_signature(self, result: SearchResult, *, question_type: str) -> str:
         combined = f"{result.title} {result.snippet}"
         if question_type == "latest_release":
@@ -670,9 +835,9 @@ class SearxNGSearchProvider:
             if match:
                 return f"version:{match.group(1)}"
         if question_type == "current_metric":
-            match = re.search(r"\b(\d+(?:\.\d+)?)\b", combined)
-            if match:
-                return f"metric:{match.group(1)}"
+            metric_value = self._extract_metric_value(result)
+            if metric_value is not None:
+                return f"metric:{metric_value:.4f}"
         tokens = sorted(_meaningful_tokens(combined))
         return "tokens:" + ",".join(tokens[:8])
 
@@ -693,6 +858,30 @@ class SearxNGSearchProvider:
         ]
         if len(trusted_candidates) < 2:
             return ("insufficient_trusted", set(), "fewer than two trusted results")
+
+        if question_type == "current_metric":
+            metric_candidates = [
+                (index, metric_value)
+                for index, result in trusted_candidates
+                if (metric_value := self._extract_metric_value(result)) is not None
+            ]
+            if len(metric_candidates) >= 2:
+                values = [metric_value for _, metric_value in metric_candidates]
+                max_value = max(values)
+                min_value = min(values)
+                baseline = sum(values) / len(values)
+                tolerance = max(0.5, baseline * 0.01)
+                if max_value - min_value <= tolerance:
+                    return (
+                        "agree",
+                        {index for index, _ in metric_candidates},
+                        f"trusted metric values agree within {tolerance:.2f}",
+                    )
+                return (
+                    "disagree",
+                    set(),
+                    f"trusted metric values differ by {max_value - min_value:.2f}",
+                )
 
         signatures: dict[str, list[int]] = {}
         for index, result in trusted_candidates:
@@ -742,6 +931,17 @@ class SearxNGSearchProvider:
                 "exact",
             )
         if agreement_status == "disagree":
+            if question_type == "current_metric" and trusted_result_count >= 1:
+                return (
+                    "low",
+                    False,
+                    "Trusted market sources are current, but exact live quotes are not synchronized enough for a precise figure",
+                    agreement_status,
+                    trusted_result_count,
+                    fallback_result_count,
+                    agreement_reason,
+                    "summary",
+                )
             return (
                 "low",
                 False,
@@ -759,6 +959,21 @@ class SearxNGSearchProvider:
                 "medium",
                 False,
                 "Trusted evidence is relevant but not corroborated enough for exact claims",
+                agreement_status,
+                trusted_result_count,
+                fallback_result_count,
+                agreement_reason,
+                "summary",
+            )
+        if question_type == "current_metric" and any(
+            result.source_class in {"official", "reference", "news", "topic_preferred"}
+            and result.freshness_bucket in {"recent", "aging"}
+            for result in results[:3]
+        ):
+            return (
+                "low",
+                False,
+                "Trusted current sources suggest the live metric, but not strongly enough for an exact figure",
                 agreement_status,
                 trusted_result_count,
                 fallback_result_count,
@@ -797,3 +1012,177 @@ def build_search_provider() -> SearchProvider:
             block_private_ips=SEARCH_BLOCK_PRIVATE_IPS,
         )
     raise SearchError(f"Unsupported search provider: {SEARCH_PROVIDER}")
+
+
+# Bot-facing orchestration helpers layered on top of the provider.
+def create_enabled_search_provider(enabled: bool) -> SearchProvider | None:
+    if not enabled:
+        return None
+    try:
+        return build_search_provider()
+    except Exception as exc:
+        print(f"⚠️ Search provider initialization failed: {exc}")
+        return None
+
+
+async def run_search_plans(
+    plans: list[SearchQueryPlan], *, reason: str, search_provider: SearchProvider | None
+) -> SearchExecution:
+    provider_name = SEARCH_PROVIDER if search_provider is not None else "disabled"
+    if search_provider is None or not plans:
+        return SearchExecution(
+            used=False,
+            reason=reason if plans else "search_not_needed",
+            query="",
+            provider=provider_name,
+            result_count=0,
+            duration=0.0,
+            error=None,
+            bundles=[],
+        )
+
+    start = time.time()
+    bundles: list[SearchBundle] = []
+    errors: list[str] = []
+    for plan in plans:
+        try:
+            bundle = await search_provider.search(
+                plan.query,
+                SEARCH_MAX_RESULTS,
+                target_entity=plan.target_entity,
+                requested_fact=plan.requested_fact,
+                question_type=plan.question_type,
+                freshness_required=plan.freshness_required,
+                topic=plan.subject_domain,
+                label=plan.label,
+            )
+        except SearchError as exc:
+            errors.append(str(exc))
+            continue
+        except Exception as exc:
+            errors.append(f"Unexpected search error: {exc}")
+            continue
+        if bundle.results:
+            bundles.append(bundle)
+            break
+        errors.append("Search returned no results")
+
+    duration = time.time() - start
+    query_summary = " | ".join(plan.query for plan in plans)
+    if not bundles:
+        return SearchExecution(
+            used=False,
+            reason="search_failed_continue_without_results",
+            query=query_summary,
+            provider=provider_name,
+            result_count=0,
+            duration=duration,
+            error="; ".join(errors) if errors else "Search returned no results",
+            bundles=[],
+        )
+    return SearchExecution(
+        used=True,
+        reason=reason,
+        query=bundles[0].query,
+        provider=bundles[0].provider,
+        result_count=len(bundles[0].results),
+        duration=duration,
+        error="; ".join(errors) if errors else None,
+        bundles=bundles,
+    )
+
+
+def build_search_context_block(bundles: list[SearchBundle]) -> str:
+    sections = [
+        "=== LIVE SEARCH RESULTS ===",
+        "Use these grouped results only for current or time-sensitive facts.",
+    ]
+    for bundle in bundles:
+        sections.append(
+            f"--- Search Group: {bundle.label or 'general'} ---\n"
+            f"Standalone query: {bundle.query}\n"
+            f"Evidence confidence: {bundle.confidence_summary}\n"
+            f"Exact claims allowed: {bundle.exact_claim_allowed}\n"
+            f"Agreement status: {bundle.agreement_status}\n"
+            f"Exact claim reason: {bundle.exact_claim_reason}\n"
+            f"Response mode: {bundle.response_mode}\n"
+            f"Evidence summary: {bundle.evidence_summary}"
+        )
+        for index, result in enumerate(bundle.results, start=1):
+            sections.append(
+                f"[Result {index}]\n"
+                f"Title: {result.title}\n"
+                f"Source: {result.source}\n"
+                f"URL: {result.url}\n"
+                f"Trust: {result.source_class} | Surface: {result.surface_class} | Freshness: {result.freshness_bucket}\n"
+                f"Rank reason: {result.rank_reason}\n"
+                f"Penalties: stale={result.stale_penalty_applied} preview={result.preview_penalty_applied} agreement={result.agreement_participant}\n"
+                f"Evidence: quality={result.evidence_quality} exact={result.supports_exact_answer}\n"
+                f"Snippet: {result.snippet}"
+            )
+    sections.append(
+        "Instructions:\n"
+        "- Use live search results only for fresh or external facts.\n"
+        "- If exact claims are not allowed, avoid precise numeric/date/current claims.\n"
+        "- If evidence is weak or conflicting, answer cautiously and acknowledge uncertainty.\n"
+        "- Do not mention citations or URLs unless the user explicitly asks for sources."
+    )
+    return "\n\n".join(sections)
+
+
+def serialize_search_results(search_execution: SearchExecution) -> list[dict[str, str]] | None:
+    if not search_execution.bundles:
+        return None
+    flattened: list[dict[str, str]] = []
+    for bundle in search_execution.bundles:
+        for result in bundle.results:
+            flattened.append(
+                {
+                    "title": result.title,
+                    "source": result.source,
+                    "url": result.url,
+                    "published_at": result.published_at or "",
+                    "snippet": result.snippet,
+                    "source_class": result.source_class,
+                    "surface_class": result.surface_class,
+                    "freshness_bucket": result.freshness_bucket,
+                    "rank_reason": result.rank_reason,
+                    "evidence_quality": result.evidence_quality,
+                    "stale_penalty_applied": str(result.stale_penalty_applied),
+                    "preview_penalty_applied": str(result.preview_penalty_applied),
+                    "agreement_participant": str(result.agreement_participant),
+                    "supports_exact_answer": str(result.supports_exact_answer),
+                    "label": bundle.label,
+                    "query": bundle.query,
+                    "bundle_confidence": bundle.confidence_summary,
+                    "bundle_exact_claim_allowed": str(bundle.exact_claim_allowed),
+                }
+            )
+    return flattened
+
+
+def serialize_search_evidence_summary(
+    search_execution: SearchExecution,
+) -> list[dict[str, str]] | None:
+    if not search_execution.bundles:
+        return None
+    return [
+        {
+            "label": bundle.label,
+            "confidence_summary": bundle.confidence_summary,
+            "exact_claim_allowed": str(bundle.exact_claim_allowed),
+            "evidence_summary": bundle.evidence_summary,
+            "agreement_status": bundle.agreement_status,
+            "trusted_result_count": str(bundle.trusted_result_count),
+            "fallback_result_count": str(bundle.fallback_result_count),
+            "exact_claim_reason": bundle.exact_claim_reason,
+            "response_mode": bundle.response_mode,
+        }
+        for bundle in search_execution.bundles
+    ]
+
+
+def search_execution_allows_exact_claims(search_execution: SearchExecution) -> bool:
+    if not search_execution.bundles:
+        return False
+    return all(bundle.exact_claim_allowed for bundle in search_execution.bundles)

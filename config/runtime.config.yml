@@ -1,0 +1,52 @@
+providers:
+  llm_provider: llamacpp
+  embedding_provider: llamacpp
+  online_base_url: https://api.deepseek.com
+  online_model: deepseek-v4-flash
+
+llama:
+  local:
+    base_url: http://127.0.0.1:8081/v1
+    model: shorekeeper_9b
+    context_window: 65536
+    kv_cache_keep: 4
+  embed:
+    base_url: http://127.0.0.1:8082/v1
+    model: nomic-embed-text-v1.5.f16
+  launcher:
+    llama_bin_dir: /home/ceejay/llama.cpp/build/bin
+    chat_model_path: /mnt/sdb4/models/shorekeeper_9b.gguf
+    embed_model_path: /mnt/sdb4/models/nomic-embed-text-v1.5.f16.gguf
+    gpu_layers: 999
+    threads: 12
+    chat_parallel: 1
+    chat:
+      temperature: 0.3
+      top_p: 0.9
+      top_k: 40
+      repeat_penalty: 1.05
+      flash_attn: true
+      cache_type_k: q4_0
+      cache_type_v: q4_0
+      jinja: true
+      no_mmap: true
+    embed:
+      pooling: cls
+      no_mmap: true
+    metrics: true
+
+memory:
+  recall_limit: 3
+  relevance_threshold: 0.22
+  candidate_pool: 60
+  recency_halflife_days: 30
+
+analysis:
+  enabled: true
+  timeout_seconds: 6
+  rag_answer_score_threshold: 0.62
+  general_knowledge_confidence_threshold: 0.7
+
+router:
+  history_turns: 4
+  max_query_chars: 240

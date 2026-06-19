@@ -5,9 +5,15 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 ENV_FILE="${PROJECT_ROOT}/.env.local"
+SEARXNG_COMPOSE_FILE="${PROJECT_ROOT}/infra/searxng/docker-compose.yml"
 
 if [[ ! -f "$ENV_FILE" ]]; then
   echo "Missing env file: $ENV_FILE" >&2
+  exit 1
+fi
+
+if [[ ! -f "$SEARXNG_COMPOSE_FILE" ]]; then
+  echo "Missing SearXNG compose file: $SEARXNG_COMPOSE_FILE" >&2
   exit 1
 fi
 
@@ -37,6 +43,14 @@ require_file() {
   fi
 }
 
+require_command() {
+  local name="$1"
+  if ! command -v "$name" >/dev/null 2>&1; then
+    echo "Missing required executable: $name" >&2
+    exit 1
+  fi
+}
+
 cleanup() {
   local exit_code=$?
   trap - EXIT INT TERM
@@ -48,11 +62,25 @@ cleanup() {
     kill "$EMBED_PID" 2>/dev/null || true
   fi
 
+  if command -v docker >/dev/null 2>&1; then
+    docker compose -f "$SEARXNG_COMPOSE_FILE" down >/dev/null 2>&1 || true
+  fi
+
   wait 2>/dev/null || true
   exit "$exit_code"
 }
 
 trap cleanup EXIT INT TERM
+
+require_command "docker"
+require_command "uv"
+
+# Load launcher values from the grouped YAML config selected by .env.local.
+# shellcheck disable=SC1091
+source <(
+  uv run --project "$PROJECT_ROOT/backend" python \
+    "$PROJECT_ROOT/scripts/print-llama-launcher-env.py"
+)
 
 require_env "LLAMA_BIN_DIR"
 require_env "LOCAL_BASE_URL"
@@ -72,11 +100,7 @@ require_env "CHAT_REPEAT_PENALTY"
 require_env "CHAT_FLASH_ATTN"
 require_env "CHAT_CACHE_TYPE_K"
 require_env "CHAT_CACHE_TYPE_V"
-require_env "CHAT_JINJA"
-require_env "CHAT_NO_MMAP"
 require_env "EMBED_POOLING"
-require_env "EMBED_NO_MMAP"
-require_env "LLAMA_METRICS"
 
 LLAMA_SERVER_BIN="${LLAMA_BIN_DIR}/llama-server"
 CHAT_ALIAS="${LOCAL_MODEL}"
@@ -90,6 +114,9 @@ require_file "$LLAMA_SERVER_BIN" "llama-server binary"
 require_file "$CHAT_MODEL_PATH" "chat model"
 require_file "$EMBED_MODEL_PATH" "embedding model"
 
+echo "Starting SearXNG compose stack from ${SEARXNG_COMPOSE_FILE}"
+docker compose -f "$SEARXNG_COMPOSE_FILE" up -d
+
 echo "Starting llama.cpp chat server on ${CHAT_HOST}:${CHAT_PORT} with alias ${CHAT_ALIAS}"
 "$LLAMA_SERVER_BIN" \
   -m "$CHAT_MODEL_PATH" \
@@ -97,7 +124,7 @@ echo "Starting llama.cpp chat server on ${CHAT_HOST}:${CHAT_PORT} with alias ${C
   --host "$CHAT_HOST" \
   --port "$CHAT_PORT" \
   -ngl "$GPU_LAYERS" \
-  "$CHAT_NO_MMAP" \
+  ${CHAT_NO_MMAP:+$CHAT_NO_MMAP} \
   -c "$LOCAL_CONTEXT_WINDOW" \
   --parallel "$CHAT_PARALLEL" \
   -t "$THREADS" \
@@ -108,8 +135,8 @@ echo "Starting llama.cpp chat server on ${CHAT_HOST}:${CHAT_PORT} with alias ${C
   --top-p "$CHAT_TOP_P" \
   --top-k "$CHAT_TOP_K" \
   --repeat-penalty "$CHAT_REPEAT_PENALTY" \
-  "$CHAT_JINJA" \
-  "$LLAMA_METRICS" &
+  ${CHAT_JINJA:+$CHAT_JINJA} \
+  ${LLAMA_METRICS:+$LLAMA_METRICS} &
 CHAT_PID=$!
 
 echo "Starting llama.cpp embedding server on ${EMBED_HOST}:${EMBED_PORT} with alias ${EMBED_ALIAS}"
@@ -121,13 +148,13 @@ echo "Starting llama.cpp embedding server on ${EMBED_HOST}:${EMBED_PORT} with al
   --embeddings \
   --pooling "$EMBED_POOLING" \
   -ngl "$GPU_LAYERS" \
-  "$EMBED_NO_MMAP" \
+  ${EMBED_NO_MMAP:+$EMBED_NO_MMAP} \
   -t "$THREADS" \
-  "$LLAMA_METRICS" &
+  ${LLAMA_METRICS:+$LLAMA_METRICS} &
 EMBED_PID=$!
 
 echo "Chat PID: $CHAT_PID"
 echo "Embed PID: $EMBED_PID"
-echo "Press Ctrl-C to stop both servers."
+echo "Press Ctrl-C to stop the llama.cpp servers and SearXNG."
 
 wait -n "$CHAT_PID" "$EMBED_PID"

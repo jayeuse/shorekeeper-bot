@@ -21,20 +21,24 @@ from core.config import (
     MEMORY_RELEVANCE_THRESHOLD,
     RAG_ANSWER_SCORE_THRESHOLD,
     ROUTER_HISTORY_TURNS,
-    ROUTER_MAX_QUERY_CHARS,
-    SEARCH_ENABLED,
-    SEARCH_EXPLICIT_PREFIX,
-    SEARCH_MAX_RESULTS,
-    SEARCH_MIN_QUERY_LENGTH,
-    SEARCH_PROVIDER,
-    SEARCH_TRIGGER_MODE,
     SYSTEM_PROMPT,
 )
 from handlers.conversation_context import get_chat, store_chat
 from services.llm import LLMClient
 from services.memory import MemoryRecord, MemoryService
 from services.rag import RAG
-from services.search import SearchBundle, SearchError, SearchProvider, build_search_provider
+from services.search import (
+    SearchExecution,
+    build_search_context_block,
+    infer_search_question_type,
+    infer_search_requested_fact,
+    infer_search_subject_domain,
+    infer_search_target_entity,
+    normalize_search_query,
+    search_execution_allows_exact_claims,
+    serialize_search_evidence_summary,
+    serialize_search_results,
+)
 from utils.logger import log_response
 
 rag = RAG()
@@ -60,15 +64,6 @@ if MEMORY_ENABLED:
         memory_service = None
 else:
     memory_service = None
-
-if SEARCH_ENABLED:
-    try:
-        search_provider: SearchProvider | None = build_search_provider()
-    except Exception as exc:
-        print(f"⚠️ Search provider initialization failed: {exc}")
-        search_provider = None
-else:
-    search_provider = None
 
 _META_PATTERNS = [
     "what topics do you have",
@@ -120,7 +115,6 @@ _DATETIME_PATTERNS = [
     "what month is it",
     "what year is it",
 ]
-_PUNCTUATION_TRIM_RE = re.compile(r"^[\s\"'`]+|[\s\"'`?!.,:;]+$")
 _DISCORD_MENTION_RE = re.compile(r"<@!?\d+>")
 _JSON_OBJECT_RE = re.compile(r"\{.*\}", re.DOTALL)
 _DATE_HINTS = ("date", "day", "month", "year", "today")
@@ -139,34 +133,7 @@ _TOP_K = {"meta": 0, "datetime": 0, "memory": 0, "casual": 0, "general": 5}
 
 
 @dataclass(slots=True)
-class SearchExecution:
-    used: bool
-    reason: str
-    query: str
-    provider: str
-    result_count: int
-    duration: float
-    error: str | None
-    bundles: list[SearchBundle] | None = None
-
-
-@dataclass(slots=True)
-class SearchQueryPlan:
-    label: str
-    query: str
-    purpose: str = ""
-    target_entity: str = ""
-    requested_fact: str = ""
-    question_type: str = ""
-    freshness_required: bool = False
-    subject_domain: str = ""
-    confidence: float = 0.0
-
-
-@dataclass(slots=True)
 class AnalysisDecision:
-    time_sensitive: bool
-    search_query: str
     rag_query: str
     can_answer_from_general_knowledge: bool
     general_knowledge_confidence: float
@@ -185,7 +152,6 @@ class RoutePlan:
     analysis_used: bool = False
     analysis_payload: dict[str, Any] | None = None
     analysis_decision: AnalysisDecision | None = None
-    search_plans: list[SearchQueryPlan] | None = None
     target_entity: str = ""
     requested_fact: str = ""
     question_type_hint: str = ""
@@ -214,108 +180,8 @@ def _classify_query(query: str) -> str:
     return "general"
 
 
-def _normalize_query_text(text: str, *, max_chars: int | None = None) -> str:
-    normalized = " ".join(text.strip().split())
-    normalized = _PUNCTUATION_TRIM_RE.sub("", normalized)
-    if max_chars is not None:
-        normalized = normalized[:max_chars].rstrip()
-    return normalized
-
-
-def _rewrite_search_query(query: str) -> str:
-    normalized = _normalize_query_text(query, max_chars=ROUTER_MAX_QUERY_CHARS)
-    lowered = normalized.lower()
-    for prefix in ("search for ", "search ", "look up ", "find ", "check "):
-        if lowered.startswith(prefix):
-            lowered = lowered[len(prefix) :].strip()
-    return lowered or normalized
-
-
-def _infer_target_entity(text: str) -> str:
-    normalized = _normalize_query_text(text)
-    lowered = normalized.lower()
-    if "wuthering waves" in lowered:
-        return "Wuthering Waves"
-    if "genshin impact" in lowered:
-        return "Genshin Impact"
-    if "nvidia" in lowered:
-        return "NVIDIA"
-    if "tesla" in lowered:
-        return "Tesla"
-    if "shorekeeper" in lowered:
-        return "Shorekeeper"
-    return ""
-
-
-def _infer_requested_fact(text: str) -> str:
-    lowered = _normalize_query_text(text).lower()
-    if any(
-        term in lowered
-        for term in ("stock price", "share price", "stock pricing", "price per share")
-    ):
-        return "price per share"
-    if any(
-        term in lowered
-        for term in ("latest version", "current version", "latest patch", "latest update")
-    ):
-        return "latest version"
-    if "banner" in lowered:
-        return "current banners"
-    if any(
-        term in lowered
-        for term in ("your name", "what is your name", "whats your name", "who are you")
-    ):
-        return "identity"
-    if any(term in lowered for term in ("meaning of", "what does", "definition")):
-        return "definition"
-    if any(term in lowered for term in ("news", "what happened", "event", "status")):
-        return "status update"
-    return ""
-
-
-def _infer_question_type(*, requested_fact: str, time_sensitive: bool, text: str = "") -> str:
-    lowered = _normalize_query_text(text).lower()
-    if requested_fact == "price per share":
-        return "current_metric"
-    if requested_fact == "latest version":
-        return "latest_release"
-    if requested_fact == "current banners":
-        return "current_availability"
-    if requested_fact == "identity":
-        return "identity"
-    if requested_fact == "definition":
-        return "definition"
-    if requested_fact == "status update":
-        return "event_status"
-    if any(
-        term in lowered
-        for term in (
-            "tell me about",
-            "who is",
-            "what is black shores",
-            "shorekeeper lore",
-            "story of",
-        )
-    ):
-        return "background_fact"
-    return "generic" if time_sensitive else "background_fact"
-
-
-def _infer_subject_domain(text: str) -> str:
-    lowered = _normalize_query_text(text).lower()
-    if any(term in lowered for term in ("stock", "share price", "price per share", "market")):
-        return "finance"
-    if any(term in lowered for term in ("wuthering waves", "genshin impact")):
-        return "game"
-    if any(term in lowered for term in ("meaning", "definition", "word")):
-        return "language"
-    if any(term in lowered for term in ("your name", "who are you")):
-        return "identity"
-    return "general"
-
-
 def _rag_is_eligible(question_type: str, user_content: str, rag_query: str) -> bool:
-    lowered = _normalize_query_text(f"{user_content} {rag_query}").lower()
+    lowered = normalize_search_query(f"{user_content} {rag_query}").lower()
     if question_type in {
         "definition",
         "identity",
@@ -357,7 +223,7 @@ def _extract_recent_user_queries(
 
 
 def _looks_elliptical_followup(query: str) -> bool:
-    lowered = _normalize_query_text(query).lower()
+    lowered = normalize_search_query(query).lower()
     return lowered.startswith(_ELLIPTICAL_FOLLOWUP_PREFIXES)
 
 
@@ -374,62 +240,6 @@ def _extract_json_object(text: str) -> dict[str, Any] | None:
 
 def _build_deterministic_route_plan(user_content: str) -> RoutePlan | None:
     cleaned = user_content.strip()
-    prefix = SEARCH_EXPLICIT_PREFIX.strip()
-    lowered = cleaned.lower()
-
-    if prefix and lowered.startswith(prefix.lower()):
-        if not SEARCH_ENABLED:
-            return RoutePlan(
-                path="general",
-                query_type="general",
-                query_text=cleaned,
-                reason="search_disabled",
-                deterministic_gate="explicit_search_disabled",
-            )
-        stripped_query = _normalize_query_text(
-            cleaned[len(prefix) :], max_chars=ROUTER_MAX_QUERY_CHARS
-        )
-        if len(stripped_query) < SEARCH_MIN_QUERY_LENGTH:
-            return RoutePlan(
-                path="general",
-                query_type="general",
-                query_text=cleaned,
-                reason="search_explicit_too_short",
-                deterministic_gate="explicit_search_short",
-            )
-        return RoutePlan(
-            path="search",
-            query_type="general",
-            query_text=stripped_query,
-            reason="search_explicit",
-            deterministic_gate="explicit_search",
-            search_plans=[
-                SearchQueryPlan(
-                    label="explicit",
-                    query=stripped_query,
-                    purpose="user-controlled explicit search",
-                    target_entity=_infer_target_entity(stripped_query),
-                    requested_fact=_infer_requested_fact(stripped_query),
-                    question_type=_infer_question_type(
-                        requested_fact=_infer_requested_fact(stripped_query),
-                        time_sensitive=True,
-                        text=stripped_query,
-                    ),
-                    freshness_required=True,
-                    subject_domain=_infer_subject_domain(stripped_query),
-                    confidence=1.0,
-                )
-            ],
-            target_entity=_infer_target_entity(stripped_query),
-            requested_fact=_infer_requested_fact(stripped_query),
-            question_type_hint=_infer_question_type(
-                requested_fact=_infer_requested_fact(stripped_query),
-                time_sensitive=True,
-                text=stripped_query,
-            ),
-            subject_domain=_infer_subject_domain(stripped_query),
-        )
-
     query_type = _classify_query(cleaned)
     if query_type == "datetime":
         return RoutePlan(
@@ -478,15 +288,10 @@ def _build_analysis_messages(user_content: str, recent_user_queries: list[str]) 
         "Available knowledge sources:\n"
         "- local datetime for date/time questions\n"
         "- local RAG knowledge base for stable in-repo knowledge and lore\n"
-        "- web search for current, latest, live, ongoing, external, changing, or real-world factual questions\n"
         "- general model knowledge only for stable non-time-sensitive questions when safe\n"
-        "Return JSON with keys: time_sensitive, search_query, rag_query, can_answer_from_general_knowledge, general_knowledge_confidence, reason.\n"
+        "Return JSON with keys: rag_query, can_answer_from_general_knowledge, general_knowledge_confidence, reason.\n"
         "Rules:\n"
-        "- If the question is current/latest/live/price/news/update/event status, set time_sensitive=true.\n"
-        "- Do not assume Wuthering Waves automatically means RAG-only.\n"
-        "- Do not treat current/latest/live/price/news/update questions as stable.\n"
         "- Use recent user turns only to resolve elliptical follow-ups.\n"
-        "- Reconstruct a standalone search_query when time_sensitive=true.\n"
         "- Always provide a standalone rag_query.\n"
         "- If the model would not be safe answering from general knowledge after weak RAG, set can_answer_from_general_knowledge=false."
     )
@@ -502,19 +307,12 @@ def _build_analysis_messages(user_content: str, recent_user_queries: list[str]) 
 
 
 def _analysis_fallback(user_content: str, recent_user_queries: list[str]) -> AnalysisDecision:
-    normalized = _normalize_query_text(user_content, max_chars=ROUTER_MAX_QUERY_CHARS)
-    time_sensitive = any(
-        term in normalized.lower()
-        for term in ("current", "latest", "live", "today", "price", "stock", "news", "update")
-    )
-    search_query = _rewrite_search_query(normalized)
+    normalized = normalize_search_query(user_content)
     if _looks_elliptical_followup(normalized) and recent_user_queries:
-        search_query = (
-            f"{search_query} {_normalize_query_text(recent_user_queries[0]).lower()}".strip()
+        normalized = (
+            f"{normalized} {normalize_search_query(recent_user_queries[0]).lower()}".strip()
         )
     return AnalysisDecision(
-        time_sensitive=time_sensitive,
-        search_query=search_query,
         rag_query=normalized or user_content,
         can_answer_from_general_knowledge=False,
         general_knowledge_confidence=0.0,
@@ -524,26 +322,17 @@ def _analysis_fallback(user_content: str, recent_user_queries: list[str]) -> Ana
 
 
 def _validate_analysis_decision(payload: dict[str, Any]) -> AnalysisDecision | None:
-    time_sensitive = payload.get("time_sensitive")
-    search_query = payload.get("search_query", "")
     rag_query = payload.get("rag_query", "")
     can_answer_from_general_knowledge = payload.get("can_answer_from_general_knowledge", False)
     general_knowledge_confidence = payload.get("general_knowledge_confidence", 0.0)
     reason = payload.get("reason", "")
 
-    if not isinstance(time_sensitive, bool):
-        return None
-    if (
-        not isinstance(search_query, str)
-        or not isinstance(rag_query, str)
-        or not isinstance(reason, str)
-    ):
+    if not isinstance(rag_query, str) or not isinstance(reason, str):
         return None
     if not isinstance(can_answer_from_general_knowledge, bool):
         return None
 
-    normalized_search_query = _normalize_query_text(search_query, max_chars=ROUTER_MAX_QUERY_CHARS)
-    normalized_rag_query = _normalize_query_text(rag_query, max_chars=ROUTER_MAX_QUERY_CHARS)
+    normalized_rag_query = normalize_search_query(rag_query)
     normalized_reason = " ".join(reason.strip().split())[:200]
 
     try:
@@ -551,14 +340,10 @@ def _validate_analysis_decision(payload: dict[str, Any]) -> AnalysisDecision | N
     except Exception:
         normalized_general_confidence = 0.0
 
-    if time_sensitive and len(normalized_search_query) < SEARCH_MIN_QUERY_LENGTH:
-        return None
     if not normalized_rag_query:
         return None
 
     return AnalysisDecision(
-        time_sensitive=time_sensitive,
-        search_query=normalized_search_query,
         rag_query=normalized_rag_query,
         can_answer_from_general_knowledge=can_answer_from_general_knowledge,
         general_knowledge_confidence=normalized_general_confidence,
@@ -601,54 +386,25 @@ async def _build_route_plan(user_content: str, chat_history: list[dict]) -> Rout
         return deterministic_plan
 
     analysis = await _run_analysis_pass(user_content, chat_history)
-    if analysis.time_sensitive:
-        query_text = analysis.rag_query or user_content
-        search_plan = _build_search_plan(
-            analysis.search_query,
-            label="primary",
-            purpose="analysis-reconstructed search query",
-        )
-        requested_fact = _infer_requested_fact(query_text)
-        question_type = _infer_question_type(
-            requested_fact=requested_fact,
-            time_sensitive=False,
-            text=query_text,
-        )
-        return RoutePlan(
-            path="general",
-            query_type="general",
-            query_text=query_text,
-            reason=analysis.reason,
-            analysis_used=True,
-            analysis_payload=analysis.raw_payload,
-            analysis_decision=analysis,
-            search_plans=[search_plan] if search_plan is not None else None,
-            target_entity=_infer_target_entity(query_text),
-            requested_fact=requested_fact,
-            question_type_hint=question_type,
-            subject_domain=_infer_subject_domain(query_text),
-        )
-
-    requested_fact = _infer_requested_fact(analysis.rag_query or user_content)
-    question_type = _infer_question_type(
+    resolved_query = analysis.rag_query or normalize_search_query(user_content) or user_content
+    requested_fact = infer_search_requested_fact(resolved_query)
+    question_type = infer_search_question_type(
         requested_fact=requested_fact,
         time_sensitive=False,
-        text=analysis.rag_query or user_content,
+        text=resolved_query,
     )
     return RoutePlan(
-        path="rag"
-        if _rag_is_eligible(question_type, user_content, analysis.rag_query)
-        else "general",
+        path="rag" if _rag_is_eligible(question_type, user_content, resolved_query) else "general",
         query_type="general",
-        query_text=analysis.rag_query,
+        query_text=resolved_query,
         reason=analysis.reason,
         analysis_used=True,
         analysis_payload=analysis.raw_payload,
         analysis_decision=analysis,
-        target_entity=_infer_target_entity(analysis.rag_query or user_content),
+        target_entity=infer_search_target_entity(resolved_query),
         requested_fact=requested_fact,
         question_type_hint=question_type,
-        subject_domain=_infer_subject_domain(analysis.rag_query or user_content),
+        subject_domain=infer_search_subject_domain(resolved_query),
     )
 
 
@@ -671,97 +427,6 @@ def _build_uncertainty_response() -> str:
     return "I do not know that accurately from my current records, and I would rather leave the answer uncertain than offer you a false one."
 
 
-def _build_search_disabled_response() -> str:
-    return "Live search is currently disabled in my records, so I cannot look that up for you right now."
-
-
-def _build_search_plan(query: str, *, label: str, purpose: str) -> SearchQueryPlan | None:
-    normalized_query = _normalize_query_text(query, max_chars=ROUTER_MAX_QUERY_CHARS)
-    if len(normalized_query) < SEARCH_MIN_QUERY_LENGTH:
-        return None
-    requested_fact = _infer_requested_fact(normalized_query)
-    return SearchQueryPlan(
-        label=label,
-        query=normalized_query,
-        purpose=purpose,
-        target_entity=_infer_target_entity(normalized_query),
-        requested_fact=requested_fact,
-        question_type=_infer_question_type(
-            requested_fact=requested_fact,
-            time_sensitive=True,
-            text=normalized_query,
-        ),
-        freshness_required=True,
-        subject_domain=_infer_subject_domain(normalized_query),
-        confidence=1.0,
-    )
-
-
-async def _execute_search_plans(plans: list[SearchQueryPlan], *, reason: str) -> SearchExecution:
-    provider_name = SEARCH_PROVIDER if search_provider is not None else "disabled"
-    if search_provider is None or not plans:
-        return SearchExecution(
-            used=False,
-            reason=reason if plans else "search_not_needed",
-            query="",
-            provider=provider_name,
-            result_count=0,
-            duration=0.0,
-            error=None,
-            bundles=[],
-        )
-
-    start = time.time()
-    bundles: list[SearchBundle] = []
-    errors: list[str] = []
-    for plan in plans:
-        try:
-            bundle = await search_provider.search(
-                plan.query,
-                SEARCH_MAX_RESULTS,
-                target_entity=plan.target_entity,
-                requested_fact=plan.requested_fact,
-                question_type=plan.question_type,
-                freshness_required=plan.freshness_required,
-                topic=plan.subject_domain,
-                label=plan.label,
-            )
-        except SearchError as exc:
-            errors.append(str(exc))
-            continue
-        except Exception as exc:
-            errors.append(f"Unexpected search error: {exc}")
-            continue
-        if bundle.results:
-            bundles.append(bundle)
-            break
-        errors.append("Search returned no results")
-
-    duration = time.time() - start
-    query_summary = " | ".join(plan.query for plan in plans)
-    if not bundles:
-        return SearchExecution(
-            used=False,
-            reason="search_failed_continue_without_results",
-            query=query_summary,
-            provider=provider_name,
-            result_count=0,
-            duration=duration,
-            error="; ".join(errors) if errors else "Search returned no results",
-            bundles=[],
-        )
-    return SearchExecution(
-        used=True,
-        reason=reason,
-        query=bundles[0].query,
-        provider=bundles[0].provider,
-        result_count=len(bundles[0].results),
-        duration=duration,
-        error="; ".join(errors) if errors else None,
-        bundles=bundles,
-    )
-
-
 def _evaluate_rag(query: str, *, question_type: str, user_content: str) -> RagDecision:
     if not _rag_is_eligible(question_type, user_content, query):
         return RagDecision(
@@ -777,7 +442,7 @@ def _evaluate_rag(query: str, *, question_type: str, user_content: str) -> RagDe
     accepted = bool(chunks) and top_score >= RAG_ANSWER_SCORE_THRESHOLD
     if question_type == "background_fact":
         accepted = accepted and any(
-            token in _normalize_query_text(chunks[0].get("text", "")).lower()
+            token in normalize_search_query(chunks[0].get("text", "")).lower()
             for token in _meaningful_anchor_tokens(query)
         )
     return RagDecision(
@@ -821,44 +486,6 @@ def _format_knowledge_context(context_chunks: list[dict[str, Any]]) -> str:
     return "\n\n".join(f"[{c['source']} - {c['heading']}]\n{c['text']}" for c in context_chunks)
 
 
-def _format_search_context(bundles: list[SearchBundle]) -> str:
-    sections = [
-        "=== LIVE SEARCH RESULTS ===",
-        "Use these grouped results only for current or time-sensitive facts.",
-    ]
-    for bundle in bundles:
-        sections.append(
-            f"--- Search Group: {bundle.label or 'general'} ---\n"
-            f"Standalone query: {bundle.query}\n"
-            f"Evidence confidence: {bundle.confidence_summary}\n"
-            f"Exact claims allowed: {bundle.exact_claim_allowed}\n"
-            f"Agreement status: {bundle.agreement_status}\n"
-            f"Exact claim reason: {bundle.exact_claim_reason}\n"
-            f"Response mode: {bundle.response_mode}\n"
-            f"Evidence summary: {bundle.evidence_summary}"
-        )
-        for index, result in enumerate(bundle.results, start=1):
-            sections.append(
-                f"[Result {index}]\n"
-                f"Title: {result.title}\n"
-                f"Source: {result.source}\n"
-                f"URL: {result.url}\n"
-                f"Trust: {result.source_class} | Surface: {result.surface_class} | Freshness: {result.freshness_bucket}\n"
-                f"Rank reason: {result.rank_reason}\n"
-                f"Penalties: stale={result.stale_penalty_applied} preview={result.preview_penalty_applied} agreement={result.agreement_participant}\n"
-                f"Evidence: quality={result.evidence_quality} exact={result.supports_exact_answer}\n"
-                f"Snippet: {result.snippet}"
-            )
-    sections.append(
-        "Instructions:\n"
-        "- Use live search results only for fresh or external facts.\n"
-        "- If exact claims are not allowed, avoid precise numeric/date/current claims.\n"
-        "- If evidence is weak or conflicting, answer cautiously and acknowledge uncertainty.\n"
-        "- Do not mention citations or URLs unless the user explicitly asks for sources."
-    )
-    return "\n\n".join(sections)
-
-
 def _build_system_prompt(
     *,
     source_path: str,
@@ -891,8 +518,8 @@ def _build_system_prompt(
             f"{_format_knowledge_context(rag_decision.context_chunks)}"
         )
     elif source_path == "search" and search_execution.used and search_execution.bundles:
-        system_sections.append(_format_search_context(search_execution.bundles))
-        if not _search_execution_exact_claims_allowed(search_execution):
+        system_sections.append(build_search_context_block(search_execution.bundles))
+        if not search_execution_allows_exact_claims(search_execution):
             system_sections.append(
                 "Search evidence is not strong enough for precise current facts. Answer cautiously and do not state exact prices, dates, versions, or live-state claims as certain."
             )
@@ -917,64 +544,6 @@ def _build_system_prompt(
         "- general: answer conservatively and allow explicit uncertainty."
     )
     return "\n\n".join(system_sections)
-
-
-def _flatten_search_results(search_execution: SearchExecution) -> list[dict[str, str]] | None:
-    if not search_execution.bundles:
-        return None
-    flattened: list[dict[str, str]] = []
-    for bundle in search_execution.bundles:
-        for result in bundle.results:
-            flattened.append(
-                {
-                    "title": result.title,
-                    "source": result.source,
-                    "url": result.url,
-                    "published_at": result.published_at or "",
-                    "snippet": result.snippet,
-                    "source_class": result.source_class,
-                    "surface_class": result.surface_class,
-                    "freshness_bucket": result.freshness_bucket,
-                    "rank_reason": result.rank_reason,
-                    "evidence_quality": result.evidence_quality,
-                    "stale_penalty_applied": str(result.stale_penalty_applied),
-                    "preview_penalty_applied": str(result.preview_penalty_applied),
-                    "agreement_participant": str(result.agreement_participant),
-                    "supports_exact_answer": str(result.supports_exact_answer),
-                    "label": bundle.label,
-                    "query": bundle.query,
-                    "bundle_confidence": bundle.confidence_summary,
-                    "bundle_exact_claim_allowed": str(bundle.exact_claim_allowed),
-                }
-            )
-    return flattened
-
-
-def _flatten_search_evidence_summary(
-    search_execution: SearchExecution,
-) -> list[dict[str, str]] | None:
-    if not search_execution.bundles:
-        return None
-    return [
-        {
-            "label": bundle.label,
-            "confidence_summary": bundle.confidence_summary,
-            "exact_claim_allowed": str(bundle.exact_claim_allowed),
-            "evidence_summary": bundle.evidence_summary,
-            "agreement_status": bundle.agreement_status,
-            "trusted_result_count": str(bundle.trusted_result_count),
-            "fallback_result_count": str(bundle.fallback_result_count),
-            "exact_claim_reason": bundle.exact_claim_reason,
-            "response_mode": bundle.response_mode,
-        }
-        for bundle in search_execution.bundles
-    ]
-
-
-def _search_execution_exact_claims_allowed(search_execution: SearchExecution) -> bool:
-    if not search_execution.bundles:
-        return False
-    return all(bundle.exact_claim_allowed for bundle in search_execution.bundles)
 
 
 def _scope_ids(msg) -> tuple[str, str, str]:
@@ -1019,7 +588,7 @@ async def on_message(bot, msg):
                 used=False,
                 reason="search_not_needed",
                 query="",
-                provider=SEARCH_PROVIDER if search_provider is not None else "disabled",
+                provider="disabled",
                 result_count=0,
                 duration=0.0,
                 error=None,
@@ -1066,42 +635,6 @@ async def on_message(bot, msg):
                 await msg.reply(reply_content)
                 return
 
-            if route_plan.deterministic_gate == "explicit_search_disabled":
-                reply_content = _build_search_disabled_response()
-                response = {
-                    "model": "search-disabled",
-                    "message": {"content": reply_content},
-                    "prompt_eval_count": 0,
-                    "eval_count": 0,
-                    "prompt_eval_duration": 0,
-                    "eval_duration": 0,
-                }
-                elapsed = time.time() - start_time
-                log_response(
-                    msg,
-                    user_content,
-                    response["model"],
-                    response,
-                    elapsed,
-                    query_type=query_type,
-                    memory_scanned=memory_scanned,
-                    memory_selected=memory_selected,
-                    memory_top_score=memory_top_score,
-                    memory_duration=memory_duration,
-                    search_used=False,
-                    search_reason="search_disabled",
-                    search_provider=search_execution.provider,
-                    deterministic_gate=route_plan.deterministic_gate,
-                    analysis_used=False,
-                    final_path="search-disabled",
-                    rag_top_score=0.0,
-                    rag_accepted=False,
-                )
-                store_chat(server_id, channel_id, msg.content, "user")
-                store_chat(server_id, channel_id, reply_content, "assistant")
-                await msg.reply(reply_content)
-                return
-
             if route_plan.path == "memory" and memory_service is not None:
                 memory_start = time.time()
                 try:
@@ -1125,19 +658,7 @@ async def on_message(bot, msg):
                 if relevant_memories:
                     memory_top_score = relevant_memories[0].score
 
-            if route_plan.path == "search":
-                search_execution = await _execute_search_plans(
-                    route_plan.search_plans or [],
-                    reason="search_explicit"
-                    if route_plan.deterministic_gate == "explicit_search"
-                    else "analysis_time_sensitive",
-                )
-                final_path = (
-                    "explicit-search"
-                    if route_plan.deterministic_gate == "explicit_search"
-                    else "search-grounded"
-                )
-            elif route_plan.path == "rag":
+            if route_plan.path == "rag":
                 rag_start = time.time()
                 rag_decision = _evaluate_rag(
                     route_plan.query_text,
@@ -1184,8 +705,6 @@ async def on_message(bot, msg):
                             search_provider=search_execution.provider,
                             deterministic_gate=route_plan.deterministic_gate,
                             analysis_used=route_plan.analysis_used,
-                            analysis_time_sensitive=analysis.time_sensitive if analysis else None,
-                            analysis_search_query=analysis.search_query if analysis else "",
                             analysis_rag_query=analysis.rag_query
                             if analysis
                             else route_plan.query_text,
@@ -1207,95 +726,13 @@ async def on_message(bot, msg):
             else:
                 rag_duration = 0.0
                 analysis = route_plan.analysis_decision
-                auto_search_enabled = SEARCH_TRIGGER_MODE not in {
-                    "explicit",
-                    "manual",
-                    "off",
-                    "disabled",
-                }
                 general_safe = (
                     analysis is not None
                     and analysis.can_answer_from_general_knowledge
                     and analysis.general_knowledge_confidence
                     >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
                 )
-                if (
-                    analysis is not None
-                    and analysis.time_sensitive
-                    and auto_search_enabled
-                    and not general_safe
-                ):
-                    search_execution = await _execute_search_plans(
-                        route_plan.search_plans or [],
-                        reason="analysis_time_sensitive_fallback",
-                    )
-                    if search_execution.used:
-                        final_path = "search-grounded"
-                    else:
-                        reply_content = _build_uncertainty_response()
-                        response = {
-                            "model": "uncertainty-guard",
-                            "message": {"content": reply_content},
-                            "prompt_eval_count": 0,
-                            "eval_count": 0,
-                            "prompt_eval_duration": 0,
-                            "eval_duration": 0,
-                        }
-                        elapsed = time.time() - start_time
-                        log_response(
-                            msg,
-                            user_content,
-                            response["model"],
-                            response,
-                            elapsed,
-                            rag_duration=rag_duration,
-                            query_type=query_type,
-                            memory_scanned=memory_scanned,
-                            memory_selected=memory_selected,
-                            memory_top_score=memory_top_score,
-                            memory_duration=memory_duration,
-                            search_used=search_execution.used,
-                            search_reason=search_execution.reason,
-                            search_query=search_execution.query,
-                            search_provider=search_execution.provider,
-                            search_result_count=search_execution.result_count,
-                            search_results=_flatten_search_results(search_execution),
-                            search_duration=search_execution.duration,
-                            search_error=search_execution.error,
-                            search_query_plans=(
-                                [
-                                    {
-                                        "label": plan.label,
-                                        "query": plan.query,
-                                        "purpose": plan.purpose,
-                                    }
-                                    for plan in (route_plan.search_plans or [])
-                                ]
-                                or None
-                            ),
-                            search_evidence_summary=_flatten_search_evidence_summary(
-                                search_execution
-                            ),
-                            exact_claims_allowed=_search_execution_exact_claims_allowed(
-                                search_execution
-                            ),
-                            deterministic_gate=route_plan.deterministic_gate,
-                            analysis_used=route_plan.analysis_used,
-                            analysis_time_sensitive=analysis.time_sensitive,
-                            analysis_search_query=analysis.search_query,
-                            analysis_rag_query=analysis.rag_query or route_plan.query_text,
-                            can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge,
-                            general_knowledge_confidence=analysis.general_knowledge_confidence,
-                            analysis_reason=analysis.reason,
-                            final_path="uncertain",
-                            rag_top_score=0.0,
-                            rag_accepted=False,
-                            rag_rejection_reason="",
-                            analysis_payload=route_plan.analysis_payload,
-                        )
-                        await msg.reply(reply_content)
-                        return
-                elif analysis is not None and not general_safe:
+                if analysis is not None and not general_safe:
                     reply_content = _build_uncertainty_response()
                     response = {
                         "model": "uncertainty-guard",
@@ -1323,8 +760,6 @@ async def on_message(bot, msg):
                         search_provider=search_execution.provider,
                         deterministic_gate=route_plan.deterministic_gate,
                         analysis_used=route_plan.analysis_used,
-                        analysis_time_sensitive=analysis.time_sensitive,
-                        analysis_search_query=analysis.search_query,
                         analysis_rag_query=analysis.rag_query or route_plan.query_text,
                         can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge,
                         general_knowledge_confidence=analysis.general_knowledge_confidence,
@@ -1347,11 +782,7 @@ async def on_message(bot, msg):
             full_system_prompt = _build_system_prompt(
                 source_path="memory"
                 if route_plan.path == "memory"
-                else (
-                    "search"
-                    if final_path in {"search-grounded", "explicit-search"}
-                    else ("rag" if final_path == "rag-grounded" else "general")
-                ),
+                else ("rag" if final_path == "rag-grounded" else "general"),
                 personalization=personalization,
                 manifest=manifest,
                 resolved_query=resolved_query,
@@ -1359,71 +790,6 @@ async def on_message(bot, msg):
                 rag_decision=rag_decision,
                 search_execution=search_execution,
             )
-            if (
-                final_path == "search-grounded"
-                and search_execution.bundles
-                and all(bundle.response_mode == "uncertain" for bundle in search_execution.bundles)
-            ):
-                reply_content = "Current reports are too mixed or weak for me to state that confidently. I would rather leave it uncertain than offer you a false exact answer."
-                response = {
-                    "model": "uncertainty-guard",
-                    "message": {"content": reply_content},
-                    "prompt_eval_count": 0,
-                    "eval_count": 0,
-                    "prompt_eval_duration": 0,
-                    "eval_duration": 0,
-                }
-                elapsed = time.time() - start_time
-                analysis = route_plan.analysis_decision
-                log_response(
-                    msg,
-                    user_content,
-                    response["model"],
-                    response,
-                    elapsed,
-                    rag_duration=rag_duration,
-                    query_type=query_type,
-                    memory_scanned=memory_scanned,
-                    memory_selected=memory_selected,
-                    memory_top_score=memory_top_score,
-                    memory_duration=memory_duration,
-                    search_used=search_execution.used,
-                    search_reason=search_execution.reason,
-                    search_query=search_execution.query,
-                    search_provider=search_execution.provider,
-                    search_result_count=search_execution.result_count,
-                    search_results=_flatten_search_results(search_execution),
-                    search_duration=search_execution.duration,
-                    search_error=search_execution.error,
-                    search_query_plans=(
-                        [
-                            {"label": plan.label, "query": plan.query, "purpose": plan.purpose}
-                            for plan in (route_plan.search_plans or [])
-                        ]
-                        or None
-                    ),
-                    search_evidence_summary=_flatten_search_evidence_summary(search_execution),
-                    exact_claims_allowed=_search_execution_exact_claims_allowed(search_execution),
-                    deterministic_gate=route_plan.deterministic_gate,
-                    analysis_used=route_plan.analysis_used,
-                    analysis_time_sensitive=analysis.time_sensitive if analysis else None,
-                    analysis_search_query=analysis.search_query if analysis else "",
-                    analysis_rag_query=analysis.rag_query if analysis else resolved_query,
-                    can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge
-                    if analysis
-                    else False,
-                    general_knowledge_confidence=analysis.general_knowledge_confidence
-                    if analysis
-                    else 0.0,
-                    analysis_reason=analysis.reason if analysis else route_plan.reason,
-                    final_path="uncertain",
-                    rag_top_score=rag_decision.top_score if rag_decision else 0.0,
-                    rag_accepted=rag_decision.accepted if rag_decision else False,
-                    rag_rejection_reason=rag_decision.rejection_reason if rag_decision else "",
-                    analysis_payload=route_plan.analysis_payload,
-                )
-                await msg.reply(reply_content)
-                return
 
             messages = [{"role": "system", "content": full_system_prompt}] + chat_history
             store_chat(server_id, channel_id, msg.content, "user")
@@ -1453,26 +819,13 @@ async def on_message(bot, msg):
                 search_query=search_execution.query,
                 search_provider=search_execution.provider,
                 search_result_count=search_execution.result_count,
-                search_results=_flatten_search_results(search_execution),
+                search_results=serialize_search_results(search_execution),
                 search_duration=search_execution.duration,
                 search_error=search_execution.error,
-                search_query_plans=(
-                    [
-                        {
-                            "label": plan.label,
-                            "query": plan.query,
-                            "purpose": plan.purpose,
-                        }
-                        for plan in (route_plan.search_plans or [])
-                    ]
-                    or None
-                ),
-                search_evidence_summary=_flatten_search_evidence_summary(search_execution),
-                exact_claims_allowed=_search_execution_exact_claims_allowed(search_execution),
+                search_evidence_summary=serialize_search_evidence_summary(search_execution),
+                exact_claims_allowed=search_execution_allows_exact_claims(search_execution),
                 deterministic_gate=route_plan.deterministic_gate,
                 analysis_used=route_plan.analysis_used,
-                analysis_time_sensitive=analysis.time_sensitive if analysis else None,
-                analysis_search_query=analysis.search_query if analysis else "",
                 analysis_rag_query=analysis.rag_query if analysis else resolved_query,
                 can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge
                 if analysis

@@ -22,13 +22,10 @@ def log_response(
     search_results: list[dict[str, str]] | None = None,
     search_duration: float = 0.0,
     search_error: str | None = None,
-    search_query_plans: list[dict[str, str]] | None = None,
     search_evidence_summary: list[dict[str, str]] | None = None,
     exact_claims_allowed: bool = False,
     deterministic_gate: str = "",
     analysis_used: bool = False,
-    analysis_time_sensitive: bool | None = None,
-    analysis_search_query: str = "",
     analysis_rag_query: str = "",
     can_answer_from_general_knowledge: bool = False,
     general_knowledge_confidence: float = 0.0,
@@ -66,13 +63,11 @@ def log_response(
         f"results={search_result_count}, duration={search_duration:.2f}s"
     )
     print(
-        f"🧩 Analysis: used={analysis_used}, time_sensitive={analysis_time_sensitive}, "
-        f"general_ok={can_answer_from_general_knowledge}, general_conf={general_knowledge_confidence:.2f}"
+        f"🧩 Analysis: used={analysis_used}, general_ok={can_answer_from_general_knowledge}, "
+        f"general_conf={general_knowledge_confidence:.2f}"
     )
     if deterministic_gate:
         print(f"🧩 Deterministic Gate: {deterministic_gate}")
-    if analysis_search_query:
-        print(f"🧩 Analysis Search Query: {analysis_search_query}")
     if analysis_rag_query:
         print(f"🧩 Analysis RAG Query: {analysis_rag_query}")
     if analysis_reason:
@@ -84,12 +79,6 @@ def log_response(
     )
     if search_query:
         print(f"🔎 Search Query: {search_query}")
-    if search_query_plans:
-        print("🗺️ Search Plans:")
-        for index, plan in enumerate(search_query_plans, start=1):
-            print(f"   [{index}] {plan.get('label', 'general')} -> {plan.get('query', '')}")
-            if plan.get("purpose"):
-                print(f"       purpose={plan.get('purpose', '-')}")
     if search_evidence_summary:
         print("🧪 Evidence Summary:")
         for index, summary in enumerate(search_evidence_summary, start=1):

@@ -8,7 +8,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from services import search as search_module
-from services.search import SearchError, SearxNGSearchProvider
+from services.search import SearchError, SearchResult, SearxNGSearchProvider
 
 
 def test_parse_results_normalizes_trims_and_filters() -> None:
@@ -347,6 +347,106 @@ def test_search_bundle_marks_exact_claims_only_for_strong_specific_results(monke
 
     assert bundle.confidence_summary == "high"
     assert bundle.exact_claim_allowed is True
+
+
+def test_search_bundle_allows_close_current_metric_values(monkeypatch) -> None:
+    monkeypatch.setattr(search_module, "SEARCH_TOPIC_DOMAIN_OVERRIDES", {})
+    monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_OFFICIAL", [])
+    monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_REFERENCE", ["example.com"])
+    monkeypatch.setattr(search_module, "SEARCH_TRUSTED_DOMAINS_NEWS", ["reuters.com"])
+    monkeypatch.setattr(search_module, "SEARCH_DEMOTED_DOMAINS", [])
+
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+    )
+
+    class _Response:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict:
+            return {
+                "results": [
+                    {
+                        "title": "NVIDIA stock price today",
+                        "url": "https://example.com/stocks/nvda-price",
+                        "content": "NVIDIA price per share today is 205.19 with live market details.",
+                        "publishedDate": "2026-06-14",
+                    },
+                    {
+                        "title": "Reuters market quote for NVIDIA",
+                        "url": "https://reuters.com/markets/us/nvda",
+                        "content": "NVIDIA shares trade at 205.27 in current market coverage.",
+                        "publishedDate": "2026-06-14",
+                    },
+                ]
+            }
+
+    class _Client:
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        async def get(self, *args, **kwargs) -> _Response:
+            return _Response()
+
+    monkeypatch.setattr(search_module.httpx, "AsyncClient", _Client)
+
+    bundle = asyncio.run(
+        provider.search(
+            "NVIDIA price per share today",
+            limit=3,
+            target_entity="NVIDIA",
+            requested_fact="price per share",
+            question_type="current_metric",
+            freshness_required=True,
+        )
+    )
+
+    assert bundle.agreement_status == "agree"
+    assert bundle.exact_claim_allowed is True
+
+
+def test_current_metric_recent_trusted_result_returns_summary_mode() -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+    )
+
+    result = SearchResult(
+        title="NVIDIA quote page",
+        url="https://finance.yahoo.com/quote/NVDA",
+        snippet="Live market page for NVIDIA stock.",
+        source="finance.yahoo.com",
+        published_at="2026-06-14",
+        score=None,
+        source_class="reference",
+        rank_score=5.0,
+        rank_reason="reference",
+        entity_match_score=0.3,
+        fact_match_score=0.2,
+        specificity_score=0.3,
+        evidence_quality="low",
+        supports_exact_answer=False,
+        surface_class="generic",
+        freshness_bucket="recent",
+    )
+
+    summary = provider._summarize_bundle_confidence(
+        [result],
+        question_type="current_metric",
+        freshness_required=True,
+    )
+
+    assert summary[0] == "low"
+    assert summary[1] is False
+    assert summary[7] == "summary"
 
 
 def test_parse_results_classifies_download_portal_as_mirror_not_official(monkeypatch) -> None:

@@ -77,31 +77,22 @@ Copy `.env.example` to `.env.local` and adjust as needed:
 cp .env.example .env.local
 ```
 
-Default `.env.local` values for your local `llama.cpp` setup:
+Default `.env.local` now keeps secrets and feature toggles:
 
 ```env
 DISCORD_TOKEN=your_discord_bot_token
 ONLINE_API_KEY=your_deepseek_api_key
-ONLINE_BASE_URL=https://api.deepseek.com
-ONLINE_MODEL=deepseek-chat
-
-LLM_PROVIDER=llamacpp
-EMBEDDING_PROVIDER=llamacpp
-LLAMA_BIN_DIR=$HOME/llama.cpp/build/bin
-LOCAL_BASE_URL=http://127.0.0.1:8081/v1
 LOCAL_API_KEY=no-key
-LOCAL_MODEL=shorekeeper
-CHAT_MODEL_PATH=/mnt/sdb4/models/shorekeeper.gguf
-
-EMBED_BASE_URL=http://127.0.0.1:8082/v1
 EMBED_API_KEY=no-key
-EMBED_MODEL=nomic-embed-text
-EMBED_MODEL_PATH=/mnt/sdb4/models/nomic-embed-text.gguf
 
-SEARCH_ENABLED=true
-SEARCH_PROVIDER=searxng
-SEARCH_BASE_URL=http://127.0.0.1:8083
+SEARCH_ENABLED=false
+MEMORY_ENABLED=true
 ```
+
+Grouped runtime settings now live in the YAML files:
+
+- `config/runtime.config.yml`: provider selection, llama.cpp URLs, model aliases, model paths, launcher tuning, memory tuning, analysis thresholds, and router limits
+- `config/search.config.yml`: SearXNG provider, limits, domain trust lists, and topic overrides
 
 Example local startup with `llama.cpp`:
 
@@ -145,7 +136,7 @@ cd ~/llama.cpp/build/bin
 
 The alias is important: the app sends whatever you set in `LOCAL_MODEL` to `LOCAL_BASE_URL`, and whatever you set in `EMBED_MODEL` to `EMBED_BASE_URL`.
 
-Live search grounding expects a JSON-capable SearxNG instance at `SEARCH_BASE_URL`. The bot will continue replying if search is unavailable, but it will avoid claiming current facts with confidence.
+Live search grounding expects a JSON-capable SearxNG instance at the `base_url` configured in `config/search.config.yml`. It is disabled by default and is intended for the Discord `/search` slash command when you explicitly turn it on.
 
 ### 4) Local SearXNG runtime
 
@@ -178,7 +169,8 @@ If you want one command instead of two terminals, use the bundled launcher:
 ./scripts/start-llama-local.sh
 ```
 
-It starts both `llama-server` processes in one terminal and stops both on `Ctrl-C`. It reads only `.env.local` and fails fast if any required launcher variable is missing, so config errors surface immediately instead of being hidden by script defaults.
+It starts both `llama-server` processes plus the local SearXNG Docker Compose stack, then stops all of them on `Ctrl-C`. It reads `.env.local`, uses `infra/searxng/docker-compose.yml`, and fails fast if any required launcher variable, binary, or compose file is missing.
+The launcher reads grouped llama settings directly from `config/runtime.config.yml`.
 
 ## Running
 
@@ -212,6 +204,8 @@ npm run dev
 ## Bot Runtime Notes
 
 - Query classes in `backend/brain/handlers/message.py`: `meta`, `casual`, `lore`
+- Normal mention/reply chat no longer auto-searches the web for current facts.
+- Live web search now runs through the Discord `/search` slash command when `SEARCH_ENABLED=true`.
 - RAG data artifacts:
   - `backend/brain/data/vectors.json`
   - `backend/brain/data/embeddings.npz`
@@ -247,11 +241,10 @@ python tests/test_rag_entity_fallback.py
 
 Bring the local runtime up in this order:
 
-1. Start the llama.cpp chat and embedding servers.
-2. Start the SearXNG compose stack.
-3. Run `cd backend && uv run python brain/commands/verify_online_model.py`.
-4. Run `cd backend && uv run python brain/commands/verify_search.py`.
-5. Start the Discord bot with `cd backend && uv run python brain/main.py`.
+1. Run `./scripts/start-llama-local.sh` to start llama.cpp and SearXNG together.
+2. Run `cd backend && uv run python brain/commands/verify_online_model.py`.
+3. Run `cd backend && uv run python brain/commands/verify_search.py`.
+4. Start the Discord bot with `cd backend && uv run python brain/main.py`.
 
 Shorekeeper live search is considered ready only when `verify_search.py` succeeds against `SEARCH_BASE_URL`.
 

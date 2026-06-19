@@ -1,0 +1,74 @@
+provider: searxng
+base_url: http://127.0.0.1:8083
+timeout_seconds: 8
+max_results: 5
+min_query_length: 5
+safe_domains: []
+block_private_ips: true
+trusted_domains:
+  official:
+    - hoyoverse.com
+    - genshin.hoyoverse.com
+    - kurogames.com
+    - wutheringwaves.kurogames.com
+    - nvidia.com
+    - investor.nvidia.com
+    - nasdaq.com
+  reference:
+    - wikipedia.org
+    - www.wikipedia.org
+    - wikidata.org
+    - investopedia.com
+    - finance.yahoo.com
+    - merriam-webster.com
+    - britannica.com
+  news:
+    - reuters.com
+    - www.reuters.com
+    - bloomberg.com
+    - www.bloomberg.com
+    - cnbc.com
+    - www.cnbc.com
+    - apnews.com
+    - ign.com
+    - www.ign.com
+    - gamespot.com
+    - www.gamespot.com
+    - polygon.com
+    - www.polygon.com
+demoted_domains:
+  - youtube.com
+  - www.youtube.com
+  - reddit.com
+  - www.reddit.com
+  - play.google.com
+  - apps.apple.com
+  - tiktok.com
+  - www.tiktok.com
+  - x.com
+  - www.x.com
+  - instagram.com
+  - www.instagram.com
+  - facebook.com
+  - www.facebook.com
+topic_domain_overrides:
+  finance:
+    preferred:
+      - nasdaq.com
+      - finance.yahoo.com
+      - reuters.com
+      - bloomberg.com
+      - marketwatch.com
+  game:
+    preferred:
+      - hoyoverse.com
+      - genshin.hoyoverse.com
+      - kurogames.com
+      - wutheringwaves.kurogames.com
+      - ign.com
+      - gamespot.com
+  language:
+    preferred:
+      - merriam-webster.com
+      - britannica.com
+      - wikipedia.org
