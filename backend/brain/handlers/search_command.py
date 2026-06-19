@@ -109,6 +109,61 @@ def _build_search_uncertain_response() -> str:
     return "Current reports are too mixed or weak for me to state that confidently. I would rather leave it uncertain than offer you a false exact answer."
 
 
+def _build_search_runtime_error_response() -> str:
+    return (
+        "The signals beyond these shores have grown turbulent for a moment. I could not finish "
+        "assembling a reliable answer just now."
+    )
+
+
+def _build_search_rate_limited_response() -> str:
+    return (
+        "I gathered the outside signals, but the final synthesis is being throttled for the moment. "
+        "Give me a little time, and I shall try to weave those reports into something clearer for you."
+    )
+
+
+def _is_rate_limit_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return "rate limit" in message or "429" in message or "too many requests" in message
+
+
+def _build_rate_limited_search_fallback(search_execution: SearchExecution) -> str:
+    if not search_execution.bundles:
+        return _build_search_rate_limited_response()
+
+    bundle = search_execution.bundles[0]
+    results = bundle.results[:3]
+    if not results:
+        return _build_search_rate_limited_response()
+
+    unique_sources = list(dict.fromkeys(result.source for result in results[:3]))
+    source_list = ", ".join(unique_sources)
+
+    top_result = results[0]
+    top_evidence = (top_result.extracted_text or top_result.snippet).strip()
+    if len(top_evidence) > 220:
+        top_evidence = top_evidence[:217].rstrip() + "..."
+
+    opening = "The archive holds little on this matter, so I listened beyond these shores for reliable reports."
+    source_sentence = f"The clearest signals came through {source_list}."
+
+    if bundle.exact_claim_allowed:
+        conclusion = f"Their reports align strongly enough that the leading account points to this: {top_evidence}"
+    elif bundle.response_mode == "summary":
+        conclusion = (
+            "Their signals are useful, but not aligned enough for a precise live claim. "
+            f"The strongest lead I found says: {top_evidence}"
+        )
+    else:
+        conclusion = (
+            "Their signals are still too mixed for certainty. "
+            f"The strongest lead I found says: {top_evidence}"
+        )
+
+    return " ".join((opening, source_sentence, conclusion))
+
+
 def _build_search_system_prompt(*, resolved_query: str, search_execution: SearchExecution) -> str:
     personalization = rag.get_personalization_context()
     manifest = rag.get_manifest()
@@ -121,6 +176,14 @@ def _build_search_system_prompt(*, resolved_query: str, search_execution: Search
         "Use this only to interpret the user's current intent.",
     ]
     if search_execution.used and search_execution.bundles:
+        system_sections.append(
+            "Search-path behavior override:\n"
+            "- The archive may not hold this subject as stable lore, but live search evidence is present below.\n"
+            "- Do NOT say the information is outside your records, unavailable to you, or beyond your frequencies when live search evidence exists.\n"
+            "- Instead, respond in character as though you briefly consulted the outside world for reliable signals before answering.\n"
+            "- A natural framing is something like: 'The archive holds little on this matter, so I listened beyond these shores for reliable reports.'\n"
+            "- After that transition, summarize the live evidence plainly and directly."
+        )
         system_sections.append(build_search_context_block(search_execution.bundles))
         if not search_execution_allows_exact_claims(search_execution):
             system_sections.append(
@@ -138,6 +201,8 @@ def _build_search_system_prompt(*, resolved_query: str, search_execution: Search
     system_sections.append(
         "Path-specific rules:\n"
         "- search: use only live search context for current facts.\n"
+        "- search: if live evidence exists, always answer from it instead of refusing on the basis that the topic is not in your archive.\n"
+        "- search: keep the transition in character, then deliver the outside findings clearly.\n"
         "- Do not mention citations or URLs unless the user explicitly asks for sources."
     )
     return "\n\n".join(system_sections)
@@ -241,21 +306,41 @@ async def handle_search_interaction(interaction: discord.Interaction, *, query: 
         },
         {"role": "user", "content": normalized_query},
     ]
-    llm_start = time.time()
-    response = await llm_client.chat(messages)
-    llm_duration = time.time() - llm_start
-    reply_content = response["message"]["content"]
-    elapsed = time.time() - start_time
-    _log_search_interaction(
-        interaction,
-        user_content=user_content,
-        response=response,
-        elapsed=elapsed,
-        llm_duration=llm_duration,
-        search_execution=search_execution,
-        final_path="search-grounded",
-    )
-    await _send_interaction_chunks(interaction, reply_content)
+    try:
+        llm_start = time.time()
+        response = await llm_client.chat(messages)
+        llm_duration = time.time() - llm_start
+        reply_content = response["message"]["content"]
+        elapsed = time.time() - start_time
+        _log_search_interaction(
+            interaction,
+            user_content=user_content,
+            response=response,
+            elapsed=elapsed,
+            llm_duration=llm_duration,
+            search_execution=search_execution,
+            final_path="search-grounded",
+        )
+        await _send_interaction_chunks(interaction, reply_content)
+    except Exception as exc:
+        if _is_rate_limit_error(exc):
+            reply_content = _build_rate_limited_search_fallback(search_execution)
+            response = _synthetic_response(model="search-rate-limited", content=reply_content)
+            final_path = "search-rate-limited"
+        else:
+            reply_content = _build_search_runtime_error_response()
+            response = _synthetic_response(model="search-runtime-error", content=reply_content)
+            final_path = "search-runtime-error"
+        _log_search_interaction(
+            interaction,
+            user_content=user_content,
+            response=response,
+            elapsed=time.time() - start_time,
+            search_execution=search_execution,
+            final_path=final_path,
+        )
+        print(f"⚠️ Search-grounded reply failed: {exc}")
+        await interaction.followup.send(reply_content)
 
 
 def register_search_command(tree: discord.app_commands.CommandTree) -> None:

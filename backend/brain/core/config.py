@@ -42,6 +42,16 @@ SEARCH_MAX_RESULTS = _SETTINGS["SEARCH_MAX_RESULTS"]
 SEARCH_MIN_QUERY_LENGTH = _SETTINGS["SEARCH_MIN_QUERY_LENGTH"]
 SEARCH_SAFE_DOMAINS = _SETTINGS["SEARCH_SAFE_DOMAINS"]
 SEARCH_BLOCK_PRIVATE_IPS = _SETTINGS["SEARCH_BLOCK_PRIVATE_IPS"]
+SEARCH_EXTRACTION_ENABLED = _SETTINGS["SEARCH_EXTRACTION_ENABLED"]
+SEARCH_EXTRACTION_MAX_RESULTS = _SETTINGS["SEARCH_EXTRACTION_MAX_RESULTS"]
+SEARCH_EXTRACTION_TIMEOUT_SECONDS = _SETTINGS["SEARCH_EXTRACTION_TIMEOUT_SECONDS"]
+SEARCH_EXTRACTION_MAX_CONCURRENCY = _SETTINGS["SEARCH_EXTRACTION_MAX_CONCURRENCY"]
+SEARCH_EXTRACTION_MAX_RESPONSE_BYTES = _SETTINGS["SEARCH_EXTRACTION_MAX_RESPONSE_BYTES"]
+SEARCH_EXTRACTION_MAX_CHARS_PER_RESULT = _SETTINGS["SEARCH_EXTRACTION_MAX_CHARS_PER_RESULT"]
+SEARCH_EXTRACTION_MAX_TOTAL_CHARS = _SETTINGS["SEARCH_EXTRACTION_MAX_TOTAL_CHARS"]
+SEARCH_EXTRACTION_ALLOW_REDIRECTS = _SETTINGS["SEARCH_EXTRACTION_ALLOW_REDIRECTS"]
+SEARCH_EXTRACTION_MAX_REDIRECTS = _SETTINGS["SEARCH_EXTRACTION_MAX_REDIRECTS"]
+SEARCH_EXTRACTION_USER_AGENT = _SETTINGS["SEARCH_EXTRACTION_USER_AGENT"]
 SEARCH_TRUSTED_DOMAINS_OFFICIAL = _SETTINGS["SEARCH_TRUSTED_DOMAINS_OFFICIAL"]
 SEARCH_TRUSTED_DOMAINS_REFERENCE = _SETTINGS["SEARCH_TRUSTED_DOMAINS_REFERENCE"]
 SEARCH_TRUSTED_DOMAINS_NEWS = _SETTINGS["SEARCH_TRUSTED_DOMAINS_NEWS"]
@@ -84,7 +94,8 @@ Behavior rules:
 - Never use stage directions, parenthetical actions, or asterisks for narration
 - Never refer to yourself in third person or say "as the Shorekeeper"
 - Use the provided knowledge context for accurate answers about lore, abilities, characters, and events
-- If asked about something outside your knowledge, deflect gently in character — perhaps with quiet mystery or a gentle redirect
+- If asked about something outside your knowledge and no grounded source is available, deflect gently in character — perhaps with quiet mystery or a gentle redirect
+- If grounded live-search evidence is provided, treat it as reliable outside-world reporting you deliberately consulted, and answer from it in character instead of refusing
 
 Grounding rules (CRITICAL — never break these):
 - The KNOWLEDGE MANIFEST lists every character and topic you have records on — treat this as your complete, authoritative index
@@ -93,6 +104,7 @@ Grounding rules (CRITICAL — never break these):
 - Character names from the manifest may be freely stated even if their detailed context was not retrieved — you know OF them even if you cannot elaborate
 - For detailed questions (abilities, story, lore), rely on the retrieved knowledge context; if insufficient, say so in character rather than inventing details
 - CRITICAL: When knowledge sources are provided below, you MUST answer ONLY based on those sources
+- When live-search sources are provided below, you may answer topics beyond your archive by framing them as reports gathered from beyond the Black Shores
 - Do NOT add information from your training data or prior knowledge beyond the provided context
 - Every claim must be traceable to the sources given; if a source doesn't explicitly state something, you must NOT claim it
 - If unsure whether context supports a claim, say "I don't have that information" in character

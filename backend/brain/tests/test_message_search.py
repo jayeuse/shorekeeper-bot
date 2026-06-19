@@ -38,7 +38,10 @@ class _StubLLM:
     async def chat(self, messages: list[dict]) -> dict:
         self.calls.append(messages)
         if self.responses:
-            return self.responses.pop(0)
+            response = self.responses.pop(0)
+            if isinstance(response, Exception):
+                raise response
+            return response
         return {
             "model": self.model,
             "message": {"content": "The tides remain steady."},
@@ -546,6 +549,9 @@ def test_slash_search_returns_successful_search_reply(monkeypatch) -> None:
     assert interaction.followup.sent == ["The latest reports place it at a steady value."]
     assert search.calls == [("latest nvidia stock price", 5, "slash", "current_metric", True)]
     assert len(stub_llm.calls) == 1
+    system_prompt = stub_llm.calls[0][0]["content"]
+    assert "consulted the outside world for reliable signals" in system_prompt
+    assert "Do NOT say the information is outside your records" in system_prompt
     assert log_calls[0]["final_path"] == "search-grounded"
     assert log_calls[0]["search_used"] is True
     assert log_calls[0]["search_query"] == "latest nvidia stock price"
@@ -601,6 +607,107 @@ def test_slash_search_returns_uncertain_on_weak_evidence(monkeypatch) -> None:
     ]
     assert log_calls[0]["final_path"] == "uncertain"
     assert log_calls[0]["search_used"] is True
+
+
+def test_slash_search_returns_runtime_error_when_llm_fails(monkeypatch) -> None:
+    monkeypatch.setattr(search_command_module, "SEARCH_ENABLED", True)
+    search = _SuccessSearchProvider(exact_claim_allowed=False, confidence_summary="medium")
+    _, stub_llm, log_calls = _configure_slash_runtime(
+        monkeypatch,
+        search_provider=search,
+        llm_responses=[RuntimeError("upstream provider disconnected")],
+    )
+    interaction = _Interaction()
+
+    asyncio.run(
+        search_command_module.handle_search_interaction(
+            cast(Any, interaction),
+            query="latest version of wuthering waves",
+        )
+    )
+
+    assert len(stub_llm.calls) == 1
+    assert interaction.followup.sent == [
+        "The signals beyond these shores have grown turbulent for a moment. I could not finish assembling a reliable answer just now."
+    ]
+    assert log_calls[0]["final_path"] == "search-runtime-error"
+
+
+def test_slash_search_returns_rate_limited_message_when_llm_is_throttled(monkeypatch) -> None:
+    monkeypatch.setattr(search_command_module, "SEARCH_ENABLED", True)
+    bundle = SearchBundle(
+        query="nvidia stock prices today",
+        provider="searxng",
+        used_fallback_query=False,
+        label="slash",
+        confidence_summary="medium",
+        exact_claim_allowed=False,
+        evidence_summary="Trusted evidence is relevant but not corroborated enough for exact claims",
+        agreement_status="insufficient_trusted",
+        trusted_result_count=3,
+        fallback_result_count=0,
+        exact_claim_reason="fewer than two trusted results",
+        response_mode="summary",
+        results=[
+            SearchResult(
+                title="(NVDA.O) | Stock Price & Latest News | Reuters",
+                url="https://www.reuters.com/markets/companies/NVDA.O/",
+                snippet="Company Information NVIDIA Corporation is an artificial intelligence (AI) infrastructure company.",
+                source="www.reuters.com",
+                extracted_text="NVIDIA stock reporting remains active across market desks, though the exact intraday figure shifts too quickly for a stable quoted value here.",
+                published_at=None,
+                score=1.0,
+                source_class="reference",
+                evidence_quality="high",
+                supports_exact_answer=False,
+            ),
+            SearchResult(
+                title="NVDA Stock Price | MarketWatch",
+                url="https://www.marketwatch.com/investing/stock/nvda",
+                snippet="View real-time stock prices and stock quotes for a full financial overview.",
+                source="www.reuters.com",
+                published_at=None,
+                score=1.0,
+                source_class="reference",
+                evidence_quality="high",
+                supports_exact_answer=False,
+            ),
+            SearchResult(
+                title="NVIDIA Corporation (NVDA) Stock Price | Yahoo Finance",
+                url="https://finance.yahoo.com/quote/NVDA/",
+                snippet="Find the latest NVIDIA Corporation stock quote, history, news and other vital information.",
+                source="finance.yahoo.com",
+                published_at=None,
+                score=1.0,
+                source_class="reference",
+                evidence_quality="high",
+                supports_exact_answer=False,
+            ),
+        ],
+    )
+    _, stub_llm, log_calls = _configure_slash_runtime(
+        monkeypatch,
+        search_provider=_CustomSearchProvider(bundle),
+        llm_responses=[
+            RuntimeError("OpenAI-compatible model call failed (HTTP 429): rate limit exceeded")
+        ],
+    )
+    interaction = _Interaction()
+
+    asyncio.run(
+        search_command_module.handle_search_interaction(
+            cast(Any, interaction),
+            query="latest version of wuthering waves",
+        )
+    )
+
+    assert len(stub_llm.calls) == 1
+    assert len(interaction.followup.sent) == 1
+    assert "The archive holds little on this matter" in interaction.followup.sent[0]
+    assert "www.reuters.com, finance.yahoo.com" in interaction.followup.sent[0]
+    assert "not aligned enough for a precise live claim" in interaction.followup.sent[0]
+    assert "exact intraday figure shifts too quickly" in interaction.followup.sent[0]
+    assert log_calls[0]["final_path"] == "search-rate-limited"
 
 
 def test_register_search_command_registers_once() -> None:

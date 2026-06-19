@@ -1,4 +1,5 @@
 import asyncio
+import socket
 import sys
 from pathlib import Path
 
@@ -8,7 +9,12 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from services import search as search_module
-from services.search import SearchError, SearchResult, SearxNGSearchProvider
+from services.search import (
+    SearchError,
+    SearchResult,
+    SearxNGSearchProvider,
+    build_search_context_block,
+)
 
 
 def test_parse_results_normalizes_trims_and_filters() -> None:
@@ -120,6 +126,281 @@ def test_search_invalid_payload_raises_controlled_error(monkeypatch) -> None:
 
     with pytest.raises(SearchError, match="missing results list"):
         asyncio.run(provider.search("subject fact", limit=3))
+
+
+def test_search_enriches_top_results_with_extracted_page_text(monkeypatch) -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+        extraction_enabled=True,
+        extraction_max_results=1,
+        extraction_max_chars_per_result=120,
+    )
+
+    class _SearchResponse:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict[str, object]:
+            return {
+                "results": [
+                    {
+                        "title": "Example article",
+                        "url": "https://example.com/article",
+                        "content": "Fallback snippet from SearXNG.",
+                        "publishedDate": "2026-06-14",
+                    }
+                ]
+            }
+
+    class _StreamResponse:
+        def __init__(self, *, body: bytes, content_type: str = "text/html") -> None:
+            self._body = body
+            self.headers = {"content-type": content_type}
+            self.is_redirect = False
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        def raise_for_status(self) -> None:
+            return None
+
+        async def aiter_bytes(self):
+            yield self._body
+
+    class _Client:
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        async def get(self, url: str, *args, **kwargs) -> _SearchResponse:
+            assert url.endswith("/search")
+            return _SearchResponse()
+
+        def stream(self, method: str, url: str, **kwargs) -> _StreamResponse:
+            assert method == "GET"
+            assert url == "https://example.com/article"
+            return _StreamResponse(body=b"<html><body><article>Body</article></body></html>")
+
+    async def _allow_public_hostname(self, hostname: str) -> None:
+        return None
+
+    monkeypatch.setattr(search_module.httpx, "AsyncClient", _Client)
+    monkeypatch.setattr(
+        search_module,
+        "trafilatura_extract",
+        lambda *args, **kwargs: "Useful extracted article body.",
+    )
+    monkeypatch.setattr(SearxNGSearchProvider, "_assert_public_hostname", _allow_public_hostname)
+
+    bundle = asyncio.run(provider.search("example article", limit=3))
+
+    result = bundle.results[0]
+    assert result.extraction_status == "success"
+    assert result.extracted_text == "Useful extracted article body."
+    assert result.extracted_url == "https://example.com/article"
+
+    context = build_search_context_block([bundle])
+    assert "Extracted page text: Useful extracted article body." in context
+
+
+def test_search_keeps_snippet_when_extraction_fails(monkeypatch) -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+        extraction_enabled=True,
+        extraction_max_results=1,
+    )
+
+    class _SearchResponse:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict[str, object]:
+            return {
+                "results": [
+                    {
+                        "title": "PDF article",
+                        "url": "https://example.com/report.pdf",
+                        "content": "Snippet stays available.",
+                        "publishedDate": "2026-06-14",
+                    }
+                ]
+            }
+
+    class _StreamResponse:
+        def __init__(self) -> None:
+            self.headers = {"content-type": "application/pdf"}
+            self.is_redirect = False
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        def raise_for_status(self) -> None:
+            return None
+
+        async def aiter_bytes(self):
+            yield b"%PDF-1.0"
+
+    class _Client:
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        async def get(self, url: str, *args, **kwargs) -> _SearchResponse:
+            return _SearchResponse()
+
+        def stream(self, method: str, url: str, **kwargs) -> _StreamResponse:
+            return _StreamResponse()
+
+    async def _allow_public_hostname(self, hostname: str) -> None:
+        return None
+
+    monkeypatch.setattr(search_module.httpx, "AsyncClient", _Client)
+    monkeypatch.setattr(SearxNGSearchProvider, "_assert_public_hostname", _allow_public_hostname)
+
+    bundle = asyncio.run(provider.search("pdf article", limit=3))
+
+    result = bundle.results[0]
+    assert result.extraction_status == "failed"
+    assert result.extracted_text == ""
+    assert "unsupported content type" in result.extraction_error
+
+    context = build_search_context_block([bundle])
+    assert "Snippet: Snippet stays available." in context
+    assert "Extracted page text: not available" in context
+
+
+def test_search_blocks_private_dns_resolution_for_page_fetch(monkeypatch) -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+        extraction_enabled=True,
+    )
+
+    class _Loop:
+        async def getaddrinfo(self, *args, **kwargs):
+            return [(socket.AF_INET, None, None, None, ("127.0.0.1", 443))]
+
+    monkeypatch.setattr(search_module.asyncio, "get_running_loop", lambda: _Loop())
+
+    with pytest.raises(SearchError, match="private resolved address"):
+        asyncio.run(provider._assert_public_hostname("example.com"))
+
+
+def test_search_dns_resolution_timeout_is_controlled(monkeypatch) -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+        extraction_enabled=True,
+        extraction_timeout_seconds=0.01,
+    )
+
+    async def _slow_getaddrinfo(hostname, port, *, type):
+        raise TimeoutError
+
+    class _Loop:
+        def getaddrinfo(self, hostname, port, *, type):
+            return _slow_getaddrinfo(hostname, port, type=type)
+
+    monkeypatch.setattr(search_module.asyncio, "get_running_loop", lambda: _Loop())
+
+    with pytest.raises(SearchError, match="DNS resolution timed out"):
+        asyncio.run(provider._assert_public_hostname("example.com"))
+
+
+def test_search_page_parsing_timeout_marks_extraction_failed(monkeypatch) -> None:
+    provider = SearxNGSearchProvider(
+        base_url="http://127.0.0.1:8083",
+        timeout_seconds=8,
+        extraction_enabled=True,
+        extraction_max_results=1,
+        extraction_timeout_seconds=0.01,
+    )
+
+    class _SearchResponse:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict[str, object]:
+            return {
+                "results": [
+                    {
+                        "title": "Example article",
+                        "url": "https://example.com/article",
+                        "content": "Fallback snippet from SearXNG.",
+                        "publishedDate": "2026-06-14",
+                    }
+                ]
+            }
+
+    class _StreamResponse:
+        def __init__(self, *, body: bytes, content_type: str = "text/html") -> None:
+            self._body = body
+            self.headers = {"content-type": content_type}
+            self.is_redirect = False
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        def raise_for_status(self) -> None:
+            return None
+
+        async def aiter_bytes(self):
+            yield self._body
+
+    class _Client:
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> bool:
+            return False
+
+        async def get(self, url: str, *args, **kwargs) -> _SearchResponse:
+            return _SearchResponse()
+
+        def stream(self, method: str, url: str, **kwargs) -> _StreamResponse:
+            return _StreamResponse(body=b"<html><body><article>Body</article></body></html>")
+
+    async def _allow_public_hostname(self, hostname: str) -> None:
+        return None
+
+    async def _timeout_extract_page_text(
+        self, html_text: str, *, url: str, content_type: str
+    ) -> str:
+        raise SearchError("Page extraction parsing timed out after 0.01s")
+
+    monkeypatch.setattr(search_module.httpx, "AsyncClient", _Client)
+    monkeypatch.setattr(SearxNGSearchProvider, "_assert_public_hostname", _allow_public_hostname)
+    monkeypatch.setattr(SearxNGSearchProvider, "_extract_page_text", _timeout_extract_page_text)
+
+    bundle = asyncio.run(provider.search("example article", limit=3))
+
+    result = bundle.results[0]
+    assert result.extraction_status == "failed"
+    assert "parsing timed out" in result.extraction_error
 
 
 def test_parse_results_prefers_specific_entity_fact_match_over_generic_portal(monkeypatch) -> None:

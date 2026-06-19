@@ -6,7 +6,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from core.config import build_runtime_values
+from core.config import SYSTEM_PROMPT, build_runtime_values
 
 
 def _write(path: Path, content: str) -> None:
@@ -26,6 +26,17 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
         safe_domains:
           - allowed.example
         block_private_ips: false
+        extraction:
+          enabled: true
+          max_results: 2
+          timeout_seconds: 1.5
+          max_concurrency: 1
+          max_response_bytes: 2048
+          max_extracted_chars_per_result: 256
+          max_total_extracted_chars: 1024
+          allow_redirects: false
+          max_redirects: 1
+          user_agent: TestAgent/1.0
         trusted_domains:
           official:
             - official.example
@@ -119,6 +130,16 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
     assert values["SEARCH_ENABLED"] is True
     assert values["SEARCH_BASE_URL"] == "http://127.0.0.1:9999"
     assert values["SEARCH_TIMEOUT_SECONDS"] == 3.5
+    assert values["SEARCH_EXTRACTION_ENABLED"] is True
+    assert values["SEARCH_EXTRACTION_MAX_RESULTS"] == 2
+    assert values["SEARCH_EXTRACTION_TIMEOUT_SECONDS"] == 1.5
+    assert values["SEARCH_EXTRACTION_MAX_CONCURRENCY"] == 1
+    assert values["SEARCH_EXTRACTION_MAX_RESPONSE_BYTES"] == 2048
+    assert values["SEARCH_EXTRACTION_MAX_CHARS_PER_RESULT"] == 256
+    assert values["SEARCH_EXTRACTION_MAX_TOTAL_CHARS"] == 1024
+    assert values["SEARCH_EXTRACTION_ALLOW_REDIRECTS"] is False
+    assert values["SEARCH_EXTRACTION_MAX_REDIRECTS"] == 1
+    assert values["SEARCH_EXTRACTION_USER_AGENT"] == "TestAgent/1.0"
     assert values["SEARCH_TRUSTED_DOMAINS_OFFICIAL"] == ["official.example"]
     assert values["SEARCH_TOPIC_DOMAIN_OVERRIDES"] == {
         "finance": {"preferred": ["finance.example"]}
@@ -235,3 +256,8 @@ def test_build_runtime_values_requires_expected_config_keys(tmp_path: Path) -> N
             },
             project_root=tmp_path,
         )
+
+
+def test_system_prompt_allows_grounded_live_search_answers() -> None:
+    assert "If grounded live-search evidence is provided" in SYSTEM_PROMPT
+    assert "When live-search sources are provided below" in SYSTEM_PROMPT

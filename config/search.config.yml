@@ -5,6 +5,17 @@ max_results: 5
 min_query_length: 5
 safe_domains: []
 block_private_ips: true
+extraction:
+  enabled: true
+  max_results: 3
+  timeout_seconds: 4
+  max_concurrency: 2
+  max_response_bytes: 1048576
+  max_extracted_chars_per_result: 2000
+  max_total_extracted_chars: 6000
+  allow_redirects: true
+  max_redirects: 2
+  user_agent: ShorekeeperBot/0.1
 trusted_domains:
   official:
     - hoyoverse.com

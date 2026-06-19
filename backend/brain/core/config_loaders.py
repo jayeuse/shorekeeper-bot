@@ -188,6 +188,7 @@ def build_runtime_values(
     search_topic_domain_overrides = coerce_mapping(
         require_nested(search_config, "topic_domain_overrides")
     )
+    search_extraction = coerce_mapping(search_config.get("extraction"), {})
 
     database_url = active_env.get("DATABASE_URL") or active_env.get(
         "SUPABASE_DIRECT_CONNECTION_STRING"
@@ -255,6 +256,46 @@ def build_runtime_values(
         "SEARCH_BLOCK_PRIVATE_IPS": coerce_bool(
             require_nested(search_config, "block_private_ips"),
             False,
+        ),
+        "SEARCH_EXTRACTION_ENABLED": coerce_bool(
+            search_extraction.get("enabled"),
+            True,
+        ),
+        "SEARCH_EXTRACTION_MAX_RESULTS": coerce_int(
+            search_extraction.get("max_results"),
+            3,
+        ),
+        "SEARCH_EXTRACTION_TIMEOUT_SECONDS": coerce_float(
+            search_extraction.get("timeout_seconds"),
+            4.0,
+        ),
+        "SEARCH_EXTRACTION_MAX_CONCURRENCY": coerce_int(
+            search_extraction.get("max_concurrency"),
+            2,
+        ),
+        "SEARCH_EXTRACTION_MAX_RESPONSE_BYTES": coerce_int(
+            search_extraction.get("max_response_bytes"),
+            1_048_576,
+        ),
+        "SEARCH_EXTRACTION_MAX_CHARS_PER_RESULT": coerce_int(
+            search_extraction.get("max_extracted_chars_per_result"),
+            2000,
+        ),
+        "SEARCH_EXTRACTION_MAX_TOTAL_CHARS": coerce_int(
+            search_extraction.get("max_total_extracted_chars"),
+            6000,
+        ),
+        "SEARCH_EXTRACTION_ALLOW_REDIRECTS": coerce_bool(
+            search_extraction.get("allow_redirects"),
+            True,
+        ),
+        "SEARCH_EXTRACTION_MAX_REDIRECTS": coerce_int(
+            search_extraction.get("max_redirects"),
+            2,
+        ),
+        "SEARCH_EXTRACTION_USER_AGENT": coerce_str(
+            search_extraction.get("user_agent"),
+            "ShorekeeperBot/0.1",
         ),
         "SEARCH_TRUSTED_DOMAINS_OFFICIAL": coerce_str_list(
             require_nested(search_config, "trusted_domains", "official")
