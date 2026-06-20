@@ -2,6 +2,7 @@ import json
 import os
 import re
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -18,14 +19,15 @@ except Exception:
     YAML_AVAILABLE = False
     print("⚠️  PyYAML not installed. Install with: pip install pyyaml")
 
-from core.config import DATABASE_URL, MODE
+from core.config import EMBEDDINGS_PATH, KNOWLEDGE_DB_PATH, KNOWLEDGE_PATH, VECTORS_PATH
+from database.database import memory_database_url
+from database.migrations import upgrade_memory_database
 from database.models import KnowledgeVector
 from services.embedder import EmbedderClient
 
-KNOWLEDGE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "knowledge")
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
-STORE_PATH = os.path.join(DATA_DIR, "vectors.json")
-EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings")  # np.savez_compressed appends .npz
+KNOWLEDGE_DIR = str(KNOWLEDGE_PATH)
+STORE_PATH = str(VECTORS_PATH)
+EMBEDDINGS_FILE_PATH = Path(EMBEDDINGS_PATH)
 
 # Trigger entity rescue when top semantic+keyword score is weak, or when top chunks
 # do not mention the named entity requested by the user.
@@ -210,8 +212,8 @@ class RAG:
         # Store embeddings as float16 binary (major size reduction)
         embedding_matrix = np.array(embeddings, dtype=np.float16)
 
-        os.makedirs(DATA_DIR, exist_ok=True)
-        np.savez_compressed(EMBEDDINGS_PATH, embeddings=embedding_matrix)
+        EMBEDDINGS_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        np.savez_compressed(EMBEDDINGS_FILE_PATH, embeddings=embedding_matrix)
 
         # Store metadata-only chunks as minified JSON (no embeddings)
         chunks_for_storage = [
@@ -227,14 +229,14 @@ class RAG:
 
         print(f"✅ Knowledge base built: {len(self.chunks)} chunks saved")
         print(f"   Metadata: {STORE_PATH}")
-        print(f"   Embeddings: {EMBEDDINGS_PATH}.npz (float16, compressed)")
+        print(f"   Embeddings: {EMBEDDINGS_FILE_PATH} (float16, compressed)")
 
-        if MODE == "online":
+        if KNOWLEDGE_DB_PATH:
             self._save_to_db()
 
     def _save_to_db(self) -> None:
-        if not DATABASE_URL:
-            print("⚠️  DATABASE_URL not set, skipping database persistence")
+        if not KNOWLEDGE_DB_PATH:
+            print("⚠️  No knowledge database configured, skipping database persistence")
             return
         if not self.chunks:
             print("⚠️  No chunks or embeddings to persist")
@@ -247,7 +249,8 @@ class RAG:
             print("⚠️  No chunks or embeddings to persist")
             return
 
-        engine = create_engine(DATABASE_URL)
+        upgrade_memory_database(KNOWLEDGE_DB_PATH)
+        engine = create_engine(memory_database_url(KNOWLEDGE_DB_PATH), echo=False)
         records: list[KnowledgeVector] = []
         for chunk, embedding in zip(self.chunks, self.embeddings, strict=False):
             embedding_array = np.array(embedding, dtype=np.float32)
@@ -270,7 +273,7 @@ class RAG:
             session.commit()
 
         engine.dispose()
-        print(f"   Database: {len(records)} vectors written to {DATABASE_URL[:40]}...")
+        print(f"   Database: {len(records)} vectors written to {KNOWLEDGE_DB_PATH[:40]}...")
 
     def load(self):
         if not os.path.exists(STORE_PATH):
@@ -280,17 +283,17 @@ class RAG:
             self.chunks = json.load(f)
 
         # Load binary embeddings if present, fall back gracefully
-        embeddings_file = EMBEDDINGS_PATH + ".npz"
-        if os.path.exists(embeddings_file):
+        embeddings_file = EMBEDDINGS_FILE_PATH
+        if embeddings_file.exists():
             data = np.load(embeddings_file)
             # Upcast to float32 for computation accuracy
             embedding_matrix = data["embeddings"].astype(np.float32)
             for i, chunk in enumerate(self.chunks):
                 if i < len(embedding_matrix):
                     chunk["embedding"] = embedding_matrix[i]
-        elif os.path.exists(EMBEDDINGS_PATH):
-            # Legacy: .npz without extension appended by np.savez_compressed
-            data = np.load(EMBEDDINGS_PATH)
+        elif os.path.exists(str(EMBEDDINGS_FILE_PATH.with_suffix(""))):
+            # Legacy: .npz path stored without the extension.
+            data = np.load(str(EMBEDDINGS_FILE_PATH.with_suffix("")))
             embedding_matrix = data["embeddings"].astype(np.float32)
             for i, chunk in enumerate(self.chunks):
                 if i < len(embedding_matrix):

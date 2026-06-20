@@ -2,19 +2,19 @@ import json
 import os
 from collections import defaultdict
 
+from core.config import VECTORS_PATH
 from tabulate import tabulate
-
-VECTORS_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "vectors.json")
 
 
 def analyze_knowledge():
-    if not os.path.exists(VECTORS_PATH):
+    vectors_path = str(VECTORS_PATH)
+    if not os.path.exists(vectors_path):
         print(f"❌ No vector store found at {VECTORS_PATH}")
         print("   Run 'python main.py' to build the knowledge base first.")
         return
 
     try:
-        with open(VECTORS_PATH, encoding="utf-8") as f:
+        with open(vectors_path, encoding="utf-8") as f:
             chunks = json.load(f)
     except Exception as e:
         print(f"❌ Failed to load vectors.json: {e}")

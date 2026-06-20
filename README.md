@@ -241,7 +241,7 @@ python tests/test_rag_entity_fallback.py
 
 Bring the local runtime up in this order:
 
-1. Run `./scripts/start-llama-local.sh` to start llama.cpp and SearXNG together.
+1. Run `./scripts/start-llama-local.sh` to start PostgreSQL, SearXNG, and the llama.cpp chat and embedding servers together.
 2. Run `cd backend && uv run python brain/commands/verify_online_model.py`.
 3. Run `cd backend && uv run python brain/commands/verify_search.py`.
 4. Start the Discord bot with `cd backend && uv run python brain/main.py`.

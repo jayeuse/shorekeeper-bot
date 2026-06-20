@@ -88,6 +88,7 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
               no_mmap: false
             embed:
               pooling: mean
+              ubatch_size: 2048
               no_mmap: false
             metrics: false
         memory:
@@ -113,6 +114,7 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
             "SEARCH_ENABLED": "true",
             "LOCAL_API_KEY": "no-key",
             "EMBED_API_KEY": "embed-key",
+            "DATABASE_URL": "postgresql://shorekeeper:shorekeeper_dev@localhost:5432/shorekeeper",
         },
         project_root=tmp_path,
     )
@@ -146,6 +148,11 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
     }
     assert values["ANALYSIS_ENABLED"] is False
     assert values["ROUTER_HISTORY_TURNS"] == 6
+    assert values["KNOWLEDGE_DB_PATH"] == values["DATABASE_URL"]
+    assert values["VECTORS_PATH"] == tmp_path / "backend" / "brain" / "data" / "local_vectors.json"
+    assert values["EMBEDDINGS_PATH"] == (
+        tmp_path / "backend" / "brain" / "data" / "local_embeddings.npz"
+    )
     assert values["LLAMA_LAUNCHER_SETTINGS"] == {
         "LLAMA_BIN_DIR": "~/custom-llama/bin",
         "LOCAL_BASE_URL": "http://127.0.0.1:9001/v1",
@@ -154,6 +161,7 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
         "EMBED_BASE_URL": "http://127.0.0.1:9002/v1",
         "EMBED_MODEL": "custom-embed",
         "EMBED_MODEL_PATH": "/models/embed.gguf",
+        "EMBED_UBATCH_SIZE": 2048,
         "GPU_LAYERS": 42,
         "THREADS": 7,
         "LOCAL_CONTEXT_WINDOW": 32768,
@@ -171,6 +179,189 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
         "EMBED_NO_MMAP": "",
         "LLAMA_METRICS": "",
     }
+
+
+def test_build_runtime_values_uses_online_artifact_paths_and_db_target(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "config" / "search.config.yml",
+        """
+        provider: searxng
+        base_url: http://127.0.0.1:8083
+        timeout_seconds: 8
+        max_results: 5
+        min_query_length: 5
+        safe_domains: []
+        block_private_ips: true
+        trusted_domains:
+          official: []
+          reference: []
+          news: []
+        demoted_domains: []
+        topic_domain_overrides: {}
+        """,
+    )
+    _write(
+        tmp_path / "config" / "runtime.config.yml",
+        """
+        providers:
+          llm_provider: llamacpp
+          embedding_provider: llamacpp
+          online_base_url: https://api.example.com
+          online_model: yaml-remote
+        llama:
+          local:
+            base_url: http://127.0.0.1:8081/v1
+            model: yaml-chat
+            context_window: 16384
+            kv_cache_keep: 4
+          embed:
+            base_url: http://127.0.0.1:8082/v1
+            model: yaml-embed
+          launcher:
+            llama_bin_dir: ~/llama/bin
+            chat_model_path: /models/chat.gguf
+            embed_model_path: /models/embed.gguf
+            gpu_layers: 20
+            threads: 8
+            chat_parallel: 1
+            chat:
+              temperature: 0.3
+              top_p: 0.9
+              top_k: 40
+              repeat_penalty: 1.05
+              flash_attn: true
+              cache_type_k: q4_0
+              cache_type_v: q4_0
+              jinja: true
+              no_mmap: true
+            embed:
+              pooling: cls
+              ubatch_size: 2048
+              no_mmap: true
+            metrics: true
+        memory:
+          recall_limit: 3
+          relevance_threshold: 0.22
+          candidate_pool: 60
+          recency_halflife_days: 30
+        analysis:
+          enabled: true
+          timeout_seconds: 6
+          rag_answer_score_threshold: 0.62
+          general_knowledge_confidence_threshold: 0.7
+        router:
+          history_turns: 4
+          max_query_chars: 240
+        """,
+    )
+
+    values = build_runtime_values(
+        env={
+            "DISCORD_TOKEN": "token",
+            "MEMORY_ENABLED": "true",
+            "SEARCH_ENABLED": "false",
+            "LOCAL_API_KEY": "no-key",
+            "EMBED_API_KEY": "embed-key",
+            "MODE": "online",
+            "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/shorekeeper",
+            "ONLINE_LLM_API_KEY": "remote-key",
+        },
+        project_root=tmp_path,
+    )
+
+    assert values["KNOWLEDGE_DB_PATH"] == values["DATABASE_URL"]
+    assert values["VECTORS_PATH"] == tmp_path / "backend" / "brain" / "data" / "vectors.json"
+    assert values["EMBEDDINGS_PATH"] == tmp_path / "backend" / "brain" / "data" / "embeddings.npz"
+
+
+def test_build_runtime_values_local_mode_uses_database_url_when_set(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "config" / "search.config.yml",
+        """
+        provider: searxng
+        base_url: http://127.0.0.1:8083
+        timeout_seconds: 8
+        max_results: 5
+        min_query_length: 5
+        safe_domains: []
+        block_private_ips: true
+        trusted_domains:
+          official: []
+          reference: []
+          news: []
+        demoted_domains: []
+        topic_domain_overrides: {}
+        """,
+    )
+    _write(
+        tmp_path / "config" / "runtime.config.yml",
+        """
+        providers:
+          llm_provider: llamacpp
+          embedding_provider: llamacpp
+          online_base_url: https://api.example.com
+          online_model: yaml-remote
+        llama:
+          local:
+            base_url: http://127.0.0.1:8081/v1
+            model: yaml-chat
+            context_window: 16384
+            kv_cache_keep: 4
+          embed:
+            base_url: http://127.0.0.1:8082/v1
+            model: yaml-embed
+          launcher:
+            llama_bin_dir: ~/llama/bin
+            chat_model_path: /models/chat.gguf
+            embed_model_path: /models/embed.gguf
+            gpu_layers: 20
+            threads: 8
+            chat_parallel: 1
+            chat:
+              temperature: 0.3
+              top_p: 0.9
+              top_k: 40
+              repeat_penalty: 1.05
+              flash_attn: true
+              cache_type_k: q4_0
+              cache_type_v: q4_0
+              jinja: true
+              no_mmap: true
+            embed:
+              pooling: cls
+              no_mmap: true
+            metrics: true
+        memory:
+          recall_limit: 3
+          relevance_threshold: 0.22
+          candidate_pool: 60
+          recency_halflife_days: 30
+        analysis:
+          enabled: true
+          timeout_seconds: 6
+          rag_answer_score_threshold: 0.62
+          general_knowledge_confidence_threshold: 0.7
+        router:
+          history_turns: 4
+          max_query_chars: 240
+        """,
+    )
+
+    values = build_runtime_values(
+        env={
+            "DISCORD_TOKEN": "token",
+            "MEMORY_ENABLED": "true",
+            "SEARCH_ENABLED": "false",
+            "LOCAL_API_KEY": "no-key",
+            "EMBED_API_KEY": "embed-key",
+            "MODE": "local",
+            "DATABASE_URL": "postgresql://shorekeeper:shorekeeper_dev@localhost:5432/shorekeeper",
+        },
+        project_root=tmp_path,
+    )
+
+    assert values["KNOWLEDGE_DB_PATH"] == values["DATABASE_URL"]
+    assert values["MEMORY_DB_PATH"] == values["DATABASE_URL"]
 
 
 def test_build_runtime_values_requires_expected_config_keys(tmp_path: Path) -> None:
@@ -243,9 +434,7 @@ def test_build_runtime_values_requires_expected_config_keys(tmp_path: Path) -> N
         """,
     )
 
-    with pytest.raises(
-        RuntimeError, match="Missing required config key: llama.local.context_window"
-    ):
+    with pytest.raises(RuntimeError, match="DATABASE_URL is required"):
         build_runtime_values(
             env={
                 "DISCORD_TOKEN": "token",

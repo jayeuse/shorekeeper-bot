@@ -11,10 +11,10 @@ from pathlib import Path
 # Add parent directory to path to import rag
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from core.config import KNOWLEDGE_PATH, VECTORS_PATH
 from services.rag import parse_frontmatter
 
-VECTORS_PATH = Path(__file__).parent.parent / "data" / "vectors.json"
-KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
+KNOWLEDGE_DIR = Path(KNOWLEDGE_PATH)
 
 
 def update_vectors_with_metadata():

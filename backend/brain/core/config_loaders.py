@@ -49,6 +49,12 @@ def _build_launcher_settings(
         require_nested(runtime_config, "llama", "launcher", "embed", "no_mmap"),
         False,
     )
+    embed_ubatch_size = coerce_int(
+        coerce_mapping(require_nested(runtime_config, "llama", "launcher", "embed"), {}).get(
+            "ubatch_size"
+        ),
+        2048,
+    )
     llama_metrics = coerce_bool(
         require_nested(runtime_config, "llama", "launcher", "metrics"),
         False,
@@ -71,6 +77,7 @@ def _build_launcher_settings(
             require_nested(runtime_config, "llama", "launcher", "embed_model_path"),
             "",
         ),
+        "EMBED_UBATCH_SIZE": embed_ubatch_size,
         "GPU_LAYERS": coerce_int(
             require_nested(runtime_config, "llama", "launcher", "gpu_layers"),
             0,
@@ -193,8 +200,8 @@ def build_runtime_values(
     database_url = active_env.get("DATABASE_URL") or active_env.get(
         "SUPABASE_DIRECT_CONNECTION_STRING"
     )
-    if mode == "online" and not database_url:
-        raise RuntimeError("DATABASE_URL is required when MODE=online")
+    if not database_url:
+        raise RuntimeError("DATABASE_URL is required")
 
     local_context_window = coerce_int(
         require_nested(runtime_config, "llama", "local", "context_window"),
@@ -343,14 +350,15 @@ def build_runtime_values(
         local_context_window=local_context_window,
     )
 
-    memory_default_db_path = str(active_project_root / "database" / "memory" / "memory.db")
-    if mode == "online":
-        values["MEMORY_DB_PATH"] = database_url
-    else:
-        values["MEMORY_DB_PATH"] = active_env.get("MEMORY_DB_PATH", memory_default_db_path)
+    values["MEMORY_DB_PATH"] = database_url
+    values["KNOWLEDGE_DB_PATH"] = database_url
     values["DATA_DIR"] = active_project_root / "backend" / "brain" / "data"
-    values["VECTORS_PATH"] = values["DATA_DIR"] / "vectors.json"
-    values["EMBEDDINGS_PATH"] = values["DATA_DIR"] / "embeddings.npz"
+    if mode == "online":
+        values["VECTORS_PATH"] = values["DATA_DIR"] / "vectors.json"
+        values["EMBEDDINGS_PATH"] = values["DATA_DIR"] / "embeddings.npz"
+    else:
+        values["VECTORS_PATH"] = values["DATA_DIR"] / "local_vectors.json"
+        values["EMBEDDINGS_PATH"] = values["DATA_DIR"] / "local_embeddings.npz"
     values["KNOWLEDGE_PATH"] = active_project_root / "backend" / "brain" / "knowledge"
     values["MODEL"] = online_model if llm_provider in {"openai", "server"} else local_model
 

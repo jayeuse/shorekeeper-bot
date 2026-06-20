@@ -32,6 +32,7 @@ llama:
       no_mmap: true
     embed:
       pooling: cls
+      ubatch_size: 2048
       no_mmap: true
     metrics: true
 
