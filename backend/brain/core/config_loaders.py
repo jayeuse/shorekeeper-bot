@@ -231,21 +231,17 @@ def build_runtime_values(
             require_nested(runtime_config, "llama", "local", "kv_cache_keep"),
             0,
         ),
-        "MEMORY_ENABLED": require_bool_env(active_env, "MEMORY_ENABLED"),
-        "MEMORY_RECALL_LIMIT": coerce_int(
-            require_nested(runtime_config, "memory", "recall_limit"), 0
+        "MEMORY_SHORT_TERM_TURN_LIMIT": coerce_int(
+            require_nested(runtime_config, "memory", "short_term_turn_limit"),
+            16,
         ),
-        "MEMORY_RELEVANCE_THRESHOLD": coerce_float(
-            require_nested(runtime_config, "memory", "relevance_threshold"),
-            0.0,
+        "MEMORY_COMPACTION_ENABLED": coerce_bool(
+            require_nested(runtime_config, "memory", "compaction_enabled"),
+            True,
         ),
-        "MEMORY_CANDIDATE_POOL": coerce_int(
-            require_nested(runtime_config, "memory", "candidate_pool"),
-            0,
-        ),
-        "MEMORY_RECENCY_HALFLIFE_DAYS": coerce_float(
-            require_nested(runtime_config, "memory", "recency_halflife_days"),
-            0.0,
+        "MEMORY_COMPACTION_TIMEOUT_SECONDS": coerce_float(
+            require_nested(runtime_config, "memory", "compaction_timeout_seconds"),
+            30.0,
         ),
         "SEARCH_ENABLED": require_bool_env(active_env, "SEARCH_ENABLED"),
         "SEARCH_PROVIDER": search_provider,
@@ -325,10 +321,6 @@ def build_runtime_values(
         ),
         "RAG_ANSWER_SCORE_THRESHOLD": coerce_float(
             require_nested(runtime_config, "analysis", "rag_answer_score_threshold"),
-            0.0,
-        ),
-        "GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD": coerce_float(
-            require_nested(runtime_config, "analysis", "general_knowledge_confidence_threshold"),
             0.0,
         ),
         "ROUTER_HISTORY_TURNS": coerce_int(

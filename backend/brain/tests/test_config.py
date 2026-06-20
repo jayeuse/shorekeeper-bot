@@ -92,15 +92,13 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
               no_mmap: false
             metrics: false
         memory:
-          recall_limit: 5
-          relevance_threshold: 0.44
-          candidate_pool: 70
-          recency_halflife_days: 12
+          short_term_turn_limit: 16
+          compaction_enabled: true
+          compaction_timeout_seconds: 30
         analysis:
           enabled: false
           timeout_seconds: 2.5
           rag_answer_score_threshold: 0.91
-          general_knowledge_confidence_threshold: 0.88
         router:
           history_turns: 6
           max_query_chars: 320
@@ -128,7 +126,6 @@ def test_build_runtime_values_reads_grouped_yaml_configs(tmp_path: Path) -> None
     assert values["ONLINE_BASE_URL"] == "https://api.example.com"
     assert values["ONLINE_MODEL"] == "remote-model"
     assert values["LLM_PROVIDER"] == "openai"
-    assert values["MEMORY_ENABLED"] is False
     assert values["SEARCH_ENABLED"] is True
     assert values["SEARCH_BASE_URL"] == "http://127.0.0.1:9999"
     assert values["SEARCH_TIMEOUT_SECONDS"] == 3.5
@@ -244,11 +241,13 @@ def test_build_runtime_values_uses_online_artifact_paths_and_db_target(tmp_path:
           relevance_threshold: 0.22
           candidate_pool: 60
           recency_halflife_days: 30
+          short_term_turn_limit: 16
+          compaction_enabled: true
+          compaction_timeout_seconds: 30
         analysis:
           enabled: true
           timeout_seconds: 6
           rag_answer_score_threshold: 0.62
-          general_knowledge_confidence_threshold: 0.7
         router:
           history_turns: 4
           max_query_chars: 240
@@ -258,7 +257,6 @@ def test_build_runtime_values_uses_online_artifact_paths_and_db_target(tmp_path:
     values = build_runtime_values(
         env={
             "DISCORD_TOKEN": "token",
-            "MEMORY_ENABLED": "true",
             "SEARCH_ENABLED": "false",
             "LOCAL_API_KEY": "no-key",
             "EMBED_API_KEY": "embed-key",
@@ -336,11 +334,13 @@ def test_build_runtime_values_local_mode_uses_database_url_when_set(tmp_path: Pa
           relevance_threshold: 0.22
           candidate_pool: 60
           recency_halflife_days: 30
+          short_term_turn_limit: 16
+          compaction_enabled: true
+          compaction_timeout_seconds: 30
         analysis:
           enabled: true
           timeout_seconds: 6
           rag_answer_score_threshold: 0.62
-          general_knowledge_confidence_threshold: 0.7
         router:
           history_turns: 4
           max_query_chars: 240
@@ -350,7 +350,6 @@ def test_build_runtime_values_local_mode_uses_database_url_when_set(tmp_path: Pa
     values = build_runtime_values(
         env={
             "DISCORD_TOKEN": "token",
-            "MEMORY_ENABLED": "true",
             "SEARCH_ENABLED": "false",
             "LOCAL_API_KEY": "no-key",
             "EMBED_API_KEY": "embed-key",
@@ -423,11 +422,13 @@ def test_build_runtime_values_requires_expected_config_keys(tmp_path: Path) -> N
           relevance_threshold: 0.22
           candidate_pool: 60
           recency_halflife_days: 30
+          short_term_turn_limit: 16
+          compaction_enabled: true
+          compaction_timeout_seconds: 30
         analysis:
           enabled: true
           timeout_seconds: 6
           rag_answer_score_threshold: 0.62
-          general_knowledge_confidence_threshold: 0.7
         router:
           history_turns: 4
           max_query_chars: 240
@@ -438,7 +439,6 @@ def test_build_runtime_values_requires_expected_config_keys(tmp_path: Path) -> N
         build_runtime_values(
             env={
                 "DISCORD_TOKEN": "token",
-                "MEMORY_ENABLED": "true",
                 "SEARCH_ENABLED": "false",
                 "LOCAL_API_KEY": "no-key",
                 "EMBED_API_KEY": "embed-key",

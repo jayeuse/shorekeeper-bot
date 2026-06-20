@@ -86,7 +86,7 @@ addopts = [
     "--strict-config",
     "--strict-markers",
     "--cov=database",
-    "--cov=services.memory",
+
     "--cov=services.rag",
     "--cov-report=term-missing",
     "--cov-report=xml",

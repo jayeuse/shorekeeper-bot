@@ -10,10 +10,6 @@ def log_response(
     rag_duration: float = 0.0,
     llm_duration: float = 0.0,
     query_type: str = "general",
-    memory_scanned: int = 0,
-    memory_selected: int = 0,
-    memory_top_score: float = 0.0,
-    memory_duration: float = 0.0,
     search_used: bool = False,
     search_reason: str = "search_not_needed",
     search_query: str = "",
@@ -27,10 +23,12 @@ def log_response(
     deterministic_gate: str = "",
     analysis_used: bool = False,
     analysis_rag_query: str = "",
-    can_answer_from_general_knowledge: bool = False,
-    general_knowledge_confidence: float = 0.0,
     analysis_reason: str = "",
     final_path: str = "general-knowledge",
+    compacted_found: bool = False,
+    compacted_version: int = 0,
+    compacted_topic: str = "",
+    compacted_importance: float = 0.0,
     rag_top_score: float = 0.0,
     rag_accepted: bool = False,
     rag_rejection_reason: str = "",
@@ -45,35 +43,39 @@ def log_response(
     prompt_rate = prompt_tokens / prompt_dur if prompt_dur > 0 else 0
     eval_rate = eval_tokens / eval_dur if eval_dur > 0 else 0
 
+    mode_display = final_path
+    if compacted_found and final_path not in ("memory-personal",):
+        mode_display = f"{final_path} [LTM]"
+
     print(f"\n{'=' * 50}")
     print(f"📩 {msg.author} in #{msg.channel}")
     print(f'📝 "{user_content[:80]}{"..." if len(user_content) > 80 else ""}"')
     print(f"user: {user_content}")
     print(f"bot: {reply_content}")
     print(f"🤖 Model: {model}")
-    print(f"🧭 Mode: {final_path}")
+    print(f"🧭 Mode: {mode_display}")
     print(f"🔍 Query: {query_type}")
     print(f"⏱️  Total: {elapsed:.2f}s (RAG: {rag_duration:.2f}s, LLM: {llm_duration:.2f}s)")
-    print(
-        f"🧠 Memory: scanned={memory_scanned}, selected={memory_selected}, "
-        f"top_score={memory_top_score:.3f}, duration={memory_duration:.2f}s"
-    )
+    if compacted_found:
+        print(
+            f"🧠 LTM: v={compacted_version}, topic={compacted_topic}, "
+            f"importance={compacted_importance:.2f}"
+        )
     print(
         f"🌐 Search: used={search_used}, reason={search_reason}, provider={search_provider or '-'}, "
         f"results={search_result_count}, duration={search_duration:.2f}s"
     )
-    print(
-        f"🧩 Analysis: used={analysis_used}, general_ok={can_answer_from_general_knowledge}, "
-        f"general_conf={general_knowledge_confidence:.2f}"
-    )
+    routing_parts = []
+    if analysis_used:
+        routing_parts.append("analysis=True")
     if deterministic_gate:
-        print(f"🧩 Deterministic Gate: {deterministic_gate}")
-    if analysis_rag_query:
+        routing_parts.append(f"gate={deterministic_gate}")
+    if routing_parts:
+        print(f"🧩 Routing: {', '.join(routing_parts)}")
+    if analysis_rag_query and analysis_used:
         print(f"🧩 Analysis RAG Query: {analysis_rag_query}")
-    if analysis_reason:
-        print(f"🧩 Analysis Reason: {analysis_reason}")
-    if analysis_payload:
-        print(f"🧩 Analysis Payload: {analysis_payload}")
+    if analysis_reason and analysis_used:
+        print(f"🧩 Analysis Reason: {analysis_reason[:200]}")
     print(
         f"📚 RAG: top_score={rag_top_score:.3f}, accepted={rag_accepted}, rejection={rag_rejection_reason or '-'}"
     )

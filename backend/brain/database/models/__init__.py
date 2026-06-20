@@ -1,4 +1,4 @@
 from database.models.knowledge import KnowledgeVector
-from database.models.memory import MemoryPair
+from database.models.memory import UserMemory
 
-__all__ = ["KnowledgeVector", "MemoryPair"]
+__all__ = ["KnowledgeVector", "UserMemory"]

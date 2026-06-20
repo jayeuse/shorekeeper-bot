@@ -12,20 +12,24 @@ from typing import Any
 from core.config import (
     ANALYSIS_ENABLED,
     ANALYSIS_TIMEOUT_SECONDS,
-    GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD,
-    MEMORY_CANDIDATE_POOL,
+    MEMORY_COMPACTION_ENABLED,
+    MEMORY_COMPACTION_TIMEOUT_SECONDS,
     MEMORY_DB_PATH,
-    MEMORY_ENABLED,
-    MEMORY_RECALL_LIMIT,
-    MEMORY_RECENCY_HALFLIFE_DAYS,
-    MEMORY_RELEVANCE_THRESHOLD,
+    MEMORY_SHORT_TERM_TURN_LIMIT,
     RAG_ANSWER_SCORE_THRESHOLD,
     ROUTER_HISTORY_TURNS,
     SYSTEM_PROMPT,
 )
-from handlers.conversation_context import get_chat, store_chat
+from handlers.conversation_context import (
+    format_chat_for_llm,
+    get_chat,
+    is_compacting,
+    mark_compacting,
+    snapshot_and_clear,
+    store_turn,
+    unmark_compacting,
+)
 from services.llm import LLMClient
-from services.memory import MemoryRecord, MemoryService
 from services.rag import RAG
 from services.search import (
     SearchExecution,
@@ -38,6 +42,11 @@ from services.search import (
     search_execution_allows_exact_claims,
     serialize_search_evidence_summary,
     serialize_search_results,
+)
+from services.user_memory import (
+    UserMemoryRepository,
+    build_compaction_messages,
+    parse_compaction_response,
 )
 from utils.logger import log_response
 
@@ -54,69 +63,14 @@ def _resolve_memory_db_path() -> str:
     return str((project_root / MEMORY_DB_PATH).resolve())
 
 
-memory_service: MemoryService | None
-if MEMORY_ENABLED:
+user_memory_repo: UserMemoryRepository | None = None
+if MEMORY_COMPACTION_ENABLED:
     try:
-        memory_service = MemoryService(
-            db_path=_resolve_memory_db_path(),
-            recency_half_life_days=MEMORY_RECENCY_HALFLIFE_DAYS,
-        )
+        user_memory_repo = UserMemoryRepository(db_path=_resolve_memory_db_path())
     except Exception as exc:
-        print(f"⚠️ Memory initialization failed: {exc}")
-        memory_service = None
-else:
-    memory_service = None
+        print(f"⚠️ User memory repository initialization failed: {exc}")
+        user_memory_repo = None
 
-_META_PATTERNS = [
-    "what topics do you have",
-    "what's in your database",
-    "list your knowledge",
-    "what factions are in your records",
-    "what groups do you know",
-]
-_MEMORY_PATTERNS = [
-    "remember",
-    "do you remember",
-    "last time",
-    "we talked",
-    "you told me",
-    "i told you",
-    "earlier",
-    "previously",
-    "before this",
-    "first question i asked",
-]
-_CASUAL_PATTERNS = [
-    "how are you",
-    "how do you feel",
-    "tell me about yourself",
-    "what do you think",
-    "what's your opinion",
-    "do you like",
-    "are you okay",
-    "how have you been",
-    "good morning",
-    "good night",
-    "hello",
-    "hi ",
-    "hey ",
-    "who are you",
-]
-_DATETIME_PATTERNS = [
-    "what's the date",
-    "whats the date",
-    "what is the date",
-    "today's date",
-    "todays date",
-    "current date",
-    "what day is it",
-    "what day is today",
-    "what time is it",
-    "what time is it now",
-    "current time",
-    "what month is it",
-    "what year is it",
-]
 _DISCORD_MENTION_RE = re.compile(r"<@!?\d+>")
 _JSON_OBJECT_RE = re.compile(r"\{.*\}", re.DOTALL)
 _DATE_HINTS = ("date", "day", "month", "year", "today")
@@ -137,9 +91,8 @@ _TOP_K = {"meta": 0, "datetime": 0, "memory": 0, "casual": 0, "general": 5}
 @dataclass(slots=True)
 class AnalysisDecision:
     rag_query: str
-    can_answer_from_general_knowledge: bool
-    general_knowledge_confidence: float
     reason: str
+    query_type: str = "general"
     raw_payload: dict[str, Any] | None = None
 
 
@@ -167,19 +120,6 @@ class RagDecision:
     context_chunks: list[dict[str, Any]]
     query: str
     rejection_reason: str = ""
-
-
-def _classify_query(query: str) -> str:
-    q = " ".join(query.lower().split())
-    if any(p in q for p in _META_PATTERNS):
-        return "meta"
-    if any(p in q for p in _DATETIME_PATTERNS):
-        return "datetime"
-    if any(p in q for p in _MEMORY_PATTERNS):
-        return "memory"
-    if any(p in q for p in _CASUAL_PATTERNS):
-        return "casual"
-    return "general"
 
 
 def _rag_is_eligible(question_type: str, user_content: str, rag_query: str) -> bool:
@@ -212,12 +152,13 @@ def _extract_recent_user_queries(
     user_messages: list[str] = []
     max_items = limit if limit is not None else ROUTER_HISTORY_TURNS
     for message in reversed(chat_history):
-        if message.get("role") != "user":
+        role = message.get("role")
+        if role != "user":
             continue
-        content = message.get("content")
+        content = message.get("content", "")
         if isinstance(content, str) and content.strip():
             cleaned = _DISCORD_MENTION_RE.sub("", content).strip()
-            if cleaned and _classify_query(cleaned) != "datetime":
+            if cleaned:
                 user_messages.append(cleaned)
         if len(user_messages) >= max_items:
             break
@@ -240,62 +181,30 @@ def _extract_json_object(text: str) -> dict[str, Any] | None:
     return parsed if isinstance(parsed, dict) else None
 
 
-def _build_deterministic_route_plan(user_content: str) -> RoutePlan | None:
-    cleaned = user_content.strip()
-    query_type = _classify_query(cleaned)
-    if query_type == "datetime":
-        return RoutePlan(
-            path="datetime",
-            query_type=query_type,
-            query_text=cleaned,
-            reason="datetime",
-            deterministic_gate="datetime",
-        )
-    if query_type == "meta":
-        return RoutePlan(
-            path="general",
-            query_type=query_type,
-            query_text=cleaned,
-            reason="meta_direct",
-            deterministic_gate="meta",
-        )
-    if query_type == "casual":
-        return RoutePlan(
-            path="general",
-            query_type=query_type,
-            query_text=cleaned,
-            reason="casual_direct",
-            deterministic_gate="casual",
-        )
-    if query_type == "memory":
-        return RoutePlan(
-            path="memory",
-            query_type=query_type,
-            query_text=cleaned,
-            reason="memory_direct",
-            deterministic_gate="memory",
-            use_memory=True,
-        )
-    return None
-
-
-def _build_analysis_messages(user_content: str, recent_user_queries: list[str]) -> list[dict]:
+def _build_analysis_messages(
+    user_content: str, recent_user_queries: list[str], *, user_context_str: str = ""
+) -> list[dict]:
     history_lines = [
         f"{index}. {query}" for index, query in enumerate(reversed(recent_user_queries), start=1)
     ]
     history_block = "\n".join(history_lines) if history_lines else "None"
+    context_note = (
+        f" The current user is identified as: {user_context_str}." if user_context_str else ""
+    )
     system_prompt = (
         "You are a routing and query-analysis component for a Discord bot. "
         "Do not roleplay. Do not answer the user. Return strict JSON only.\n"
-        "Available knowledge sources:\n"
-        "- local datetime for date/time questions\n"
-        "- local RAG knowledge base for stable in-repo knowledge and lore\n"
-        "- general model knowledge only for stable non-time-sensitive questions when safe\n"
-        "Return JSON with keys: rag_query, can_answer_from_general_knowledge, general_knowledge_confidence, reason.\n"
+        "Return JSON with keys: rag_query, reason, query_type.\n"
+        "query_type must be one of: datetime, casual, meta, memory, general.\n"
         "Rules:\n"
         "- Use recent user turns only to resolve elliptical follow-ups.\n"
         "- Always provide a standalone rag_query.\n"
-        "- If the model would not be safe answering from general knowledge after weak RAG, set can_answer_from_general_knowledge=false."
+        "- datetime: the user is asking about the current date, time, day, month, or year.\n"
+        '- casual: greeting, small talk, simple social exchange (e.g. "hello", "how are you").\n'
+        "- meta: the user is referencing past conversation or asking about the bot itself.\n"
+        "- memory: the user is asking about someone's identity or what you remember about them — could be themselves or another Discord user.\n"
+        "- general: everything else — questions about lore, characters, abilities, facts, etc."
+        f"{context_note}"
     )
     user_prompt = (
         f"Recent user turns:\n{history_block}\n\n"
@@ -316,8 +225,6 @@ def _analysis_fallback(user_content: str, recent_user_queries: list[str]) -> Ana
         )
     return AnalysisDecision(
         rag_query=normalized or user_content,
-        can_answer_from_general_knowledge=False,
-        general_knowledge_confidence=0.0,
         reason="analysis_fallback",
         raw_payload={"fallback": True},
     )
@@ -325,41 +232,40 @@ def _analysis_fallback(user_content: str, recent_user_queries: list[str]) -> Ana
 
 def _validate_analysis_decision(payload: dict[str, Any]) -> AnalysisDecision | None:
     rag_query = payload.get("rag_query", "")
-    can_answer_from_general_knowledge = payload.get("can_answer_from_general_knowledge", False)
-    general_knowledge_confidence = payload.get("general_knowledge_confidence", 0.0)
     reason = payload.get("reason", "")
+    query_type = payload.get("query_type", "general")
 
     if not isinstance(rag_query, str) or not isinstance(reason, str):
-        return None
-    if not isinstance(can_answer_from_general_knowledge, bool):
         return None
 
     normalized_rag_query = normalize_search_query(rag_query)
     normalized_reason = " ".join(reason.strip().split())[:200]
 
-    try:
-        normalized_general_confidence = max(0.0, min(float(general_knowledge_confidence), 1.0))
-    except Exception:
-        normalized_general_confidence = 0.0
-
     if not normalized_rag_query:
         return None
 
+    valid_types = {"datetime", "casual", "meta", "memory", "general"}
+    if not isinstance(query_type, str) or query_type not in valid_types:
+        query_type = "general"
+
     return AnalysisDecision(
         rag_query=normalized_rag_query,
-        can_answer_from_general_knowledge=can_answer_from_general_knowledge,
-        general_knowledge_confidence=normalized_general_confidence,
         reason=normalized_reason,
+        query_type=query_type,
         raw_payload=payload,
     )
 
 
-async def _run_analysis_pass(user_content: str, chat_history: list[dict]) -> AnalysisDecision:
+async def _run_analysis_pass(
+    user_content: str, chat_history: list[dict], *, user_context_str: str = ""
+) -> AnalysisDecision:
     recent_user_queries = _extract_recent_user_queries(chat_history)
     if not ANALYSIS_ENABLED:
         return _analysis_fallback(user_content, recent_user_queries)
 
-    messages = _build_analysis_messages(user_content, recent_user_queries)
+    messages = _build_analysis_messages(
+        user_content, recent_user_queries, user_context_str=user_context_str
+    )
     try:
         response = await asyncio.wait_for(
             llm_client.chat(messages), timeout=ANALYSIS_TIMEOUT_SECONDS
@@ -382,12 +288,51 @@ async def _run_analysis_pass(user_content: str, chat_history: list[dict]) -> Ana
     return validated
 
 
-async def _build_route_plan(user_content: str, chat_history: list[dict]) -> RoutePlan:
-    deterministic_plan = _build_deterministic_route_plan(user_content)
-    if deterministic_plan is not None:
-        return deterministic_plan
+async def _build_route_plan(
+    user_content: str, chat_history: list[dict], *, user_context_str: str = ""
+) -> RoutePlan:
+    analysis = await _run_analysis_pass(
+        user_content, chat_history, user_context_str=user_context_str
+    )
 
-    analysis = await _run_analysis_pass(user_content, chat_history)
+    if analysis.query_type == "datetime":
+        return RoutePlan(
+            path="datetime",
+            query_type="datetime",
+            query_text=user_content.strip(),
+            reason="datetime",
+            deterministic_gate="datetime",
+        )
+    if analysis.query_type == "casual":
+        return RoutePlan(
+            path="general",
+            query_type="casual",
+            query_text=user_content.strip(),
+            reason="casual_direct",
+            deterministic_gate="casual",
+        )
+    if analysis.query_type == "meta":
+        return RoutePlan(
+            path="general",
+            query_type="meta",
+            query_text=user_content.strip(),
+            reason="meta_direct",
+            deterministic_gate="meta",
+        )
+    if analysis.query_type == "memory":
+        return RoutePlan(
+            path="memory",
+            query_type="memory",
+            query_text=user_content.strip(),
+            reason="memory_direct",
+            deterministic_gate="memory",
+            use_memory=True,
+            analysis_used=True if analysis.raw_payload else False,
+            analysis_payload=analysis.raw_payload,
+            analysis_decision=analysis,
+        )
+
+    # general or rag
     resolved_query = analysis.rag_query or normalize_search_query(user_content) or user_content
     requested_fact = infer_search_requested_fact(resolved_query)
     question_type = infer_search_question_type(
@@ -465,25 +410,6 @@ def _meaningful_anchor_tokens(text: str) -> set[str]:
     }
 
 
-def _format_memory_context(memories: list[MemoryRecord]) -> str:
-    sections: list[str] = []
-
-    def clip(text: str, max_len: int = 280) -> str:
-        if len(text) <= max_len:
-            return text
-        return f"{text[:max_len].rstrip()}..."
-
-    for index, memory in enumerate(memories, start=1):
-        topics = ", ".join(memory.topics)
-        timestamp = memory.created_at.replace("T", " ")[:19]
-        sections.append(
-            f"[Memory {index} | scope={memory.scope} | time={timestamp} | topics={topics} | score={memory.score:.3f}]\n"
-            f"User: {clip(memory.user_message)}\n"
-            f"Assistant: {clip(memory.assistant_message)}"
-        )
-    return "\n\n".join(sections)
-
-
 def _format_knowledge_context(context_chunks: list[dict[str, Any]]) -> str:
     return "\n\n".join(f"[{c['source']} - {c['heading']}]\n{c['text']}" for c in context_chunks)
 
@@ -494,27 +420,42 @@ def _build_system_prompt(
     personalization: str,
     manifest: str,
     resolved_query: str,
-    relevant_memories: list[MemoryRecord],
     rag_decision: RagDecision | None,
     search_execution: SearchExecution,
+    compacted_memory: str | None = None,
+    memory_subject_name: str | None = None,
+    asking_user_name: str = "",
+    user_context_str: str = "",
 ) -> str:
     system_sections = [
         SYSTEM_PROMPT,
         f"=== PERSONALITY & BACKSTORY ===\n{personalization}",
         manifest,
     ]
+    if user_context_str:
+        system_sections.insert(1, f"[Current user context: {user_context_str}]")
+    if compacted_memory:
+        if memory_subject_name and asking_user_name:
+            system_sections.append(
+                "=== WHAT I REMEMBER ===\n"
+                f"{compacted_memory}\n\n"
+                f'NOTE: This describes another user named "{memory_subject_name}". '
+                f'It does NOT describe "{asking_user_name}" who is currently speaking. '
+                f"Answer {asking_user_name}'s questions about {memory_subject_name}."
+            )
+        else:
+            system_sections.append(
+                "=== WHAT I REMEMBER ===\n"
+                f"{compacted_memory}\n\n"
+                "Use these notes to recall their identity, interests, and past topics naturally."
+            )
     system_sections.append(
         "Resolved interpretation of the current user message:\n"
         f"{resolved_query}\n"
         "Use this only to interpret the user's current intent."
     )
 
-    if source_path == "memory" and relevant_memories:
-        system_sections.append(
-            "Answer from relevant conversation memory when it directly supports the response:\n\n"
-            f"{_format_memory_context(relevant_memories)}"
-        )
-    elif source_path == "rag" and rag_decision and rag_decision.context_chunks:
+    if source_path == "rag" and rag_decision and rag_decision.context_chunks:
         system_sections.append(
             "Answer only from the accepted local knowledge context below. Do not invent unsupported lore or facts:\n\n"
             f"{_format_knowledge_context(rag_decision.context_chunks)}"
@@ -533,6 +474,11 @@ def _build_system_prompt(
             system_sections.append(
                 "If the evidence is too weak, say that current reports are insufficient instead of inferring missing details."
             )
+    elif source_path == "memory":
+        system_sections.append(
+            "I recalled what I remember about this user below. Use that personal context naturally without announcing the memory explicitly. "
+            "Do not change your personality or pretend to have a different relationship than what the memory describes."
+        )
     elif source_path == "general":
         system_sections.append(
             "No accepted live-search or RAG grounding was available. Answer only if you are genuinely confident. If uncertain, say you do not know rather than improvising."
@@ -542,8 +488,8 @@ def _build_system_prompt(
         "Path-specific rules:\n"
         "- search: use only live search context for current facts.\n"
         "- rag: use only accepted knowledge context for lore and stable repository knowledge.\n"
-        "- memory: use memory only for prior conversation details.\n"
-        "- general: answer conservatively and allow explicit uncertainty."
+        "- general: answer conservatively and allow explicit uncertainty.\n"
+        "- memory: use only what I remember about you and the conversation history. Do not invent personal details."
     )
     return "\n\n".join(system_sections)
 
@@ -557,6 +503,59 @@ def _scope_ids(msg) -> tuple[str, str, str]:
 
 def _clean_user_content(content: str, bot_user_id: int) -> str:
     return content.replace(f"<@{bot_user_id}>", "").strip()
+
+
+async def _compact_memory_background(
+    user_id: str,
+    server_id: str,
+    channel_id: str,
+) -> None:
+    if user_memory_repo is None:
+        return
+    mark_compacting(user_id, server_id)
+    try:
+        snapshot = snapshot_and_clear(user_id, server_id)
+        if not snapshot:
+            unmark_compacting(user_id, server_id)
+            return
+        existing = user_memory_repo.get_by_user(user_id, server_id)
+        messages = build_compaction_messages(existing, snapshot)
+        response = await asyncio.wait_for(
+            llm_client.chat(messages),
+            timeout=MEMORY_COMPACTION_TIMEOUT_SECONDS,
+        )
+        reply = response.get("message", {}).get("content", "")
+        parsed = parse_compaction_response(reply)
+        if parsed is not None:
+            user_memory_repo.upsert(
+                user_id=user_id,
+                server_id=server_id,
+                channel_id=channel_id,
+                memory_content=parsed.memory_content,
+                topic=parsed.topic,
+                importance_score=parsed.importance_score,
+                tags=",".join(parsed.tags),
+                existing=existing,
+            )
+            new_ver = (existing.memory_version + 1) if existing else 1
+            print(f"Memory compacted for user {user_id} (v{new_ver})")
+        else:
+            print(f"Memory compaction parse failed for {user_id}")
+    except Exception as exc:
+        print(f"Memory compaction failed for {user_id}: {exc}")
+    finally:
+        unmark_compacting(user_id, server_id)
+
+
+def _maybe_compact_memory(user_id: str, server_id: str, channel_id: str) -> None:
+    if not (
+        MEMORY_COMPACTION_ENABLED
+        and user_memory_repo is not None
+        and not is_compacting(user_id, server_id)
+        and len(get_chat(user_id, server_id)) >= MEMORY_SHORT_TERM_TURN_LIMIT
+    ):
+        return
+    asyncio.create_task(_compact_memory_background(user_id, server_id, channel_id))
 
 
 async def on_message(bot, msg):
@@ -573,19 +572,31 @@ async def on_message(bot, msg):
 
     try:
         server_id, channel_id, user_id = _scope_ids(msg)
+        user_display_name = getattr(msg.author, "display_name", None) or str(msg.author)
         user_content = _clean_user_content(msg.content, bot.user.id)
 
         start_time = time.time()
-        memory_duration = 0.0
-        memory_scanned = 0
-        memory_selected = 0
-        memory_top_score = 0.0
-        relevant_memories: list[MemoryRecord] = []
-        chat_history = get_chat(server_id, channel_id)
-        query_type = _classify_query(user_content)
+        chat_history = list(get_chat(user_id, server_id))
+
+        # Build user context for analysis and system prompt
+        user_context_str = ""
+        if user_memory_repo is not None:
+            record = user_memory_repo.get_by_user(user_id, server_id)
+            if record is not None and record.memory_content:
+                first_line = record.memory_content.split("\n")[0]
+                ident = (
+                    first_line.replace("Identifier: ", "").strip()
+                    if first_line.startswith("Identifier: ")
+                    else ""
+                )
+                if ident:
+                    user_context_str = f"{ident} ({record.topic or 'known visitor'})"
 
         async with msg.channel.typing():
-            route_plan = await _build_route_plan(user_content, chat_history)
+            route_plan = await _build_route_plan(
+                user_content, chat_history, user_context_str=user_context_str
+            )
+            query_type = route_plan.query_type
             search_execution = SearchExecution(
                 used=False,
                 reason="search_not_needed",
@@ -619,10 +630,6 @@ async def on_message(bot, msg):
                     response,
                     elapsed,
                     query_type=query_type,
-                    memory_scanned=memory_scanned,
-                    memory_selected=memory_selected,
-                    memory_top_score=memory_top_score,
-                    memory_duration=memory_duration,
                     search_used=False,
                     search_reason="search_not_needed",
                     search_provider=search_execution.provider,
@@ -632,33 +639,49 @@ async def on_message(bot, msg):
                     rag_top_score=0.0,
                     rag_accepted=False,
                 )
-                store_chat(server_id, channel_id, msg.content, "user")
-                store_chat(server_id, channel_id, reply_content, "assistant")
+                store_turn(user_id, server_id, msg.content, "user", author=user_display_name)
+                store_turn(user_id, server_id, reply_content, "assistant")
                 await msg.reply(reply_content)
                 return
 
-            if route_plan.path == "memory" and memory_service is not None:
-                memory_start = time.time()
-                try:
-                    relevant_memories, memory_scanned = (
-                        memory_service.retrieve_relevant_with_metrics(
-                            query=route_plan.query_text,
-                            server_id=server_id,
-                            channel_id=channel_id,
-                            user_id=user_id,
-                            limit=MEMORY_RECALL_LIMIT,
-                            relevance_threshold=MEMORY_RELEVANCE_THRESHOLD,
-                            candidate_pool=MEMORY_CANDIDATE_POOL,
-                        )
+            compacted_memory: str | None = None
+            compacted_version = 0
+            compacted_topic = ""
+            compacted_importance = 0.0
+            memory_subject_name: str | None = None
+            if user_memory_repo is not None:
+                record = user_memory_repo.get_by_user(user_id, server_id)
+                if record is not None and record.memory_content:
+                    compacted_memory = record.memory_content
+                    compacted_version = record.memory_version
+                    compacted_topic = record.topic
+                    compacted_importance = record.importance_score
+
+                # Cross-user matching: detect known identifiers and load cross-user memory
+                all_records = user_memory_repo.get_all_by_server(server_id)
+                for rec in all_records:
+                    if not rec.memory_content:
+                        continue
+                    first_line = rec.memory_content.split("\n")[0]
+                    ident = (
+                        first_line.replace("Identifier: ", "").strip()
+                        if first_line.startswith("Identifier: ")
+                        else ""
                     )
-                except Exception as exc:
-                    print(f"⚠️ Memory retrieval failed: {exc}")
-                    relevant_memories = []
-                    memory_scanned = 0
-                memory_duration = time.time() - memory_start
-                memory_selected = len(relevant_memories)
-                if relevant_memories:
-                    memory_top_score = relevant_memories[0].score
+                    if ident and ident.lower() in user_content.lower():
+                        if rec.user_id != user_id:
+                            compacted_memory = rec.memory_content
+                            compacted_version = rec.memory_version
+                            compacted_topic = rec.topic
+                            compacted_importance = rec.importance_score
+                            memory_subject_name = ident
+                        if query_type != "memory":
+                            query_type = "memory"
+                            route_plan.query_type = "memory"
+                            route_plan.path = "memory"
+                            route_plan.deterministic_gate = "memory"
+                            route_plan.use_memory = True
+                        break
 
             if route_plan.path == "rag":
                 rag_start = time.time()
@@ -670,110 +693,12 @@ async def on_message(bot, msg):
                 rag_duration = time.time() - rag_start
                 if rag_decision.accepted:
                     final_path = "rag-grounded"
+                elif compacted_memory is not None:
+                    final_path = "memory-personal"
                 else:
-                    analysis = route_plan.analysis_decision
-                    if (
-                        analysis is not None
-                        and analysis.can_answer_from_general_knowledge
-                        and analysis.general_knowledge_confidence
-                        >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
-                    ):
-                        final_path = "general-knowledge"
-                    else:
-                        reply_content = _build_uncertainty_response()
-                        response = {
-                            "model": "uncertainty-guard",
-                            "message": {"content": reply_content},
-                            "prompt_eval_count": 0,
-                            "eval_count": 0,
-                            "prompt_eval_duration": 0,
-                            "eval_duration": 0,
-                        }
-                        elapsed = time.time() - start_time
-                        log_response(
-                            msg,
-                            user_content,
-                            response["model"],
-                            response,
-                            elapsed,
-                            rag_duration=rag_duration,
-                            query_type=query_type,
-                            memory_scanned=memory_scanned,
-                            memory_selected=memory_selected,
-                            memory_top_score=memory_top_score,
-                            memory_duration=memory_duration,
-                            search_used=False,
-                            search_reason="search_not_needed",
-                            search_provider=search_execution.provider,
-                            deterministic_gate=route_plan.deterministic_gate,
-                            analysis_used=route_plan.analysis_used,
-                            analysis_rag_query=analysis.rag_query
-                            if analysis
-                            else route_plan.query_text,
-                            can_answer_from_general_knowledge=(
-                                analysis.can_answer_from_general_knowledge if analysis else False
-                            ),
-                            general_knowledge_confidence=(
-                                analysis.general_knowledge_confidence if analysis else 0.0
-                            ),
-                            analysis_reason=analysis.reason if analysis else route_plan.reason,
-                            final_path="uncertain",
-                            rag_top_score=rag_decision.top_score,
-                            rag_accepted=False,
-                            rag_rejection_reason=rag_decision.rejection_reason,
-                            analysis_payload=route_plan.analysis_payload,
-                        )
-                        await msg.reply(reply_content)
-                        return
+                    final_path = "general"
             else:
                 rag_duration = 0.0
-                analysis = route_plan.analysis_decision
-                general_safe = (
-                    analysis is not None
-                    and analysis.can_answer_from_general_knowledge
-                    and analysis.general_knowledge_confidence
-                    >= GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD
-                )
-                if analysis is not None and not general_safe:
-                    reply_content = _build_uncertainty_response()
-                    response = {
-                        "model": "uncertainty-guard",
-                        "message": {"content": reply_content},
-                        "prompt_eval_count": 0,
-                        "eval_count": 0,
-                        "prompt_eval_duration": 0,
-                        "eval_duration": 0,
-                    }
-                    elapsed = time.time() - start_time
-                    log_response(
-                        msg,
-                        user_content,
-                        response["model"],
-                        response,
-                        elapsed,
-                        rag_duration=rag_duration,
-                        query_type=query_type,
-                        memory_scanned=memory_scanned,
-                        memory_selected=memory_selected,
-                        memory_top_score=memory_top_score,
-                        memory_duration=memory_duration,
-                        search_used=False,
-                        search_reason="search_not_needed",
-                        search_provider=search_execution.provider,
-                        deterministic_gate=route_plan.deterministic_gate,
-                        analysis_used=route_plan.analysis_used,
-                        analysis_rag_query=analysis.rag_query or route_plan.query_text,
-                        can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge,
-                        general_knowledge_confidence=analysis.general_knowledge_confidence,
-                        analysis_reason=analysis.reason,
-                        final_path="uncertain",
-                        rag_top_score=0.0,
-                        rag_accepted=False,
-                        rag_rejection_reason="",
-                        analysis_payload=route_plan.analysis_payload,
-                    )
-                    await msg.reply(reply_content)
-                    return
 
             if route_plan.path != "rag":
                 rag_duration = 0.0
@@ -781,21 +706,36 @@ async def on_message(bot, msg):
             personalization = rag.get_personalization_context()
             manifest = rag.get_manifest()
             resolved_query = route_plan.query_text or user_content
+            source_path_label = (
+                "memory"
+                if final_path == "memory-personal"
+                else ("rag" if final_path == "rag-grounded" else "general")
+            )
             full_system_prompt = _build_system_prompt(
-                source_path="memory"
-                if route_plan.path == "memory"
-                else ("rag" if final_path == "rag-grounded" else "general"),
+                source_path=source_path_label,
                 personalization=personalization,
                 manifest=manifest,
                 resolved_query=resolved_query,
-                relevant_memories=relevant_memories,
                 rag_decision=rag_decision,
                 search_execution=search_execution,
+                compacted_memory=compacted_memory,
+                memory_subject_name=memory_subject_name,
+                asking_user_name=user_display_name or "",
+                user_context_str=user_context_str,
             )
 
-            messages = [{"role": "system", "content": full_system_prompt}] + chat_history
-            store_chat(server_id, channel_id, msg.content, "user")
-            messages.append({"role": "user", "content": user_content})
+            messages = [{"role": "system", "content": full_system_prompt}] + format_chat_for_llm(
+                chat_history
+            )
+            store_turn(user_id, server_id, msg.content, "user", author=user_display_name)
+            messages.append(
+                {
+                    "role": "user",
+                    "content": f"[{user_display_name}] {user_content}"
+                    if user_display_name
+                    else user_content,
+                }
+            )
 
             llm_start = time.time()
             response = await llm_client.chat(messages)
@@ -812,10 +752,6 @@ async def on_message(bot, msg):
                 rag_duration=rag_duration,
                 llm_duration=llm_duration,
                 query_type=query_type,
-                memory_scanned=memory_scanned,
-                memory_selected=memory_selected,
-                memory_top_score=memory_top_score,
-                memory_duration=memory_duration,
                 search_used=search_execution.used,
                 search_reason=search_execution.reason,
                 search_query=search_execution.query,
@@ -829,14 +765,12 @@ async def on_message(bot, msg):
                 deterministic_gate=route_plan.deterministic_gate,
                 analysis_used=route_plan.analysis_used,
                 analysis_rag_query=analysis.rag_query if analysis else resolved_query,
-                can_answer_from_general_knowledge=analysis.can_answer_from_general_knowledge
-                if analysis
-                else False,
-                general_knowledge_confidence=analysis.general_knowledge_confidence
-                if analysis
-                else 0.0,
                 analysis_reason=analysis.reason if analysis else route_plan.reason,
                 final_path=final_path,
+                compacted_found=compacted_memory is not None,
+                compacted_version=compacted_version,
+                compacted_topic=compacted_topic,
+                compacted_importance=compacted_importance,
                 rag_top_score=rag_decision.top_score if rag_decision else 0.0,
                 rag_accepted=rag_decision.accepted if rag_decision else False,
                 rag_rejection_reason=rag_decision.rejection_reason if rag_decision else "",
@@ -844,19 +778,8 @@ async def on_message(bot, msg):
             )
 
             reply_content = response["message"]["content"]
-            store_chat(server_id, channel_id, reply_content, "assistant")
-
-            if memory_service is not None:
-                try:
-                    memory_service.store_exchange(
-                        server_id=server_id,
-                        channel_id=channel_id,
-                        user_id=user_id,
-                        user_message=user_content,
-                        assistant_message=reply_content,
-                    )
-                except Exception as exc:
-                    print(f"⚠️ Memory persistence failed: {exc}")
+            store_turn(user_id, server_id, reply_content, "assistant")
+            _maybe_compact_memory(user_id, server_id, channel_id)
 
             chunks = split_message(reply_content)
             await msg.reply(chunks[0])

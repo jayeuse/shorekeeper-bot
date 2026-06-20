@@ -192,15 +192,13 @@ class _Interaction:
 def _analysis_response(
     *,
     rag_query: str,
-    can_answer_from_general_knowledge: bool,
-    general_knowledge_confidence: float,
     reason: str,
+    query_type: str = "general",
 ) -> dict:
     payload = {
         "rag_query": rag_query,
-        "can_answer_from_general_knowledge": can_answer_from_general_knowledge,
-        "general_knowledge_confidence": general_knowledge_confidence,
         "reason": reason,
+        "query_type": query_type,
     }
     return {
         "model": "stub-model",
@@ -229,7 +227,7 @@ def _configure_message_runtime(
     rag_results=None,
     llm_responses=None,
 ):
-    conversation_context.conversation_context.clear()
+    conversation_context.user_context.clear()
     stub_rag = _StubRag(results=rag_results)
     stub_llm = _StubLLM()
     stub_llm.responses = list(llm_responses or [])
@@ -240,11 +238,9 @@ def _configure_message_runtime(
 
     monkeypatch.setattr(message_module, "rag", stub_rag)
     monkeypatch.setattr(message_module, "llm_client", stub_llm)
-    monkeypatch.setattr(message_module, "memory_service", None)
     monkeypatch.setattr(message_module, "ANALYSIS_ENABLED", True)
     monkeypatch.setattr(message_module, "ANALYSIS_TIMEOUT_SECONDS", 6.0)
     monkeypatch.setattr(message_module, "RAG_ANSWER_SCORE_THRESHOLD", 0.62)
-    monkeypatch.setattr(message_module, "GENERAL_KNOWLEDGE_CONFIDENCE_THRESHOLD", 0.70)
     monkeypatch.setattr(message_module, "ROUTER_HISTORY_TURNS", 3)
     monkeypatch.setattr(message_module, "log_response", _fake_log_response)
 
@@ -304,7 +300,6 @@ def test_build_system_prompt_warns_when_exact_claims_not_allowed() -> None:
         personalization="Calm and observant.",
         manifest="Known records manifest.",
         resolved_query="query",
-        relevant_memories=[],
         rag_decision=None,
         search_execution=execution,
     )
@@ -313,15 +308,138 @@ def test_build_system_prompt_warns_when_exact_claims_not_allowed() -> None:
     assert "Exact claims allowed: False" in prompt
 
 
+def test_build_system_prompt_includes_compacted_memory() -> None:
+    prompt = message_module._build_system_prompt(
+        source_path="general",
+        personalization="Calm and observant.",
+        manifest="Known records manifest.",
+        resolved_query="who am i",
+        rag_decision=None,
+        search_execution=message_module.SearchExecution(
+            used=False,
+            reason="",
+            query="",
+            provider="",
+            result_count=0,
+            duration=0.0,
+            error=None,
+            bundles=[],
+        ),
+        compacted_memory="Identifier: lore_enthusiast\nInterests:\n\tSubject: Rinascita history\n\tReason: Fascinated by the lore\nFacts: fascinated by Rinascita",
+    )
+    assert "=== WHAT I REMEMBER ===" in prompt
+    assert "=== WHAT I REMEMBER ABOUT YOU ===" not in prompt
+    assert "Identifier: lore_enthusiast" in prompt
+    assert "Subject: Rinascita history" in prompt
+    assert "Reason: Fascinated by the lore" in prompt
+    assert "fascinated by Rinascita" in prompt
+
+
+def test_build_system_prompt_without_compacted_memory() -> None:
+    prompt = message_module._build_system_prompt(
+        source_path="general",
+        personalization="Calm and observant.",
+        manifest="Known records manifest.",
+        resolved_query="who am i",
+        rag_decision=None,
+        search_execution=message_module.SearchExecution(
+            used=False,
+            reason="",
+            query="",
+            provider="",
+            result_count=0,
+            duration=0.0,
+            error=None,
+            bundles=[],
+        ),
+    )
+    assert "=== WHAT I REMEMBER ===" not in prompt
+
+
+def test_compacted_memory_bypasses_uncertain_gate(monkeypatch) -> None:
+    stub_rag, stub_llm, log_calls = _configure_message_runtime(
+        monkeypatch,
+        llm_responses=[
+            _analysis_response(
+                rag_query="what do you know about the user",
+                reason="personal query requires local context",
+            ),
+            _final_response("I remember you are a lore enthusiast."),
+        ],
+    )
+
+    class _StubUserMemoryRepo:
+        def get_by_user(self, user_id, server_id):
+            return SimpleNamespace(
+                memory_content="Identifier: lore_enthusiast\nFacts: is a lore enthusiast",
+                memory_version=2,
+                topic="lore",
+                importance_score=0.8,
+            )
+
+        def get_all_by_server(self, server_id):
+            return []
+
+        def search_by_content(self, text, server_id):
+            return []
+
+    monkeypatch.setattr(message_module, "user_memory_repo", _StubUserMemoryRepo())
+    monkeypatch.setattr(message_module, "MEMORY_COMPACTION_ENABLED", False)
+
+    bot_user = SimpleNamespace(id=999)
+    bot = SimpleNamespace(user=bot_user)
+    msg = _Message(content="<@999> what do you know about me?", bot_user=bot_user)
+
+    asyncio.run(message_module.on_message(bot, msg))
+
+    assert log_calls[0]["final_path"] == "memory-personal"
+    assert log_calls[0]["compacted_found"] is True
+    assert log_calls[0]["compacted_version"] == 2
+    assert log_calls[0]["compacted_topic"] == "lore"
+    assert len(stub_llm.calls) == 2
+
+
+def test_compacted_memory_without_repo_falls_through_to_llm(monkeypatch) -> None:
+    stub_rag, stub_llm, log_calls = _configure_message_runtime(
+        monkeypatch,
+        llm_responses=[
+            _analysis_response(
+                rag_query="what do you know about the user",
+                reason="personal query requires local context",
+            ),
+            _final_response("I only know what you have told me."),
+        ],
+    )
+
+    monkeypatch.setattr(message_module, "user_memory_repo", None)
+    monkeypatch.setattr(message_module, "MEMORY_COMPACTION_ENABLED", False)
+
+    bot_user = SimpleNamespace(id=999)
+    bot = SimpleNamespace(user=bot_user)
+    msg = _Message(content="<@999> what do you know about me?", bot_user=bot_user)
+
+    asyncio.run(message_module.on_message(bot, msg))
+
+    assert log_calls[0]["compacted_found"] is False
+    assert len(stub_llm.calls) == 2
+
+
 def test_analysis_fallback_builds_safe_default() -> None:
     decision = message_module._analysis_fallback("whats the latest nvidia price?", [])
-
     assert decision.rag_query == "whats the latest nvidia price"
-    assert decision.can_answer_from_general_knowledge is False
 
 
 def test_on_message_uses_local_datetime_without_llm(monkeypatch) -> None:
-    stub_rag, stub_llm, log_calls = _configure_message_runtime(monkeypatch)
+    stub_rag, stub_llm, log_calls = _configure_message_runtime(
+        monkeypatch,
+        llm_responses=[
+            _analysis_response(
+                rag_query="whats the date today",
+                reason="datetime query",
+                query_type="datetime",
+            ),
+        ],
+    )
     bot_user = SimpleNamespace(id=999)
     bot = SimpleNamespace(user=bot_user)
     msg = _Message(content="<@999> whats the date today?", bot_user=bot_user)
@@ -329,21 +447,22 @@ def test_on_message_uses_local_datetime_without_llm(monkeypatch) -> None:
     asyncio.run(message_module.on_message(bot, msg))
 
     assert stub_rag.calls == []
-    assert stub_llm.calls == []
+    assert len(stub_llm.calls) == 1
+    assert log_calls[0]["final_path"] == "local-datetime"
+    assert log_calls[0]["deterministic_gate"] == "datetime"
     assert log_calls[0]["final_path"] == "local-datetime"
     assert log_calls[0]["deterministic_gate"] == "datetime"
 
 
-def test_message_search_prefix_no_longer_triggers_live_search(monkeypatch) -> None:
+def test_message_search_prefix_falls_through_to_llm(monkeypatch) -> None:
     _, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
         llm_responses=[
             _analysis_response(
                 rag_query="search latest nvidia share price",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.1,
                 reason="current fact requires slash search",
-            )
+            ),
+            _final_response("I cannot look that up right now."),
         ],
     )
     bot_user = SimpleNamespace(id=999)
@@ -352,9 +471,7 @@ def test_message_search_prefix_no_longer_triggers_live_search(monkeypatch) -> No
 
     asyncio.run(message_module.on_message(bot, msg))
 
-    assert len(stub_llm.calls) == 1
-    assert "do not know that accurately" in msg.replies[0].lower()
-    assert log_calls[0]["final_path"] == "uncertain"
+    assert len(stub_llm.calls) == 2
 
 
 def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
@@ -372,8 +489,6 @@ def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
         llm_responses=[
             _analysis_response(
                 rag_query="tell me about black shores",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.0,
                 reason="stable local knowledge",
             ),
             _final_response("The Black Shores are a sanctuary."),
@@ -394,7 +509,7 @@ def test_non_time_sensitive_prompt_uses_rag_when_strong(monkeypatch) -> None:
     assert log_calls[0]["final_path"] == "rag-grounded"
 
 
-def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> None:
+def test_weak_rag_falls_through_to_llm(monkeypatch) -> None:
     rag_results = [{"score": 0.22, "source": "lore.md", "heading": "Lore", "text": "Weak match."}]
     _, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
@@ -402,11 +517,9 @@ def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> 
         llm_responses=[
             _analysis_response(
                 rag_query="what does transmission mean",
-                can_answer_from_general_knowledge=True,
-                general_knowledge_confidence=0.91,
                 reason="stable definition",
             ),
-            _final_response("Transmission means sending something from one place to another."),
+            _final_response("Transmission refers to the process of sending data."),
         ],
     )
     bot_user = SimpleNamespace(id=999)
@@ -423,7 +536,7 @@ def test_weak_rag_falls_back_to_general_when_analysis_confident(monkeypatch) -> 
     assert log_calls[0]["final_path"] == "general-knowledge"
 
 
-def test_weak_rag_low_general_confidence_returns_uncertain(monkeypatch) -> None:
+def test_weak_rag_low_confidence_falls_through_to_llm(monkeypatch) -> None:
     rag_results = [{"score": 0.15, "source": "lore.md", "heading": "Lore", "text": "Weak match."}]
     _, stub_llm, log_calls = _configure_message_runtime(
         monkeypatch,
@@ -431,10 +544,9 @@ def test_weak_rag_low_general_confidence_returns_uncertain(monkeypatch) -> None:
         llm_responses=[
             _analysis_response(
                 rag_query="what is ligma exactly",
-                can_answer_from_general_knowledge=False,
-                general_knowledge_confidence=0.2,
-                reason="unsafe to answer",
+                reason="general question",
             ),
+            _final_response("Ligma is not something I have reliable records on."),
         ],
     )
     bot_user = SimpleNamespace(id=999)
@@ -443,12 +555,10 @@ def test_weak_rag_low_general_confidence_returns_uncertain(monkeypatch) -> None:
 
     asyncio.run(message_module.on_message(bot, msg))
 
-    assert len(stub_llm.calls) == 1
-    assert "do not know that accurately" in msg.replies[0].lower()
-    assert log_calls[0]["final_path"] == "uncertain"
+    assert len(stub_llm.calls) == 2
 
 
-def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) -> None:
+def test_definition_prompt_falls_through_to_llm(monkeypatch) -> None:
     stub_rag, _, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=[
@@ -457,8 +567,6 @@ def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) 
         llm_responses=[
             _analysis_response(
                 rag_query='what does the word "approximately" mean',
-                can_answer_from_general_knowledge=True,
-                general_knowledge_confidence=0.9,
                 reason="dictionary definition",
             ),
             _final_response("Approximately means nearly, but not exactly."),
@@ -478,7 +586,7 @@ def test_definition_prompt_bypasses_rag_and_uses_general_knowledge(monkeypatch) 
     assert log_calls[0]["final_path"] == "general-knowledge"
 
 
-def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
+def test_identity_prompt_falls_through_to_llm(monkeypatch) -> None:
     stub_rag, _, log_calls = _configure_message_runtime(
         monkeypatch,
         rag_results=[
@@ -487,8 +595,6 @@ def test_identity_prompt_bypasses_rag_when_not_lore(monkeypatch) -> None:
         llm_responses=[
             _analysis_response(
                 rag_query="what is your name",
-                can_answer_from_general_knowledge=True,
-                general_knowledge_confidence=0.95,
                 reason="identity question",
             ),
             _final_response("I am Shorekeeper."),

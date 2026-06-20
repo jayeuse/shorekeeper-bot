@@ -37,16 +37,14 @@ llama:
     metrics: true
 
 memory:
-  recall_limit: 3
-  relevance_threshold: 0.22
-  candidate_pool: 60
-  recency_halflife_days: 30
+  short_term_turn_limit: 16
+  compaction_enabled: true
+  compaction_timeout_seconds: 30
 
 analysis:
   enabled: true
   timeout_seconds: 6
   rag_answer_score_threshold: 0.62
-  general_knowledge_confidence_threshold: 0.7
 
 router:
   history_turns: 4

@@ -12,15 +12,13 @@ from handlers import message as message_module
 def _analysis(
     *,
     rag_query: str,
-    can_answer_from_general_knowledge: bool = False,
-    general_knowledge_confidence: float = 0.0,
     reason: str = "test-analysis",
+    query_type: str = "general",
 ) -> message_module.AnalysisDecision:
     return message_module.AnalysisDecision(
         rag_query=rag_query,
-        can_answer_from_general_knowledge=can_answer_from_general_knowledge,
-        general_knowledge_confidence=general_knowledge_confidence,
         reason=reason,
+        query_type=query_type,
         raw_payload={"source": "test"},
     )
 
@@ -32,7 +30,7 @@ async def _build_route_with_analysis(
     chat_history: list[dict] | None = None,
 ) -> message_module.RoutePlan:
     async def _fake_analysis(
-        user_content: str, history: list[dict]
+        user_content: str, chat_history: list[dict], *, user_context_str: str = ""
     ) -> message_module.AnalysisDecision:
         assert user_content == prompt
         return decision
@@ -42,28 +40,37 @@ async def _build_route_with_analysis(
 
 
 @pytest.mark.parametrize(
-    ("prompt", "expected_plan"),
+    ("prompt", "analysis_query_type", "expected_plan"),
     [
-        ("whats the date today?", ("datetime", "datetime")),
-        ("what time is it right now?", ("datetime", "datetime")),
-        ("what was the first question i asked?", ("memory", "memory")),
-        ("do you remember what i told you earlier?", ("memory", "memory")),
-        ("how are you today?", ("general", "casual")),
-        ("good morning", ("general", "casual")),
-        ("what factions are in your records?", ("general", "meta")),
-        ("search: latest nvidia stock price", None),
+        ("whats the date today?", "datetime", ("datetime", "datetime")),
+        ("what time is it right now?", "datetime", ("datetime", "datetime")),
+        ("what was the first question i asked?", "memory", ("memory", "memory")),
+        ("do you remember what i told you earlier?", "memory", ("memory", "memory")),
+        ("how are you today?", "casual", ("general", "casual")),
+        ("good morning", "casual", ("general", "casual")),
+        ("what factions are in your records?", "meta", ("general", "meta")),
     ],
 )
-def test_prompt_matrix_deterministic_routes(
-    prompt: str, expected_plan: tuple[str, str] | None
+def test_prompt_matrix_analysis_routes(
+    monkeypatch: pytest.MonkeyPatch,
+    prompt: str,
+    analysis_query_type: str,
+    expected_plan: tuple[str, str],
 ) -> None:
-    plan = message_module._build_deterministic_route_plan(prompt)
+    decision = _analysis(
+        rag_query=prompt,
+        query_type=analysis_query_type,
+    )
 
-    if expected_plan is None:
-        assert plan is None
-        return
+    async def _fake_analysis(
+        user_content: str, chat_history: list[dict], *, user_context_str: str = ""
+    ) -> message_module.AnalysisDecision:
+        assert user_content == prompt
+        return decision
 
-    assert plan is not None
+    monkeypatch.setattr(message_module, "_run_analysis_pass", _fake_analysis)
+    plan = asyncio.run(message_module._build_route_plan(prompt, []))
+
     assert plan.path == expected_plan[0]
     assert plan.deterministic_gate == expected_plan[1]
 
@@ -86,30 +93,6 @@ def test_prompt_matrix_deterministic_routes(
             "background_fact",
             "general",
             "Shorekeeper",
-        ),
-        (
-            "what does transmission mean?",
-            _analysis(
-                rag_query="what does transmission mean",
-                can_answer_from_general_knowledge=True,
-                general_knowledge_confidence=0.9,
-            ),
-            "general",
-            "definition",
-            "general",
-            "",
-        ),
-        (
-            "whats your name?",
-            _analysis(
-                rag_query="what is your name",
-                can_answer_from_general_knowledge=True,
-                general_knowledge_confidence=0.95,
-            ),
-            "general",
-            "identity",
-            "identity",
-            "",
         ),
     ],
 )
@@ -139,15 +122,12 @@ def test_analysis_fallback_resolves_elliptical_followup() -> None:
     )
 
     assert decision.rag_query == "what about there tell me about black shores"
-    assert decision.can_answer_from_general_knowledge is False
 
 
 def test_validate_analysis_decision_rejects_empty_rag_query() -> None:
     decision = message_module._validate_analysis_decision(
         {
             "rag_query": "   ",
-            "can_answer_from_general_knowledge": True,
-            "general_knowledge_confidence": 0.8,
             "reason": "invalid",
         }
     )
