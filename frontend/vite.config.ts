@@ -1,9 +1,10 @@
 import react from '@vitejs/plugin-react'
+import tailwind from '@tailwindcss/vite'
 import { defineConfig } from 'vitest/config'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwind()],
   test: {
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
