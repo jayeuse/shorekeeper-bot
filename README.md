@@ -51,7 +51,7 @@ shorekeeper_bot/
 
 ### Runtime Components
 
-The bot runtime requires four services running together:
+The system utilizes several local runtime services and interfaces:
 
 | Service | Default Address | Purpose |
 |---|---|---|
@@ -59,8 +59,11 @@ The bot runtime requires four services running together:
 | **llama.cpp embed server** | `127.0.0.1:8082` | Serves the embedding model (Nomic Embed Text) for RAG queries |
 | **PostgreSQL** | `127.0.0.1:5432` | Stores user memories and knowledge vectors |
 | **SearXNG** | `127.0.0.1:8083` | Private meta-search engine for live web grounding (optional) |
+| **Adminer** | `127.0.0.1:8080` | Web-based database management tool for PostgreSQL |
+| **FastAPI Backend API** | `127.0.0.1:8001` | HTTP API surface and database migration/service scaffold |
+| **Frontend Web Client** | `127.0.0.1:5173` | React/Vite web interface development server |
 
-All four can be started together with `./scripts/start.sh`, which reads `.env.local` and `config/runtime.config.yml`, launches both llama servers, and brings up the Docker Compose stacks. It stops everything cleanly on `Ctrl-C`.
+The core infrastructure services (PostgreSQL, SearXNG, Adminer, and the llama.cpp model servers) can be started together with `./scripts/start.sh`, which reads `.env.local` and `config/runtime.config.yml`, launches both model servers, and brings up the Docker Compose stacks. It stops everything cleanly on `Ctrl-C`.
 
 ## Core Features
 
