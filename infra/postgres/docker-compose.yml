@@ -4,7 +4,7 @@ services:
   db:
     container_name: shorekeeper-postgres
     image: docker.io/postgres:17-alpine
-    restart: unless-stopped
+    restart: "no"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -24,7 +24,7 @@ services:
   adminer:
     container_name: shorekeeper-adminer
     image: docker.io/adminer:latest
-    restart: unless-stopped
+    restart: "no"
     ports:
       - "127.0.0.1:${ADMINER_PORT:-8080}:8080"
     depends_on:
