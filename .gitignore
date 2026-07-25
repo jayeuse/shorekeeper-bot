@@ -10,7 +10,6 @@ share/
 
 # Agent-local guidance
 .github/
-**/AGENTS.md
 
 # Python
 __pycache__/
