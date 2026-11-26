@@ -1,19 +1,34 @@
-# Shorekeeper Bot
+# Shorekeeper
 
-Shorekeeper Bot is a specialized **orchestration wrapper** that wraps local and online Large Language Models (LLMs) with a layer of structured prompting, context grounding, and routing logic to make them act consistently as **The Shorekeeper** — a character from *Wuthering Waves*. 
+A context compiler for small language models.
 
-Instead of treating the AI model as an opaque black box, Shorekeeper Bot acts as a control plane around it. It intercepts every interaction, runs classification and routing passes, dynamically gathers context from a curated knowledge base or user memories, and constructs a highly structured prompt environment. This forces the underlying model—whether running locally via `llama.cpp` or through an external API—to maintain a precise persona, retrieve factual lore, and recall user details without relying on external hosted companion services.
+Shorekeeper is a **context compiler**. It takes an ambiguous message and decides which context the answer needs. It retrieves only that slice from a curated knowledge corpus, per-user memory, or search evidence from an explicit `/search` request. It compiles a constrained prompt with provenance and uncertainty rules. It then answers from that prompt or states what it cannot support. The model never sees the whole corpus; it sees the compiled context.
+
+Discord is the first integration, not the definition. The compiler services do not depend on Discord; the adapter supplies the message and delivers the reply.
+
+**Integrations**
+
+- **Discord** — Current and working: the message pipeline and the `/search` slash command. The deployed persona is The Shorekeeper, a character from *Wuthering Waves*.
+- **HTTP API** — Scaffold only: a health check and online-provider diagnostics. It is not a chat or compiler endpoint.
+- **No other integration** — None exists today.
+
+The repository and Python package keep the historical name `shorekeeper-bot`, so setup commands and paths stay valid.
 
 ## Why This Exists
 
-Most Discord LLM integrations are simple, stateless API pass-throughs that result in generic, forgetful chat experiences, while dedicated "AI companion" platforms lock your data and configuration into proprietary cloud services. 
+Most Discord LLM integrations are stateless API pass-throughs: every message reaches the model with no selection, so replies stay generic and forgetful. Dedicated "AI companion" platforms take the other path and lock your data and configuration into a proprietary cloud.
 
-Shorekeeper Bot is designed as a **self-hosted, model-agnostic orchestration wrapper** that provides:
+Shorekeeper is a self-hosted, model-agnostic context compiler, and it is not tied to Discord. Two disciplines separate it from both options:
 
-- **Model Agnosticism** — The wrapper sits in front of any OpenAI-compatible API (local `llama.cpp` / Ollama servers or remote endpoints like DeepSeek or OpenRouter), allowing you to swap the underlying model backend at any time while preserving the character logic.
-- **Curated Knowledge Wrapper (RAG)** — Rather than hoping the model has memorized game lore, a retrieval-augmented generation pipeline extracts context from hand-written markdown files (about characters, lore, and abilities) and wraps the user prompt with explicit source-grounding instructions.
-- **Persistent Memory Context** — A background memory system captures and compacts conversation history into structured user profiles stored in PostgreSQL, dynamically injecting this information back into the LLM context so the character "remembers" users across sessions.
-- **Verified Search Grounding** — Live web search through a private SearXNG instance is exposed via a dedicated `/search` command, passing results through a multi-stage evidence evaluation pipeline to constrain what the model is allowed to claim before it answers.
+- **Context selection** — The compiler decides what the answer needs before it calls the model. Retrieval is gated by question type and a score threshold, so unrelated corpus text does not enter the prompt.
+- **Uncertainty discipline** — The compiled prompt carries source-grounding rules, and the code has explicit paths for weak evidence. When the sources are insufficient, the answer says so.
+
+The compiler is built from four parts:
+
+- **Model Agnosticism** — The provider layer sits in front of any OpenAI-compatible API (local `llama.cpp` / Ollama servers or remote endpoints like DeepSeek or OpenRouter). You can swap the model backend without changing the persona or grounding rules.
+- **Curated Knowledge (RAG)** — The retrieval pipeline does not rely on memorized game lore. It extracts context from hand-written markdown files about characters, lore, and abilities. It then adds explicit source-grounding instructions to the prompt.
+- **Persistent Memory Context** — A background memory system compacts conversation history into structured user profiles stored in PostgreSQL. It injects that profile back into the prompt so the character remembers users across sessions.
+- **Verified Search Grounding** — Live web search through a private SearXNG instance runs through the `/search` command. A multi-stage evidence evaluation constrains what the model may claim before it answers.
 
 ## System Architecture
 
@@ -22,10 +37,10 @@ The project is organized as a monorepo with three main surfaces:
 ```
 shorekeeper_bot/
 ├── backend/
-│   ├── brain/                      Discord bot runtime + RAG + memory
-│   │   ├── main.py                 Bot entrypoint
+│   ├── brain/                      Context compiler + Discord adapter
+│   │   ├── main.py                 Discord adapter entrypoint
 │   │   ├── core/                   Config parsing, Discord client wiring
-│   │   ├── handlers/               Message orchestration, routing, /search command
+│   │   ├── handlers/               Discord adapter, routing, /search command
 │   │   ├── services/               RAG engine, LLM client, embedder, search, memory
 │   │   ├── database/               SQLModel models, migrations, engine setup
 │   │   ├── knowledge/              Markdown knowledge corpus (characters, lore, persona)
@@ -67,9 +82,11 @@ The core infrastructure services (PostgreSQL, SearXNG, Adminer, and the llama.cp
 
 ## Core Features
 
+The compiler is the pipeline described in this section. The Discord adapter calls it, hands in the message, and delivers the reply. The compiler services under `backend/brain/services/` do not import Discord objects.
+
 ### Message Pipeline
 
-The core wrapper logic is driven by the [message handler](backend/brain/handlers/message.py), which orchestrates every incoming Discord message through a multi-stage control pipeline to safely construct the LLM's prompt context:
+The [message handler](backend/brain/handlers/message.py) is the Discord adapter's entry point. It runs each incoming message through the compilation stages:
 
 ```
 User message → Analysis Router → Route Plan → Source Resolution → System Prompt Assembly → LLM → Reply
@@ -97,7 +114,7 @@ User message → Analysis Router → Route Plan → Source Resolution → System
 
 ### RAG Pipeline
 
-The [RAG service](backend/brain/services/rag.py) provides retrieval-augmented generation from a curated Markdown knowledge corpus:
+The [RAG service](backend/brain/services/rag.py) selects the knowledge slice that the compiler may inject. It reads one curated Markdown corpus:
 
 - **Knowledge corpus** (`backend/brain/knowledge/`) is organized into `characters/` (grouped by faction), `lore/` (regions and world-building), and `personalization/` (backstory, personality, relationships that define the bot's persona).
 - **Chunking** — Each markdown file is split on `## ` headings. YAML frontmatter (character name, group, region, importance, tags) is parsed and preserved as metadata per chunk.
@@ -109,7 +126,7 @@ The [RAG service](backend/brain/services/rag.py) provides retrieval-augmented ge
 
 ### Memory System
 
-The [user memory service](backend/brain/services/user_memory.py) gives the bot persistent, evolving knowledge about individual users:
+The [user memory service](backend/brain/services/user_memory.py) compiles conversation history into a per-user profile for the prompt:
 
 - **Short-term context** — Conversation turns are stored in-memory per user per server, capped at a configurable limit (default 16 turns). This provides immediate conversational context.
 - **Long-term compaction** — When the short-term buffer fills, a background task snapshots the conversation and sends it to the LLM with a structured compaction prompt. The LLM extracts a structured profile with fields for `Identifier`, `Interests` (subject + reason), `Personality` (3–8 word bot impression), and `Facts` (pipe-delimited traits). The result is stored in PostgreSQL with versioning, topic labels, importance scores, and tags.
@@ -119,7 +136,7 @@ The [user memory service](backend/brain/services/user_memory.py) gives the bot p
 
 ### Live Web Search
 
-The [search service](backend/brain/services/search.py) provides grounded, evidence-evaluated web search through a private SearXNG instance:
+The [search service](backend/brain/services/search.py) turns `/search` evidence into a constrained prompt block. It queries a private SearXNG instance:
 
 - **Slash command interface** — Search is exposed as a `/search` Discord slash command, not as automatic behavior on regular messages. This is intentional: the bot should answer lore from its knowledge base and remember users from memory, not reflexively web-search every question.
 - **Search planning** — Queries are analyzed to extract a target entity, requested fact type, question type (current metric, latest release, background fact, etc.), and subject domain (finance, game, language). This metadata drives result scoring.
@@ -152,7 +169,11 @@ The client auto-strips `<think>` blocks from reasoning models and normalizes res
 
 ---
 
-## Prerequisites
+## Current Integration: Discord
+
+Discord is the only integration today. The adapter supplies incoming messages to the compiler and delivers replies. Setup below starts the services the adapter needs, plus the API and frontend scaffolds.
+
+### Prerequisites
 
 - **Python 3.14+** & **`uv`** (Python package & dependency manager)
 - **Node.js 20+** (for the frontend web client)
@@ -160,9 +181,9 @@ The client auto-strips `<think>` blocks from reasoning models and normalizes res
 - **`llama-server`** (compiled executable from the `llama.cpp` project)
 - **GGUF Models** (a chat model and a text embedding model like Nomic Embed)
 
-## Setup
+### Setup
 
-### 1. Install Dependencies
+#### 1. Install Dependencies
 ```bash
 # Backend dependencies
 cd backend
@@ -180,7 +201,7 @@ uv run pre-commit install --config ../.pre-commit-config.yaml --hook-type pre-co
 cd ..
 ```
 
-### 2. Configure Environment Variables
+#### 2. Configure Environment Variables
 Copy the template `.env.example` to `.env.local` and fill in your local system details:
 ```bash
 cp .env.example .env.local
@@ -192,7 +213,7 @@ Key paths to specify include:
 
 Fine-grained runtime configurations (e.g. GPU layer offloading, prompt parameters, context sizes, search engine overrides) are managed in [config/runtime.config.yml](file:///mnt/sdb4/Programming/Python/AI/Local-AI/shorekeeper_bot/config/runtime.config.yml) and [config/search.config.yml](file:///mnt/sdb4/Programming/Python/AI/Local-AI/shorekeeper_bot/config/search.config.yml).
 
-### 3. Launch Local Infrastructure
+#### 3. Launch Local Infrastructure
 Instead of starting each service manually, use the unified launcher script, [start.sh](file:///mnt/sdb4/Programming/Python/AI/Local-AI/shorekeeper_bot/scripts/start.sh), which spins up the entire local environment in a single command:
 ```bash
 ./scripts/start.sh
@@ -207,6 +228,8 @@ This script reads `.env.local` and your configuration files to automatically:
 To tear down all local infrastructure (shutting down Docker containers and stopping background llama servers), press `Ctrl-C` in that terminal.
 
 ## Running
+
+Start each surface separately. The Discord adapter and the API need the local services from Setup.
 
 ### Run Discord bot runtime
 
@@ -261,9 +284,9 @@ python tests/phrolova_lore_smoke.py
 python tests/test_rag_entity_fallback.py
 ```
 
-## Local Startup Order
+## Local Startup Order (Discord Adapter)
 
-Bring the local runtime up in this order:
+For the Discord adapter, bring the local runtime up in this order:
 
 1. Run `./scripts/start.sh` to start PostgreSQL, SearXNG, and the llama.cpp chat and embedding servers together.
 2. Run `cd backend && uv run python brain/commands/verify_online_model.py`.
