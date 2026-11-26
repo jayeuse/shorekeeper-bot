@@ -1,7 +1,7 @@
 [project]
 name = "shorekeeper-bot"
 version = "0.1.0"
-description = "Add your description here"
+description = "A context compiler that turns curated knowledge, user memory, and live evidence into constrained prompts for small language models."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
